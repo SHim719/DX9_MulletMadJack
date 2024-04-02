@@ -1,0 +1,110 @@
+#include "Wall.h"
+
+#include "GameInstance.h"
+
+CWall::CWall(LPDIRECT3DDEVICE9 pGraphic_Device)
+	: CGameObject { pGraphic_Device }
+{
+}
+
+CWall::CWall(const CWall& rhs)
+	: CGameObject { rhs }
+{
+}
+
+HRESULT CWall::Initialize_Prototype()
+{
+	
+	return S_OK;
+}
+
+HRESULT CWall::Initialize(void* pArg)
+{
+	if (E_FAIL == Add_Components())
+		return E_FAIL;
+
+	if (nullptr != pArg)
+		m_iTexture_Index = *(_uint*)pArg;
+
+	return S_OK;
+}
+
+void CWall::PriorityTick(_float fTimeDelta)
+{
+}
+
+void CWall::Tick(_float fTimeDelta)
+{
+}
+
+void CWall::LateTick(_float fTimeDelta)
+{
+	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+}
+
+HRESULT CWall::Render()
+{
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, false);
+
+	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
+		return E_FAIL;
+
+	if (FAILED(m_pTextureCom->Bind_Texture(m_iTexture_Index)))
+		return E_FAIL;
+
+	m_pVIBufferCom->Render();
+
+	return S_OK;
+}
+
+HRESULT CWall::Add_Components()
+{
+	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
+	if (nullptr == m_pTransformCom)
+		return E_FAIL;
+
+	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(m_pGameInstance->Clone_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default")));
+	if (nullptr == m_pVIBufferCom)
+		return E_FAIL;
+
+	m_pTextureCom = dynamic_cast<CTexture*>(m_pGameInstance->Clone_Component(LEVEL_STATIC, L"Wall_Textures"));
+	if (nullptr == m_pTextureCom)
+		return E_FAIL;
+
+	return S_OK;
+}
+
+CWall* CWall::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+{
+	CWall* pInstance = new CWall(pGraphic_Device);
+	           
+	if (FAILED(pInstance->Initialize_Prototype()))
+	{
+		MSG_BOX(TEXT("Failed to Created : CWall"));
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
+}
+
+CGameObject* CWall::Clone(void* pArg)
+{
+	CWall* pInstance = new CWall(*this);
+
+	if (FAILED(pInstance->Initialize(pArg)))
+	{
+		MSG_BOX(TEXT("Failed to Clone : CWall"));
+		Safe_Release(pInstance);
+	}
+
+	return pInstance;
+}
+
+void CWall::Free()
+{
+	__super::Free();
+
+	Safe_Release(m_pTransformCom);
+	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pTextureCom);
+}
