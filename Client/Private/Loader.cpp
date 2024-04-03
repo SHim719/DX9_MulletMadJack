@@ -1,8 +1,14 @@
 #include "..\Public\Loader.h"
 
+#include "GameInstance.h"
+#include "Enemy.h"
+#include "Enemy_Bullet.h"
+
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
+	, m_pGameInstance{ CGameInstance::Get_Instance() }
 {
+	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pGraphic_Device);
 }
 
@@ -80,6 +86,13 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 {
 	lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
 	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Enemy"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Enemy/02bullethole%d.png"), 23))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Enemy_Bullet"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/bullet_sprites_4_%d.png"), 4))))
+		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
 	
@@ -91,7 +104,13 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
 
-	
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy"),
+		CEnemy::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
+		CEnemy_Bullet::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 
@@ -123,5 +142,6 @@ void CLoader::Free()
 	DeleteObject(m_hThread);
 	CloseHandle(m_hThread);
 
+	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pGraphic_Device);
 }

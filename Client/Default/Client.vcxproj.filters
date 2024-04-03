@@ -73,6 +73,21 @@
     <Filter Include="02.GameObjects\03. Camera\01. FPS_Camera">
       <UniqueIdentifier>{38d66a05-f387-4c82-b9a8-7f47aaed8a58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Client_Components">
+      <UniqueIdentifier>{4bbf10dd-1327-4520-b373-5bcb6768e3af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\Animation">
+      <UniqueIdentifier>{4ac07784-c5ca-46d8-a244-4bfa158541b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject">
+      <UniqueIdentifier>{9fc429b0-8228-49fe-ad25-49aa487f48d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Enemy">
+      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
+      <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -141,6 +156,15 @@
     <ClInclude Include="..\Public\FPS_Camera.h">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Animation.h">
+      <Filter>03. Client_Components\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Enemy.h">
+      <Filter>02.GameObjects\04. EnemyObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Enemy_Bullet.h">
+      <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -196,6 +220,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Animation.cpp">
+      <Filter>03. Client_Components\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Enemy.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Enemy_Bullet.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

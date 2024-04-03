@@ -42,6 +42,14 @@ public:
 
 	void Set_Scale(const _float3& vScale);
 
+	void Set_Billboard_Matrix(_float4x4 _BillboardMatrix)	// y축 빌보드 행렬을 만들기 위한 함수
+	{
+		m_WorldMatrix.m[0][0] = _BillboardMatrix.m[0][0];
+		m_WorldMatrix.m[0][2] = _BillboardMatrix.m[0][2];
+		m_WorldMatrix.m[2][0] = _BillboardMatrix.m[2][0];
+		m_WorldMatrix.m[2][2] = _BillboardMatrix.m[2][2];
+	}
+
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;

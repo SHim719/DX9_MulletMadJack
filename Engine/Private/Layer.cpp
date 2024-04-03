@@ -9,7 +9,7 @@ HRESULT CLayer::Add_GameObject(CGameObject * pGameObject)
 {
 	if (nullptr == pGameObject)
 		return E_FAIL;
-
+	//CGameObject* pGameObject = *m_GameObjects.begin();
 	m_GameObjects.emplace_back(pGameObject);
 
 	return S_OK;

@@ -163,7 +163,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\Public\Enemy.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\CUi_Active.h" />
     <ClInclude Include="..\Public\CUi_Background.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="..\Public\CUi_Special3Sec.h" />
     <ClInclude Include="..\Public\CUi_MonsterDie.h" />
     <ClInclude Include="..\Public\CUi_SpecialHit.h" />
+    <ClInclude Include="..\Public\Enemy_Bullet.h" />
     <ClInclude Include="..\Public\Floor.h" />
     <ClInclude Include="..\Public\FPS_Camera.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
@@ -186,13 +189,16 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\Private\Enemy.cpp" />
     <ClCompile Include="..\Private\CUi_Active.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />
     <ClCompile Include="..\Private\CUi_Life.cpp" />
     <ClCompile Include="..\Private\CUi_Special3Sec.cpp" />
     <ClCompile Include="..\Private\CUi_MonsterDie.cpp" />
     <ClCompile Include="..\Private\CUi_SpecialHit.cpp" />
+    <ClCompile Include="..\Private\Enemy_Bullet.cpp" />
     <ClCompile Include="..\Private\Floor.cpp" />
     <ClCompile Include="..\Private\FPS_Camera.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />

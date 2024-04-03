@@ -37,7 +37,6 @@ private:
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
 	class CLayer* Find_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 
-
 public:
 	static CObject_Manager* Create(_uint iNumLevels);
 	virtual void Free() override;

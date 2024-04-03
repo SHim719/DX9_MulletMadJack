@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "Level.h"
+#include "FPS_Camera.h"
 
 BEGIN(Client)
 
@@ -22,6 +23,13 @@ public:
 
 private:
 	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
+	HRESULT Ready_Layer_Enemy(const wstring& strLayerTag);
+
+public:
+	class CFPS_Camera*	Get_Camera() { return pFPS_Camera; }
+
+private:
+	class CFPS_Camera*	pFPS_Camera = { nullptr };
 };
 
 END

@@ -8,6 +8,7 @@
 #include "CUi_Special3Sec.h"
 #include "CUi_SpecialHit.h"
 #include "FPS_Camera.h"
+#include "Animation.h"
 
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
@@ -90,6 +91,10 @@ HRESULT CMainApp::Ready_Prototype_Components()
 		CVIBuffer_Rect::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	/* For Prototype_Component_Animation */
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Animation"),
+		CAnimation::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	return S_OK;
 }

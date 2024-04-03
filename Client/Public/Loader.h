@@ -6,6 +6,10 @@
 /* 2. 로딩 다음 레벨에 필요한 자원을 생성한다.  */
 /* 다음 레벨에 대한 자원 로딩 : 멀티스레드 */
 
+BEGIN(Engine)
+class CGameInstance;
+END
+
 BEGIN(Client)
 
 class CLoader final : public CBase
@@ -34,6 +38,9 @@ private:
 	_tchar				m_szLoadingText[MAX_PATH] = TEXT("");
 	_float				m_fLoadingPercent = { 0.0f };
 	_bool				m_isFinished = { false };
+
+private:
+	CGameInstance*		m_pGameInstance = { nullptr };
 
 private:
 	HRESULT Loading_For_Logo_Level();

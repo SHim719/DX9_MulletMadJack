@@ -126,6 +126,14 @@ HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
 
 	return m_pLevel_Manager->Change_Level(pNewLevel);
 }
+
+CLevel* CGameInstance::Find_Level()
+{
+	if (nullptr == m_pLevel_Manager)
+		return nullptr;
+
+	return m_pLevel_Manager->Get_Level();
+}
 #pragma endregion
 
 #pragma region TIMER_MANAGER

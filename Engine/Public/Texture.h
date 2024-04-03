@@ -19,16 +19,21 @@ public:
 
 public:
 	virtual HRESULT Initialize_Prototype(TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures);
-	HRESULT Initialize(void* pArg) override;
+	virtual HRESULT Initialize(void* pArg) override;
+
+public:
+	_uint	Get_MaxTextureNum() { return m_iMaxTextureNum; }
 
 private:
 	vector<LPDIRECT3DBASETEXTURE9>	m_Textures;
 	typedef vector<LPDIRECT3DBASETEXTURE9> TEXTURES;
 
+	_uint	m_iMaxTextureNum;
+
 public:
 	static CTexture* Create(LPDIRECT3DDEVICE9 pGraphic_Device, TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures = 1);
-	CComponent* Clone(void* pArg) override;
-	void Free() override;
+	virtual CComponent* Clone(void* pArg) override;
+	virtual void Free() override;
 };
 
 END

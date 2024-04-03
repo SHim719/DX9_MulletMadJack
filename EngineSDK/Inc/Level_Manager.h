@@ -25,6 +25,9 @@ private:
 	class CGameInstance*	m_pGameInstance = { nullptr };
 
 public:
+	CLevel*		Get_Level() { return m_pCurrentLevel; }
+
+public:
 	static CLevel_Manager* Create();
 	virtual void Free() override;
 };

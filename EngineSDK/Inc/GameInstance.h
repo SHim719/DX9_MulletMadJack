@@ -4,6 +4,7 @@
 #include "Component_Manager.h"
 #include "Key_Manager.h"
 #include "CUi_Manager.h"
+#include "Layer.h"
 
 /* 클라이언트와 엔진의 중계자의 역활을 수행한다. */
 /* 클라이언트에서 엔진의 기능을 쓰고하자 한다라면 무조건 게임인스턴스를 떠올리면 되도록. */
@@ -32,6 +33,7 @@ public: /* For.Graphic_Device */
 #pragma region LEVEL_MANAGER
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
+	class CLevel* Find_Level();
 #pragma endregion
 
 #pragma region TIMER_MANAGER
@@ -85,6 +87,9 @@ private:
 	class CRenderer*				m_pRenderer = { nullptr };
 	class CKey_Manager*				m_pKey_Manager = { nullptr };
 	class CUi_Manager*				m_pUi_Manager = { nullptr };
+
+public:
+	CLevel_Manager*		Get_Level_Manager() { return m_pLevel_Manager; }
 
 public:
 	static void Release_Engine();

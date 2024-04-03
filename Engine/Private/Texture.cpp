@@ -8,6 +8,7 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphic_Device)
 CTexture::CTexture(const CTexture& rhs)
     : CComponent { rhs }
     , m_Textures { rhs.m_Textures }
+    , m_iMaxTextureNum{ rhs.m_iMaxTextureNum }
 {
     for (auto& pTexture : m_Textures)
         Safe_AddRef(pTexture);
@@ -43,6 +44,8 @@ HRESULT CTexture::Initialize_Prototype(TYPE eTextureType, const wstring& strText
             return E_FAIL;
 
         m_Textures.push_back(pTexture);
+
+        m_iMaxTextureNum = i;   // 텍스처 번호 최대값을 구하기 위해 i 대입
     }
 
     return S_OK;

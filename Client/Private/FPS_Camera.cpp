@@ -5,7 +5,6 @@
 CFPS_Camera::CFPS_Camera(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CCoreCamera{ pGraphic_Device }
 {
-
 }
 
 CFPS_Camera::CFPS_Camera(const CFPS_Camera& rhs)
@@ -112,7 +111,18 @@ void CFPS_Camera::PriorityTick(_float fTimeDelta)
 
 	_float4x4		ProjMatrix;
 
-	m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, D3DXMatrixPerspectiveFovLH(&ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar));
+	m_pGraphic_Device->SetTransform(D3DTS_PROJECTION,
+		D3DXMatrixPerspectiveFovLH(&ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar));
+
+	// 카메라 월드 행렬의 역행렬이 카메라의 view 행렬임
+	// 카메라 view 행렬의 y축 회전 성분을 추려냄
+	m_BillboardMatrix._11 = m_pTransformCom->Get_WorldMatrix_Inverse()._11;
+	m_BillboardMatrix._13 = m_pTransformCom->Get_WorldMatrix_Inverse()._13;
+	m_BillboardMatrix._31 = m_pTransformCom->Get_WorldMatrix_Inverse()._31;
+	m_BillboardMatrix._33 = m_pTransformCom->Get_WorldMatrix_Inverse()._33;
+
+	// y축 회전 성분이 담긴 행렬을 역변환하면 y축 빌보드 행렬이 됨
+	D3DXMatrixInverse(&m_BillboardMatrix, nullptr, &m_BillboardMatrix);
 }
 
 void CFPS_Camera::Tick(_float fTimeDelta)

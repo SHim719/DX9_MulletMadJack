@@ -1,4 +1,3 @@
-
 #include "..\Public\Level_GamePlay.h"
 
 #include "GameInstance.h"
@@ -29,6 +28,9 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -71,9 +73,23 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 
-	if(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Camera"), &CameraDesc) == nullptr)
+	// FPS 카메라 사본을 pFPS_Camera에 담음
+	pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Camera"), &CameraDesc));
+
+	if (nullptr == pFPS_Camera)
 		return E_FAIL;
 	
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
+{
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy")))
+		return E_FAIL;
+
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy_Bullet")))
+		return E_FAIL;
+
 	return S_OK;
 }
 
