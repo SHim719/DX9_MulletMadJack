@@ -23,6 +23,7 @@ public:
 
 protected:
 	/* 정점 배열을 보관하는 컴 객체. */
+	vector<_float3>					m_vecPositions;
 	LPDIRECT3DVERTEXBUFFER9			m_pVB = { nullptr };
 
 	/* 정점 하나의 크기. */
@@ -37,9 +38,17 @@ protected:
 	_uint							m_iIndexSizeofPrimitive = 0;
 	D3DFORMAT						m_eIndexFormat;
 
+public:
+	const vector<_float3>& Get_Positions() const { return m_vecPositions; }
+
 protected:
 	HRESULT Create_VertexBuffer();
 	HRESULT Create_IndexBuffer();
+
+public:
+	// Ray의 World 시작좌표, World 방향이 Input, 리턴 값으로 피킹된 위치의 월드 좌표와 Ray의 시작점으로부터 거리 값을 리턴
+	virtual bool Intersect_Ray(class CTransform* pTransform, const _float3& vRayWorldPos, const _float3& vRayDir, OUT _float3* pHitWorldPos, OUT _float* pDist);
+
 
 public:
 	virtual CComponent* Clone(void* pArg) = 0;

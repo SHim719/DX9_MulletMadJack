@@ -3,6 +3,7 @@
 #include "Level_Manager.h"
 #include "Timer_Manager.h"
 #include "Object_Manager.h"
+#include "Collision_Manager.h"
 
 
 IMPLEMENT_SINGLETON(CGameInstance)
@@ -55,6 +56,10 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	// Ui 매니져 사용할 준비
 	m_pUi_Manager = CUi_Manager::Create(*ppOut);
 	if (nullptr == m_pUi_Manager)
+		return E_FAIL;
+
+	m_pCollision_Manager = CCollision_Manager::Create();
+	if (nullptr == m_pComponent_Manager)
 		return E_FAIL;
 	
 	return S_OK;
@@ -168,6 +173,14 @@ CGameObject* CGameInstance::Add_Clone(_uint iLevelIndex, const wstring & strLaye
 
 	return m_pObject_Manager->Add_Clone(iLevelIndex, strLayerTag, strPrototypeTag, pArg);
 }
+
+CLayer* CGameInstance::Find_Layer(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Find_Layer(iLevelIndex, strLayerTag);
+}
 #pragma endregion
 
 #pragma region COMPONENT_MANAGER
@@ -234,6 +247,12 @@ void CGameInstance::Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY)
 }
 #pragma endregion
 
+#pragma region COLLISION_MANAGER
+void CGameInstance::Add_RayDesc(const RAY_DESC& RayDesc)
+{
+}
+#pragma endregion
+
 void CGameInstance::Release_Engine()
 {
 	CGameInstance::Get_Instance()->Free();
@@ -251,4 +270,5 @@ void CGameInstance::Free()
 	Safe_Release(m_pLevel_Manager);
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pKey_Manager);
+	Safe_Release(m_pCollision_Manager);
 }

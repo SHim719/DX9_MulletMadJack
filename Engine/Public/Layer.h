@@ -24,6 +24,9 @@ private:
 	list<class CGameObject*>			m_GameObjects;
 
 public:
+	list<class CGameObject*>& Get_GameObjects() { return m_GameObjects; }
+
+public:
 	static CLayer* Create();
 	virtual void Free() override;
 };

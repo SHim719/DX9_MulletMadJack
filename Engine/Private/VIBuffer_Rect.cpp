@@ -1,4 +1,5 @@
 #include "..\Public\VIBuffer_Rect.h"
+#include "Transform.h"
 
 CVIBuffer_Rect::CVIBuffer_Rect(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CVIBuffer { pGraphic_Device }
@@ -42,6 +43,11 @@ HRESULT CVIBuffer_Rect::Initialize_Prototype()
 
 	m_pVB->Unlock();
 
+	m_vecPositions[0] = pVertices[0].vPosition;
+	m_vecPositions[1] = pVertices[1].vPosition;
+	m_vecPositions[2] = pVertices[2].vPosition;
+	m_vecPositions[3] = pVertices[3].vPosition;
+
 	m_iIndexSizeofPrimitive = sizeof(FACEINDICES16);
 	m_eIndexFormat = D3DFMT_INDEX16;
 
@@ -68,6 +74,30 @@ HRESULT CVIBuffer_Rect::Initialize_Prototype()
 HRESULT CVIBuffer_Rect::Initialize(void * pArg)
 {
 	return S_OK;
+}
+
+bool CVIBuffer_Rect::Intersect_Ray(CTransform* pTransform, const _float3& vRayWorldPos, const _float3& vRayDir, OUT _float3* pHitWorldPos, OUT _float* pDist)
+{
+	_float4x4 Inverse_WorldMatrix = pTransform->Get_WorldMatrix_Inverse();
+	_float3 vRayLocalPos = *D3DXVec3TransformCoord(&_float3(), &vRayWorldPos, &Inverse_WorldMatrix);
+	_float3 vRayLocalDir = *D3DXVec3TransformNormal(&_float3(), &vRayDir, &Inverse_WorldMatrix);
+
+	_float fU, fV;
+	if (D3DXIntersectTri(&m_vecPositions[0], &m_vecPositions[1], &m_vecPositions[2], &vRayLocalPos, &vRayLocalDir, &fU, &fV, pDist))
+	{
+		*pHitWorldPos = m_vecPositions[0] + fU * (m_vecPositions[1] - m_vecPositions[0]) + fV * (m_vecPositions[2] - m_vecPositions[0]);
+		D3DXVec3TransformCoord(pHitWorldPos, pHitWorldPos, &pTransform->Get_WorldMatrix());
+		return true;
+	}
+
+	if (D3DXIntersectTri(&m_vecPositions[0], &m_vecPositions[2], &m_vecPositions[3], &vRayLocalPos, &vRayLocalDir, &fU, &fV, pDist))
+	{
+		*pHitWorldPos = m_vecPositions[0] + fU * (m_vecPositions[2] - m_vecPositions[0]) + fV * (m_vecPositions[3] - m_vecPositions[0]);
+		D3DXVec3TransformCoord(pHitWorldPos, pHitWorldPos, &pTransform->Get_WorldMatrix());
+		return true;
+	}
+
+	return false;
 }
 
 CVIBuffer_Rect * CVIBuffer_Rect::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

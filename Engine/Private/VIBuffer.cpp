@@ -8,6 +8,7 @@ CVIBuffer::CVIBuffer(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 CVIBuffer::CVIBuffer(const CVIBuffer & rhs)
 	: CComponent{ rhs }
+	, m_vecPositions{ rhs.m_vecPositions }
 	, m_pVB{ rhs.m_pVB }
 	, m_iVertexStride{ rhs.m_iVertexStride }
 	, m_iNumVertices{ rhs.m_iNumVertices }
@@ -66,6 +67,11 @@ HRESULT CVIBuffer::Create_IndexBuffer()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+bool CVIBuffer::Intersect_Ray(CTransform* pTransform, const _float3& vRayWorldPos, const _float3& vRayDir, OUT _float3* pHitWorldPos, OUT _float* pDist)
+{
+	return false;
 }
 
 void CVIBuffer::Free()
