@@ -3,6 +3,7 @@
 
 #include "GameInstance.h"
 #include "Wall.h"
+#include "Core_Camera.h"
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device } 
@@ -27,6 +28,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall")))
 		return E_FAIL;
 
+	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -53,6 +56,25 @@ CLevel_GamePlay * CLevel_GamePlay::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	}
 
 	return pInstance;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
+{
+	CCoreCamera::CAMERA_DESC			CameraDesc{};
+
+	CameraDesc.vEye = _float3(0.f, 0.f, -25.f);
+	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
+	CameraDesc.fFovy = D3DXToRadian(60.0f);
+	CameraDesc.fNear = 0.1f;
+	CameraDesc.fFar = 1000.0f;
+	CameraDesc.fSpeedPerSec = 10.f;
+	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
+	CameraDesc.fMouseSensor = 0.1f;
+
+	if(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Camera"), &CameraDesc) == nullptr)
+		return E_FAIL;
+	
+	return S_OK;
 }
 
 void CLevel_GamePlay::Free()

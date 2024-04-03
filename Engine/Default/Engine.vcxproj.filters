@@ -70,11 +70,17 @@
     <Filter Include="01.Utility\05.Key">
       <UniqueIdentifier>{8c00bd9b-15e4-4992-9767-c9168ab48ee1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\Ui">
+    <Filter Include="01.Utility\98. Camera">
+      <UniqueIdentifier>{d6c29404-220a-47e4-93a6-d8791031c9f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\99. Ui">
       <UniqueIdentifier>{07c626c3-b1c3-43b5-9690-733023b6ad18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utility\Ui\Manager">
+    <Filter Include="01.Utility\99. Ui\Manager">
       <UniqueIdentifier>{8b5ca4f5-8df9-4b25-a110-fa05b7ff2da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\98. Camera\Manager">
+      <UniqueIdentifier>{ae3fbca7-41ce-4087-ac1f-1e6423d15a4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -148,10 +154,16 @@
       <Filter>01.Utility\05.Key</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi.h">
-      <Filter>01.Utility\Ui</Filter>
+      <Filter>01.Utility\99. Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Manager.h">
-      <Filter>01.Utility\Ui\Manager</Filter>
+      <Filter>01.Utility\99. Ui\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Core_Camera.h">
+      <Filter>01.Utility\98. Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Camera_Manager.h">
+      <Filter>01.Utility\98. Camera\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -210,10 +222,16 @@
       <Filter>01.Utility\05.Key</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi.cpp">
-      <Filter>01.Utility\Ui</Filter>
+      <Filter>01.Utility\99. Ui</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Manager.cpp">
-      <Filter>01.Utility\Ui\Manager</Filter>
+      <Filter>01.Utility\99. Ui\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Core_Camera.cpp">
+      <Filter>01.Utility\98. Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Camera_Manager.cpp">
+      <Filter>01.Utility\98. Camera\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

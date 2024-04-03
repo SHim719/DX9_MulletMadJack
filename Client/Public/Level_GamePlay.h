@@ -19,6 +19,9 @@ public:
 public:
 	static CLevel_GamePlay* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
+
+private:
+	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
 };
 
 END

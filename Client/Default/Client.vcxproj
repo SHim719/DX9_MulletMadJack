@@ -172,6 +172,7 @@
     <ClInclude Include="..\Public\CUi_MonsterDie.h" />
     <ClInclude Include="..\Public\CUi_SpecialHit.h" />
     <ClInclude Include="..\Public\Floor.h" />
+    <ClInclude Include="..\Public\FPS_Camera.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\public\Level_Logo.h" />
@@ -193,6 +194,7 @@
     <ClCompile Include="..\Private\CUi_MonsterDie.cpp" />
     <ClCompile Include="..\Private\CUi_SpecialHit.cpp" />
     <ClCompile Include="..\Private\Floor.cpp" />
+    <ClCompile Include="..\Private\FPS_Camera.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp" />

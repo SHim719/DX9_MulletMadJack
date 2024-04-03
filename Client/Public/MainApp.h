@@ -57,7 +57,10 @@ private:
 	HRESULT Open_Level(LEVEL eStartLevelID);
 	HRESULT Ready_Prototype_GameObjects();
 	HRESULT Ready_Prototype_Components();
+
+	//Custom Prototype
 	HRESULT Ready_Prototype_Ui_Life();
+	HRESULT Ready_Prototype_Camera();
 
 public:
 	static CMainApp* Create();

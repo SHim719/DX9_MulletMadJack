@@ -101,8 +101,12 @@ CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
 {
 	auto	iter = m_Prototypes.find(strPrototypeTag);
 
-	if (iter == m_Prototypes.end())
+	if (iter == m_Prototypes.end()) {
+		std::cout << "------------------------------------------------------" << std::endl;
+		std::cout << "Not Found Prototype :: [ERROR TARGET] - OBJECT_MANAGER :: Find_Prototype" << std::endl;
+		std::cout << "Prototype Tag : "; std::wcout << strPrototypeTag << std::endl;
 		return nullptr;
+	}
 
 	return iter->second;	
 }

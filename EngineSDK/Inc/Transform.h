@@ -66,8 +66,20 @@ public:
 	void Go_Backward(_float fTimeDelta);
 	void Go_Right(_float fTimeDelta);
 	void Go_Left(_float fTimeDelta);
+
+	void Go_Floor_Straight(_float fTimeDelta);
+	void Go_Floor_Backward(_float fTimeDelta);
+	void Go_Floor_Right(_float fTimeDelta);
+	void Go_Floor_Left(_float fTimeDelta);
+
 	void Go_Up(_float fTimeDelta);
 	void Go_Down(_float fTimeDelta);
+
+	void Head_Roll_Right(_float fTimeDelta, _float Degree);
+	void Head_Roll_Left(_float fTimeDelta, _float Degree);
+
+	void Set_Up_Head_Initialize();
+
 
 
 	void Turn(const _float3& vAxis, _float fTimeDelta);

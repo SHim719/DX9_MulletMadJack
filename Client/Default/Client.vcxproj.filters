@@ -67,6 +67,12 @@
     <Filter Include="Ui\CUi_Life\SpeicialHit">
       <UniqueIdentifier>{6bc5968f-f1e1-4c19-86b3-a03f409142b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\03. Camera">
+      <UniqueIdentifier>{9204bc79-9a62-42ac-a0c7-89d3c6afe6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\03. Camera\01. FPS_Camera">
+      <UniqueIdentifier>{38d66a05-f387-4c82-b9a8-7f47aaed8a58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -132,6 +138,9 @@
     <ClInclude Include="..\Public\CUi_Life.h">
       <Filter>Ui\CUi_Life</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\FPS_Camera.h">
+      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -184,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Active.cpp">
       <Filter>Ui\CUi_Active</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FPS_Camera.cpp">
+      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

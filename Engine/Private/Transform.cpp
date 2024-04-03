@@ -98,6 +98,101 @@ void CTransform::Go_Down(_float fTimeDelta)
 	Set_State(STATE_POSITION, &vPosition);
 }
 
+void CTransform::Go_Floor_Straight(_float fTimeDelta)
+{
+	_float3		vPosition = Get_State(STATE_POSITION);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	vLook = { vLook.x, 0.f, vLook.z };
+	vPosition += *D3DXVec3Normalize(&vLook, &vLook) * m_fSpeedPerSec * fTimeDelta;
+
+	Set_State(STATE_POSITION, &vPosition);
+}
+
+void CTransform::Go_Floor_Backward(_float fTimeDelta)
+{
+	_float3		vPosition = Get_State(STATE_POSITION);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	vLook = { vLook.x, 0.f, vLook.z };
+	vPosition -= *D3DXVec3Normalize(&vLook, &vLook) * m_fSpeedPerSec * fTimeDelta;
+
+	Set_State(STATE_POSITION, &vPosition);
+}
+
+void CTransform::Go_Floor_Right(_float fTimeDelta)
+{
+	_float3		vPosition = Get_State(STATE_POSITION);
+	_float3		vRight = Get_State(STATE_RIGHT);
+
+	vRight = { vRight.x, 0.f, vRight.z };
+	vPosition += *D3DXVec3Normalize(&vRight, &vRight) * m_fSpeedPerSec * fTimeDelta;
+
+	Set_State(STATE_POSITION, &vPosition);
+}
+
+void CTransform::Go_Floor_Left(_float fTimeDelta)
+{
+	_float3		vPosition = Get_State(STATE_POSITION);
+	_float3		vRight = Get_State(STATE_RIGHT);
+
+	vRight = { vRight.x, 0.f, vRight.z };
+	vPosition -= *D3DXVec3Normalize(&vRight, &vRight) * m_fSpeedPerSec * fTimeDelta;
+
+	Set_State(STATE_POSITION, &vPosition);
+}
+
+void CTransform::Head_Roll_Left(_float fTimeDelta, _float Degree)
+{
+	_float3		vRight = Get_State(STATE_RIGHT);
+	_float3		vUp = Get_State(STATE_UP);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	_float4x4	RotationMatrix;
+	
+	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, To_Radian(Degree) * fTimeDelta);
+
+	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
+	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+
+	Set_State(STATE_RIGHT, &vRight);
+	Set_State(STATE_UP, &vUp);
+}
+
+void CTransform::Set_Up_Head_Initialize()
+{
+	_float3		vRight = Get_State(STATE_RIGHT);
+	_float3		vUp = Get_State(STATE_UP);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	_float4x4	RotationMatrix;
+
+	D3DXMatrixRotationAxis(&RotationMatrix, &vRight, 0.f);
+
+	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+	D3DXVec3TransformNormal(&vLook, &vLook, &RotationMatrix);
+
+	Set_State(STATE_UP, &vUp);
+	Set_State(STATE_LOOK, &vLook);
+}
+
+void CTransform::Head_Roll_Right(_float fTimeDelta, _float Degree)
+{
+	_float3		vRight = Get_State(STATE_RIGHT);
+	_float3		vUp = Get_State(STATE_UP);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	_float4x4	RotationMatrix;
+
+	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, -To_Radian(Degree) * fTimeDelta);
+
+	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
+	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+
+	Set_State(STATE_RIGHT, &vRight);
+	Set_State(STATE_UP, &vUp);
+}
+
 void CTransform::Turn(const _float3& vAxis, _float fTimeDelta)
 {
 	/* 세가지 방향벡터를 모두 회전시킨다. */

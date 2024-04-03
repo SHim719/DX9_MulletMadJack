@@ -2,6 +2,7 @@
 
 #pragma warning (disable : 4005)
 #pragma warning (disable : 4251)
+#pragma warning (disable : 4828)
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -12,6 +13,7 @@
 #include <algorithm>
 #include <string>
 #include <assert.h>
+#include <iostream>
 
 #include "Engine_Struct.h"
 #include "Engine_Function.h"

@@ -7,7 +7,7 @@
 #include "CUi_Background.h"
 #include "CUi_Special3Sec.h"
 #include "CUi_SpecialHit.h"
-
+#include "FPS_Camera.h"
 
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
@@ -31,6 +31,9 @@ HRESULT CMainApp::Initialize()
 		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_GameObjects()))
+		return E_FAIL;
+
+	if(FAILED(Ready_Prototype_Camera()))
 		return E_FAIL;
 
 	if (FAILED(Open_Level(LEVEL_LOGO)))
@@ -107,6 +110,16 @@ HRESULT CMainApp::Ready_Prototype_Ui_Life()
 
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_SpecialHit"),
 		CUi_SpecialHit::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CMainApp::Ready_Prototype_Camera()
+{
+	/* For.Prototype_GameObject_Camera */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera"),
+		CFPS_Camera::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
