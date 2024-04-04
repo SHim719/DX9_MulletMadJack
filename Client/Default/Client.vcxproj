@@ -187,6 +187,7 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\public\Level_Logo.h" />
     <ClInclude Include="..\public\Loader.h" />
+    <ClInclude Include="..\Public\Machine_Gun.h" />
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\Public\Wall.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp" />
     <ClCompile Include="..\private\Loader.cpp" />
+    <ClCompile Include="..\Private\Machine_Gun.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />

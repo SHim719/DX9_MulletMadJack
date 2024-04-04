@@ -31,6 +31,7 @@ public:
 
 private:
 	LPDIRECT3DDEVICE9	m_pGraphic_Device = { nullptr };
+
 	HANDLE				m_hThread = {};
 	CRITICAL_SECTION	m_CriticalSection = {};
 	LEVEL				m_eNextLevelID = { LEVEL_END };

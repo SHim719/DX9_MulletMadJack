@@ -14,6 +14,7 @@
 #include <string>
 #include <assert.h>
 #include <iostream>
+#include <random>
 
 #include "Engine_Struct.h"
 #include "Engine_Function.h"

@@ -27,17 +27,32 @@ public:
 	virtual void LateTick(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
-private:
-	virtual void Update_Matrix() {};
-	virtual void Update_Info() {};
+//Public Camera Event Order
+public:
+	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { m_fShakePower = fShakePower; m_fShakeTime = fShakeTime; }
 
+//Private Camera Event List
 private:
-	HRESULT Add_Components();
-	_float2				m_vOldMousePos = { 0.0f, 0.f };
 	_float4x4			m_BillboardMatrix;
 
 public:
 	_float4x4		Get_Billboard_Matrix() { return m_BillboardMatrix; }
+	void Camera_Shake(_float fTimeDelta, _float m_fShakePower, _float& m_fShakeTime);
+
+//Custom Camera Event Variable
+private:
+	_float m_fShakeTime = 0.f;
+	_float m_fShakePower = 0.f;
+
+
+
+
+protected:
+	virtual HRESULT Add_Components() override;
+	virtual void	Key_Input(_float fTimeDelta) override;
+	virtual void    Camera_Event(_float fTimeDelta) override;
+	//virtual void Update_Matrix() {};
+	//virtual void Update_Info() {};
 
 public:
 	static CFPS_Camera* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

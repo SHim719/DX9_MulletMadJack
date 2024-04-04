@@ -1,4 +1,6 @@
 #include "..\Public\Loader.h"
+#include "GameInstance.h"
+#include "Machine_Gun.h"
 
 #include "GameInstance.h"
 #include "Enemy.h"
@@ -10,6 +12,7 @@ CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pGraphic_Device);
+	Safe_AddRef(m_pGameInstance);
 }
 
 // typedef unsigned(__stdcall* _beginthreadex_proc_type)(void*);
@@ -95,10 +98,8 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
-	
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩 중 입니다."));
-	
 
 	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩 중 입니다."));
 

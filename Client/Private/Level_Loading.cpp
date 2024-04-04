@@ -30,6 +30,13 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 	if (nullptr == m_pLoader)
 		return E_FAIL;	
 
+	if (FAILED(Test_Texture_Loading()))
+		return E_FAIL;
+
+	//if (FAILED(Test_LifeUi_Clone()))
+		//return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -71,6 +78,35 @@ HRESULT CLevel_Loading::Render()
 HRESULT CLevel_Loading::Ready_Layer_BackGround(const wstring & strLayerTag)
 {
 
+	return S_OK;
+}
+
+HRESULT CLevel_Loading::Test_LifeUi_Clone()
+{
+	//CUi_MonsterDie::MonsterDie_Arg Arg;
+	//Arg.MonsterDiePosX = -200;
+	//Arg.MonsterDiePosY = -200;
+	//Arg.MonsterGrade = eMonsterGrade::Special;
+	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_MonsterDie"), 
+	//	eUiRenderType::Render_Blend,
+	//	&Arg)))
+	//	return E_FAIL;
+	//
+	/*if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_Special3Sec"), 
+		eUiRenderType::Render_Blend, 
+		nullptr
+		)))
+		return E_FAIL;*/
+	
+	//_uint a = (_uint)eSpecialHit::HEADSHOT;
+	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &a)))
+		//return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_Loading::Test_Texture_Loading()
+{
 	return S_OK;
 }
 

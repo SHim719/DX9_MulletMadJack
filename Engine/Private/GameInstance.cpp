@@ -77,10 +77,6 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	m_pUi_Manager->Tick(fTimeDelta);
 	m_pUi_Manager->LateTick(fTimeDelta);
 
-	m_pUi_Manager->Blend_PriorityTick(fTimeDelta);
-	m_pUi_Manager->Blend_Tick(fTimeDelta);
-	m_pUi_Manager->Blend_LateTick(fTimeDelta);
-
 	m_pLevel_Manager->Tick(fTimeDelta);
 }
 
@@ -91,11 +87,9 @@ HRESULT CGameInstance::Draw()
 		return E_FAIL;
 
 	m_pRenderer->Draw();	
-
 	m_pUi_Manager->Ui_Render_Begin();
 	m_pUi_Manager->Ui_Render();
 	m_pUi_Manager->Ui_Render_End();
-
 	return m_pLevel_Manager->Render();
 }
 void CGameInstance::Clear(_uint iLevelIndex)
@@ -118,7 +112,6 @@ void CGameInstance::Render_End(HWND hWnd)
 {
 	if (nullptr == m_pGraphic_Device)
 		return;
-
 	m_pGraphic_Device->Render_End(hWnd);
 }
 #pragma endregion
@@ -219,12 +212,12 @@ HRESULT CGameInstance::Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, 
 
 	return m_pUi_Manager->Add_Ui_LifePrototype(Ui_LifePrototypeTag, Ui_LifePrototype);
 }
-HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, CUi* Ui_Active)
+HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui_RenderType, CUi* Ui_Active)
 {
 	if (nullptr == m_pUi_Manager)
 		return E_FAIL;
 
-	return m_pUi_Manager->Add_Ui_Active(Ui_ActiveTag, Ui_Active);
+	return m_pUi_Manager->Add_Ui_Active(Ui_ActiveTag, Ui_RenderType, Ui_Active);
 }
 HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
 {
@@ -245,6 +238,11 @@ void CGameInstance::Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY)
 {
 	m_pUi_Manager->Set_WinSize(iWinSizeX, iWinSizeY);
 }
+
+void CGameInstance::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive)
+{
+	m_pUi_Manager->Set_Ui_ActiveState(Ui_ActiveTag, _isActive);
+}
 #pragma endregion
 
 void CGameInstance::Release_Engine()
@@ -256,12 +254,12 @@ void CGameInstance::Release_Engine()
 
 void CGameInstance::Free()
 {	
-	Safe_Release(m_pUi_Manager);
 	Safe_Release(m_pRenderer);
 	Safe_Release(m_pComponent_Manager);
 	Safe_Release(m_pObject_Manager);
 	Safe_Release(m_pTimer_Manager);
 	Safe_Release(m_pLevel_Manager);
-	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pKey_Manager);
+	Safe_Release(m_pUi_Manager);
+	Safe_Release(m_pGraphic_Device);
 }

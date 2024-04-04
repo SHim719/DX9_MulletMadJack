@@ -38,7 +38,27 @@ public:
 
 	void Set_State(STATE eState, const _float3* pState) {
 		memcpy(&m_WorldMatrix.m[eState][0], pState, sizeof(_float3));
+		Update_Offset();
 	}
+
+	void Set_UnOffset_State(STATE eState, const _float3* pState) {
+		memcpy(&m_WorldMatrix.m[eState][0], pState, sizeof(_float3));
+	}
+
+	void Debug_State_Out() {
+		std::cout << "REAL Right :" << m_WorldMatrix._11 << " " << m_WorldMatrix._12 << " " << m_WorldMatrix._13 << std::endl;
+		std::cout << "REAL Up :" << m_WorldMatrix._21 << " " << m_WorldMatrix._22 << " " << m_WorldMatrix._23 << std::endl;
+		std::cout << "REAL Look :" << m_WorldMatrix._31 << " " << m_WorldMatrix._32 << " " << m_WorldMatrix._33 << std::endl;
+		std::cout << "REAL Position :" << m_WorldMatrix._41 << " " << m_WorldMatrix._42 << " " << m_WorldMatrix._43 << std::endl;
+	}
+
+	void Debug_State_Out2() {
+		std::cout << "OFFSET Right :" << m_WorldMatrix_Offset._11 << " " << m_WorldMatrix_Offset._12 << " " << m_WorldMatrix_Offset._13 << std::endl;
+		std::cout << "OFFSET Up :" << m_WorldMatrix_Offset._21 << " " << m_WorldMatrix_Offset._22 << " " << m_WorldMatrix_Offset._23 << std::endl;
+		std::cout << "OFFSET Look :" << m_WorldMatrix_Offset._31 << " " << m_WorldMatrix_Offset._32 << " " << m_WorldMatrix_Offset._33 << std::endl;	
+		std::cout << "OFFSET Position :" << m_WorldMatrix_Offset._41 << " " << m_WorldMatrix_Offset._42 << " " << m_WorldMatrix_Offset._43 << std::endl;
+	}
+
 
 	void Set_Scale(const _float3& vScale);
 
@@ -83,19 +103,30 @@ public:
 	void Go_Up(_float fTimeDelta);
 	void Go_Down(_float fTimeDelta);
 
-	void Head_Roll_Right(_float fTimeDelta, _float Degree);
-	void Head_Roll_Left(_float fTimeDelta, _float Degree);
+	void Head_Roll(_float fTimeDelta, _float Degree);
 
-	void Set_Up_Head_Initialize();
-
-
+	void Set_View_RollBack();
 
 	void Turn(const _float3& vAxis, _float fTimeDelta);
+	void UnOffset_Turn(const _float3& vAxis, _float fTimeDelta);
+
 	void Rotation(const _float3& vAxis, _float fRadian);
 	void Rotation_XYZ(const _float3& vXYZ); // XYZ Degree 값 받아서 돌아줌.
 
 	void LookAt(const _float3& vWorldPoint);
 	void LookAt_ForLandObject(const _float3& vWorldPoint);
+	
+	void Set_Position(const _float3& vPos) {
+		m_WorldMatrix._41 = vPos.x; m_WorldMatrix._42 = vPos.y; m_WorldMatrix._43 = vPos.z; 
+		Update_Offset(); 
+	}
+private:
+	void Update_Offset();
+
+//Camera Action
+public:
+	void Camera_Shake(_float fTimeDelta, _float fShakePower);
+	void Camera_Gun_Shake(_float fTimeDelta, _float fShakePower);
 
 public:
 	void AddSpeedPerSec(_float Speed) { m_fSpeedPerSec += Speed; }
@@ -104,6 +135,7 @@ public:
 
 private:
 	_float4x4			m_WorldMatrix;
+	_float4x4			m_WorldMatrix_Offset;
 
 private:
 	_float				m_fSpeedPerSec = { 0.0f };
