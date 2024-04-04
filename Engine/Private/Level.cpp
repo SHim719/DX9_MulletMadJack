@@ -73,7 +73,15 @@ HRESULT CLevel::Load_MapObject(const wstring& strFilePath)
 	return S_OK;
 }
 
+void CLevel::PriorityTick(_float fTimeDelta)
+{
+}
+
 void CLevel::Tick(_float fTimeDelta)
+{
+}
+
+void CLevel::LateTick(_float fTimeDelta)
 {
 }
 
