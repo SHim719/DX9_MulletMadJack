@@ -73,6 +73,12 @@
     <Filter Include="02.GameObjects\03. Camera\01. FPS_Camera">
       <UniqueIdentifier>{38d66a05-f387-4c82-b9a8-7f47aaed8a58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\Player">
+      <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Weapon">
+      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -132,14 +138,14 @@
     <ClInclude Include="..\Public\CUi_Special3Sec.h">
       <Filter>Ui\CUi_Life\Special3Sec</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi_Active.h">
-      <Filter>Ui\CUi_Active</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_Life.h">
       <Filter>Ui\CUi_Life</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\FPS_Camera.h">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Machine_Gun.h">
+      <Filter>Ui\CUi_Active\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -191,11 +197,11 @@
     <ClCompile Include="..\Private\CUi_Life.cpp">
       <Filter>Ui\CUi_Life</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CUi_Active.cpp">
-      <Filter>Ui\CUi_Active</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Machine_Gun.cpp">
+      <Filter>Ui\CUi_Active\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

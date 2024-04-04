@@ -69,10 +69,11 @@ public:
 
 #pragma region UI_MANAGER
 	HRESULT Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, class CUi* Ui_LifePrototype);
-	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, class CUi* Ui_Active);
+	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui_RenderType, class CUi* Ui_Active);
 	HRESULT Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
 	class CUi* Add_Ui_BackgroundClone(void* pArg);
 	void Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY);
+	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive = true);
 #pragma endregion
 
 

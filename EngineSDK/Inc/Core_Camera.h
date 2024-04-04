@@ -29,33 +29,29 @@ public:
 	wstring Get_Key() const { return m_strKey; }
 
 	void Set_Target(CGameObject* _pTarget) { m_pTarget = _pTarget; }
+
 protected:
 
 	//LPDIRECT3DDEVICE9	 m_pGraphic_Device = { nullptr };
 	class CGameInstance* m_pGameInstance = { nullptr };
 
-	void	Set_Key(const wstring& _strKey) { m_strKey = _strKey; }
-	void	Set_Pos(const _float3 _vPos) { m_CameraDesc.vEye = _vPos; }
+	virtual void  Key_Input(_float fTimeDelta) {};
+	virtual void  Camera_Event(_float fTimeDelta) {};
+	void		  Set_Pos(const _float3 _vPos) { m_CameraDesc.vEye = _vPos; }
+
+	virtual HRESULT Add_Components() PURE;
 
 protected:
 	CGameObject* m_pTarget = { nullptr };
 
 	CTransform* m_pTransformCom = { nullptr };
 
-	wstring m_strKey;
+	wstring		m_strKey;
 
 	CAMERA_DESC m_CameraDesc;
 
-	_float _fFovY;
-	_float _fAspect;
-	_float _fFar;
-	_float _fNear;
 
-	_float _fYaw;
-	_float _fPitch;
-	_float _fRoll;
-	_float _fOffset;
-	_float _fSensitive;
+	_float		m_MoveSensitivity = 1.f;
 
 	D3DXVECTOR3 m_vLookAt;
 	D3DXVECTOR3 _vOffset;

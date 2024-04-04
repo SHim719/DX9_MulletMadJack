@@ -18,13 +18,21 @@ HRESULT CUi_Manager::Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, CU
 	return S_OK;
 }
 
-HRESULT CUi_Manager::Add_Ui_Active(const wstring& Ui_ActiveTag, CUi* Ui_Active)
+HRESULT CUi_Manager::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType UiRenderType, CUi* Ui_Active)
 {
-	if (m_Ui_Active.end() != m_Ui_Active.find(Ui_ActiveTag))
-		return E_FAIL;
+	if (UiRenderType == eUiRenderType::Render_NonBlend)
+	{
+		if (m_Ui_Active.end() != m_Ui_Active.find(Ui_ActiveTag))
+			return E_FAIL;
 
-	m_Ui_Active.emplace(Ui_ActiveTag, Ui_Active);
+		m_Ui_Active.emplace(Ui_ActiveTag, Ui_Active);
+	}
+	else {
+		if (m_Ui_ActiveBlend.end() != m_Ui_ActiveBlend.find(Ui_ActiveTag))
+			return E_FAIL;
 
+		m_Ui_ActiveBlend.emplace(Ui_ActiveTag, Ui_Active);
+	}
 	return S_OK;
 }
 
@@ -84,6 +92,31 @@ void CUi_Manager::PriorityTick(_float fTimeDelta)
 			++iter;
 		}
 	}
+
+	auto Blenditer = m_Ui_LifeBlendClonelist.begin();
+	for (; Blenditer != m_Ui_LifeBlendClonelist.end(); )
+	{
+		if ((*Blenditer)->Is_Dead())
+		{
+			Safe_Release(*Blenditer);
+			Blenditer = m_Ui_LifeBlendClonelist.erase(Blenditer);
+		}
+		else
+		{
+			(*Blenditer)->PriorityTick(fTimeDelta);
+			++Blenditer;
+		}
+	}
+
+	for (auto& iter : m_Ui_Active) {
+		if (iter.second->Get_Active())
+			iter.second->PriorityTick(fTimeDelta);
+	}
+
+	for (auto& iter : m_Ui_ActiveBlend) {
+		if (iter.second->Get_Active())
+			iter.second->PriorityTick(fTimeDelta);
+	}
 }
 
 void CUi_Manager::Tick(_float fTimeDelta)
@@ -101,6 +134,31 @@ void CUi_Manager::Tick(_float fTimeDelta)
 			(*iter)->Tick(fTimeDelta);
 			++iter;
 		}
+	}
+
+	auto Blenditer = m_Ui_LifeBlendClonelist.begin();
+	for (; Blenditer != m_Ui_LifeBlendClonelist.end(); )
+	{
+		if ((*Blenditer)->Is_Dead())
+		{
+			Safe_Release(*Blenditer);
+			Blenditer = m_Ui_LifeBlendClonelist.erase(Blenditer);
+		}
+		else
+		{
+			(*Blenditer)->Tick(fTimeDelta);
+			++Blenditer;
+		}
+	}
+
+	for (auto& iter : m_Ui_Active) {
+		if (iter.second->Get_Active())
+			iter.second->Tick(fTimeDelta);
+	}
+
+	for (auto& iter : m_Ui_ActiveBlend) {
+		if (iter.second->Get_Active())
+			iter.second->Tick(fTimeDelta);
 	}
 }
 
@@ -120,46 +178,7 @@ void CUi_Manager::LateTick(_float fTimeDelta)
 			++iter;
 		}
 	}
-}
 
-void CUi_Manager::Blend_PriorityTick(_float fTimeDelta)
-{
-	auto Blenditer = m_Ui_LifeBlendClonelist.begin();
-	for (; Blenditer != m_Ui_LifeBlendClonelist.end(); )
-	{
-		if ((*Blenditer)->Is_Dead())
-		{
-			Safe_Release(*Blenditer);
-			Blenditer = m_Ui_LifeBlendClonelist.erase(Blenditer);
-		}
-		else
-		{
-			(*Blenditer)->PriorityTick(fTimeDelta);
-			++Blenditer;
-		}
-	}
-}
-
-void CUi_Manager::Blend_Tick(_float fTimeDelta)
-{
-	auto Blenditer = m_Ui_LifeBlendClonelist.begin();
-	for (; Blenditer != m_Ui_LifeBlendClonelist.end(); )
-	{
-		if ((*Blenditer)->Is_Dead())
-		{
-			Safe_Release(*Blenditer);
-			Blenditer = m_Ui_LifeBlendClonelist.erase(Blenditer);
-		}
-		else
-		{
-			(*Blenditer)->Tick(fTimeDelta);
-			++Blenditer;
-		}
-	}
-}
-
-void CUi_Manager::Blend_LateTick(_float fTimeDelta)
-{
 	auto Blenditer = m_Ui_LifeBlendClonelist.begin();
 	for (; Blenditer != m_Ui_LifeBlendClonelist.end(); )
 	{
@@ -173,6 +192,16 @@ void CUi_Manager::Blend_LateTick(_float fTimeDelta)
 			(*Blenditer)->LateTick(fTimeDelta);
 			++Blenditer;
 		}
+	}
+
+	for (auto& iter : m_Ui_Active) {
+		if (iter.second->Get_Active())
+			iter.second->LateTick(fTimeDelta);
+	}
+
+	for (auto& iter : m_Ui_ActiveBlend) {
+		if (iter.second->Get_Active())
+			iter.second->LateTick(fTimeDelta);
 	}
 }
 
@@ -196,9 +225,18 @@ HRESULT CUi_Manager::Ui_Render()
 	for (auto& Clone : m_Ui_LifeClonelist)
 		Clone->Render();
 
-
 	for (auto& BlendClone : m_Ui_LifeBlendClonelist)
 		BlendClone->Render();
+
+	for (auto& iter : m_Ui_Active) {
+		if (iter.second->Get_Active() == true)
+			iter.second->Render();
+	}
+
+	for (auto& iter : m_Ui_ActiveBlend) {
+		if(iter.second->Get_Active() == true)
+			iter.second->Render();
+	}
 
 
 	return S_OK;
@@ -213,6 +251,23 @@ void CUi_Manager::Set_WinSize(_uint iWinSizeX, _uint iWinSizeY)
 {
 	m_iWinSizeX = iWinSizeX;
 	m_iWinSizeY = iWinSizeY;
+}
+
+void CUi_Manager::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive)
+{
+
+	auto iter = m_Ui_Active.find(Ui_ActiveTag);
+	if (m_Ui_Active.end() != iter)
+	{
+		iter->second->Set_Active(_isActive);
+	}
+
+	auto Blenditer = m_Ui_ActiveBlend.find(Ui_ActiveTag);
+	if (m_Ui_ActiveBlend.end() != Blenditer)
+	{
+		Blenditer->second->Set_Active(_isActive);
+	}
+
 }
 
 CUi_Manager* CUi_Manager::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -240,6 +295,10 @@ void CUi_Manager::Free()
 	for (auto& Pair : m_Ui_Active)
 		Safe_Release(Pair.second);
 	m_Ui_Active.clear();
+
+	for (auto& Pair : m_Ui_ActiveBlend)
+		Safe_Release(Pair.second);
+	m_Ui_ActiveBlend.clear();
 
 	Safe_Release(m_pGraphic_Device);
 }

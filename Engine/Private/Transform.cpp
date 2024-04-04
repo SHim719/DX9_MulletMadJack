@@ -142,7 +142,7 @@ void CTransform::Go_Floor_Left(_float fTimeDelta)
 	Set_State(STATE_POSITION, &vPosition);
 }
 
-void CTransform::Head_Roll_Left(_float fTimeDelta, _float Degree)
+void CTransform::Head_Roll(_float fTimeDelta, _float Degree)
 {
 	_float3		vRight = Get_State(STATE_RIGHT);
 	_float3		vUp = Get_State(STATE_UP);
@@ -155,42 +155,65 @@ void CTransform::Head_Roll_Left(_float fTimeDelta, _float Degree)
 	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
 	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
 
-	Set_State(STATE_RIGHT, &vRight);
-	Set_State(STATE_UP, &vUp);
+	Set_UnOffset_State(STATE_RIGHT, &vRight);
+	Set_UnOffset_State(STATE_UP, &vUp);
+	Set_UnOffset_State(STATE_LOOK, &vLook);
 }
 
-void CTransform::Set_Up_Head_Initialize()
+void CTransform::Set_View_RollBack()
 {
-	_float3		vRight = Get_State(STATE_RIGHT);
-	_float3		vUp = Get_State(STATE_UP);
-	_float3		vLook = Get_State(STATE_LOOK);
-
-	_float4x4	RotationMatrix;
-
-	D3DXMatrixRotationAxis(&RotationMatrix, &vRight, 0.f);
-
-	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
-	D3DXVec3TransformNormal(&vLook, &vLook, &RotationMatrix);
-
-	Set_State(STATE_UP, &vUp);
-	Set_State(STATE_LOOK, &vLook);
+	//Set_State(STATE_POSITION, &m_vOffset_Position);
+	m_WorldMatrix = m_WorldMatrix_Offset;
 }
 
-void CTransform::Head_Roll_Right(_float fTimeDelta, _float Degree)
+void CTransform::Camera_Shake(_float fTimeDelta, _float fShakePower)
 {
-	_float3		vRight = Get_State(STATE_RIGHT);
-	_float3		vUp = Get_State(STATE_UP);
 	_float3		vLook = Get_State(STATE_LOOK);
+	_float3		vRight = Get_State(STATE_RIGHT);
 
-	_float4x4	RotationMatrix;
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 1000);
 
-	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, -To_Radian(Degree) * fTimeDelta);
+	int i = 0;
+	if ( 0 >= (dis(gen) - 500) / 500.f) i = -1;
+	else i = 1;
 
-	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
-	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+	Set_View_RollBack();
 
-	Set_State(STATE_RIGHT, &vRight);
-	Set_State(STATE_UP, &vUp);
+	if (dis(gen) % 2 == 0) {
+		UnOffset_Turn(Get_State(STATE_RIGHT), fShakePower * i);
+	
+	}
+	else {
+		UnOffset_Turn(_float3(0.f, 1.f, 0.f), fShakePower * i);
+	}
+	return;
+
+}
+
+void CTransform::Camera_Gun_Shake(_float fTimeDelta, _float fShakePower)
+{
+	_float3		vLook = Get_State(STATE_LOOK);
+	_float3		vRight = Get_State(STATE_RIGHT);
+
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 1000);
+
+	int i = 0;
+	if (0 >= (dis(gen) - 500) / 500.f) i = -1;
+	else i = 1;
+
+	if (dis(gen) % 2 == 0) {
+		Turn(Get_State(STATE_RIGHT), fShakePower * i);
+
+	}
+	else {
+		Turn(_float3(0.f, 1.f, 0.f), fShakePower * i);
+	}
+	return;
+
 }
 
 void CTransform::Turn(const _float3& vAxis, _float fTimeDelta)
@@ -211,6 +234,26 @@ void CTransform::Turn(const _float3& vAxis, _float fTimeDelta)
 	Set_State(STATE_RIGHT, &vRight);
 	Set_State(STATE_UP, &vUp);
 	Set_State(STATE_LOOK, &vLook);
+}
+
+void CTransform::UnOffset_Turn(const _float3& vAxis, _float fTimeDelta)
+{
+	/* 세가지 방향벡터를 모두 회전시킨다. */
+	/* 방향벡터의 회전 = 방향벡터 * 행렬 */
+	_float3		vRight = Get_State(STATE_RIGHT);
+	_float3		vUp = Get_State(STATE_UP);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	_float4x4	RotationMatrix;
+	D3DXMatrixRotationAxis(&RotationMatrix, &vAxis, m_fRotationPerSec * fTimeDelta);
+
+	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
+	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+	D3DXVec3TransformNormal(&vLook, &vLook, &RotationMatrix);
+
+	Set_UnOffset_State(STATE_RIGHT, &vRight);
+	Set_UnOffset_State(STATE_UP, &vUp);
+	Set_UnOffset_State(STATE_LOOK, &vLook);
 }
 
 void CTransform::Rotation(const _float3& vAxis, _float fRadian)
@@ -292,6 +335,18 @@ void CTransform::LookAt_ForLandObject(const _float3& vWorldPoint)
 	Set_State(STATE_RIGHT, &vRight);
 	Set_State(STATE_LOOK, &vLook);
 }
+
+void CTransform::Update_Offset()
+{
+	m_WorldMatrix_Offset = m_WorldMatrix;
+	/*
+	m_vOffset_Position = Get_State(STATE_POSITION);
+	m_vOffset_Right = Get_State(STATE_RIGHT);
+	m_vOffset_Up = Get_State(STATE_UP);
+	m_vOffset_Look = Get_State(STATE_LOOK);
+	*/
+}
+
 void CTransform::MonsterDieUi_Go_Up(_float fTimeDelta, _float Speed)
 {
 	_float3		vPosition = Get_State(STATE_POSITION);
@@ -329,6 +384,7 @@ CComponent * CTransform::Clone(void* pArg)
 
 	return pInstance;
 }
+
 
 void CTransform::Free()
 {

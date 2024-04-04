@@ -8,6 +8,7 @@
 #include "CUi_Special3Sec.h"
 #include "CUi_SpecialHit.h"
 #include "FPS_Camera.h"
+#include "Machine_Gun.h"
 
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
@@ -27,13 +28,27 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_Engine(LEVEL_END, GraphicDesc, &m_pGraphic_Device)))
 		return E_FAIL;
 
+	m_pGameInstance->Set_UiManager_Winsize(g_iWinSizeX, g_iWinSizeY);
+
 	if (FAILED(Ready_Prototype_Components()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_GameObjects()))
 		return E_FAIL;
 
+	if (FAILED(Ready_Static_Texture_Prototype()))
+		return E_FAIL;
+	
 	if(FAILED(Ready_Prototype_Camera()))
+		return E_FAIL;
+
+	if(FAILED(Ready_Prototype_Ui_Life()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Active_Ui_Texture()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Active_Ui()))
 		return E_FAIL;
 
 	if (FAILED(Open_Level(LEVEL_LOGO)))
@@ -122,6 +137,64 @@ HRESULT CMainApp::Ready_Prototype_Camera()
 		CFPS_Camera::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	return S_OK;
+}
+
+HRESULT CMainApp::Ready_Static_Texture_Prototype()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC,	L"CUi_Background_Texture",
+		CTexture::Create(m_pGraphic_Device,	CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background.png"))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterLowGrade_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/1Sec.png"))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterMiddleGrade_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/2Sec.png"))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterSpecialGrade_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/3Sec.png"))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Special3Sec_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/Special3Sec.png"))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background2.png"))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CMainApp::Ready_Active_Ui_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CrossHair_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Crosshair/Crosshair%d.png", 7))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CMainApp::Ready_Active_Ui()
+{
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CMachine_Gun::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 

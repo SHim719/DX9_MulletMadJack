@@ -1,9 +1,13 @@
 #include "..\Public\Loader.h"
+#include "GameInstance.h"
+#include "Machine_Gun.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
+	, m_pGameInstance{ CGameInstance::Get_Instance() }
 {
 	Safe_AddRef(m_pGraphic_Device);
+	Safe_AddRef(m_pGameInstance);
 }
 
 // typedef unsigned(__stdcall* _beginthreadex_proc_type)(void*);
@@ -79,19 +83,14 @@ HRESULT CLoader::Loading_For_Logo_Level()
 HRESULT CLoader::Loading_For_GamePlay_Level()
 {
 	lstrcpy(m_szLoadingText, TEXT("텍스쳐를 로딩 중 입니다."));
-	
 
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
-	
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩 중 입니다."));
-	
 
 	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
-
-	
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 
@@ -123,5 +122,6 @@ void CLoader::Free()
 	DeleteObject(m_hThread);
 	CloseHandle(m_hThread);
 
+	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pGraphic_Device);
 }

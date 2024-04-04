@@ -3,6 +3,7 @@
 
 #include "GameInstance.h"
 #include "Wall.h"
+#include "Machine_Gun.h"
 #include "Core_Camera.h"
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -25,8 +26,34 @@ HRESULT CLevel_GamePlay::Initialize()
 		CWall::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall")))
-		return E_FAIL;
+	auto wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
+	wall->Get_Transform()->Set_Position(_float3(0.f, 0.f, 0.f));
+	wall->Set_Texture_Index(1);
+
+
+	for (int i = 0; i < 10; ++i) {
+		for (int j = 0; j < 10; ++j) {
+			wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
+			wall->Get_Transform()->Rotation_XYZ(_float3(90.f, 0.f, 0.f));
+			wall->Get_Transform()->Set_Position(_float3(i, -0.5f, j));
+
+			if (i == 9) {
+
+			wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
+			wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 90.f, 0.f));
+			wall->Get_Transform()->Set_Position(_float3(i, 0.f, j));
+
+			}
+
+			if(j == 9) {
+				wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
+				wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 0.f, 0.f));
+				wall->Get_Transform()->Set_Position(_float3(i, 0.f, j));
+			}
+		}
+	}
+
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"),true);
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
@@ -62,8 +89,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 {
 	CCoreCamera::CAMERA_DESC			CameraDesc{};
 
-	CameraDesc.vEye = _float3(0.f, 0.f, -25.f);
-	CameraDesc.vAt = _float3(0.f, 0.f, 0.f);
+	CameraDesc.vEye = _float3(0.f, 0.2f, -1.f);
+	CameraDesc.vAt = _float3(10.f, 0.f, 10.f);
 	CameraDesc.fFovy = D3DXToRadian(60.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1000.0f;

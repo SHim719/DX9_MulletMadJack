@@ -62,6 +62,10 @@ private:
 	HRESULT Ready_Prototype_Ui_Life();
 	HRESULT Ready_Prototype_Camera();
 
+	HRESULT Ready_Static_Texture_Prototype();
+
+	HRESULT Ready_Active_Ui_Texture();
+	HRESULT Ready_Active_Ui();
 public:
 	static CMainApp* Create();
 	virtual void Free() override;

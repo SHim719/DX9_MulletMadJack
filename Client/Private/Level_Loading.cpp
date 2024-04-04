@@ -30,6 +30,13 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 	if (nullptr == m_pLoader)
 		return E_FAIL;	
 
+	if (FAILED(Test_Texture_Loading()))
+		return E_FAIL;
+
+	//if (FAILED(Test_LifeUi_Clone()))
+		//return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -91,54 +98,15 @@ HRESULT CLevel_Loading::Test_LifeUi_Clone()
 		)))
 		return E_FAIL;*/
 	
-	_uint a = (_uint)eSpecialHit::HEADSHOT;
-	if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
-		eUiRenderType::Render_NonBlend,
-		&a
-	)))
-		return E_FAIL;
+	//_uint a = (_uint)eSpecialHit::HEADSHOT;
+	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &a)))
+		//return E_FAIL;
 
 	return S_OK;
 }
 
 HRESULT CLevel_Loading::Test_Texture_Loading()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Background_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterLowGrade_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/1Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterMiddleGrade_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/2Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterSpecialGrade_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/3Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Special3Sec_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Special3Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background2.png"))))
-		return E_FAIL;
-
-
 	return S_OK;
 }
 

@@ -26,6 +26,7 @@ protected:
 public:
 	virtual HRESULT Initialize_Prototype() PURE;
 	virtual HRESULT Initialize(void* pArg) PURE;
+	virtual HRESULT Initialize_Active() { return S_OK; };
 	virtual void PriorityTick(_float fTimeDelta) PURE;
 	virtual void Tick(_float fTimeDelta) PURE;
 	virtual void LateTick(_float fTimeDelta) PURE;
@@ -54,6 +55,13 @@ public:
 	bool Is_Dead() { return m_bDead; }
 	void Set_Dead() { m_bDead = true; }
 
+	bool Get_Active() { return m_bActive; }
+	void Set_Active(bool _isActive) {
+		if (_isActive == true){
+			Initialize(NULL);
+		}
+		m_bActive = _isActive; 
+	}
 
 protected:
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;
@@ -65,10 +73,12 @@ protected:
 
 protected:
 	bool m_bDead = { false };
+	bool m_bActive = { false };
+
 	Ui_Pos_Size m_UiDesc;
 	_uint m_iTexture_Index = {0};
-
-
+	
+	
 public:
 	virtual void Free() override;
 	virtual CUi* Clone(void* pArg);

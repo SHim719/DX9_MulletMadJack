@@ -165,7 +165,6 @@
   <ItemGroup>
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
-    <ClInclude Include="..\Public\CUi_Active.h" />
     <ClInclude Include="..\Public\CUi_Background.h" />
     <ClInclude Include="..\Public\CUi_Life.h" />
     <ClInclude Include="..\Public\CUi_Special3Sec.h" />
@@ -177,6 +176,7 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\public\Level_Logo.h" />
     <ClInclude Include="..\public\Loader.h" />
+    <ClInclude Include="..\Public\Machine_Gun.h" />
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\Public\Wall.h" />
@@ -187,7 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\BackGround.cpp" />
-    <ClCompile Include="..\Private\CUi_Active.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />
     <ClCompile Include="..\Private\CUi_Life.cpp" />
     <ClCompile Include="..\Private\CUi_Special3Sec.cpp" />
@@ -199,6 +198,7 @@
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp" />
     <ClCompile Include="..\private\Loader.cpp" />
+    <ClCompile Include="..\Private\Machine_Gun.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />
