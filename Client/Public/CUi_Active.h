@@ -25,8 +25,8 @@ protected:
 	virtual void Initialize_Set_Speed() PURE;
 
 
-	virtual void Default_Set_LifeTime() PURE;
-	virtual void Default_Set_Size() PURE;
+	virtual void Initialize_Set_ActiveTime() PURE;
+	virtual void Initialize_Set_Size() PURE;
 
 
 protected:
@@ -34,10 +34,14 @@ protected:
 	virtual HRESULT Add_Texture(void* pArg) PURE;
 
 
+public:
+	bool Get_Active() const { return m_bActive; }
+
 
 protected:
 	bool m_bActive = { false };
-
+	_float m_fActiveTime = { 0.f };
+	
 
 public:
 	virtual void Free() override;

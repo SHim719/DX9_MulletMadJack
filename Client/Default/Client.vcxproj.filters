@@ -58,9 +58,6 @@
     <Filter Include="Ui\CUi_Life\MonsterDie">
       <UniqueIdentifier>{a8281e90-d652-4ec1-99ce-929357b72936}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Life\Background">
-      <UniqueIdentifier>{321a04ff-6fbf-4b33-bbfb-1f09d25817a3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Life\Special3Sec">
       <UniqueIdentifier>{e35bf6f3-95d3-418e-aab6-f0f7fcdac7d3}</UniqueIdentifier>
     </Filter>
@@ -87,6 +84,32 @@
     </Filter>
     <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
       <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
+    <Filter Include="Ui\CUi_Life\Part">
+      <UniqueIdentifier>{8e91680d-6cfe-4d4c-b8bb-00536ec8cce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\Background">
+      <UniqueIdentifier>{413e9543-3dc0-4d7c-9efb-d2a205d3c4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\SpecialHit">
+      <UniqueIdentifier>{a0103705-b4e5-4c9d-8e24-aa2324a1f85e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear">
+      <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels\ClearLevel">
+      <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Finish">
+      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Peace">
+      <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Announcer">
+      <UniqueIdentifier>{83d683fb-8760-4861-8946-e864a1d4cf54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart">
+      <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +161,6 @@
     <ClInclude Include="..\Public\CUi_MonsterDie.h">
       <Filter>Ui\CUi_Life\MonsterDie</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi_Background.h">
-      <Filter>Ui\CUi_Life\Background</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_SpecialHit.h">
       <Filter>Ui\CUi_Life\SpeicialHit</Filter>
     </ClInclude>
@@ -164,6 +184,26 @@
     </ClInclude>
     <ClInclude Include="..\Public\Enemy_Bullet.h">
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+    <ClInclude Include="..\Public\CUi_Background.h">
+      <Filter>Ui\CUi_Life\Part\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_SpecialHit_Part.h">
+      <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CLevel_Clear.h">
+      <Filter>01.Levels\ClearLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Finish.h">
+      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_PEACE.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Announcer.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Private\CUi_Heart.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +243,6 @@
     <ClCompile Include="..\Private\CUi_MonsterDie.cpp">
       <Filter>Ui\CUi_Life\MonsterDie</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CUi_Background.cpp">
-      <Filter>Ui\CUi_Life\Background</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\CUi_SpecialHit.cpp">
       <Filter>Ui\CUi_Life\SpeicialHit</Filter>
     </ClCompile>
@@ -229,6 +266,26 @@
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Bullet.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+    <ClCompile Include="..\Private\CUi_Background.cpp">
+      <Filter>Ui\CUi_Life\Part\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_SpecialHit_Part.cpp">
+      <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CLevel_Clear.cpp">
+      <Filter>01.Levels\ClearLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Finish.cpp">
+      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_PEACE.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Announcer.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Public\CUi_Heart.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

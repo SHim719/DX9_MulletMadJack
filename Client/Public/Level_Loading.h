@@ -29,8 +29,7 @@ private:
 private:
 	/* 로딩화면의 배경을 구성하는데 있어 필요한 객체들을 모아놓은 레이어를 생성한다. */
 	HRESULT Ready_Layer_BackGround(const wstring& strLayerTag);
-	HRESULT Test_LifeUi_Clone();
-	HRESULT Test_Texture_Loading();
+
 
 public:
 	static CLevel_Loading* Create(LPDIRECT3DDEVICE9 pGraphic_Device, LEVEL eNextLevelID);

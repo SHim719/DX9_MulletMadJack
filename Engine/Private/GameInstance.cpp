@@ -57,6 +57,7 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	if (nullptr == m_pUi_Manager)
 		return E_FAIL;
 	
+	
 	return S_OK;
 }
 
@@ -90,6 +91,10 @@ HRESULT CGameInstance::Draw()
 		return E_FAIL;
 
 	m_pRenderer->Draw();	
+
+	m_pUi_Manager->Ui_Render_Begin();
+	m_pUi_Manager->Ui_Render();
+	m_pUi_Manager->Ui_Render_End();
 
 	return m_pLevel_Manager->Render();
 }
@@ -228,13 +233,13 @@ HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiR
 
 	return m_pUi_Manager->Add_Ui_LifeClone(Ui_LifePrototypeTag, UiRenderType, pArg);
 }
-CUi* CGameInstance::Add_Ui_BackgroundClone(void* pArg)
+CUi* CGameInstance::Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg)
 {
 	if (nullptr == m_pUi_Manager)
 		return nullptr;
 
 
-	return m_pUi_Manager->Add_Ui_BackgroundClone(pArg);
+	return m_pUi_Manager->Add_Ui_PartClone(Ui_PartPrototypeTag, pArg);
 }
 void CGameInstance::Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY)
 {

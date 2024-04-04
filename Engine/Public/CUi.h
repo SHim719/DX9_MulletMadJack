@@ -14,7 +14,8 @@ public:
 		_float m_fY = { 0 };
 		_float m_fSizeX = { 0 };
 		_float m_fSizeY = { 0 };
-	}Ui_Pos_Size;
+		_float3 m_Rotation = { 0, 0, 0 };
+	}Ui_Pos_Size_Rotation;
 
 
 protected:
@@ -23,6 +24,7 @@ protected:
 	virtual ~CUi() = default;
 
 
+	
 public:
 	virtual HRESULT Initialize_Prototype() PURE;
 	virtual HRESULT Initialize(void* pArg) PURE;
@@ -65,12 +67,13 @@ protected:
 
 protected:
 	bool m_bDead = { false };
-	Ui_Pos_Size m_UiDesc;
+	Ui_Pos_Size_Rotation m_UiDesc;
 	_uint m_iTexture_Index = {0};
 
 
 public:
 	virtual void Free() override;
+	virtual CUi* Start(void* pArg);
 	virtual CUi* Clone(void* pArg);
 };
 

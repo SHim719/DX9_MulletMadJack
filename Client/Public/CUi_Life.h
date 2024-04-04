@@ -47,7 +47,7 @@ protected:
 	bool m_bBlink = { false };
 
 public:
-	virtual CUi_Life* Clone(void* pArg) PURE;
+	virtual CUi* Clone(void* pArg) PURE;
 	virtual void Free() override;
 };
 

@@ -9,6 +9,8 @@
 #include "CUi_SpecialHit.h"
 #include "FPS_Camera.h"
 #include "Animation.h"
+#include "CUi_SpecialHit_Part.h"
+
 
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
@@ -28,10 +30,15 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(m_pGameInstance->Initialize_Engine(LEVEL_END, GraphicDesc, &m_pGraphic_Device)))
 		return E_FAIL;
 
+	m_pGameInstance->Set_UiManager_Winsize(g_iWinSizeX, g_iWinSizeY);
+
 	if (FAILED(Ready_Prototype_Components()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_GameObjects()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Prototype_Ui_Life()))
 		return E_FAIL;
 
 	if(FAILED(Ready_Prototype_Camera()))
@@ -105,17 +112,26 @@ HRESULT CMainApp::Ready_Prototype_Ui_Life()
 		CUi_MonsterDie::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+
 	if(FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_BackGround"),
 		CUi_Background::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
 
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Special3Sec"),
 		CUi_Special3Sec::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_SpecialHit"),
 		CUi_SpecialHit::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_SpecialHit_Part"),
+		CUi_SpecialHit_Part::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 
 	return S_OK;
 }

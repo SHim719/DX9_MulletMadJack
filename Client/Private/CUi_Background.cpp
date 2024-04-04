@@ -23,7 +23,7 @@ HRESULT CUi_Background::Initialize(void* pArg)
 	if (FAILED(Add_Components(pArg)))
 		return E_FAIL;
 
-	Copy(pArg);
+
 	Initialize_Set_Scale_Pos_Rotation(pArg);
 	Initialize_Set_Speed();
 
@@ -93,11 +93,27 @@ void CUi_Background::Default_Set_Size()
 
 void CUi_Background::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
+	if (pArg == nullptr)
+	{
+		MSG_BOX(TEXT("Background SizeSet Failed"));
+		return;
+	}
+
+	Ui_Pos_Size_Rotation* Arg = (Ui_Pos_Size_Rotation*)pArg;
+	m_UiDesc.m_fSizeX = Arg->m_fSizeX;
+	m_UiDesc.m_fSizeY = Arg->m_fSizeY;
+	m_UiDesc.m_fX = Arg->m_fX;
+	m_UiDesc.m_fY = Arg->m_fY;
+	m_UiDesc.m_Rotation = Arg->m_Rotation;
+
+
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
+
 
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State
 	(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
+	m_pTransformCom->Rotation_XYZ(m_UiDesc.m_Rotation);
 }
 
 void CUi_Background::Initialize_Set_Speed()
@@ -116,19 +132,7 @@ void CUi_Background::Set_Rotation(_float3 Rotation)
 	m_pTransformCom->Rotation_XYZ(Rotation);
 }
 
-void CUi_Background::Copy(void* pArg)
-{
-	if (pArg == nullptr)
-	{
-		MSG_BOX(TEXT("Background SizeSet Failed"));
-		return;
-	}
-	auto Arg = (Ui_Pos_Size*)pArg;
-	m_UiDesc.m_fSizeX = Arg->m_fSizeX;
-	m_UiDesc.m_fSizeY = Arg->m_fSizeY;
-	m_UiDesc.m_fX = Arg->m_fX;
-	m_UiDesc.m_fY = Arg->m_fY;
-}
+
 
 CUi_Background* CUi_Background::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
@@ -143,7 +147,7 @@ CUi_Background* CUi_Background::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-CUi_Life* CUi_Background::Clone(void* pArg)
+CUi* CUi_Background::Clone(void* pArg)
 {
 	CUi_Background* pInstance = new CUi_Background(*this);
 

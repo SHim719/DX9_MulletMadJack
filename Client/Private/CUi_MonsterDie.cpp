@@ -28,7 +28,7 @@ HRESULT CUi_MonsterDie::Initialize(void* pArg)
 	Initialize_MoveLogic_Select();
 	Initialize_Set_Scale_Pos_Rotation(pArg);
 	Initialize_Set_Speed();
-	Initalize_Set_Background();
+	Initialize_Set_Background();
 
 	return S_OK;
 }
@@ -93,21 +93,21 @@ HRESULT CUi_MonsterDie::Add_Texture(void* pArg)
 	if (Grade == eMonsterGrade::Low)
 	{
 		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("MonsterLowGrade_Texture"),
+			TEXT("CUi_MonsterLowGrade_Texture"),
 			(CComponent**)&m_pTextureCom)))
 			return E_FAIL;
 	}
 	else if (Grade == eMonsterGrade::Middle)
 	{
 		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("MonsterMiddleGrade_Texture"),
+			TEXT("CUi_MonsterMiddleGrade_Texture"),
 			(CComponent**)&m_pTextureCom)))
 			return E_FAIL;
 	}
-	else if (Grade == eMonsterGrade::Special)
+	else if (Grade == eMonsterGrade::High)
 	{
 		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("MonsterSpecialGrade_Texture"),
+			TEXT("CUi_MonsterHighGrade_Texture"),
 			(CComponent**)&m_pTextureCom)))
 			return E_FAIL;
 	}
@@ -125,6 +125,7 @@ void CUi_MonsterDie::Default_Set_LifeTime()
 	m_fLifeTime = 2.f;
 }
 
+
 void CUi_MonsterDie::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
 	if (pArg == nullptr)
@@ -137,7 +138,7 @@ void CUi_MonsterDie::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 		auto Position = (MonsterDie_Arg*)pArg;
 		m_UiDesc.m_fX = Position->MonsterDiePosX;
 		m_UiDesc.m_fY = Position->MonsterDiePosY;
-
+		m_UiDesc.m_Rotation = Position->MonsterRotation;
 		//if (rand() % 2)
 		//	m_UiDesc.m_fY = Position->MonsterDiePosY;
 		//else
@@ -202,10 +203,10 @@ void CUi_MonsterDie::Initialize_MoveLogic_Select()
 	}
 }
 
-void CUi_MonsterDie::Initalize_Set_Background()
+void CUi_MonsterDie::Initialize_Set_Background()
 {
 	m_pBackGround = (CUi_Background*)m_pGameInstance->
-		Add_Ui_BackgroundClone(&m_UiDesc);
+		Add_Ui_PartClone(TEXT("CUi_BackGround"), &m_UiDesc);
 }
  
 void CUi_MonsterDie::Move(_float fTimeDelta)
@@ -380,6 +381,11 @@ void CUi_MonsterDie::Random_Speed()
 	m_pTransformCom->Set_Speed((_float)Speed);
 }
 
+void CUi_MonsterDie::Set_Pos(_float3 Position)
+{
+	m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Position);
+}
+
 
 
 CUi_MonsterDie* CUi_MonsterDie::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -394,7 +400,7 @@ CUi_MonsterDie* CUi_MonsterDie::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-CUi_Life* CUi_MonsterDie::Clone(void* pArg)
+CUi* CUi_MonsterDie::Clone(void* pArg)
 {
 	CUi_MonsterDie* pInstance = new CUi_MonsterDie(*this);
 
