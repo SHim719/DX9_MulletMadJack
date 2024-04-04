@@ -82,6 +82,15 @@
     <Filter Include="01.Utility\98. Camera\Manager">
       <UniqueIdentifier>{ae3fbca7-41ce-4087-ac1f-1e6423d15a4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\04.Components\Collider">
+      <UniqueIdentifier>{c9d764b6-af68-4c8e-bd26-0f5f8d181b7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\Manager">
+      <UniqueIdentifier>{1246e18d-f35b-4d18-a965-de0080691e17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\Collider\BoxCollider">
+      <UniqueIdentifier>{ad946128-006e-4e6c-bdd4-c1363fd2264a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Base.h">
@@ -165,6 +174,12 @@
     <ClInclude Include="..\Public\Camera_Manager.h">
       <Filter>01.Utility\98. Camera\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Collider.h">
+      <Filter>01.Utility\04.Components\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Collision_Manager.h">
+      <Filter>01.Utility\04.Components\Collider\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -232,6 +247,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Camera_Manager.cpp">
       <Filter>01.Utility\98. Camera\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Collision_Manager.cpp">
+      <Filter>01.Utility\04.Components\Collider\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Collider.cpp">
+      <Filter>01.Utility\04.Components\Collider</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

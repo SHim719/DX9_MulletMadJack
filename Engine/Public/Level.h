@@ -21,7 +21,9 @@ protected:
 	HRESULT Load_MapObject(const wstring& strFilePath);
 
 public:
+	virtual void PriorityTick(_float fTimeDelta);
 	virtual void Tick(_float fTimeDelta);
+	virtual void LateTick(_float fTimeDelta);
 	virtual HRESULT Render();
 
 protected:

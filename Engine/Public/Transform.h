@@ -84,6 +84,11 @@ public:
 		return *D3DXMatrixInverse(&_float4x4{}, nullptr, &m_WorldMatrix);
 	}
 
+	const _float4x4& Get_WorldMatrix() const
+	{
+		return m_WorldMatrix;
+	}
+
 	void Set_WorldMatrix(const _float4x4& worldMatrix)
 	{
 		m_WorldMatrix = worldMatrix;

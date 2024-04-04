@@ -35,6 +35,8 @@ private:
 
 private:
 	class CGameObject* Find_Prototype(const wstring& strPrototypeTag);
+
+public:
 	class CLayer* Find_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 
 public:

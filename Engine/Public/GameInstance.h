@@ -47,6 +47,7 @@ public:
 public:
 	HRESULT Add_Prototype(const wstring& strPrototypeTag, class CGameObject* pPrototype);
 	class CGameObject* Add_Clone(_uint iLevelIndex, const wstring& strLayerTag, const wstring& strPrototypeTag, void* pArg = nullptr);
+	class CLayer* Find_Layer(_uint iLevelIndex, const wstring& strLayerTag);
 #pragma endregion
 
 #pragma region COMPONENT_MANAGER
@@ -79,6 +80,10 @@ public:
 #pragma endregion
 
 
+#pragma region COLLISION_MANAGER
+	void Add_RayDesc(const RAY_DESC& RayDesc);
+#pragma endregion
+
 private:
 	class CGraphic_Device*			m_pGraphic_Device = { nullptr };
 	class CLevel_Manager*			m_pLevel_Manager = { nullptr };
@@ -88,6 +93,7 @@ private:
 	class CRenderer*				m_pRenderer = { nullptr };
 	class CKey_Manager*				m_pKey_Manager = { nullptr };
 	class CUi_Manager*				m_pUi_Manager = { nullptr };
+	class CCollision_Manager* m_pCollision_Manager = { nullptr };
 
 public:
 	CLevel_Manager*		Get_Level_Manager() { return m_pLevel_Manager; }

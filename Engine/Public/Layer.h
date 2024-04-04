@@ -2,9 +2,6 @@
 
 #include "Base.h"
 
-/* 사본객체들을 모아서 저장한다. */
-/* 4. 보유하고있는 사본객체들의 Tick들을 호출한다. */
-/* 5. 보유하고있는 사본객체들의 Render (x : 그리는 순서를 관리해야 할 필요가 있어서. ) */
 
 BEGIN(Engine)
 
@@ -25,6 +22,7 @@ private:
 
 public:
 	CGameObject*	Get_Object() { return *m_GameObjects.begin(); }
+	list<class CGameObject*>& Get_GameObjects() { return m_GameObjects; }
 
 public:
 	static CLayer* Create();

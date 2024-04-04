@@ -39,7 +39,7 @@ HRESULT CLevel::Load_MapObject(const wstring& strFilePath)
 	while (true)
 	{
 		_uint iVecSize = 0;
-		iReadFlag += ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag = ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
 		if (0 == dwByte)
 			break;
 
@@ -73,7 +73,15 @@ HRESULT CLevel::Load_MapObject(const wstring& strFilePath)
 	return S_OK;
 }
 
+void CLevel::PriorityTick(_float fTimeDelta)
+{
+}
+
 void CLevel::Tick(_float fTimeDelta)
+{
+}
+
+void CLevel::LateTick(_float fTimeDelta)
 {
 }
 

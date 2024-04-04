@@ -16,6 +16,9 @@ public:
 	virtual HRESULT Initialize(void* pArg) override;
 
 public:
+	bool Intersect_Ray(class CTransform* pTransform, const _float3& vRayWorldPos, const _float3& vRayDir, OUT _float3* pHitWorldPos, OUT _float* pDist) override;
+
+public:
 	static CVIBuffer_Rect* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CComponent* Clone(void* pArg) override;
 	virtual void Free() override;
