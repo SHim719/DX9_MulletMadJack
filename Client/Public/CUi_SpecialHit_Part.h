@@ -2,15 +2,14 @@
 #include "Client_Defines.h"
 #include "CUi_Life.h"
 
-
 BEGIN(Client)
 
-class CUi_Background final : public CUi_Life
+class CUi_SpecialHit_Part : public CUi_Life
 {
-private:
-	CUi_Background(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Background(const CUi_Background& rhs);
-	virtual ~CUi_Background() = default;
+protected:
+	CUi_SpecialHit_Part(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_SpecialHit_Part(const CUi_Life& rhs);
+	virtual ~CUi_SpecialHit_Part() = default;
 
 
 public:
@@ -42,10 +41,15 @@ public:
 	void Set_Rotation(_float3 Rotation);
 
 
+private:
+	class CUi_Background* m_pBackGround = { nullptr };
+
+
 public:
-	static CUi_Background* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
-	virtual CUi* Clone(void* pArg); // pArg -> Ui_Pos_Size_Rotation
+	static CUi_SpecialHit_Part* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual CUi* Clone(void* pArg) override; // pArg -> Ui_Pos_Size_Rotation
 	virtual void Free() override;
 };
 
 END
+

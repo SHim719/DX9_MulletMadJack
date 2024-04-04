@@ -1,6 +1,6 @@
 #include "Cui_Special3Sec.h"
-#include "CUi_Background.h"
 #include "GameInstance.h"
+#include "CUi_SpecialHit_Part.h"
 
 
 CUi_Special3Sec::CUi_Special3Sec(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -46,14 +46,14 @@ void CUi_Special3Sec::Tick(_float fTimeDelta)
 
 void CUi_Special3Sec::LateTick(_float fTimeDelta)
 {
-	m_pBackGround->Set_Pos(m_pTransformCom->Get_State(CTransform::STATE::STATE_POSITION));
+	m_pSpecialHit_Part->Set_Pos(m_pTransformCom->Get_State(CTransform::STATE::STATE_POSITION));
 }
 
 HRESULT CUi_Special3Sec::Render()
 {
 	if (Cal_BlinkRender(0.1f))
 	{
-		m_pBackGround->Render();
+		m_pSpecialHit_Part->Render();
 
 		if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 			return E_FAIL;
@@ -80,8 +80,8 @@ void CUi_Special3Sec::Move(_float fTimeDelta)
 
 void CUi_Special3Sec::Initialize_Set_Background()
 {
-	m_pBackGround = (CUi_Background*)m_pGameInstance->
-		Add_Ui_BackgroundClone(&m_UiDesc);
+	m_pSpecialHit_Part = (CUi_SpecialHit_Part*)m_pGameInstance->
+		Add_Ui_PartClone(TEXT("CUi_BackGround"), &m_UiDesc);
 }
 
 HRESULT CUi_Special3Sec::Add_Components(void* pArg)
@@ -154,9 +154,9 @@ CUi_Special3Sec* CUi_Special3Sec::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-CUi_Life* CUi_Special3Sec::Clone(void* pArg)
+CUi* CUi_Special3Sec::Clone(void* pArg)
 {
-	CUi_Life* pInstance = new CUi_Special3Sec(*this);
+	CUi_Special3Sec* pInstance = new CUi_Special3Sec(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
@@ -169,6 +169,6 @@ CUi_Life* CUi_Special3Sec::Clone(void* pArg)
 
 void CUi_Special3Sec::Free()
 {
-	Safe_Release(m_pBackGround);
+	Safe_Release(m_pSpecialHit_Part);
 	__super::Free();
 }

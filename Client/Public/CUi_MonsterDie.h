@@ -8,6 +8,7 @@ enum class eMonsterGrade
 {
 	Low = 0,
 	Middle,
+	High,
 	Special,
 	End
 };
@@ -29,6 +30,7 @@ public:
 	{
 		_float MonsterDiePosX = 0;
 		_float MonsterDiePosY = 0;
+		_float3 MonsterRotation = { 0, 0, 0 };
 		eMonsterGrade MonsterGrade;
 	}MonsterDie_Arg;
 
@@ -48,7 +50,6 @@ public:
 
 	
 protected:
-
 	virtual HRESULT Add_Components(void* pArg) override;
 	virtual HRESULT Add_Texture(void* pArg) override;
 
@@ -61,10 +62,10 @@ protected:
 protected:
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override; 
 	virtual void Initialize_Set_Speed() override;
-	virtual void Initalize_Set_Background();
 
 
 private:
+	void Initialize_Set_Background();
 	void Initialize_MoveLogic_Select();
 
 
@@ -80,6 +81,12 @@ private:
 	void Random_Speed();
 
 
+
+public:
+	void Set_Pos(_float3 Position);
+	void Set_Speed(_float Speed) { m_pTransformCom->Set_Speed(Speed); }
+
+
 private:
 	eMoveLogic m_eMoveLogic = { eMoveLogic::End };
 	bool m_bStartPosRight = { false };
@@ -90,7 +97,7 @@ private:
 
 public:
 	static CUi_MonsterDie* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
-	virtual CUi_Life* Clone(void* pArg) override; //pArg -> MonsterDie_Arg
+	virtual CUi* Clone(void* pArg) override; //pArg -> MonsterDie_Arg
 	virtual void Free() override;
 };
 

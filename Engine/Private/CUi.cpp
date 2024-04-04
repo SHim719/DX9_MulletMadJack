@@ -13,7 +13,7 @@ CUi::CUi(const CUi& rhs)
 	: m_pGraphic_Device(rhs.m_pGraphic_Device)
 	, m_pGameInstance(rhs.m_pGameInstance)
 {
-	memcpy(&m_UiDesc, &rhs.m_UiDesc, sizeof(Ui_Pos_Size));
+	memcpy(&m_UiDesc, &rhs.m_UiDesc, sizeof(Ui_Pos_Size_Rotation));
 	Safe_AddRef(m_pGraphic_Device);
 	Safe_AddRef(m_pGameInstance);
 }
@@ -82,6 +82,11 @@ void CUi::Free()
 	Safe_Release(m_pGameInstance);
 
 	Safe_Release(m_pGraphic_Device);
+}
+
+CUi* CUi::Start(void* pArg)
+{
+	return nullptr;
 }
 
 CUi* CUi::Clone(void* pArg)

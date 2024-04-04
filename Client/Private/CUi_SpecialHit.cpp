@@ -1,6 +1,8 @@
 #include "CUi_SpecialHit.h"
 #include "CUi_Background.h"
 #include "GameInstance.h"
+#include "CUi_MonsterDie.h"
+#include "CUi_SpecialHit_Part.h"
 
 
 CUi_SpecialHit::CUi_SpecialHit(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -28,8 +30,10 @@ HRESULT CUi_SpecialHit::Initialize(void* pArg)
 
 	Initialize_Set_Scale_Pos_Rotation(pArg);
 	Initialize_Set_Speed();
-	Initalize_Set_Background();
-	
+	Initialize_Set_Scale_Limit();
+	Initialize_Set_Background();
+	Initialize_Set_SpecialHit_Part();
+
 
 	return S_OK;
 }
@@ -40,11 +44,23 @@ void CUi_SpecialHit::PriorityTick(_float fTimeDelta)
 
 void CUi_SpecialHit::Tick(_float fTimeDelta)
 {
-	//Cal_Life_Blink(fTimeDelta);
+	Move(fTimeDelta);
+	Scaling(fTimeDelta);
+	Cal_Life_Blink(fTimeDelta);
 }
 
 void CUi_SpecialHit::LateTick(_float fTimeDelta)
 {
+	_float3 BackPos = m_pTransformCom->Get_State(CTransform::STATE::STATE_POSITION);
+	BackPos.x -= 50.f;
+	BackPos.y -= 8;
+	m_pBackGround->Set_Pos(BackPos);
+
+
+	_float3 PartPos = m_pTransformCom->Get_State(CTransform::STATE::STATE_POSITION);
+	PartPos.x += 190.f;
+	PartPos.y += 30.f;
+	m_pSpecialHit_Part->Set_Pos(PartPos);
 }
 
 HRESULT CUi_SpecialHit::Render()
@@ -52,7 +68,7 @@ HRESULT CUi_SpecialHit::Render()
 	if (Cal_BlinkRender(0.1f))
 	{
 		m_pBackGround->Render();
-
+		m_pSpecialHit_Part->Render();
 		if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 			return E_FAIL;
 
@@ -87,17 +103,21 @@ HRESULT CUi_SpecialHit::Add_Components(void* pArg)
 
 HRESULT CUi_SpecialHit::Add_Texture(void* pArg)
 {
-	eSpecialHit* type = (eSpecialHit*)pArg;
-	if (*type == eSpecialHit::HEADSHOT)
+	SpecialHit_Desc* type = (SpecialHit_Desc*)pArg;
+	
+	if (type->Hit == eSpecialHit::HEADSHOT)
 	{
 		if (FAILED(Add_Component(LEVEL_STATIC, 
-			TEXT("CUi_SpecialHit_Texture"),
+			TEXT("CUi_SpecialHit_HEADSHOT_Texture"),
 			(CComponent**)&m_pTextureCom)))
 			return E_FAIL;
 	}
-	else if(*type == eSpecialHit::FINISHED)
+	else if(type->Hit == eSpecialHit::FINISHED)
 	{
-
+		if (FAILED(Add_Component(LEVEL_STATIC,
+			TEXT("CUi_SpecialHit_FINISHED_Texture"),
+			(CComponent**)&m_pTextureCom)))
+			return E_FAIL;
 	}
 
 
@@ -112,19 +132,26 @@ void CUi_SpecialHit::Default_Set_LifeTime()
 
 void CUi_SpecialHit::Default_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 100;
-	m_UiDesc.m_fSizeY = 40;
-
+	m_UiDesc.m_fSizeX = 256;
+	m_UiDesc.m_fSizeY = 50;
 }
 
 void CUi_SpecialHit::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	m_UiDesc.m_fX = -500;
-	m_UiDesc.m_fY = -50;
-	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
-	_float3 Rotation = { 0.f, 0.f, 15.f };
+	SpecialHit_Desc* temp = (SpecialHit_Desc*)pArg;
+	_uint i = (temp->iCount) % 5;
+
+
+	m_UiDesc.m_fX = -550;
+	m_UiDesc.m_fY += -100 + (_float)(i * 25);
+
+
+	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 0 };
+	m_UiDesc.m_Rotation = { 0.f, 0.f, 10.f };
+
+
 	m_pTransformCom->Set_Scale(Scale);
-	m_pTransformCom->Rotation_XYZ(Rotation);
+	m_pTransformCom->Rotation_XYZ(m_UiDesc.m_Rotation);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 	
 }
@@ -134,16 +161,65 @@ void CUi_SpecialHit::Initialize_Set_Speed()
 	m_pTransformCom->Set_Speed(50.f);
 }
 
-void CUi_SpecialHit::Initalize_Set_Background()
+void CUi_SpecialHit::Initialize_Set_Background()
 {
-	Ui_Pos_Size temp;
-	temp.m_fSizeX = { 200 };
+	Ui_Pos_Size_Rotation temp;
+	temp.m_fSizeX = { 350 };
 	temp.m_fSizeY = { 40 };
-	temp.m_fX = m_UiDesc.m_fX;
-	temp.m_fY = m_UiDesc.m_fY;
+	temp.m_fX = m_UiDesc.m_fX - 50;
+	temp.m_fY = m_UiDesc.m_fY - 8;
+	temp.m_Rotation = m_UiDesc.m_Rotation;
 
 	m_pBackGround = (CUi_Background*)m_pGameInstance->
-		Add_Ui_BackgroundClone(&temp);
+		Add_Ui_PartClone(TEXT("CUi_BackGround"), &temp);
+}
+
+void CUi_SpecialHit::Initialize_Set_Scale_Limit()
+{
+	m_fScaleUpperLimit = 600;
+	m_fScaleDownLimit = 256;
+}
+
+void CUi_SpecialHit::Initialize_Set_SpecialHit_Part()
+{
+	Ui_Pos_Size_Rotation Set;
+	Set.m_fX = m_UiDesc.m_fX + 200;
+	Set.m_fY = m_UiDesc.m_fY + 100;
+	Set.m_fSizeX = m_UiDesc.m_fSizeX * 0.6f;
+	Set.m_fSizeY = m_UiDesc.m_fSizeY * 0.6f;
+	Set.m_Rotation = m_UiDesc.m_Rotation;
+
+
+	m_pSpecialHit_Part = (CUi_SpecialHit_Part*)
+		m_pGameInstance->Add_Ui_PartClone(TEXT("CUi_SpecialHit_Part"), &Set);
+}
+
+void CUi_SpecialHit::Move(_float fTimeDelta)
+{
+	m_fMoveTime += fTimeDelta;
+	if (m_fMoveTime < 1.5f)
+	{
+		m_pTransformCom->Go_Up(fTimeDelta);
+	}
+	else
+	{
+		m_pTransformCom->Go_Down(fTimeDelta);
+	}
+}
+
+void CUi_SpecialHit::Scaling(_float fTimeDelta)
+{	
+	m_fScaleTime += fTimeDelta;
+	if (m_fScaleTime < 0.3f && m_pTransformCom->Get_Scale().x < m_fScaleUpperLimit)
+	{
+		_float3 ScaleUp = { 1.1f, 1.1f, 0.f };
+		m_pTransformCom->Set_Scale(ScaleUp);
+	}
+	else if (m_fScaleTime > 0.3f && m_fScaleTime < 1.f && m_pTransformCom->Get_Scale().x > m_fScaleDownLimit)
+	{
+		_float3 ScaleDown = { 0.95f, 0.95f, 0.f };
+		m_pTransformCom->Set_Scale(ScaleDown);
+	}
 }
 
 CUi_SpecialHit* CUi_SpecialHit::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -158,9 +234,9 @@ CUi_SpecialHit* CUi_SpecialHit::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-CUi_Life* CUi_SpecialHit::Clone(void* pArg)
+CUi* CUi_SpecialHit::Clone(void* pArg)
 {
-	CUi_Life* pInstance = new CUi_SpecialHit(*this);
+	CUi_SpecialHit* pInstance = new CUi_SpecialHit(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
@@ -172,6 +248,7 @@ CUi_Life* CUi_SpecialHit::Clone(void* pArg)
 }
 void CUi_SpecialHit::Free()
 {
+	Safe_Release(m_pSpecialHit_Part);
 	Safe_Release(m_pBackGround);
 	__super::Free();
 }

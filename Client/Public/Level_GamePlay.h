@@ -20,6 +20,12 @@ public:
 	static CLevel_GamePlay* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 
+
+public:
+	HRESULT Test_LifeUi_Clone();
+	HRESULT Test_UiTexture_Loading();
+
+
 private:
 	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
 };

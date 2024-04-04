@@ -55,9 +55,9 @@ HRESULT CUi_Manager::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRen
 	return S_OK;
 }
 
-CUi* CUi_Manager::Add_Ui_BackgroundClone(void* pArg)
+CUi* CUi_Manager::Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg)
 {
-	auto pLife = m_Ui_LifePrototypes.find(TEXT("CUi_BackGround"));
+	auto pLife = m_Ui_LifePrototypes.find(Ui_PartPrototypeTag);
 	if(m_Ui_LifePrototypes.end() == pLife)
 		return nullptr;
 
@@ -190,7 +190,7 @@ void CUi_Manager::Ui_Render_Begin()
 
 
 }
-
+// 
 HRESULT CUi_Manager::Ui_Render()
 {
 	for (auto& Clone : m_Ui_LifeClonelist)
@@ -240,6 +240,12 @@ void CUi_Manager::Free()
 	for (auto& Pair : m_Ui_Active)
 		Safe_Release(Pair.second);
 	m_Ui_Active.clear();
+
+
+	for (auto& Pair : m_Ui_Clear)
+		Safe_Release(Pair.second);
+	m_Ui_Clear.clear();
+
 
 	Safe_Release(m_pGraphic_Device);
 }
