@@ -42,7 +42,8 @@ HRESULT CVIBuffer_Rect::Initialize_Prototype()
 	pVertices[3].vTexcoord = _float2(0.0f, 1.0f);
 
 	m_pVB->Unlock();
-
+	
+	m_vecPositions.resize(4);
 	m_vecPositions[0] = pVertices[0].vPosition;
 	m_vecPositions[1] = pVertices[1].vPosition;
 	m_vecPositions[2] = pVertices[2].vPosition;

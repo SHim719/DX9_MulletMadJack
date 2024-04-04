@@ -78,7 +78,6 @@ protected:
 	Ui_Pos_Size_Rotation m_UiDesc;
 	bool m_bActive = { false };
 
-	Ui_Pos_Size m_UiDesc;
 	_uint m_iTexture_Index = {0};
 	
 	

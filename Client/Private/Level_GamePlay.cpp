@@ -57,17 +57,17 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"),true);
 
-	if (FAILED(Test_UiTexture_Loading()))
-		return E_FAIL;
+	//if (FAILED(Test_UiTexture_Loading()))
+	//	return E_FAIL;
 
-	if (FAILED(Test_LifeUi_Clone()))
-		return E_FAIL;
+	//if (FAILED(Test_LifeUi_Clone()))
+	//	return E_FAIL;
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
+	//	return E_FAIL;
 
 	return S_OK;
 }

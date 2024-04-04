@@ -198,7 +198,6 @@ void CFPS_Camera::Key_Input(_float fTimeDelta)
 		m_pTransformCom->Debug_State_Out2();
 	}
 
-	SetCursorPos(pt2.x, pt2.y);
 
 	if(CGameInstance::Get_Instance()->GetKey(eKeyCode::LButton))
 	{

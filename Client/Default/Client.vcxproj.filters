@@ -84,6 +84,7 @@
     </Filter>
     <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
       <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Ui\CUi_Life\Part">
       <UniqueIdentifier>{8e91680d-6cfe-4d4c-b8bb-00536ec8cce6}</UniqueIdentifier>
     </Filter>
@@ -187,6 +188,7 @@
     </ClInclude>
     <ClInclude Include="..\Public\Enemy_Bullet.h">
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\CUi_Background.h">
       <Filter>Ui\CUi_Life\Part\Background</Filter>
     </ClInclude>
@@ -269,6 +271,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Bullet.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
       <Filter>Ui\CUi_Life\Part\Background</Filter>
     </ClCompile>
