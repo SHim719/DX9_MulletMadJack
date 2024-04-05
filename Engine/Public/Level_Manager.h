@@ -25,7 +25,7 @@ private:
 	class CGameInstance*	m_pGameInstance = { nullptr };
 
 public:
-	CLevel*		Get_Level() { return m_pCurrentLevel; }
+	CLevel*		Get_CurrentLevel() { return m_pCurrentLevel; }
 
 public:
 	static CLevel_Manager* Create();

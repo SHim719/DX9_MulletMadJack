@@ -42,10 +42,10 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(Ready_Static_Texture_Prototype()))
 		return E_FAIL;
 	
-	if(FAILED(Ready_Prototype_Camera()))
+	if (FAILED(Ready_Prototype_Camera()))
 		return E_FAIL;
 
-	if(FAILED(Ready_Prototype_Ui_Life()))
+	if (FAILED(Ready_Prototype_Ui_Life()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Active_Ui_Texture()))
@@ -54,7 +54,7 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(Ready_Active_Ui()))
 		return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_LOGO)))
+	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
 
 	return S_OK;

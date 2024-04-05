@@ -41,7 +41,7 @@ void CCollision_Manager::Intersect_Ray()
 			_float3 fHitWorldPos;
 			_float fDist;
 			if (pVIBuffer->Intersect_Ray((*it)->Get_Transform(), RayDesc.vRayWorldPos, RayDesc.vRayDir, &fHitWorldPos, &fDist))
-				(*it)->On_Ray_Intersect(fHitWorldPos, fDist);
+				(*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg);
 		}
 
 		Safe_Release(pLayer);

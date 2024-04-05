@@ -17,8 +17,9 @@ public:
 	HRESULT Initialize();
 
 public:
-	static CCamera_Manager* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
+
+	static CCamera_Manager* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 
 public:
 	HRESULT Create_Third_Camera(const wstring& _wstrCameraKey, CCoreCamera* pCamera);

@@ -36,7 +36,11 @@ HRESULT CTexture::Initialize_Prototype(TYPE eTextureType, const wstring& strText
 
         HRESULT hr = S_OK;
         if (eTextureType == TYPE_TEXTURE2D)
-            hr = D3DXCreateTextureFromFile(m_pGraphic_Device, szFilePath, (LPDIRECT3DTEXTURE9*)&pTexture);
+            hr = D3DXCreateTextureFromFileEx(m_pGraphic_Device, szFilePath
+                , D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2,
+                D3DX_FROM_FILE, 0, D3DFMT_FROM_FILE, D3DPOOL_MANAGED
+                , D3DX_FILTER_NONE, D3DX_FILTER_NONE,
+                0, nullptr, NULL, (LPDIRECT3DTEXTURE9*)&pTexture);
         else
             hr = D3DXCreateCubeTextureFromFile(m_pGraphic_Device, szFilePath, (LPDIRECT3DCUBETEXTURE9*)&pTexture);
       

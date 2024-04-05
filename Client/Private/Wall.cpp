@@ -63,15 +63,22 @@ HRESULT CWall::Add_Components()
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
 
-	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(m_pGameInstance->Clone_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default")));
+	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
 	if (nullptr == m_pVIBufferCom)
 		return E_FAIL;
 
-	m_pTextureCom = dynamic_cast<CTexture*>(m_pGameInstance->Clone_Component(LEVEL_STATIC, L"Wall_Textures"));
+	m_pTextureCom = dynamic_cast<CTexture*>(Add_Component(LEVEL_STATIC, L"Wall_Textures", L"Wall_Textures"));
 	if (nullptr == m_pTextureCom)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CWall::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+{
+	std::cout << "Ray_Intersect : Wall " << '\n';
+	std::cout << "Hit World Pos: " << "X : " << fHitWorldPos.x << " Y : " << fHitWorldPos.y << " Z : " << fHitWorldPos.z << '\n';
+	int a = 10;
 }
 
 CWall* CWall::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

@@ -32,11 +32,9 @@ public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { m_fShakePower = fShakePower; m_fShakeTime = fShakeTime; }
 
 //Private Camera Event List
-private:
-	_float4x4			m_BillboardMatrix;
 
-public:
-	_float4x4		Get_Billboard_Matrix() { return m_BillboardMatrix; }
+
+private:
 	void Camera_Shake(_float fTimeDelta, _float m_fShakePower, _float& m_fShakeTime);
 
 //Custom Camera Event Variable
@@ -44,7 +42,18 @@ private:
 	_float m_fShakeTime = 0.f;
 	_float m_fShakePower = 0.f;
 
+private:
+	_float4x4			m_ViewMatrix;
+	_float4x4			m_ProjMatrix;
+	_float4x4			m_BillboardMatrix;
 
+public:
+	_float4x4		Get_Billboard_Matrix() { return m_BillboardMatrix; }
+	
+
+private:
+	void Mouse_Ray();
+	
 
 
 protected:

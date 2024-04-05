@@ -31,10 +31,6 @@ public:
 	void Set_Target(CGameObject* _pTarget) { m_pTarget = _pTarget; }
 
 protected:
-
-	//LPDIRECT3DDEVICE9	 m_pGraphic_Device = { nullptr };
-	class CGameInstance* m_pGameInstance = { nullptr };
-
 	virtual void  Key_Input(_float fTimeDelta) {};
 	virtual void  Camera_Event(_float fTimeDelta) {};
 	void		  Set_Pos(const _float3 _vPos) { m_CameraDesc.vEye = _vPos; }

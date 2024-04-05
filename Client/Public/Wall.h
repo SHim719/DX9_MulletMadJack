@@ -36,6 +36,9 @@ private:
 	HRESULT Add_Components();
 
 public:
+	void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
+
+public:
 	static CWall* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CGameObject* Clone(void* pArg) override;
 	void Free() override;

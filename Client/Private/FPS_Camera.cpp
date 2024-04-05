@@ -81,11 +81,12 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		SetCursorPos(ptWindow.x, ptWindow.y);
 
-		m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_pTransformCom->Get_WorldMatrix_Inverse());
+		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
 
-		_float4x4		ProjMatrix;
+		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
+		m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 
-		m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, D3DXMatrixPerspectiveFovLH(&ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar));
+		m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	
 		// 카메라 월드 행렬의 역행렬이 카메라의 view 행렬임
 		// 카메라 view 행렬의 y축 회전 성분을 추려냄
@@ -96,6 +97,11 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		// y축 회전 성분이 담긴 행렬을 역변환하면 y축 빌보드 행렬이 됨
 		D3DXMatrixInverse(&m_BillboardMatrix, nullptr, &m_BillboardMatrix);
+		
+		if (m_pGameInstance->GetKeyDown(eKeyCode::RButton))
+		{
+			Mouse_Ray();
+		}
 	}
 
 	
@@ -130,6 +136,28 @@ void CFPS_Camera::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fS
 	}
 
 	return;
+}
+
+void CFPS_Camera::Mouse_Ray()
+{
+	_float3 fMouseNDC_Near = _float3(_float(g_iWinSizeX) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY) * 2.0f / g_iWinSizeY + 1, 0.f);
+	_float3 fMouseNDC_Far = _float3(_float(g_iWinSizeX) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY) * 2.0f / g_iWinSizeY + 1, 1.f);
+
+	_float4x4 inverseProjView;
+	D3DXMatrixInverse(&inverseProjView, nullptr, &(m_ViewMatrix * m_ProjMatrix));
+
+	_float3 fMouseWorld_Near = *D3DXVec3TransformCoord(&fMouseWorld_Near, &fMouseNDC_Near, &inverseProjView);
+	_float3 fMouseWorld_Far = *D3DXVec3TransformCoord(&fMouseWorld_Far, &fMouseNDC_Far, &inverseProjView);
+
+	_float3 vRayDir = *D3DXVec3Normalize(&vRayDir, &(fMouseWorld_Far - fMouseWorld_Near));
+
+	RAY_DESC rayDesc{};
+	rayDesc.iLevel = LEVEL_GAMEPLAY;
+	rayDesc.strDstLayer = L"Wall";
+	rayDesc.vRayDir = vRayDir;
+	rayDesc.vRayWorldPos = fMouseWorld_Near;
+
+	m_pGameInstance->Add_RayDesc(rayDesc);
 }
 
 HRESULT CFPS_Camera::Add_Components()

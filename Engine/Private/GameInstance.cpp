@@ -82,6 +82,8 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	m_pUi_Manager->Tick(fTimeDelta);
 	m_pUi_Manager->LateTick(fTimeDelta);
 
+	m_pCollision_Manager->Tick();
+
 	m_pLevel_Manager->Tick(fTimeDelta);
 }
 
@@ -135,7 +137,7 @@ CLevel* CGameInstance::Find_Level()
 	if (nullptr == m_pLevel_Manager)
 		return nullptr;
 
-	return m_pLevel_Manager->Get_Level();
+	return m_pLevel_Manager->Get_CurrentLevel();
 }
 #pragma endregion
 
@@ -261,6 +263,7 @@ void CGameInstance::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActi
 #pragma region COLLISION_MANAGER
 void CGameInstance::Add_RayDesc(const RAY_DESC& RayDesc)
 {
+	m_pCollision_Manager->Add_RayDesc(RayDesc);
 }
 #pragma endregion
 
