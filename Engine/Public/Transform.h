@@ -61,6 +61,7 @@ public:
 
 
 	void Set_Scale(const _float3& vScale);
+	void Multiply_Scale(const _float3& vScale);
 
 	void Set_Billboard_Matrix(_float4x4 _BillboardMatrix)	// y축 빌보드 행렬을 만들기 위한 함수
 	{

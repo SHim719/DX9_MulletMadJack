@@ -21,16 +21,20 @@ HRESULT CMachine_Gun::Initialize(void* pArg)
 {
 	if (E_FAIL == Add_Components(NULL))
 		return E_FAIL;
-	
-	Initialize_Set_Scale_Pos_Rotation(NULL);
+
 	Default_Set_Size();
+	Initialize_Set_Scale_Pos_Rotation(NULL);
 	m_iTexture_Index = 0;
+
+
 	return S_OK;
 }
 
 HRESULT CMachine_Gun::Initialize_Active()
 {
-
+	
+	Default_Set_Size();
+	Initialize_Set_Scale_Pos_Rotation(NULL);
 	return S_OK;
 }
 
@@ -70,7 +74,6 @@ void CMachine_Gun::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Rotation_XYZ(Rotation);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
-
 }
 
 void CMachine_Gun::Initialize_Set_Speed()
@@ -83,8 +86,8 @@ void CMachine_Gun::Default_Set_LifeTime()
 
 void CMachine_Gun::Default_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 50;
-	m_UiDesc.m_fSizeY = 50;
+	m_UiDesc.m_fSizeX = 256 / 5.0f;
+	m_UiDesc.m_fSizeY = 253 / 5.0f;
 }
 
 HRESULT CMachine_Gun::Add_Components(void* pArg)

@@ -238,11 +238,11 @@ void CFPS_Camera::Camera_Event(_float fTimeDelta)
 	if(m_fShakeTime >= 0.f) Camera_Shake(fTimeDelta, 250000.f, m_fShakeTime);
 }
 
-CFPS_Camera* CFPS_Camera::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CFPS_Camera* CFPS_Camera::Create(LPDIRECT3DDEVICE9 pGraphic_Device, void* pArg)
 {
 	CFPS_Camera* pInstance = new CFPS_Camera(pGraphic_Device);
 
-	if (FAILED(pInstance->Initialize_Prototype()))
+	if (FAILED(pInstance->Initialize(pArg)))
 	{
 		MSG_BOX(TEXT("Failed to Created : CFPS_Camera"));
 		Safe_Release(pInstance);

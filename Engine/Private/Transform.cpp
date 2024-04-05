@@ -11,11 +11,22 @@ CTransform::CTransform(const CTransform & rhs)
 {
 }
 
-void CTransform::Set_Scale(const _float3& vScale)
+void CTransform::Multiply_Scale(const _float3& vScale)
 {
 	Set_State(STATE_RIGHT, &(Get_State(STATE_RIGHT) * vScale.x));
 	Set_State(STATE_UP, &(Get_State(STATE_UP) * vScale.y));
 	Set_State(STATE_LOOK, &(Get_State(STATE_LOOK) * vScale.z));
+}
+
+void CTransform::Set_Scale(const _float3& vScale)
+{
+	_float3 vRight = *D3DXVec3Normalize(&vRight, &Get_State(STATE_RIGHT)) * vScale.x;
+	_float3 vUp = *D3DXVec3Normalize(&vUp, &Get_State(STATE_UP)) * vScale.y;
+	_float3 vLook = *D3DXVec3Normalize(&vLook, &Get_State(STATE_LOOK)) * vScale.z;
+
+	Set_State(STATE_RIGHT, &vRight);
+	Set_State(STATE_UP, &vUp);
+	Set_State(STATE_LOOK, &vLook);
 }
 
 HRESULT CTransform::Initialize_Prototype()

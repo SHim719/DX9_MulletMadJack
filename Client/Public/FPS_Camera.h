@@ -64,7 +64,7 @@ protected:
 	//virtual void Update_Info() {};
 
 public:
-	static CFPS_Camera* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CFPS_Camera* Create(LPDIRECT3DDEVICE9 pGraphic_Device, void* pArg);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

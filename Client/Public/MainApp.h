@@ -60,7 +60,6 @@ private:
 
 	//Custom Prototype
 	HRESULT Ready_Prototype_Ui_Life();
-	HRESULT Ready_Prototype_Camera();
 
 	HRESULT Ready_Static_Texture_Prototype();
 

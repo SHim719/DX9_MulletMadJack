@@ -41,9 +41,6 @@ HRESULT CMainApp::Initialize()
 
 	if (FAILED(Ready_Static_Texture_Prototype()))
 		return E_FAIL;
-	
-	if (FAILED(Ready_Prototype_Camera()))
-		return E_FAIL;
 
 	if (FAILED(Ready_Prototype_Ui_Life()))
 		return E_FAIL;
@@ -146,16 +143,6 @@ HRESULT CMainApp::Ready_Prototype_Ui_Life()
 	return S_OK;
 }
 
-HRESULT CMainApp::Ready_Prototype_Camera()
-{
-	/* For.Prototype_GameObject_Camera */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Camera"),
-		CFPS_Camera::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	return S_OK;
-}
-
 HRESULT CMainApp::Ready_Static_Texture_Prototype()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC,	L"CUi_Background_Texture",
@@ -208,8 +195,6 @@ HRESULT CMainApp::Ready_Active_Ui_Texture()
 
 HRESULT CMainApp::Ready_Active_Ui()
 {
-	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CMachine_Gun::Create(m_pGraphic_Device))))
-		return E_FAIL;
 	
 	return S_OK;
 }

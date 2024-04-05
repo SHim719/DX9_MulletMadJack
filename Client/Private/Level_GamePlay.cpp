@@ -37,20 +37,20 @@ HRESULT CLevel_GamePlay::Initialize()
 		for (int j = 0; j < 10; ++j) {
 			wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
 			wall->Get_Transform()->Rotation_XYZ(_float3(90.f, 0.f, 0.f));
-			wall->Get_Transform()->Set_Position(_float3(i, -0.5f, j));
+			wall->Get_Transform()->Set_Position(_float3((float)i, -0.5f, (float)j));
 
 			if (i == 9) {
 
 			wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
 			wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 90.f, 0.f));
-			wall->Get_Transform()->Set_Position(_float3(i, 0.f, j));
+			wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
 
 			}
 
 			if(j == 9) {
 				wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
 				wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 0.f, 0.f));
-				wall->Get_Transform()->Set_Position(_float3(i, 0.f, j));
+				wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
 			}
 		}
 	}
@@ -63,7 +63,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(Test_LifeUi_Clone()))
 	//	return E_FAIL;
 
-	if (FAILED(Ready_Layer_Camera(TEXT("Layer_Camera"))))
+	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 
 	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
@@ -110,9 +110,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fMouseSensor = 0.1f;
 
 	// FPS 카메라 사본을 pFPS_Camera에 담음
-	pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Camera"), &CameraDesc));
-
-	if (nullptr == pFPS_Camera)
+	if(FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
 		return E_FAIL;
 	
 	return S_OK;

@@ -2,10 +2,8 @@
 #include "GameObject.h"
 #include "Core_Camera.h"
 
-CCamera_Manager::CCamera_Manager(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: pGraphicDevice(pGraphic_Device)
+CCamera_Manager::CCamera_Manager()
 {
-	Safe_AddRef(pGraphicDevice);
 }
 
 HRESULT CCamera_Manager::Initialize()
@@ -13,9 +11,9 @@ HRESULT CCamera_Manager::Initialize()
 	return S_OK;
 }
 
-CCamera_Manager* CCamera_Manager::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CCamera_Manager* CCamera_Manager::Create()
 {
-	CCamera_Manager* pInstance = new CCamera_Manager(pGraphic_Device);
+	CCamera_Manager* pInstance = new CCamera_Manager();
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -32,13 +30,10 @@ void CCamera_Manager::Free()
 	{
 		Safe_Release(Pair.second);
 	}
-
-	Safe_Release(pGraphicDevice);
-
 	m_mapCamera.clear();
 }
 
-HRESULT CCamera_Manager::Create_Third_Camera(const wstring& _wstrCameraKey, CCoreCamera* pCamera)
+HRESULT CCamera_Manager::Create_Camera(const wstring& _wstrCameraKey, CCoreCamera* pCamera)
 {
 	if (pCamera == nullptr)
 		return E_FAIL;
@@ -78,15 +73,19 @@ HRESULT CCamera_Manager::Change_Camera(const wstring& _wstrCameraKey)
 	return S_OK;
 }
 
-HRESULT CCamera_Manager::Update_CurCamera(const _float& fTimeDelta)
+HRESULT CCamera_Manager::Render_CurCamera(const _float& fTimeDelta)
 {
 	if (nullptr == m_pCurCamera) {
 		return E_FAIL;
 	}
 
-	if (nullptr == m_pCurCamera || nullptr != m_pTarget)
-		m_pCurCamera->Set_Target(m_pTarget);
+	//if (nullptr == m_pCurCamera || nullptr != m_pTarget)
+	//m_pCurCamera->Set_Target(m_pTarget);
 
+	m_pCurCamera->PriorityTick(fTimeDelta);
 	m_pCurCamera->Tick(fTimeDelta);
+	m_pCurCamera->LateTick(fTimeDelta);
+	m_pCurCamera->Render();
+
 	return S_OK;
 }

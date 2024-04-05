@@ -104,14 +104,11 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
+	
+	lstrcpy(m_szLoadingText, TEXT("UI을(를) 로딩 중 입니다."));
 
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy"),
-	//	CEnemy::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
-	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CMachine_Gun::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 

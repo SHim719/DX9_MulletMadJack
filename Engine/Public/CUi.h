@@ -60,7 +60,7 @@ public:
 	bool Get_Active() { return m_bActive; }
 	void Set_Active(bool _isActive) {
 		if (_isActive == true){
-			Initialize(NULL);
+			Initialize_Active();
 		}
 		m_bActive = _isActive; 
 	}

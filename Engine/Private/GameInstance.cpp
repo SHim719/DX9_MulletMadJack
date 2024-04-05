@@ -4,7 +4,7 @@
 #include "Timer_Manager.h"
 #include "Object_Manager.h"
 #include "Collision_Manager.h"
-
+#include "Camera_Manager.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -62,7 +62,10 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	if (nullptr == m_pComponent_Manager)
 		return E_FAIL;
 	
-	
+	m_pCamera_Manager = CCamera_Manager::Create();
+	if(nullptr == m_pCamera_Manager)
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -83,6 +86,8 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	m_pUi_Manager->LateTick(fTimeDelta);
 
 	m_pCollision_Manager->Tick();
+	
+	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
 
 	m_pLevel_Manager->Tick(fTimeDelta);
 }
@@ -97,6 +102,7 @@ HRESULT CGameInstance::Draw()
 	m_pUi_Manager->Ui_Render_Begin();
 	m_pUi_Manager->Ui_Render();
 	m_pUi_Manager->Ui_Render_End();
+
 	return m_pLevel_Manager->Render();
 }
 void CGameInstance::Clear(_uint iLevelIndex)
@@ -267,6 +273,26 @@ void CGameInstance::Add_RayDesc(const RAY_DESC& RayDesc)
 }
 #pragma endregion
 
+#pragma region CAMERA_MANAGER
+HRESULT CGameInstance::Create_Camera(const wstring& _wstrCameraKey, CCoreCamera* pCamera)
+{
+	if (FAILED(m_pCamera_Manager->Create_Camera(_wstrCameraKey, pCamera)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGameInstance::Change_Camera(const wstring& _wstrCameraKey)
+{
+	if (FAILED(m_pCamera_Manager->Change_Camera(_wstrCameraKey)))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+#pragma endregion
+
+
 void CGameInstance::Release_Engine()
 {
 	CGameInstance::Get_Instance()->Free();
@@ -284,5 +310,6 @@ void CGameInstance::Free()
 	Safe_Release(m_pKey_Manager);
 	Safe_Release(m_pUi_Manager);
 	Safe_Release(m_pCollision_Manager);
+	Safe_Release(m_pCamera_Manager);
 	Safe_Release(m_pGraphic_Device);
 }
