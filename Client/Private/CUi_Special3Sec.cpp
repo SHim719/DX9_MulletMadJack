@@ -4,12 +4,12 @@
 
 
 CUi_Special3Sec::CUi_Special3Sec(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: CUi_Life(pGraphic_Device)
+	: CUi(pGraphic_Device)
 {
 }
 
 CUi_Special3Sec::CUi_Special3Sec(const CUi_Special3Sec& rhs)
-	: CUi_Life(rhs)
+	: CUi(rhs)
 {
 }
 

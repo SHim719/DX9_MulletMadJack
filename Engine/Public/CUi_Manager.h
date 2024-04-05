@@ -21,10 +21,10 @@ public:
 	HRESULT Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, class CUi* Ui_LifePrototype);
 	HRESULT Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
 	class CUi* Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg);
-
 	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType UiRenderType, class CUi* Ui_Active);
 
-	class CUi* Add_Ui_BackgroundClone(void* pArg);
+
+
 
 public:
 	void PriorityTick(_float fTimeDelta);
@@ -35,7 +35,13 @@ public:
 	void Ui_Render_End();
 	void Set_WinSize(_uint iWinSizeX, _uint iWinSizeY);
 
+//for UiActive
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive);
+
+
+//for UiClear
+	void Set_Enter(bool _Enter);
+
 
 private:
 	map<const wstring, class CUi*> m_Ui_LifePrototypes;

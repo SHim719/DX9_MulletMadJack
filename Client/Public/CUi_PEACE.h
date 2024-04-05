@@ -1,10 +1,10 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi_Active.h"
+#include "CUi.h"
 
 BEGIN(Client)
 
-class CUi_PEACE final : public CUi_Active
+class CUi_PEACE final : public CUi
 {
 protected:
 	CUi_PEACE(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -21,17 +21,24 @@ public:
 
 
 protected:
-	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
-	virtual void Initialize_Set_Speed() override;
-
-
+	virtual HRESULT Initialize_Active() override;
 	virtual void Initialize_Set_ActiveTime() override;
 	virtual void Initialize_Set_Size() override;
+	virtual void Initialize_Set_Speed() override;
+	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
 
 
 protected:
 	virtual HRESULT Add_Components(void* pArg) override;
 	virtual HRESULT Add_Texture(void* pArg) override;
+
+
+public:
+	virtual void Enter(bool _Enter) override;
+
+
+private:
+	void Move(_float fTimeDelta);
 
 
 public:

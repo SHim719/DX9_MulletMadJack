@@ -1,6 +1,7 @@
 #pragma once
-#include "CUi_Active.h"
-class CUi_Announcer :  public CUi_Active
+#include "CUi.h"
+
+class CUi_Announcer :  public CUi
 {
 };
 

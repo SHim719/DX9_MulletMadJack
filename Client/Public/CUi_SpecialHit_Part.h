@@ -1,14 +1,14 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi_Life.h"
+#include "CUi.h"
 
 BEGIN(Client)
 
-class CUi_SpecialHit_Part : public CUi_Life
+class CUi_SpecialHit_Part : public CUi
 {
 protected:
 	CUi_SpecialHit_Part(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_SpecialHit_Part(const CUi_Life& rhs);
+	CUi_SpecialHit_Part(const CUi_SpecialHit_Part& rhs);
 	virtual ~CUi_SpecialHit_Part() = default;
 
 

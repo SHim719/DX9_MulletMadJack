@@ -118,6 +118,12 @@
     <Filter Include="Ui\CUi_Active\Weapon">
       <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Fine">
+      <UniqueIdentifier>{dd98ff7d-a669-4cb0-8619-dbf193ad27e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine">
+      <UniqueIdentifier>{f50b077b-5fca-4141-b957-ad55c4b2e907}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -174,12 +180,6 @@
     <ClInclude Include="..\Public\CUi_Special3Sec.h">
       <Filter>Ui\CUi_Life\Special3Sec</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi_Life.h">
-      <Filter>Ui\CUi_Life</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FPS_Camera.h">
-      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Animation.h">
       <Filter>03. Client_Components\Animation</Filter>
     </ClInclude>
@@ -207,11 +207,17 @@
     <ClInclude Include="..\Public\CUi_Announcer.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Private\CUi_Heart.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Machine_Gun.h">
       <Filter>Ui\CUi_Active\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Heart.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Fine.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FPS_Camera.h">
+      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -257,9 +263,6 @@
     <ClCompile Include="..\Private\CUi_Special3Sec.cpp">
       <Filter>Ui\CUi_Life\Special3Sec</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CUi_Life.cpp">
-      <Filter>Ui\CUi_Life</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClCompile>
@@ -290,11 +293,14 @@
     <ClCompile Include="..\Private\CUi_Announcer.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Public\CUi_Heart.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Machine_Gun.cpp">
       <Filter>Ui\CUi_Active\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Heart.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Fine.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

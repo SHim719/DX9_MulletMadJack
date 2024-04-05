@@ -1,12 +1,12 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi_Life.h"
+#include "CUi.h"
 
 // for DrinkSoda and headshot and finished
 
 BEGIN(Client)
 
-class CUi_Special3Sec : public CUi_Life
+class CUi_Special3Sec : public CUi
 {
 private:
 	CUi_Special3Sec(LPDIRECT3DDEVICE9 pGraphic_Device);

@@ -1,11 +1,11 @@
 #include "..\Public\Level_GamePlay.h"
-
 #include "GameInstance.h"
 #include "Wall.h"
 #include "Machine_Gun.h"
 #include "Core_Camera.h"
 #include "CUi_SpecialHit.h"
 #include "CUi_MonsterDie.h"
+#include "CUi_PEACE.h"
 
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -57,11 +57,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"),true);
 
-	//if (FAILED(Test_UiTexture_Loading()))
-	//	return E_FAIL;
-
-	//if (FAILED(Test_LifeUi_Clone()))
-	//	return E_FAIL;
+	if (FAILED(Test_LifeUi_Clone()))
+		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
@@ -74,6 +71,15 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
+	if (m_pGameInstance->GetKeyDown(eKeyCode::Q))
+	{
+		m_pGameInstance->Set_Enter(true);
+	}
+
+	if (m_pGameInstance->GetKeyDown(eKeyCode::W))
+	{
+		m_pGameInstance->Set_Enter(false);
+	}
 }
 
 HRESULT CLevel_GamePlay::Render()
@@ -159,60 +165,8 @@ HRESULT CLevel_GamePlay::Test_LifeUi_Clone()
 	//	eUiRenderType::Render_NonBlend,
 	//	&Arg)))
 	//	return E_FAIL;
-
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Test_UiTexture_Loading()
-{
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Background_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterLowGrade_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/1Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterMiddleGrade_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/2Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterHighGrade_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/3Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Special3Sec_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Special3Sec.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_HEADSHOT_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/HEADSHOT.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_FINISHED_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/FINISHED.png"))))
-		return E_FAIL;
-
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Peace_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Clear/GREEN_PEACE.png"))))
-		return E_FAIL;
-
+	//CUi_Peace_Texture
 
 	return S_OK;
 }
+

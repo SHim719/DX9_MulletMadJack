@@ -10,8 +10,12 @@
 #include "FPS_Camera.h"
 #include "Animation.h"
 #include "CUi_SpecialHit_Part.h"
-
+#include "CUi_PEACE.h"
 #include "Machine_Gun.h"
+#include "CUi_Fine.h"
+#include "CUi_Heart.h"
+
+
 
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
@@ -150,35 +154,66 @@ HRESULT CMainApp::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background.png"))))
 		return E_FAIL;
 
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterLowGrade_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Life/1Sec.png"))))
 		return E_FAIL;
-
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterMiddleGrade_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Life/2Sec.png"))))
 		return E_FAIL;
 
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterSpecialGrade_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Life/3Sec.png"))))
 		return E_FAIL;
-
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Special3Sec_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Life/Special3Sec.png"))))
 		return E_FAIL;
 
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_HEADSHOT_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background2.png"))))
+			L"../Bin/Resources/Textures/Ui/Life/HEADSHOT.png"))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_FINISHED_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/FINISHED.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Peace_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/Green_Peace.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Fine_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/Fine.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_LiveStream_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/LiveStream.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Heart_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Heart/Heart%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Heart_Beat_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Heart/Heart_Beat.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Heart_Line_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Heart/Heart_Line.png"))))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -195,7 +230,24 @@ HRESULT CMainApp::Ready_Active_Ui_Texture()
 
 HRESULT CMainApp::Ready_Active_Ui()
 {
-	
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Peace"),
+		eUiRenderType::Render_NonBlend,
+		CUi_PEACE::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Fine"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Fine::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Heart"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Heart::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 

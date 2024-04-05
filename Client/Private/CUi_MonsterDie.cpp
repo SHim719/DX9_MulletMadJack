@@ -4,12 +4,12 @@
 
 
 CUi_MonsterDie::CUi_MonsterDie(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: CUi_Life(pGraphic_Device)
+	: CUi(pGraphic_Device)
 {
 }
 
 CUi_MonsterDie::CUi_MonsterDie(const CUi_MonsterDie& rhs)
-	: CUi_Life(rhs)
+	: CUi(rhs)
 {
 }
 

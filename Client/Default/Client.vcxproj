@@ -165,15 +165,14 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\Public\CUi_Fine.h" />
+    <ClInclude Include="..\Public\CUi_Heart.h" />
     <ClInclude Include="..\Public\Enemy.h" />
-    <ClInclude Include="..\Private\CUi_Heart.h" />
     <ClInclude Include="..\Public\CLevel_Clear.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
-    <ClInclude Include="..\Public\CUi_Active.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
     <ClInclude Include="..\Public\CUi_Background.h" />
     <ClInclude Include="..\Public\CUi_Finish.h" />
-    <ClInclude Include="..\Public\CUi_Life.h" />
     <ClInclude Include="..\Public\CUi_PEACE.h" />
     <ClInclude Include="..\Public\CUi_Special3Sec.h" />
     <ClInclude Include="..\Public\CUi_MonsterDie.h" />
@@ -198,13 +197,13 @@
   <ItemGroup>
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\Private\CUi_Fine.cpp" />
+    <ClCompile Include="..\Private\CUi_Heart.cpp" />
     <ClCompile Include="..\Private\Enemy.cpp" />
     <ClCompile Include="..\Private\CLevel_Clear.cpp" />
-    <ClCompile Include="..\Private\CUi_Active.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />
     <ClCompile Include="..\Private\CUi_Finish.cpp" />
-    <ClCompile Include="..\Private\CUi_Life.cpp" />
     <ClCompile Include="..\Private\CUi_PEACE.cpp" />
     <ClCompile Include="..\Private\CUi_Special3Sec.cpp" />
     <ClCompile Include="..\Private\CUi_MonsterDie.cpp" />
@@ -221,7 +220,6 @@
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />
-    <ClCompile Include="..\Public\CUi_Heart.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

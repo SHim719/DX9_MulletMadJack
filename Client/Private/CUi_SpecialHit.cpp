@@ -6,12 +6,12 @@
 
 
 CUi_SpecialHit::CUi_SpecialHit(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: CUi_Life(pGraphic_Device)
+	: CUi(pGraphic_Device)
 {
 }
 
 CUi_SpecialHit::CUi_SpecialHit(const CUi_SpecialHit& rhs)
-	:CUi_Life(rhs)
+	:CUi(rhs)
 {
 }
 

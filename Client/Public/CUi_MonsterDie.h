@@ -1,6 +1,6 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi_Life.h"
+#include "CUi.h"
 
 BEGIN(Client)
 
@@ -23,7 +23,7 @@ enum class eMoveLogic
 	End
 };
 
-class CUi_MonsterDie final : public CUi_Life
+class CUi_MonsterDie final : public CUi
 {
 public:
 	typedef struct MonsterDieArg

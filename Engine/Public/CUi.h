@@ -40,14 +40,26 @@ protected:
 	virtual void Initialize_Set_Speed() PURE;
 
 
-	virtual void Default_Set_LifeTime() PURE;
-	virtual void Default_Set_Size() PURE;
-
-
 protected:
 	virtual HRESULT Add_Components(void* pArg) PURE;
 	virtual HRESULT Add_Texture(void* pArg) PURE;
 
+
+//for UiLife
+protected:
+	virtual void Default_Set_LifeTime();
+	virtual void Default_Set_Size();
+
+
+//for UiActive
+protected:
+	virtual void Initialize_Set_ActiveTime();
+	virtual void Initialize_Set_Size();
+
+
+public:
+//for UiClear
+	virtual void Enter(bool _Enter);
 
 protected:
 	HRESULT Add_Component(_uint iLevelIndex, const wstring& strPrototypeTag, CComponent** ppOut, void* pArg = nullptr);
@@ -57,7 +69,7 @@ public:
 	bool Is_Dead() { return m_bDead; }
 	void Set_Dead() { m_bDead = true; }
 
-	bool Get_Active() { return m_bActive; }
+ 	bool Get_Active() { return m_bActive; }
 	void Set_Active(bool _isActive) {
 		if (_isActive == true){
 			Initialize_Active();
@@ -74,13 +86,29 @@ protected:
 
 
 protected:
+	void Set_Lifetime(_float Lifetime) { m_fLifeTime = Lifetime; }
+	void Cal_Life_Blink(_float fTimeDelta);
+	bool Cal_BlinkRender(_float BlinkGap);
+
+
+protected:
+	_float m_fLifeTime = { 0.f };
+	_float m_iBlink = { 0.f };
+	bool m_bBlink = { false };
+
+
+protected:
 	bool m_bDead = { false };
 	Ui_Pos_Size_Rotation m_UiDesc;
 	bool m_bActive = { false };
-
+	_float m_fActiveTime = { 0.f };
 	_uint m_iTexture_Index = {0};
 	
+
+protected:
+	bool m_bEnter = { false };
 	
+
 public:
 	virtual void Free() override;
 	virtual CUi* Start(void* pArg);

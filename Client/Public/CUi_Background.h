@@ -1,11 +1,11 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi_Life.h"
+#include "CUi.h"
 
 
 BEGIN(Client)
 
-class CUi_Background final : public CUi_Life
+class CUi_Background final : public CUi
 {
 private:
 	CUi_Background(LPDIRECT3DDEVICE9 pGraphic_Device);

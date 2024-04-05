@@ -1,6 +1,6 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi_Life.h"
+#include "CUi.h"
 
 BEGIN(Client)
 
@@ -10,7 +10,7 @@ enum class eSpecialHit
 	FINISHED,
 	End
 };
-class CUi_SpecialHit : public CUi_Life
+class CUi_SpecialHit : public CUi
 {
 public:
 	typedef struct SpecialHit

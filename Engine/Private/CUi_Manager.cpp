@@ -270,6 +270,15 @@ void CUi_Manager::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive
 
 }
 
+void CUi_Manager::Set_Enter(bool _Enter)
+{
+	for (auto& Pair : m_Ui_Active)
+		Pair.second->Enter(_Enter);
+
+	for (auto& Pair : m_Ui_ActiveBlend)
+		Pair.second->Enter(_Enter);
+}
+
 CUi_Manager* CUi_Manager::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	return new CUi_Manager(pGraphic_Device);

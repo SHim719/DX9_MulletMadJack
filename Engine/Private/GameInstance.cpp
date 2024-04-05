@@ -264,6 +264,10 @@ void CGameInstance::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActi
 {
 	m_pUi_Manager->Set_Ui_ActiveState(Ui_ActiveTag, _isActive);
 }
+void CGameInstance::Set_Enter(bool _Enter)
+{
+	m_pUi_Manager->Set_Enter(_Enter);
+}
 #pragma endregion
 
 #pragma region COLLISION_MANAGER

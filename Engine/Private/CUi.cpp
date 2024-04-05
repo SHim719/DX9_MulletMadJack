@@ -45,6 +45,10 @@ HRESULT CUi::Render()
 	return E_NOTIMPL;
 }
 
+void CUi::Enter(bool _Enter)
+{
+}
+
 HRESULT CUi::Add_Component(_uint iLevelIndex, const wstring& strPrototypeTag, CComponent** ppOut, void* pArg)
 {
 	CComponent* pComponent = m_pGameInstance->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
@@ -71,6 +75,45 @@ void CUi::Default_Set_LifeTime()
 }
 
 void CUi::Default_Set_Size()
+{
+}
+
+void CUi::Cal_Life_Blink(_float fTimeDelta)
+{
+	m_fLifeTime -= fTimeDelta;
+	m_iBlink += fTimeDelta;
+
+	if (m_fLifeTime < 0)
+	{
+		m_bDead = true;
+	}
+
+	if (m_fLifeTime < 0.5f)
+	{
+		m_bBlink = true;
+	}
+}
+
+bool CUi::Cal_BlinkRender(_float BlinkGap)
+{
+	if (m_bBlink)
+	{
+		if (m_iBlink > BlinkGap)
+		{
+			m_iBlink = 0.f;
+			return true;
+		}
+		return false;
+	}
+
+	return true;
+}
+
+void CUi::Initialize_Set_ActiveTime()
+{
+}
+
+void CUi::Initialize_Set_Size()
 {
 }
 

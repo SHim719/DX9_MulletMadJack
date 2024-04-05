@@ -24,7 +24,6 @@ public:
 
 public:
 	HRESULT Test_LifeUi_Clone();
-	HRESULT Test_UiTexture_Loading();
 
 
 private:

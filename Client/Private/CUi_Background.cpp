@@ -1,12 +1,12 @@
 #include "CUi_Background.h"
 
 CUi_Background::CUi_Background(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: CUi_Life(pGraphic_Device)
+	: CUi(pGraphic_Device)
 {
 }
 
 CUi_Background::CUi_Background(const CUi_Background& rhs)
-	: CUi_Life(rhs)
+	: CUi(rhs)
 {
 }
 
