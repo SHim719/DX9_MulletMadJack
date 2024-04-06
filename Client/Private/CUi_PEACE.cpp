@@ -69,12 +69,12 @@ HRESULT CUi_PEACE::Initialize_Active()
 
 void CUi_PEACE::Initialize_Set_Speed()
 {
-	m_pTransformCom->Set_Speed(750);
+	m_pTransformCom->Set_Speed(1500);
 }
 
 void CUi_PEACE::Initialize_Set_ActiveTime()
 {
-	m_fActiveTime = 0.3f;
+	m_fActiveTime = 0.15f;
 }
 
 void CUi_PEACE::Initialize_Set_Size()

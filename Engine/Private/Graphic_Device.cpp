@@ -105,7 +105,6 @@ void CGraphic_Device::Render_End(HWND hWnd)
 {	
 	m_pDevice->EndScene();
 	m_pDevice->Present(nullptr, nullptr, hWnd, nullptr);
-
 	// Present : 후면 버퍼가 전면 버퍼로 텍스처를 전환시켜 화면에 출력할 수 있게 만들어줌
 	// 1, 2 인자 : 렉트 주소, 스왑체인 D3DSWAPEFFECT_COPY로 작성되지 않는한 NULL
 	// 4인자 : 스왑체인 D3DSWAPEFFECT_COPY로 작성되지 않는한 NULL
@@ -178,7 +177,7 @@ void CGraphic_Device::Free()
 		if (0 != iRefCnt)
 			MSG_BOX(TEXT("Failed to Deleted : IDirect3DDevice9"));
 	}
-
+	
 	if (nullptr != m_pSDK)
 		m_pSDK->Release();
 }

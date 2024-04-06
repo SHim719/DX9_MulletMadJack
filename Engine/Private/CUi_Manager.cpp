@@ -219,19 +219,22 @@ void CUi_Manager::Ui_Render_Begin()
 
 
 }
-// 
+
 HRESULT CUi_Manager::Ui_Render()
 {
 	for (auto& Clone : m_Ui_LifeClonelist)
 		Clone->Render();
 
-	for (auto& BlendClone : m_Ui_LifeBlendClonelist)
-		BlendClone->Render();
-
 	for (auto& iter : m_Ui_Active) {
 		if (iter.second->Get_Active() == true)
 			iter.second->Render();
 	}
+
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	for (auto& BlendClone : m_Ui_LifeBlendClonelist)
+		BlendClone->Render();
+
 
 	for (auto& iter : m_Ui_ActiveBlend) {
 		if(iter.second->Get_Active() == true)

@@ -97,9 +97,6 @@
     <Filter Include="Ui\CUi_Active\CUi_Clear">
       <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Levels\ClearLevel">
-      <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Finish">
       <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
     </Filter>
@@ -123,6 +120,21 @@
     </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine">
       <UniqueIdentifier>{f50b077b-5fca-4141-b957-ad55c4b2e907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background">
+      <UniqueIdentifier>{fefe55b3-cf37-4ccc-9cad-f2d19f020aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine\CUi_HeartLine_Part">
+      <UniqueIdentifier>{4b5599a9-59e3-43ab-973a-282ef2f45cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_LiveStream">
+      <UniqueIdentifier>{9b36f8d2-aa8a-4c2c-b4d8-2351e8116e1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager">
+      <UniqueIdentifier>{c86a67ad-2539-4748-b16d-257ac9d3ec15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Border">
+      <UniqueIdentifier>{dbfeea87-563f-469c-ad82-b1a9282dd654}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +207,6 @@
     <ClInclude Include="..\Public\CUi_SpecialHit_Part.h">
       <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CLevel_Clear.h">
-      <Filter>01.Levels\ClearLevel</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_Finish.h">
       <Filter>Ui\CUi_Active\CUi_Finish</Filter>
     </ClInclude>
@@ -218,6 +227,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\FPS_Camera.h">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Heart_BackGround.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Heart_Line.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CGame_Manager.h">
+      <Filter>GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Border.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +302,6 @@
     <ClCompile Include="..\Private\CUi_SpecialHit_Part.cpp">
       <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CLevel_Clear.cpp">
-      <Filter>01.Levels\ClearLevel</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\CUi_Finish.cpp">
       <Filter>Ui\CUi_Active\CUi_Finish</Filter>
     </ClCompile>
@@ -301,6 +319,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Fine.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Heart_BackGround.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Heart_Line.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CGame_Manager.cpp">
+      <Filter>GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Border.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -91,8 +91,8 @@ void CUi_Heart::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 
 void CUi_Heart::Initialize_Set_Speed()
 {
-	m_pTransformCom->Set_Speed(750);
-	m_pUniqueTransformCom->Set_Speed(750);
+	m_pTransformCom->Set_Speed(1500);
+	m_pUniqueTransformCom->Set_Speed(1500);
 }
 
 void CUi_Heart::Move(_float fTimeDelta)
@@ -153,7 +153,7 @@ HRESULT CUi_Heart::Initialize_Active()
 
 void CUi_Heart::Initialize_Set_ActiveTime()
 {
-	m_fActiveTime = 0.3f;
+	m_fActiveTime = 0.15f;
 }
 
 void CUi_Heart::Initialize_Set_Size()

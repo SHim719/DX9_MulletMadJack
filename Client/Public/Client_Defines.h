@@ -12,7 +12,7 @@ namespace Client
 	enum LEVEL { LEVEL_STATIC, 
 		LEVEL_LOADING, 
 		LEVEL_LOGO, 
-		LEVEL_GAMEPLAY, 
+		LEVEL_GAMEPLAY,
 		LEVEL_END };
 
 	enum class UIPOS

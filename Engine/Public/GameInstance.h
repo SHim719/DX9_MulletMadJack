@@ -79,6 +79,7 @@ public:
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive = true);
 	// for UiClear
 	void Set_Enter(bool _Enter);
+	void UiRender();
 #pragma endregion
 
 

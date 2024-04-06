@@ -76,7 +76,6 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 			if (fabs(iMouseMove) > m_MoveSensitivity)
 				m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
 		}
-		
 		ClientToScreen(g_hWnd, &ptWindow);
 
 		SetCursorPos(ptWindow.x, ptWindow.y);

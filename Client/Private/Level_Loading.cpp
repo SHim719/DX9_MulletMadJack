@@ -4,15 +4,10 @@
 #include "Loader.h"
 #include "Level_Logo.h"
 #include "Level_GamePlay.h"
-#include "CUi_MonsterDie.h"
-#include "CUi_Special3Sec.h"
-#include "CUi_SpecialHit.h"
-
 
 CLevel_Loading::CLevel_Loading(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device } 
 {
-
 }
 
 HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)

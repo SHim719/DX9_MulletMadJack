@@ -98,10 +98,7 @@ HRESULT CGameInstance::Draw()
 		nullptr == m_pRenderer)
 		return E_FAIL;
 
-	m_pRenderer->Draw();	
-	m_pUi_Manager->Ui_Render_Begin();
-	m_pUi_Manager->Ui_Render();
-	m_pUi_Manager->Ui_Render_End();
+	m_pRenderer->Draw();
 
 	return m_pLevel_Manager->Render();
 }
@@ -210,7 +207,7 @@ CComponent * CGameInstance::Clone_Component(_uint iLevelIndex, const wstring & s
 {
 	if (nullptr == m_pComponent_Manager)
 		return nullptr;
-
+	
 	return m_pComponent_Manager->Clone_Component(iLevelIndex, strPrototypeTag, pArg);
 }
 #pragma endregion
@@ -267,6 +264,12 @@ void CGameInstance::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActi
 void CGameInstance::Set_Enter(bool _Enter)
 {
 	m_pUi_Manager->Set_Enter(_Enter);
+}
+void CGameInstance::UiRender()
+{
+	m_pUi_Manager->Ui_Render_Begin();
+	m_pUi_Manager->Ui_Render();
+	m_pUi_Manager->Ui_Render_End();
 }
 #pragma endregion
 

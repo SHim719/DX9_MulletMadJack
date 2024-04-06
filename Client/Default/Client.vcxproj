@@ -165,10 +165,13 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\Public\CGame_Manager.h" />
+    <ClInclude Include="..\Public\CUi_Border.h" />
     <ClInclude Include="..\Public\CUi_Fine.h" />
     <ClInclude Include="..\Public\CUi_Heart.h" />
+    <ClInclude Include="..\Public\CUi_Heart_BackGround.h" />
+    <ClInclude Include="..\Public\CUi_Heart_Line.h" />
     <ClInclude Include="..\Public\Enemy.h" />
-    <ClInclude Include="..\Public\CLevel_Clear.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
     <ClInclude Include="..\Public\CUi_Background.h" />
@@ -197,10 +200,13 @@
   <ItemGroup>
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\Private\CGame_Manager.cpp" />
+    <ClCompile Include="..\Private\CUi_Border.cpp" />
     <ClCompile Include="..\Private\CUi_Fine.cpp" />
     <ClCompile Include="..\Private\CUi_Heart.cpp" />
+    <ClCompile Include="..\Private\CUi_Heart_BackGround.cpp" />
+    <ClCompile Include="..\Private\CUi_Heart_Line.cpp" />
     <ClCompile Include="..\Private\Enemy.cpp" />
-    <ClCompile Include="..\Private\CLevel_Clear.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />
     <ClCompile Include="..\Private\CUi_Finish.cpp" />

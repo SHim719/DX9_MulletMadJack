@@ -67,7 +67,7 @@ HRESULT CUi_Fine::Initialize_Active()
 
 void CUi_Fine::Initialize_Set_ActiveTime()
 {
-    m_fActiveTime = 0.3f;
+    m_fActiveTime = 0.15f;
 }
 
 void CUi_Fine::Initialize_Set_Size()
@@ -78,21 +78,18 @@ void CUi_Fine::Initialize_Set_Size()
 
 void CUi_Fine::Initialize_Set_Speed()
 {
-    m_pTransformCom->Set_Speed(750);
+    m_pTransformCom->Set_Speed(1500);
 }
 
 void CUi_Fine::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
     _float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
-
-
+    
     m_UiDesc.m_fX = -540.f;
     m_UiDesc.m_fY = -500.f;
 
-
     m_pTransformCom->Set_Scale(Scale);
     m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
-
 }
 
 HRESULT CUi_Fine::Add_Components(void* pArg)

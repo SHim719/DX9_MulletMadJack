@@ -6,6 +6,8 @@
 #include "CUi_SpecialHit.h"
 #include "CUi_MonsterDie.h"
 #include "CUi_PEACE.h"
+#include "Level_Loading.h"
+#include "CGame_Manager.h"
 
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -73,13 +75,13 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
 	if (m_pGameInstance->GetKeyDown(eKeyCode::Q))
 	{
-		m_pGameInstance->Set_Enter(true);
+		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Clear);
 	}
-
-	if (m_pGameInstance->GetKeyDown(eKeyCode::W))
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::E))
 	{
-		m_pGameInstance->Set_Enter(false);
+		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Start);
 	}
+	
 }
 
 HRESULT CLevel_GamePlay::Render()
