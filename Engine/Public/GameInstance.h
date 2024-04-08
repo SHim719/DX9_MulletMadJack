@@ -33,7 +33,7 @@ public: /* For.Graphic_Device */
 #pragma region LEVEL_MANAGER
 public: /* For.Level_Manager */
 	HRESULT Change_Level(class CLevel* pNewLevel);
-	class CLevel* Find_Level();
+	_uint Get_CurrentLevelID();
 #pragma endregion
 
 #pragma region TIMER_MANAGER
@@ -106,8 +106,6 @@ private:
 	class CCollision_Manager*		m_pCollision_Manager = { nullptr };
 	class CCamera_Manager*			m_pCamera_Manager = { nullptr };
 
-public:
-	CLevel_Manager*		Get_Level_Manager() { return m_pLevel_Manager; }
 
 public:
 	static void Release_Engine();

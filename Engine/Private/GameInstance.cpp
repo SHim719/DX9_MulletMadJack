@@ -89,6 +89,8 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	
 	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
 
+	m_pRenderer->Sort_AlphaBlendObj();
+
 	m_pLevel_Manager->Tick(fTimeDelta);
 }
 
@@ -135,12 +137,9 @@ HRESULT CGameInstance::Change_Level(CLevel * pNewLevel)
 	return m_pLevel_Manager->Change_Level(pNewLevel);
 }
 
-CLevel* CGameInstance::Find_Level()
+_uint CGameInstance::Get_CurrentLevelID()
 {
-	if (nullptr == m_pLevel_Manager)
-		return nullptr;
-
-	return m_pLevel_Manager->Get_CurrentLevel();
+	return m_pLevel_Manager->Get_CurrentLevelID();
 }
 #pragma endregion
 

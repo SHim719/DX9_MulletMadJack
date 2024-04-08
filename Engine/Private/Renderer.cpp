@@ -1,5 +1,6 @@
 #include "..\Public\Renderer.h"
 #include "GameObject.h"
+#include "Transform.h"
 
 CRenderer::CRenderer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device { pGraphic_Device }
@@ -46,6 +47,18 @@ void CRenderer::Clear()
 			Safe_Release(pRenderObject);
 		RenderObjects.clear();
 	}
+}
+
+void CRenderer::Sort_AlphaBlendObj()
+{
+	if (0 == m_RenderObjects[RENDER_BLEND].size())
+		return;
+
+	m_RenderObjects[RENDER_BLEND].sort([](CGameObject* pLeft, CGameObject* pRight)
+		{
+			return pLeft->Get_Transform()->Get_State(CTransform::STATE_POSITION).z
+				< pRight->Get_Transform()->Get_State(CTransform::STATE_POSITION).z;
+		});
 }
 
 HRESULT CRenderer::Render_Priority()

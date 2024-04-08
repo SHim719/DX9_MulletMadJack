@@ -59,9 +59,18 @@ public:
 		std::cout << "OFFSET Position :" << m_WorldMatrix_Offset._41 << " " << m_WorldMatrix_Offset._42 << " " << m_WorldMatrix_Offset._43 << std::endl;
 	}
 
-
 	void Set_Scale(const _float3& vScale);
 	void Multiply_Scale(const _float3& vScale);
+
+	void Set_ScaleX(const _float fX);
+	void Set_ScaleY(const _float fY);
+	void Set_ScaleZ(const _float fZ);
+
+	void Set_PosX(const _float& fX) { m_WorldMatrix.m[STATE_POSITION][0] = fX; }
+	void Set_PosY(const _float& fY) { m_WorldMatrix.m[STATE_POSITION][1] = fY; }
+	void Set_PosZ(const _float& fZ) { m_WorldMatrix.m[STATE_POSITION][2] = fZ; }
+
+	void Add_Pos(const _float3& vAdd);
 
 	void Set_Billboard_Matrix(_float4x4 _BillboardMatrix)	// y축 빌보드 행렬을 만들기 위한 함수
 	{

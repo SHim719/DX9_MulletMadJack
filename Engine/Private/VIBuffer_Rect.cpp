@@ -101,6 +101,10 @@ bool CVIBuffer_Rect::Intersect_Ray(CTransform* pTransform, const _float3& vRayWo
 	return false;
 }
 
+void CVIBuffer_Rect::Scaling_Texcoord(const _float3& vScale)
+{
+}
+
 CVIBuffer_Rect * CVIBuffer_Rect::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CVIBuffer_Rect*	pInstance = new CVIBuffer_Rect(pGraphic_Device);

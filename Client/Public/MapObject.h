@@ -3,10 +3,7 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 
-
-
 BEGIN(Engine)
-class CTransform;
 class CVIBuffer_Rect;
 class CTexture;
 class CBoxCollider;
@@ -14,12 +11,12 @@ END
 
 BEGIN(Client)
 
-class CWall final : public CGameObject
+class CMapObject : public CGameObject
 {
 private:
-	CWall(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CWall(const CWall& rhs);
-	virtual ~CWall() = default;
+	CMapObject(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CMapObject(const CMapObject& rhs);
+	virtual ~CMapObject() = default;
 
 public:
 	HRESULT Initialize_Prototype();
@@ -31,21 +28,15 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture*		m_pTextureCom = { nullptr };
-	CBoxCollider*	m_pBoxCollider = { nullptr };
+	CTexture* m_pTextureCom = { nullptr };
 
 private:
 	HRESULT Add_Components();
 
 public:
-	void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-
-public:
-	static CWall* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CMapObject* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CGameObject* Clone(void* pArg) override;
 	void Free() override;
 };
 
 END
-
-

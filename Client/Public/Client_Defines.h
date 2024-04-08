@@ -21,6 +21,15 @@ namespace Client
 		ScreenXpos = 700,
 		End
 	};
+
+	enum OBJTYPE
+	{
+		WALL,
+		FLOOR,
+		OBJECT,
+		DOOR,
+		OBJTYPE_END,
+	};
 }
 
 

@@ -1,10 +1,11 @@
 #include "..\Public\Loader.h"
 #include "GameInstance.h"
 #include "Machine_Gun.h"
-
-#include "GameInstance.h"
 #include "Enemy.h"
 #include "Enemy_Bullet.h"
+#include "Wall.h"
+#include "Floor.h"
+#include "MapObject.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -97,6 +98,22 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/bullet_sprites_4_%d.png"), 4))))
 	//	return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Floor_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Objects/Object%d.png", 13))))
+		return E_FAIL;
+
+
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩 중 입니다."));
@@ -104,6 +121,19 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
+
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
+		CWall::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Floor"),
+		CFloor::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_MapObject"),
+		CMapObject::Create(m_pGraphic_Device))))
+		return E_FAIL;
 	
 	lstrcpy(m_szLoadingText, TEXT("UI을(를) 로딩 중 입니다."));
 
