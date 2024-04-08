@@ -95,6 +95,7 @@ public:
 #pragma region CAMERA_MANAGER
 	HRESULT Create_Camera(const wstring& _wstrCameraKey, CCoreCamera* pCamera);
 	HRESULT Change_Camera(const wstring& _wstrCameraKey);
+	class CCoreCamera* Get_CurCamera();
 #pragma endregion
 
 

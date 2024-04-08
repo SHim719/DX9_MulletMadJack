@@ -6,6 +6,8 @@
 #include "CUi_PEACE.h"
 #include "Level_Loading.h"
 #include "CGame_Manager.h"
+#include "Enemy.h"
+#include "Enemy_Bullet.h"
 
 #include "Wall.h"
 #include "CrossHair.h"
@@ -15,7 +17,7 @@
 #include "Player.h"
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: CLevel{ pGraphic_Device } 
+	: CLevel{ pGraphic_Device }
 {
 }
 
@@ -38,13 +40,13 @@ HRESULT CLevel_GamePlay::Initialize()
 
 			if (i == 9) {
 
-			wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
-			wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 90.f, 0.f));
-			wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
+				wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
+				wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 90.f, 0.f));
+				wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
 
 			}
 
-			if(j == 9) {
+			if (j == 9) {
 				wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
 				wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 0.f, 0.f));
 				wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
@@ -56,6 +58,14 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	if(FAILED(Ready_Layer_Player()))
+	
+	//if (FAILED(Test_UiTexture_Loading()))
+	//	return E_FAIL;
+
+	//if (FAILED(Test_LifeUi_Clone()))
+	//	return E_FAIL;
+
+	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -80,16 +90,16 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 HRESULT CLevel_GamePlay::Render()
 {
 
-	SetWindowText(g_hWnd, TEXT("ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½."));
+	SetWindowText(g_hWnd, TEXT("°ÔÀÓÇÃ·¹ÀÌ·¹º§."));
 
 	m_pPlayer->Render();
 
 	return S_OK;
 }
 
-CLevel_GamePlay * CLevel_GamePlay::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CLevel_GamePlay* CLevel_GamePlay::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CLevel_GamePlay*	pInstance = new CLevel_GamePlay(pGraphic_Device);
+	CLevel_GamePlay* pInstance = new CLevel_GamePlay(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize()))
 	{
@@ -113,19 +123,24 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 
-
-	if(FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
+	if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
 		return E_FAIL;
-	
+
+	pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Get_CurCamera());
+
 	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
 {
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy")))
-		return E_FAIL;
+	CEnemy::ENEMY_DESC	EnemyDesc{};
 
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy_Bullet")))
+	EnemyDesc.vPosition = _float3(5.f, 0.f, 5.f);
+	EnemyDesc.vAt = _float3(pFPS_Camera->Get_CAMERA_DESC().vEye);
+	EnemyDesc.fSpeedPerSec = 2.f;
+	EnemyDesc.fRotationPerSec = D3DXToRadian(90.f);
+
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy"), &EnemyDesc))
 		return E_FAIL;
 
 	return S_OK;

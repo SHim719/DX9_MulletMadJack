@@ -4,6 +4,7 @@
 
 BEGIN(Engine)
 
+typedef vector<LPDIRECT3DBASETEXTURE9> TEXTURES;
 class ENGINE_DLL CTexture final : public CComponent
 {
 public:
@@ -22,18 +23,24 @@ public:
 	virtual HRESULT Initialize(void* pArg) override;
 
 public:
-	_uint	Get_MaxTextureNum() { return m_iMaxTextureNum; }
+	_uint		Get_MaxTextureNum() { return m_iMaxTextureNum; }
+	TEXTURES	Get_Textures() { return m_Textures; }
 
 private:
 	vector<LPDIRECT3DBASETEXTURE9>	m_Textures;
-	vector<POINT>					m_vTextureSizes;
-	
-	POINT test = { 0,0 };
-
 	typedef vector<LPDIRECT3DBASETEXTURE9> TEXTURES;
 
-	_uint	m_iMaxTextureNum = 0;
+	vector<POINT>					m_vTextureSizes;
+	_uint							m_iMaxTextureNum = 0;
 
+public:
+	static CTexture* Create(LPDIRECT3DDEVICE9 pGraphic_Device, TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures = 1);
+	virtual CComponent* Clone(void* pArg) override;
+	virtual void Free() override;
+
+
+
+private:
 	string TCharToString(const TCHAR* pSource)
 	{
 		_uint iLength = lstrlen(pSource) + 1;
@@ -46,12 +53,6 @@ private:
 
 		return strDest;
 	}
-
-
-public:
-	static CTexture* Create(LPDIRECT3DDEVICE9 pGraphic_Device, TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures = 1);
-	virtual CComponent* Clone(void* pArg) override;
-	virtual void Free() override;
 };
 
 END

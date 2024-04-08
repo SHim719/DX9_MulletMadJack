@@ -14,6 +14,13 @@ BEGIN(Client)
 
 class CEnemy final : public CGameObject
 {
+public:
+	typedef struct tagEnemy : public CTransform::TRANSFORM_DESC
+	{
+		_float3 vPosition;
+		_float3 vAt;
+	}ENEMY_DESC;
+
 private:
 	CEnemy(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CEnemy(const CEnemy& rhs);
@@ -29,16 +36,22 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTransform*		m_pTransformCom = { nullptr };
-	CTexture*		m_pTextureCom = { nullptr };
-	CFPS_Camera*	m_pFPS_Camera = { nullptr };
-	CAnimation*		m_pAnimationCom = { nullptr };
-	CLevel*			m_pLevel = { nullptr };
+	CTransform* m_pTransformCom = { nullptr };
+	CFPS_Camera* m_pFPS_Camera = { nullptr };
+	CAnimation* m_pAnimationCom = { nullptr };
+	CLevel* m_pLevel = { nullptr };
+
+private:
+	ENEMY_DESC		m_EnemyDesc{};
+	_float			m_fTimeAcc;
+	bool			m_bChange_Direction;
 
 private:
 	HRESULT Add_Components();
+	HRESULT	Add_Textures();
 	HRESULT Begin_RenderState();
 	HRESULT End_RenderState();
+	void	Key_Input();
 
 public:
 	static CEnemy* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

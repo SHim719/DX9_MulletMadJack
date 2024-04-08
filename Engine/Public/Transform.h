@@ -80,6 +80,8 @@ public:
 		m_WorldMatrix.m[2][2] = _BillboardMatrix.m[2][2];
 	}
 
+	void Set_Target(const _float3& vWorldPoint);	// 특정 위치를 목표점으로 잡는 함수
+
 public:
 	virtual HRESULT Initialize_Prototype() override;
 	virtual HRESULT Initialize(void* pArg) override;

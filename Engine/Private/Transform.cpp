@@ -69,6 +69,11 @@ void CTransform::Set_Scale(const _float3& vScale)
 	Set_State(STATE_LOOK, &vLook);
 }
 
+void CTransform::Set_Target(const _float3& vWorldPoint)
+{
+	Set_State(STATE_LOOK, &vWorldPoint);
+}
+
 HRESULT CTransform::Initialize_Prototype()
 {
 	D3DXMatrixIdentity(&m_WorldMatrix);

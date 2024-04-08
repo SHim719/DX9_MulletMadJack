@@ -315,6 +315,14 @@ HRESULT CGameInstance::Change_Camera(const wstring& _wstrCameraKey)
 	return S_OK;
 }
 
+CCoreCamera* CGameInstance::Get_CurCamera()
+{
+	if (nullptr == m_pCamera_Manager)
+		return nullptr;
+
+	return m_pCamera_Manager->Get_CurCamera();
+}
+
 #pragma endregion
 
 

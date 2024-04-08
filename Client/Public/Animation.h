@@ -1,6 +1,11 @@
 #pragma once
 #include "Client_Defines.h"
 #include "Component.h"
+#include "GameInstance.h"
+
+BEGIN(Engine)
+class CTexture;
+END
 
 BEGIN(Client)
 
@@ -16,18 +21,32 @@ public:
     virtual HRESULT Initialize(void* pArg);
 
 public:
-    // fTimeAcc마다 텍스처가 바뀌어서 애니메이션이 진행되는 함수
-    void    Change_TextureNum(_float fTimeDelta, _float fTimeAcc, _uint iMaxTextureNum);
+    HRESULT         Insert_Textures(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strAnimeTag);
+    CTexture*       Find_Texture(const wstring& strPrototypeTag);
+    HRESULT         Bind_Texture(_uint iTextureIndex);
+    void            Play_Animation(const wstring& strPrototypeTag, _float fTimeAcc, bool bLoop);
 
 public:
-    _uint   Get_TextureNum() { return m_iTextureNum; }
+    _uint           Get_TextureNum() { return m_iTextureNum; }
+    CTexture* Get_Texture() { return m_pCurTexture; }
+
+public:
+    void            Update(_float fTimeDelta);
+    void            Render();
 
 private:
     _float			m_fTimeAcc;         // timedelta값 누적시키는 변수
     _uint			m_iTextureNum;      // 현재 텍스처 번호
+    _uint			m_iMaxTextureNum;      // 현재 텍스처 번호
+    _float          m_fFrameGap;
+    _bool           m_bLoop;
+
+    CTexture* m_pCurTexture = { nullptr };
+    map<const wstring, CTexture*>   m_Textures;
 
 private:
     LPDIRECT3DDEVICE9	m_pGraphic_Device = { nullptr };
+    CGameInstance* m_pGameInstance = { nullptr };
 
 public:
     static CAnimation* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

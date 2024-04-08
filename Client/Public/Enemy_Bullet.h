@@ -2,6 +2,8 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 #include "Animation.h"
+#include "Enemy.h"
+#include "FPS_Camera.h"
 
 BEGIN(Engine)
 class CTexture;
@@ -13,6 +15,13 @@ BEGIN(Client)
 
 class CEnemy_Bullet final : public CGameObject
 {
+public:
+	typedef struct tagEnemyBullet : public CTransform::TRANSFORM_DESC
+	{
+		_float3 vPosition;
+		_float3 vAt;
+	}ENEMY_BULLET_DESC;
+
 private:
 	CEnemy_Bullet(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CEnemy_Bullet(const CEnemy_Bullet& rhs);
@@ -28,9 +37,15 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTransform*		m_pTransformCom = { nullptr };
-	CTexture*		m_pTextureCom = { nullptr };
-	CAnimation*		m_pAnimationCom = { nullptr };
+	CTransform* m_pTransformCom = { nullptr };
+	CTexture* m_pTextureCom = { nullptr };
+	CAnimation* m_pAnimationCom = { nullptr };
+	CFPS_Camera* m_pFPS_Camera = { nullptr };
+	CEnemy* m_pEnemy = { nullptr };
+
+private:
+	ENEMY_BULLET_DESC	m_Enemy_BulletDesc{};
+	_float				m_fTimeAcc;
 
 private:
 	HRESULT Add_Components();
