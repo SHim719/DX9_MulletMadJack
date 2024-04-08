@@ -111,7 +111,6 @@ protected:
 
 public:
 	virtual void Free() override;
-	virtual CUi* Start(void* pArg);
 	virtual CUi* Clone(void* pArg);
 };
 

@@ -27,7 +27,7 @@ HRESULT CBackGround::Initialize(void * pArg)
 
 void CBackGround::PriorityTick(_float fTimeDelta)
 {
-	int a = 10;
+	
 }
 
 void CBackGround::Tick(_float fTimeDelta)

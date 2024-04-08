@@ -2,20 +2,6 @@
 
 #include "GameInstance.h"
 #include "Level_Loading.h"
-#include "BackGround.h"
-#include "CUi_MonsterDie.h"
-#include "CUi_Background.h"
-#include "CUi_Special3Sec.h"
-#include "CUi_SpecialHit.h"
-#include "FPS_Camera.h"
-#include "Animation.h"
-#include "CUi_SpecialHit_Part.h"
-#include "CUi_PEACE.h"
-#include "Machine_Gun.h"
-#include "CUi_Fine.h"
-#include "CUi_Heart.h"
-#include "CUi_Heart_BackGround.h"
-#include "CUi_Heart_Line.h"
 #include "CGame_Manager.h"
 
 
@@ -26,6 +12,7 @@ CMainApp::CMainApp()
 {
 	Safe_AddRef(m_pGameInstance);
 }
+
 
 HRESULT CMainApp::Initialize()
 {

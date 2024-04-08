@@ -2,15 +2,14 @@
 #include "Client_Defines.h"
 #include "CUi.h"
 
-
 BEGIN(Client)
 
-class CUi_Announcer final : public CUi
+class CUi_LiveStream final : public CUi
 {
 protected:
-	CUi_Announcer(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Announcer(const CUi_Announcer& rhs);
-	virtual ~CUi_Announcer() = default;
+	CUi_LiveStream(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_LiveStream(const CUi_LiveStream& rhs);
+	virtual ~CUi_LiveStream() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -39,16 +38,15 @@ public:
 
 
 private:
+	void Scaling(_float fTimeDelta);
 	void Move(_float fTimeDelta);
-	void Texture_Switching(_float fTimeDelta);
 
 
 private:
-	_float m_fUniqueTextureTime = { 0.f };
-	CTexture* m_pUniqueTexture = { nullptr };
-	_uint m_iUniqueTextureIndex = { 0 };
+	_float m_fScaleTime = { 0 };
+
 public:
-	static CUi_Announcer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_LiveStream* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

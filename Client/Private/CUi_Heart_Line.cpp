@@ -1,6 +1,6 @@
 #include "CUi_Heart_Line.h"
 #include "GameInstance.h"
-
+#include "Ui_Pos.h"
 
 
 CUi_Heart_Line::CUi_Heart_Line(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -38,6 +38,14 @@ void CUi_Heart_Line::Tick(_float fTimeDelta)
 	{
 		Move(fTimeDelta);
 	}
+	else if (m_fActiveTime < 0 && m_bEnter)
+	{
+		m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::HeartLine);
+	}
+	else if (m_fActiveTime < 0 && !m_bEnter)
+	{
+		m_bActive = false;
+	}
 }
 
 void CUi_Heart_Line::LateTick(_float fTimeDelta)
@@ -67,7 +75,7 @@ HRESULT CUi_Heart_Line::Initialize_Active()
 
 void CUi_Heart_Line::Initialize_Set_ActiveTime()
 {
-	m_fActiveTime = 0.15f;
+	m_fActiveTime = 0.3f;
 }
 
 void CUi_Heart_Line::Initialize_Set_Size()
@@ -78,14 +86,14 @@ void CUi_Heart_Line::Initialize_Set_Size()
 
 void CUi_Heart_Line::Initialize_Set_Speed()
 {
-	m_pTransformCom->Set_Speed(1500);
+	m_pTransformCom->Set_Speed(750);
 }
 
 void CUi_Heart_Line::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
-	m_UiDesc.m_fX = 70.f;
+	m_UiDesc.m_fX = 85.f;
 	m_UiDesc.m_fY = -500.f;
 
 	m_pTransformCom->Set_Scale(Scale);

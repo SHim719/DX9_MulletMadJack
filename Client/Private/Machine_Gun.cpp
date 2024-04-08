@@ -113,7 +113,7 @@ HRESULT CMachine_Gun::Add_Components(void* pArg)
 HRESULT CMachine_Gun::Add_Texture(void* pArg)
 {
 	if (FAILED(Add_Component(LEVEL_STATIC, TEXT("CrossHair_Textures")
-		, (CComponent**)&m_pTextureCom)))
+		,(CComponent**)&m_pTextureCom)))
 		return E_FAIL;
 
 	return S_OK;

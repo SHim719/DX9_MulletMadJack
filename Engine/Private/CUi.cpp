@@ -127,10 +127,6 @@ void CUi::Free()
 	Safe_Release(m_pGraphic_Device);
 }
 
-CUi* CUi::Start(void* pArg)
-{
-	return nullptr;
-}
 
 CUi* CUi::Clone(void* pArg)
 {

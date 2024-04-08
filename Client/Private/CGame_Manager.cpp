@@ -15,6 +15,10 @@
 #include "CUi_Heart_BackGround.h"
 #include "CUi_Heart_Line.h"
 #include "CUi_Border.h"
+#include "CUi_Chat.h"
+#include "CUi_LiveStream.h"
+#include "CUi_Announcer.h"
+#include "CUi_Floor_F.h"
 
 
 IMPLEMENT_SINGLETON(CGame_Manager)
@@ -69,10 +73,13 @@ void CGame_Manager::Clear()
 void CGame_Manager::Start()
 {
 	m_pGameInstance->Set_Enter(false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor_F"));
 }
 
 void CGame_Manager::Render()
 {
+	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	
 	if (m_eProgress == StageProgress::OnGoing)
 	{
 		m_pGameInstance->Render_Begin();
@@ -89,6 +96,7 @@ void CGame_Manager::Render()
 		m_pGameInstance->UiRender();
 		m_pGameInstance->Render_End();
 	}
+	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CGame_Manager::Change_Check()
@@ -116,16 +124,18 @@ void CGame_Manager::Change_Check()
 
 void CGame_Manager::Reduce_ViewPort(_float fTimeDelta)
 {
+	m_fAdjustTime += fTimeDelta;
 	if (m_MainViewPort.Width > g_iWinSizeX - 300)
 	{
 		m_MainViewPort.Width -= DWORD(fTimeDelta * 1500);
-		m_MainViewPort.Height -= DWORD(fTimeDelta * 750);
+		m_MainViewPort.Height -= DWORD(fTimeDelta * 710);
 	}
 	else
 	{
-		m_MainViewPort.Width = g_iWinSizeX - 300;
-		m_MainViewPort.Height = g_iWinSizeY - 150;
+		m_MainViewPort.Width = 956;
+		m_MainViewPort.Height = 570;
 	}
+	
 }
 
 void CGame_Manager::Extend_ViewPort(_float fTimeDelta)
@@ -133,7 +143,7 @@ void CGame_Manager::Extend_ViewPort(_float fTimeDelta)
 	if (m_MainViewPort.Width < g_iWinSizeX)
 	{
 		m_MainViewPort.Width += DWORD(fTimeDelta * 1500);
-		m_MainViewPort.Height += DWORD(fTimeDelta * 750);
+		m_MainViewPort.Height += DWORD(fTimeDelta * 1200);
 	}
 	else
 	{
@@ -279,12 +289,32 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Ui/Clear/Logo/Border.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Chat_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Chat/Chat%d.png", 7))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Announcer_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Announcer/Announcer.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Sheet_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Sheet/Sheet%d.png", 4))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_F_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Start/Active_F.png"))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CrossHair_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Crosshair/Crosshair%d.png", 7))))
 		return E_FAIL;
 
-	
+
 	return S_OK;
 }
 
@@ -319,6 +349,26 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Border"),
 		eUiRenderType::Render_NonBlend,
 		CUi_Border::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Chat"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Chat::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_LiveStream"),
+		eUiRenderType::Render_NonBlend,
+		CUi_LiveStream::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Announcer"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Announcer::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_F"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Floor_F::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

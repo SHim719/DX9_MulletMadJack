@@ -2,15 +2,14 @@
 #include "Client_Defines.h"
 #include "CUi.h"
 
-
 BEGIN(Client)
 
-class CUi_Announcer final : public CUi
+class CUi_Chat final : public CUi
 {
 protected:
-	CUi_Announcer(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Announcer(const CUi_Announcer& rhs);
-	virtual ~CUi_Announcer() = default;
+	CUi_Chat(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Chat(const CUi_Chat& rhs);
+	virtual ~CUi_Chat() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -40,15 +39,16 @@ public:
 
 private:
 	void Move(_float fTimeDelta);
-	void Texture_Switching(_float fTimeDelta);
+	void Texture_Switching();
 
 
 private:
-	_float m_fUniqueTextureTime = { 0.f };
-	CTexture* m_pUniqueTexture = { nullptr };
-	_uint m_iUniqueTextureIndex = { 0 };
+	_float m_fTextureTime = { 0.f };
+
+
+
 public:
-	static CUi_Announcer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_Chat* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

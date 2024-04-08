@@ -1,4 +1,6 @@
 #include "CUi_Heart_BackGround.h"
+#include "Ui_Pos.h"
+
 
 CUi_Heart_BackGround::CUi_Heart_BackGround(LPDIRECT3DDEVICE9 pGraphic_Device)
 	:CUi(pGraphic_Device)
@@ -35,6 +37,14 @@ void CUi_Heart_BackGround::Tick(_float fTimeDelta)
 	{
 		Move(fTimeDelta);
 	}
+	else if (m_fActiveTime < 0 && m_bEnter)
+	{
+		m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::HeartBackGround);
+	}
+	else if (m_fActiveTime < 0 && !m_bEnter)
+	{
+		m_bActive = false;
+	}
 }
 
 void CUi_Heart_BackGround::LateTick(_float fTimeDelta)
@@ -65,7 +75,7 @@ HRESULT CUi_Heart_BackGround::Initialize_Active()
 
 void CUi_Heart_BackGround::Initialize_Set_ActiveTime()
 {
-	m_fActiveTime = 0.15f;
+	m_fActiveTime = 0.3f;
 }
 
 void CUi_Heart_BackGround::Initialize_Set_Size()
@@ -76,15 +86,15 @@ void CUi_Heart_BackGround::Initialize_Set_Size()
 
 void CUi_Heart_BackGround::Initialize_Set_Speed()
 {
-	m_pTransformCom->Set_Speed(1500);
+	m_pTransformCom->Set_Speed(750);
 }
 
 void CUi_Heart_BackGround::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
-	m_UiDesc.m_fX = 100.f;
-	m_UiDesc.m_fY = -500.f;
+	m_UiDesc.m_fX = 112.f;
+	m_UiDesc.m_fY = -495.f;
 
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.9f));

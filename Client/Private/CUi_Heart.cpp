@@ -1,4 +1,5 @@
 #include "CUi_Heart.h"
+#include "Ui_Pos.h"
 
 
 CUi_Heart::CUi_Heart(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -39,7 +40,16 @@ void CUi_Heart::Tick(_float fTimeDelta)
 	{
 		Move(fTimeDelta);
 	}
-
+	else if (m_fActiveTime < 0 && m_bEnter)
+	{
+		_float3 unique = { Ui_Pos::Heart.x - 450, Ui_Pos::Heart.y, Ui_Pos::Heart.z };
+		m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::Heart);
+		m_pUniqueTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &unique);
+	}
+	else if (m_fActiveTime < 0 && !m_bEnter)
+	{
+		m_bActive = false;
+	}
 
 	if (m_fTextureTime > 0.06)
 	{
@@ -77,7 +87,7 @@ void CUi_Heart::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
 
-	m_UiDesc.m_fX = 300.f;
+	m_UiDesc.m_fX = 315.f;
 	m_UiDesc.m_fY = -500.f;
 
 
@@ -91,8 +101,8 @@ void CUi_Heart::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 
 void CUi_Heart::Initialize_Set_Speed()
 {
-	m_pTransformCom->Set_Speed(1500);
-	m_pUniqueTransformCom->Set_Speed(1500);
+	m_pTransformCom->Set_Speed(750);
+	m_pUniqueTransformCom->Set_Speed(750);
 }
 
 void CUi_Heart::Move(_float fTimeDelta)
@@ -142,6 +152,7 @@ void CUi_Heart::Enter(bool _Enter)
 
 HRESULT CUi_Heart::Initialize_Active()
 {
+	
 	Initialize_Set_ActiveTime();
 	Initialize_Set_Size();
 	Initialize_Set_Scale_Pos_Rotation(nullptr);
@@ -153,7 +164,7 @@ HRESULT CUi_Heart::Initialize_Active()
 
 void CUi_Heart::Initialize_Set_ActiveTime()
 {
-	m_fActiveTime = 0.15f;
+	m_fActiveTime = 0.3f;
 }
 
 void CUi_Heart::Initialize_Set_Size()

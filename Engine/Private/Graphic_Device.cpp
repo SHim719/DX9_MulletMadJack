@@ -162,11 +162,13 @@ CGraphic_Device * CGraphic_Device::Create(const GRAPHIC_DESC & GraphicDesc, _Out
 
 void CGraphic_Device::Free()
 {
+	unsigned long rcnt = 0;
+
 	if (nullptr != m_pFont)
-		m_pFont->Release();
+		rcnt = m_pFont->Release();
 
 	if (nullptr != m_pSprite)
-		m_pSprite->Release();
+		rcnt = m_pSprite->Release();
 
 	unsigned int iRefCnt = { 0 };
 
@@ -179,5 +181,7 @@ void CGraphic_Device::Free()
 	}
 	
 	if (nullptr != m_pSDK)
-		m_pSDK->Release();
+		rcnt = m_pSDK->Release();
+
+	int a = 0;
 }

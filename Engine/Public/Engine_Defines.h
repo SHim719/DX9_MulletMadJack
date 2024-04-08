@@ -21,7 +21,6 @@
 #include "Engine_Macro.h"
 #include "Engine_Typedef.h"
 
-
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
@@ -34,8 +33,7 @@
 #define new DBG_NEW 
 
 #endif
-
-#endif // _DEBUG
+#endif
 
 using namespace Engine;
 using namespace std;

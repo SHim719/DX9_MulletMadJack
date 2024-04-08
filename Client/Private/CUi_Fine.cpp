@@ -1,4 +1,6 @@
 #include "CUi_Fine.h"
+#include "Ui_Pos.h"
+
 
 CUi_Fine::CUi_Fine(LPDIRECT3DDEVICE9 pGraphic_Device)
     :CUi(pGraphic_Device)
@@ -35,6 +37,14 @@ void CUi_Fine::Tick(_float fTimeDelta)
     {
         Move(fTimeDelta);
     }
+    else if (m_fActiveTime < 0 && m_bEnter)
+    {
+        m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::Fine);
+    }
+    else if (m_fActiveTime < 0 && !m_bEnter)
+    {
+        m_bActive = false;
+    }
 }
 
 void CUi_Fine::LateTick(_float fTimeDelta)
@@ -67,7 +77,7 @@ HRESULT CUi_Fine::Initialize_Active()
 
 void CUi_Fine::Initialize_Set_ActiveTime()
 {
-    m_fActiveTime = 0.15f;
+    m_fActiveTime = 0.3f;
 }
 
 void CUi_Fine::Initialize_Set_Size()
@@ -78,7 +88,7 @@ void CUi_Fine::Initialize_Set_Size()
 
 void CUi_Fine::Initialize_Set_Speed()
 {
-    m_pTransformCom->Set_Speed(1500);
+    m_pTransformCom->Set_Speed(750);
 }
 
 void CUi_Fine::Initialize_Set_Scale_Pos_Rotation(void* pArg)

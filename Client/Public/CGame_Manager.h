@@ -58,7 +58,7 @@ private:
 private:
 	D3DVIEWPORT9 m_MainViewPort;
 	D3DVIEWPORT9 m_UiViewPort;
-
+	_float m_fAdjustTime = {0};
 
 public:
 	virtual void Free() override;

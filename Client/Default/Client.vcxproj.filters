@@ -136,6 +136,15 @@
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Border">
       <UniqueIdentifier>{dbfeea87-563f-469c-ad82-b1a9282dd654}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Chat">
+      <UniqueIdentifier>{e43af6de-a95a-4013-a65a-adef609b52f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Start">
+      <UniqueIdentifier>{30f36453-2343-443c-a983-5b6a2a6607b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Start\CUi_Floor">
+      <UniqueIdentifier>{692c0838-891e-4753-a8fe-9d0027138c4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -167,9 +176,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Level_Loading.h">
       <Filter>01.Levels\99.Loading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\public\Loader.h">
-      <Filter>01.Levels\99.Loading\Loader</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Player.h">
       <Filter>02.GameObjects\02. Player</Filter>
@@ -239,6 +245,21 @@
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Border.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Ui_Pos.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Chat.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Chat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_LiveStream.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Floor_F.h">
+      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Loader.h">
+      <Filter>01.Levels\99.Loading\Loader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +352,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Border.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Chat.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Chat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_LiveStream.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Floor_F.cpp">
+      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

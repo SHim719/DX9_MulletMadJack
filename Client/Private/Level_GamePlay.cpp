@@ -73,11 +73,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
-	if (m_pGameInstance->GetKeyDown(eKeyCode::Q))
+	if (m_pGameInstance->GetKeyDown(eKeyCode::U))
 	{
 		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Clear);
 	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::E))
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::I))
 	{
 		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Start);
 	}

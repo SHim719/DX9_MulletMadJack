@@ -6,6 +6,15 @@ BEGIN(Client)
 
 class CUi_Border final : public CUi
 {
+public:
+	using UniqueDesc = struct UiUniqueDesc
+	{
+		_float m_fX = { 0 };
+		_float m_fY = { 0 };
+		_float m_fSizeX = { 0 };
+		_float m_fSizeY = { 0 };
+		_float3 m_Rotation = { 0, 0, 0 };
+	};
 protected:
 	CUi_Border(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CUi_Border(const CUi_Border& rhs);
@@ -40,12 +49,13 @@ public:
 private:
 	void Move(_float fTimeDelta);
 	void Scaling(_float fTimeDelta);
+	void Scaling_Move(_float fTimeDelta);
 
 
 private:
 	CVIBuffer_Rect* m_pUniqueVIBufferCom = { nullptr };
 	CTransform* m_pUniqueTransformCom = { nullptr };
-
+	UniqueDesc m_UniqueUiDesc = {};
 
 public:
 	static CUi_Border* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

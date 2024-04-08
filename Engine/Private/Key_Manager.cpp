@@ -104,7 +104,7 @@ void CKey_Manager::clearKeys()
 
 CKey_Manager* CKey_Manager::Create()
 {
-	CKey_Manager* pInstance = new CKey_Manager;
+	CKey_Manager* pInstance = new CKey_Manager();
 
 	pInstance->Initialize();
 
