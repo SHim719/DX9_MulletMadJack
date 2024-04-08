@@ -42,6 +42,10 @@ private:
 private:
 	_float m_fSpeed = { 0.f };
 	_float m_fRotationTime = { 0.f };
+	_float m_fAngle = { 0.f };
+	bool m_bTemp = true;
+
+
 public:
 	static CUi_Floor_F* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

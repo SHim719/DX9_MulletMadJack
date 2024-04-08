@@ -31,14 +31,11 @@ void CUi_Floor_F::Tick(_float fTimeDelta)
 {
 	m_fActiveTime -= fTimeDelta;
 
-	if (m_fActiveTime > 0)
+	if (m_fActiveTime > 2.5)
 	{
 		Sub_Speed(fTimeDelta);
 		Move(fTimeDelta);
 		Rotation(fTimeDelta);
-	}
-	else
-	{
 	}
 }
 
@@ -52,7 +49,7 @@ HRESULT CUi_Floor_F::Render()
 		return E_FAIL;
 
 	m_pTextureCom->Bind_Texture(m_iTexture_Index);
-	m_pVIBufferCom->Render();
+	//m_pVIBufferCom->Render();
 
 	return S_OK;
 }
@@ -87,13 +84,13 @@ void CUi_Floor_F::Initialize_Set_Speed()
 
 void CUi_Floor_F::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 0.f };
+	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
 	m_UiDesc.m_fX = -220;
 	m_UiDesc.m_fY = 270;
 
 	m_pTransformCom->Set_Scale(Scale);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 1.f));
 }
 
 HRESULT CUi_Floor_F::Add_Components(void* pArg)
@@ -149,17 +146,26 @@ void CUi_Floor_F::Move(_float fTimeDelta)
 void CUi_Floor_F::Rotation(_float fTimeDelta)
 {
 	m_fRotationTime += fTimeDelta;
-	if (m_fRotationTime > 0.1)
+	if(m_UiDesc.m_fSizeX <= 80 && m_bTemp)
 	{
-		_float4x4 world = m_pTransformCom->Get_WorldMatrix();
-		_float4x4 rotation;
-		D3DXMatrixIdentity(&rotation);
-		world = world * *D3DXMatrixRotationY(&rotation, To_Radian(1));
-		m_pTransformCom->Set_WorldMatrix(world);
-	
-
-		m_fRotationTime = 0;
+		m_UiDesc.m_fSizeX -= 10;
+		_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1 };
+		m_pTransformCom->Set_Scale(Scale);
+		if (m_UiDesc.m_fSizeX <= 10)
+		{
+			_float3 w = { 0, 180, 0 };
+			m_bTemp = false;
+			m_pTransformCom->Rotation_XYZ(w);
+		}
 	}
+	else
+	{
+		m_UiDesc.m_fSizeX -= 20;
+		_float3 Scale = { -m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1 };
+		m_pTransformCom->Set_Scale(Scale);
+	}
+
+
 }
 
 CUi_Floor_F* CUi_Floor_F::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -178,3 +184,37 @@ void CUi_Floor_F::Free()
 {
 	__super::Free();
 }
+
+
+//static float f = 1.f;
+//static _float theta = 0.f;
+//theta += 30.f * fTimeDelta * f;
+//if (theta >= 179.f)
+//{
+//	theta = 179.f;
+//	f = -f;
+//}
+//else if (theta <= 0.5f)
+//{
+//	theta = 0.5f;
+//	f = -f;
+//}
+//cout << theta << endl;
+
+
+
+		//_float4x4 world = m_pTransformCom->Get_WorldMatrix();
+		//_float3 vPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+		//_float4x4 scale;
+		//_float4x4 rotation;
+		//_float4x4 pos;
+		//D3DXMatrixIdentity(&scale);
+		//D3DXMatrixIdentity(&rotation);
+		//D3DXMatrixIdentity(&pos);
+
+		//D3DXMatrixScaling(&scale, m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 0.f);
+		//D3DXMatrixRotationY(&rotation, To_Radian(m_fAngle));
+		//D3DXMatrixTranslation(&pos, vPos.x, vPos.y, vPos.z/1000000.f);
+		//world = scale * rotation * pos;
+		//m_pTransformCom->Set_WorldMatrix(world);
