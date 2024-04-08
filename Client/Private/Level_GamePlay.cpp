@@ -1,7 +1,6 @@
 #include "..\Public\Level_GamePlay.h"
 
 #include "GameInstance.h"
-#include "Wall.h"
 #include "Machine_Gun.h"
 #include "Core_Camera.h"
 #include "CUi_SpecialHit.h"
@@ -18,15 +17,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 3))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
-		CWall::Create(m_pGraphic_Device))))
-		return E_FAIL;
+	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
 
 	auto wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
 	wall->Get_Transform()->Set_Position(_float3(0.f, 0.f, 0.f));

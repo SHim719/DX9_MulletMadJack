@@ -18,6 +18,46 @@ void CTransform::Multiply_Scale(const _float3& vScale)
 	Set_State(STATE_LOOK, &(Get_State(STATE_LOOK) * vScale.z));
 }
 
+void CTransform::Set_ScaleX(const _float fX)
+{
+	_float3 vRight = *D3DXVec3Normalize(&vRight, &Get_State(STATE_RIGHT));
+	if (D3DXVec3Length(&vRight) == 0.f)
+		vRight.x = 1.f;
+	vRight *= fX;
+
+	Set_State(STATE_RIGHT, &vRight);
+}
+
+void CTransform::Set_ScaleY(const _float fY)
+{
+	_float3 vUp = *D3DXVec3Normalize(&vUp, &Get_State(STATE_UP));
+	if (D3DXVec3Length(&vUp) == 0.f)
+		vUp.y = 1.f;
+
+	vUp *= fY;
+	Set_State(STATE_UP, &vUp);
+}
+
+void CTransform::Set_ScaleZ(const _float fZ)
+{
+	_float3 vLook = *D3DXVec3Normalize(&vLook, &Get_State(STATE_LOOK));
+	if (D3DXVec3Length(&vLook) == 0.f)
+		vLook.z = 1.f;
+
+	vLook *= fZ;
+
+	Set_State(STATE_LOOK, &vLook);
+}
+
+void CTransform::Add_Pos(const _float3& vAdd)
+{
+	_float3 vPos = Get_State(STATE_POSITION);
+
+	vPos += vAdd;
+
+	Set_State(STATE_POSITION, &vPos);
+}
+
 void CTransform::Set_Scale(const _float3& vScale)
 {
 	_float3 vRight = *D3DXVec3Normalize(&vRight, &Get_State(STATE_RIGHT)) * vScale.x;

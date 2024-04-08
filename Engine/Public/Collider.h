@@ -15,9 +15,32 @@ public:
 	virtual HRESULT Initialize_Prototype();
 	virtual HRESULT Initialize(void* pArg);
 
+	virtual void Render();
 protected:
-	class CGameObject* m_pOwner = { nullptr };
-	class CTransform*	m_pTransform = { nullptr };
+	class CGameInstance* m_pGameInstance = { nullptr };
+	_float3		m_vOffset;
+
+public:
+	void Set_Offset(const _float3& vOffset) { m_vOffset = vOffset; }
+	const _float3& Get_Offset() { return m_vOffset; }
+
+protected:
+	static _uint	iCollisionID;
+	_uint	m_iCollisionID = { 0 };
+
+public:
+	_uint Get_CollisionID() { return m_iCollisionID; }
+
+private:
+	_bool m_bIsTrigger = { false }; // 통과하느냐
+	_bool m_bActive = { true }; // 활성화 되어있느냐
+
+public:
+	_bool IsTrigger() { return m_bIsTrigger; }
+	_bool IsActive() { return m_bActive; }
+
+	void Set_Active(_bool bActive) { m_bActive = bActive; }
+	void Set_Trigger(_bool bTrigger) { m_bIsTrigger = bTrigger; }
 
 public:
 	virtual CComponent* Clone(void* pArg) = 0;

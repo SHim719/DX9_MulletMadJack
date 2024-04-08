@@ -16,7 +16,7 @@ HRESULT CLevel::Initialize()
 	return S_OK;
 }
 
-HRESULT CLevel::Load_MapObject(const wstring& strFilePath)
+HRESULT CLevel::Load_MapObject(const wstring& strFilePath, _uint iMaxObjType)
 {
 	HANDLE		hFile = CreateFile(strFilePath.c_str(), // 파일 경로와 이름을 명시
 		GENERIC_READ, // 파일 접근 모드(GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -36,37 +36,47 @@ HRESULT CLevel::Load_MapObject(const wstring& strFilePath)
 
 	int iReadFlag = 0;
 
-	while (true)
+	for (_uint i = 0; i <= (_uint)iMaxObjType; ++i)
 	{
 		_uint iVecSize = 0;
-		iReadFlag = ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
-		if (0 == dwByte)
-			break;
+		int iReadFlag = (int)ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
 
-		_float4x4 worldMatrix = {};
-		_uint iTextureIndex = 0;
-		_uint iLayerStrLength = 0;
-		_tchar szLayer[MAX_PATH] = {};
-		_uint iPrototypeTagLength = 0;
-		_tchar szPrototypeTag[MAX_PATH] = {};
-
-		iReadFlag += (int)ReadFile(hFile, &worldMatrix, sizeof(_float4x4), &dwByte, nullptr);
-		iReadFlag += (int)ReadFile(hFile, &iTextureIndex, sizeof(_uint), &dwByte, nullptr);
-		iReadFlag += (int)ReadFile(hFile, &iLayerStrLength, sizeof(_uint), &dwByte, nullptr);
-		iReadFlag += (int)ReadFile(hFile, szLayer, sizeof(_tchar) * iLayerStrLength, &dwByte, nullptr);
-		iReadFlag += (int)ReadFile(hFile, &iPrototypeTagLength, sizeof(_uint), &dwByte, nullptr);
-		iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
-
-		if (iReadFlag != 7)
+		for (_uint j = 0; j < iVecSize; ++j)
 		{
-			CloseHandle(hFile);
-			return E_FAIL;
-		}
-			
+			_float4x4 worldMatrix = {};
+			_uint iTextureIndex = 0;
+			_uint iLayerStrLength = 0;
+			_tchar szLayer[MAX_PATH] = {};
+			_uint iPrototypeTagLength = 0;
+			_tchar szPrototypeTag[MAX_PATH] = {};
+			_float3 vColliderOffset;
+			_float3 vColliderScale;
 
-		auto pObj = CGameInstance::Get_Instance()->Add_Clone(m_iLevelID, szLayer, szPrototypeTag);
-		pObj->Set_Texture_Index(iTextureIndex);
-		pObj->Get_Transform()->Set_WorldMatrix(worldMatrix);
+			iReadFlag += (int)ReadFile(hFile, &worldMatrix, sizeof(_float4x4), &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, &iTextureIndex, sizeof(_uint), &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, &iLayerStrLength, sizeof(_uint), &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, szLayer, sizeof(_tchar) * iLayerStrLength, &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, &iPrototypeTagLength, sizeof(_uint), &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
+			iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
+
+			auto pObj = m_pGameInstance->Add_Clone(m_iLevelID, szLayer, szPrototypeTag);
+			pObj->Set_Texture_Index(iTextureIndex);
+			pObj->Get_Transform()->Set_WorldMatrix(worldMatrix);
+
+			CBoxCollider* pBoxCollider = dynamic_cast<CBoxCollider*>(pObj->Find_Component(L"Collider"));
+			if (pBoxCollider)
+			{
+				pBoxCollider->Set_Scale(vColliderScale);
+				pBoxCollider->Set_Offset(vColliderOffset);
+			}
+
+			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>(pObj->Find_Component(L"VIBuffer"));
+			pVIBuffer->Scaling_Texcoord(pObj->Get_Transform()->Get_Scale());
+
+			iReadFlag = 1;
+		}
 	}
 
 	CloseHandle(hFile);

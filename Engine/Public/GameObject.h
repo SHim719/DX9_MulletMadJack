@@ -59,6 +59,15 @@ public:
 	virtual void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) {} // Ray Picking했을 때 호출되는 함수
 
 public:
+	virtual void OnCollisionEnter(CGameObject* pOther) {}
+	virtual void OnCollisionStay(CGameObject* pOther) {}
+	virtual void OnCollisionExit(CGameObject* pOther) {}
+
+	virtual void OnTriggerEnter(CGameObject* pOther) {}
+	virtual void OnTriggerStay(CGameObject* pOther) {}
+	virtual void OnTriggerExit(CGameObject* pOther) {}
+
+public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;
 };

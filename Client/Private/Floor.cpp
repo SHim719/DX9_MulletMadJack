@@ -35,6 +35,7 @@ void CFloor::PriorityTick(_float fTimeDelta)
 
 void CFloor::Tick(_float fTimeDelta)
 {
+	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CFloor::LateTick(_float fTimeDelta)
@@ -54,6 +55,8 @@ HRESULT CFloor::Render()
 
 	m_pVIBufferCom->Render();
 
+	m_pBoxCollider->Render();
+
 	return S_OK;
 }
 
@@ -63,12 +66,21 @@ HRESULT CFloor::Add_Components()
 	if (nullptr == m_pTransformCom)
 		return E_FAIL;
 
-	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer_Rect"), nullptr));
+	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(Add_Component(LEVEL_STATIC, TEXT("VIBuffer_RectXY_Default"), TEXT("VIBuffer"), this));
 	if (nullptr == m_pVIBufferCom)
 		return E_FAIL;
 
 	m_pTextureCom = dynamic_cast<CTexture*>(Add_Component(LEVEL_STATIC, TEXT("Floor_Textures"), TEXT("Floor_Textures"), nullptr));
 	if (nullptr == m_pTextureCom)
+		return E_FAIL;
+
+
+	CBoxCollider::BOXCOLLISION_DESC desc;
+	desc.vScale = { 1.f, 1.f, 1.f };
+	desc.vOffset = { 0.f, 0.f, 0.f };
+
+	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
+	if (nullptr == m_pBoxCollider)
 		return E_FAIL;
 
 	return S_OK;
@@ -104,7 +116,7 @@ void CFloor::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pTransformCom);
 	Safe_Release(m_pVIBufferCom);
 	Safe_Release(m_pTextureCom);
+	Safe_Release(m_pBoxCollider);
 }

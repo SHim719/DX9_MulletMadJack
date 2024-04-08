@@ -4,9 +4,9 @@
 
 BEGIN(Engine)
 
-class ENGINE_DLL CVIBuffer_Rect final : public CVIBuffer
+class ENGINE_DLL CVIBuffer_Rect : public CVIBuffer
 {
-private:
+protected:
 	CVIBuffer_Rect(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CVIBuffer_Rect(const CVIBuffer_Rect& rhs);
 	virtual ~CVIBuffer_Rect() = default;
@@ -17,6 +17,9 @@ public:
 
 public:
 	bool Intersect_Ray(class CTransform* pTransform, const _float3& vRayWorldPos, const _float3& vRayDir, OUT _float3* pHitWorldPos, OUT _float* pDist) override;
+
+public:
+	void Scaling_Texcoord(const _float3& vScale)	override;
 
 public:
 	static CVIBuffer_Rect* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

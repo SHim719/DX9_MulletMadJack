@@ -118,6 +118,12 @@
     <Filter Include="Ui\CUi_Active\Weapon">
       <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\MapObject">
+      <UniqueIdentifier>{6ad062de-0955-446e-9bb6-08b98f57cb4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\TriggerObject">
+      <UniqueIdentifier>{0f6b1636-a57c-4cca-8811-a45d18b0d2c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -213,6 +219,13 @@
     <ClInclude Include="..\Public\Machine_Gun.h">
       <Filter>Ui\CUi_Active\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi_Active.h" />
+    <ClInclude Include="..\Public\MapObject.h">
+      <Filter>02.GameObjects\01. MapObject\MapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\TriggerObject.h">
+      <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -295,6 +308,13 @@
     </ClCompile>
     <ClCompile Include="..\Private\Machine_Gun.cpp">
       <Filter>Ui\CUi_Active\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Active.cpp" />
+    <ClCompile Include="..\Private\MapObject.cpp">
+      <Filter>02.GameObjects\01. MapObject\MapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\TriggerObject.cpp">
+      <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

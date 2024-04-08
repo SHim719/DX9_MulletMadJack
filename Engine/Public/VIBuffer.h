@@ -49,6 +49,10 @@ public:
 	// Ray의 World 시작좌표, World 방향이 Input, 리턴 값으로 피킹된 위치의 월드 좌표와 Ray의 시작점으로부터 거리 값을 리턴
 	virtual bool Intersect_Ray(class CTransform* pTransform, const _float3& vRayWorldPos, const _float3& vRayDir, OUT _float3* pHitWorldPos, OUT _float* pDist);
 
+public:
+	virtual void Scaling_Texcoord(const _float3& vScale) {}
+
+
 
 public:
 	virtual CComponent* Clone(void* pArg) = 0;

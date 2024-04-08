@@ -18,7 +18,9 @@ public:
 	}
 protected:
 	virtual HRESULT Initialize();
-	HRESULT Load_MapObject(const wstring& strFilePath);
+
+protected:
+	HRESULT Load_MapObject(const wstring& strFilePath, _uint iMaxObjType);
 
 public:
 	virtual void PriorityTick(_float fTimeDelta);

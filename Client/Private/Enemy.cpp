@@ -23,7 +23,6 @@ HRESULT CEnemy::Initialize(void* pArg)
         return E_FAIL;
 
     // Level_GamePlay 객체에 접근
-    m_pLevel = m_pGameInstance->Get_Instance()->Get_Level_Manager()->Get_CurrentLevel();
 
     // Level_GamePlay 객체에 있는 FPS 카메라 객체를 갖고 옴
     m_pFPS_Camera = dynamic_cast<CLevel_GamePlay*>(m_pLevel)->Get_Camera();

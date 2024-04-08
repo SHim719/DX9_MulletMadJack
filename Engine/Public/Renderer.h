@@ -22,6 +22,8 @@ public:
 	HRESULT Draw();
 	void Clear();
 
+	void Sort_AlphaBlendObj();
+
 private:
 	LPDIRECT3DDEVICE9					m_pGraphic_Device = { nullptr };
 	list<class CGameObject*>			m_RenderObjects[RENDER_END];

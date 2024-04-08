@@ -91,6 +91,15 @@
     <Filter Include="01.Utility\04.Components\Collider\BoxCollider">
       <UniqueIdentifier>{ad946128-006e-4e6c-bdd4-c1363fd2264a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Rect\VIBuffer_RectX">
+      <UniqueIdentifier>{f2956dfe-6802-49ff-99c4-1bee3407019b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Rect\VIBuffer_RectXY">
+      <UniqueIdentifier>{2d512438-8c3f-4904-9d64-aed6c10cb98a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utility\04.Components\VIBuffer\Box">
+      <UniqueIdentifier>{dca43b6a-95ce-451d-bd6f-344a0d4cbca0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Base.h">
@@ -180,6 +189,18 @@
     <ClInclude Include="..\Public\Collision_Manager.h">
       <Filter>01.Utility\04.Components\Collider\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\BoxCollider.h">
+      <Filter>01.Utility\04.Components\Collider\BoxCollider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\VIBuffer_RectX.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Rect\VIBuffer_RectX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_RectXY.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Rect\VIBuffer_RectXY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Box.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Box</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -253,6 +274,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\Collider.cpp">
       <Filter>01.Utility\04.Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BoxCollider.cpp">
+      <Filter>01.Utility\04.Components\Collider\BoxCollider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_RectX.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Rect\VIBuffer_RectX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_RectXY.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Rect\VIBuffer_RectXY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Box.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Box</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

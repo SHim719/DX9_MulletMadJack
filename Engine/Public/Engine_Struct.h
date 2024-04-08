@@ -44,6 +44,12 @@ namespace Engine
 		D3DXVECTOR3		vTexture;
 	}VTXCUBETEX;
 
+	typedef struct
+	{
+		D3DXVECTOR3 vPosition;
+		D3DCOLOR	Color;
+	}VTXCOLOR;
+
 	typedef struct tagRayDesc
 	{
 		unsigned int		iLevel; // 현재 레벨 

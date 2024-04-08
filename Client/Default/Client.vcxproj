@@ -188,7 +188,9 @@
     <ClInclude Include="..\public\Loader.h" />
     <ClInclude Include="..\Public\Machine_Gun.h" />
     <ClInclude Include="..\Public\MainApp.h" />
+    <ClInclude Include="..\Public\MapObject.h" />
     <ClInclude Include="..\public\Player.h" />
+    <ClInclude Include="..\Public\TriggerObject.h" />
     <ClInclude Include="..\Public\Wall.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -219,7 +221,9 @@
     <ClCompile Include="..\private\Loader.cpp" />
     <ClCompile Include="..\Private\Machine_Gun.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
+    <ClCompile Include="..\Private\MapObject.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
+    <ClCompile Include="..\Private\TriggerObject.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />
     <ClCompile Include="..\Public\CUi_Heart.cpp" />
     <ClCompile Include="Client.cpp" />
