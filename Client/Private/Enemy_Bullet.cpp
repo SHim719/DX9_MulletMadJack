@@ -9,6 +9,7 @@ CEnemy_Bullet::CEnemy_Bullet(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 CEnemy_Bullet::CEnemy_Bullet(const CEnemy_Bullet& rhs)
 	: CGameObject{ rhs }
+	, m_fTimeAcc(0.f)
 {
 }
 
@@ -19,14 +20,27 @@ HRESULT CEnemy_Bullet::Initialize_Prototype()
 
 HRESULT CEnemy_Bullet::Initialize(void* pArg)
 {
+	if (nullptr == pArg)
+		return E_FAIL;
+
+	memcpy(&m_Enemy_BulletDesc, pArg, sizeof m_Enemy_BulletDesc);
+
 	if (FAILED(Add_Components()))
 		return E_FAIL;
+
+	m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Get_CurCamera());
+
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_Enemy_BulletDesc.vPosition);
+
+	// 카메라 위치로 목표점을 잡음
+	m_pTransformCom->Set_Target(m_pFPS_Camera->Get_TransformCom()->Get_State(CTransform::STATE_POSITION));
 
 	return S_OK;
 }
 
 void CEnemy_Bullet::PriorityTick(_float fTimeDelta)
 {
+	m_pTransformCom->Go_Straight(fTimeDelta);	// 카메라 위치로 총알이 전진하게 함
 }
 
 void CEnemy_Bullet::Tick(_float fTimeDelta)
@@ -35,7 +49,7 @@ void CEnemy_Bullet::Tick(_float fTimeDelta)
 
 void CEnemy_Bullet::LateTick(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
 }
 
 HRESULT CEnemy_Bullet::Render()
@@ -62,15 +76,15 @@ HRESULT CEnemy_Bullet::Add_Components()
 {
 	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("Com_VIBuffer")));
 
-	CTransform::TRANSFORM_DESC	TransformDesc{};
+	/*CTransform::TRANSFORM_DESC	TransformDesc{};
 
 	TransformDesc.fSpeedPerSec = 5.f;
-	TransformDesc.fRotationPerSec = D3DXToRadian(90.f);
+	TransformDesc.fRotationPerSec = D3DXToRadian(90.f);*/
 
-	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Com_Transform")));
+	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Com_Transform"), &m_Enemy_BulletDesc));
 
 	m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Enemy_Bullet"), TEXT("Com_Texture")));
-	
+
 	m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Animation"), TEXT("Com_Animation")));
 
 	return S_OK;
@@ -78,16 +92,16 @@ HRESULT CEnemy_Bullet::Add_Components()
 
 HRESULT CEnemy_Bullet::Begin_RenderState()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	return S_OK;
 }
 
 HRESULT CEnemy_Bullet::End_RenderState()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 	return S_OK;
 }

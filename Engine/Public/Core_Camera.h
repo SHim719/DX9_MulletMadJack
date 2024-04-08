@@ -29,6 +29,7 @@ public:
 	wstring Get_Key() const { return m_strKey; }
 
 	void Set_Target(CGameObject* _pTarget) { m_pTarget = _pTarget; }
+	CAMERA_DESC		Get_CAMERA_DESC() { return m_CameraDesc; }
 
 protected:
 	virtual void  Key_Input(_float fTimeDelta) {};

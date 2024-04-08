@@ -37,12 +37,14 @@ HRESULT CFPS_Camera::Initialize(void* pArg)
 	ClientToScreen(g_hWnd, &ptWindow);
 	SetCursorPos(ptWindow.x, ptWindow.y);
 
+	// 빌보드 행렬을 단위행렬로 초기화
+	D3DXMatrixIdentity(&m_BillboardMatrix);
 
 	return S_OK;
 }
 
 void CFPS_Camera::PriorityTick(_float fTimeDelta)
-{	
+{
 	Key_Input(fTimeDelta);
 	Camera_Event(fTimeDelta);
 }
