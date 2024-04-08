@@ -25,34 +25,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
-
-	auto wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
-	wall->Get_Transform()->Set_Position(_float3(0.f, 0.f, 0.f));
-	wall->Set_Texture_Index(1);
-
-
-	for (int i = 0; i < 10; ++i) {
-		for (int j = 0; j < 10; ++j) {
-			wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
-			wall->Get_Transform()->Rotation_XYZ(_float3(90.f, 0.f, 0.f));
-			wall->Get_Transform()->Set_Position(_float3((float)i, -0.5f, (float)j));
-
-			if (i == 9) {
-
-				wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
-				wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 90.f, 0.f));
-				wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
-
-			}
-
-			if (j == 9) {
-				wall = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Wall", TEXT("Prototype_Wall"));
-				wall->Get_Transform()->Rotation_XYZ(_float3(0.f, 0.f, 0.f));
-				wall->Get_Transform()->Set_Position(_float3((float)i, 0.f, (float)j));
-			}
-		}
-	}
+	Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
