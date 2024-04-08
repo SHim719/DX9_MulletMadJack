@@ -109,6 +109,9 @@
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart">
       <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Levels\ClearLevel">
+      <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Ui\Player">
       <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
     </Filter>
@@ -150,6 +153,36 @@
     </Filter>
     <Filter Include="02.GameObjects\01. MapObject\TriggerObject">
       <UniqueIdentifier>{0f6b1636-a57c-4cca-8811-a45d18b0d2c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand">
+      <UniqueIdentifier>{da29112f-0a6b-482d-b7b1-a463ce1ddbb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand">
+      <UniqueIdentifier>{27a86044-790e-4178-90cf-77e5b62e25ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Clear">
+      <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Clear\CUi_Peace">
+      <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Clear\CUi_Announcer">
+      <UniqueIdentifier>{83d683fb-8760-4861-8946-e864a1d4cf54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Clear\CUi_Heart">
+      <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Clear\CUi_Finish">
+      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
+      <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol_Right_Hand">
+      <UniqueIdentifier>{05041a46-e88d-4ab7-9921-af4da25cac7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Weapon\Pistol">
+      <UniqueIdentifier>{c391c9fa-046a-4fa4-be10-c6d872ae2107}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,16 +253,28 @@
       <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Finish.h">
-      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+      <Filter>Ui\CUi_Clear\CUi_Finish</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_PEACE.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+      <Filter>Ui\CUi_Clear\CUi_Peace</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Announcer.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+      <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Machine_Gun.h">
       <Filter>Ui\CUi_Active\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Private\CUi_Heart.h">
+      <Filter>Ui\CUi_Clear\CUi_Heart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CrossHair.h">
+      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Right_Hand.h">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol_Right_Hand</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol.h">
+      <Filter>Ui\CUi_Active\Weapon\Pistol</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Heart.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
@@ -336,16 +381,28 @@
       <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Finish.cpp">
-      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+      <Filter>Ui\CUi_Clear\CUi_Finish</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_PEACE.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+      <Filter>Ui\CUi_Clear\CUi_Peace</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Announcer.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+      <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Machine_Gun.cpp">
       <Filter>Ui\CUi_Active\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Public\CUi_Heart.cpp">
+      <Filter>Ui\CUi_Clear\CUi_Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CrossHair.cpp">
+      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Right_Hand.cpp">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol_Right_Hand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol.cpp">
+      <Filter>Ui\CUi_Active\Weapon\Pistol</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Heart.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>

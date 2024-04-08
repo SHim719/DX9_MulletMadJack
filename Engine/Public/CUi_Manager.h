@@ -37,6 +37,10 @@ public:
 
 //for UiActive
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive);
+	bool Get_Ui_ActiveState(const wstring& Ui_ActiveTag);
+
+	void Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex);
+	int  Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag);
 
 
 //for UiClear

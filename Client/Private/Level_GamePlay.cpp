@@ -1,6 +1,5 @@
 #include "..\Public\Level_GamePlay.h"
 #include "GameInstance.h"
-#include "Machine_Gun.h"
 #include "Core_Camera.h"
 #include "CUi_SpecialHit.h"
 #include "CUi_MonsterDie.h"
@@ -8,11 +7,16 @@
 #include "Level_Loading.h"
 #include "CGame_Manager.h"
 
+#include "Wall.h"
+#include "CrossHair.h"
+#include "Core_Camera.h"
+#include "CUi_SpecialHit.h"
+#include "CUi_MonsterDie.h"
+#include "Player.h"
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device } 
 {
-
 }
 
 HRESULT CLevel_GamePlay::Initialize()
@@ -48,16 +52,11 @@ HRESULT CLevel_GamePlay::Initialize()
 		}
 	}
 
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"),true);
-
-	if (FAILED(Test_LifeUi_Clone()))
-		return E_FAIL;
-
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
-	//	return E_FAIL;
+	if(FAILED(Ready_Layer_Player()))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -73,11 +72,17 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Start);
 	}
 	
+	m_pPlayer->PriorityTick(fTimeDelta);
+	m_pPlayer->Tick(fTimeDelta);
+	m_pPlayer->LateTick(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render()
 {
-	SetWindowText(g_hWnd, TEXT("°ÔÀÓÇÃ·¹ÀÌ·¹º§ÀÔ´Ï´Ù."));
+
+	SetWindowText(g_hWnd, TEXT("ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½."));
+
+	m_pPlayer->Render();
 
 	return S_OK;
 }
@@ -108,7 +113,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 
-	// FPS Ä«¸Þ¶ó »çº»À» pFPS_Camera¿¡ ´ãÀ½
+
 	if(FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
 		return E_FAIL;
 	
@@ -126,8 +131,21 @@ HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
 	return S_OK;
 }
 
+HRESULT CLevel_GamePlay::Ready_Layer_Player()
+{
+	if(m_pPlayer != nullptr)
+		return E_FAIL;
+
+	m_pPlayer = CPlayer::Create();
+
+	return S_OK;
+}
+
 void CLevel_GamePlay::Free()
 {
+
+	Safe_Release(m_pPlayer);
+
 	__super::Free();
 
 }

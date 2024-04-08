@@ -4,6 +4,17 @@
 #include "Level_Loading.h"
 #include "CGame_Manager.h"
 
+#include "BackGround.h"
+#include "CUi_MonsterDie.h"
+#include "CUi_Background.h"
+#include "CUi_Special3Sec.h"
+#include "CUi_SpecialHit.h"
+#include "FPS_Camera.h"
+#include "Animation.h"
+#include "CUi_SpecialHit_Part.h"
+#include "CrossHair.h"
+#include "Pistol_Right_Hand.h"
+#include "Pistol.h"
 
 CMainApp::CMainApp()
 	: m_pGameInstance { CGameInstance::Get_Instance() }
@@ -175,13 +186,32 @@ HRESULT CMainApp::Ready_Active_Ui_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Crosshair/Crosshair%d.png", 7))))
 		return E_FAIL;
+	
+	//Pistol
+ 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Hand_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Hand/Pistol/HAND_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/PISTOL_IDLE%d.png", 3))))
+		return E_FAIL;
 
 	return S_OK;
 }
 
 HRESULT CMainApp::Ready_Active_Ui()
 {
-	
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if(FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Right_Hand", eUiRenderType::Render_NonBlend, CPistol_Right_Hand::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if(FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

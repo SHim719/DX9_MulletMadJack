@@ -280,6 +280,54 @@ void CUi_Manager::Set_Enter(bool _Enter)
 
 	for (auto& Pair : m_Ui_ActiveBlend)
 		Pair.second->Enter(_Enter);
+bool CUi_Manager::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
+{
+	auto iter = m_Ui_Active.find(Ui_ActiveTag);
+	if (m_Ui_Active.end() != iter)
+	{
+		return iter->second->Get_Active();
+	}
+
+	auto Blenditer = m_Ui_ActiveBlend.find(Ui_ActiveTag);
+	if (m_Ui_ActiveBlend.end() != Blenditer)
+	{
+		return Blenditer->second->Get_Active();
+	}
+
+	return false;
+}
+
+void CUi_Manager::Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex)
+{
+	auto iter = m_Ui_Active.find(Ui_ActiveTag);
+	if (m_Ui_Active.end() != iter)
+	{
+		iter->second->Set_Texture_Index(_iTextureIndex);
+	}
+
+	auto Blenditer = m_Ui_ActiveBlend.find(Ui_ActiveTag);
+	if (m_Ui_ActiveBlend.end() != Blenditer)
+	{
+		Blenditer->second->Set_Texture_Index(_iTextureIndex);
+	}
+}
+
+int CUi_Manager::Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag)
+{
+
+	auto iter = m_Ui_Active.find(Ui_ActiveTag);
+	if (m_Ui_Active.end() != iter)
+	{
+		return iter->second->Get_Texture_Index();
+	}
+
+	auto Blenditer = m_Ui_ActiveBlend.find(Ui_ActiveTag);
+	if (m_Ui_ActiveBlend.end() != Blenditer)
+	{
+		return Blenditer->second->Get_Texture_Index();
+	}
+
+	return 0;
 }
 
 CUi_Manager* CUi_Manager::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

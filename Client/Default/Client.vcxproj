@@ -109,15 +109,16 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;C:\opencv\build\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../EngineSDK/Lib/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;opencv_world490.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../EngineSDK/Lib/;C:\opencv\build\x64\vc16\lib</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>opencv_world490.dll;opencv_world490d.dll;opencv_core246d.dll;opencv_highgui246d.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -146,7 +147,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;C:\opencv\build\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -155,8 +156,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../EngineSDK/Lib/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;opencv_world490.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../EngineSDK/Lib/;C:\opencv\build\x64\vc16\lib</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>opencv_world490.dll;opencv_world490d.dll;opencv_core246d.dll;opencv_highgui246d.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -191,12 +193,15 @@
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\public\Level_Logo.h" />
     <ClInclude Include="..\public\Loader.h" />
-    <ClInclude Include="..\Public\Machine_Gun.h" />
+    <ClInclude Include="..\Public\CrossHair.h" />
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\Public\MapObject.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\Public\Ui_Pos.h" />
     <ClInclude Include="..\Public\TriggerObject.h" />
+    <ClInclude Include="..\Public\Pistol.h" />
+    <ClInclude Include="..\public\Player.h" />
+    <ClInclude Include="..\Public\Pistol_Right_Hand.h" />
     <ClInclude Include="..\Public\Wall.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -231,11 +236,14 @@
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp" />
     <ClCompile Include="..\private\Loader.cpp" />
-    <ClCompile Include="..\Private\Machine_Gun.cpp" />
+    <ClCompile Include="..\Private\CrossHair.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\Private\MapObject.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\TriggerObject.cpp" />
+    <ClCompile Include="..\Private\Pistol.cpp" />
+    <ClCompile Include="..\private\Player.cpp" />
+    <ClCompile Include="..\Private\Pistol_Right_Hand.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">

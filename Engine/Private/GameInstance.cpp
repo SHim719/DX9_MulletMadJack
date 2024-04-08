@@ -15,19 +15,19 @@ CGameInstance::CGameInstance()
 
 HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& GraphicDesc, _Out_ LPDIRECT3DDEVICE9* ppOut)
 {
-	/* ¿£ÁøÀ» »ç¿ëÇÏ±âÀ§ÇØ ÇÊ¿äÇÑ ±âÅ¸ ÃÊ±âÈ­ ÀÛ¾÷µéÀ» °ÅÄ£´Ù. */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ ï¿½Ê±ï¿½È­ ï¿½Û¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä£ï¿½ï¿½. */
 
-	/* ±×·¡ÇÈ µð¹ÙÀÌ½º ÃÊ±âÈ­. */
+	/* ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ê±ï¿½È­. */
 	m_pGraphic_Device = CGraphic_Device::Create(GraphicDesc, ppOut);
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
 
-	/* ÀÎÇ² µð¹ÙÀÌ½º ÃÊ±âÈ­. */
+	/* ï¿½ï¿½Ç² ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ê±ï¿½È­. */
 	m_pKey_Manager = CKey_Manager::Create();
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
 
-	/* »ç¿îµå µð¹ÙÀÌ½º ÃÊ±âÈ­. */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ê±ï¿½È­. */
 
 	m_pRenderer = CRenderer::Create(*ppOut);
 	if (nullptr == m_pRenderer)
@@ -37,23 +37,23 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	if (nullptr == m_pTimer_Manager)
 		return E_FAIL;
 
-	/* ·¹º§ ¸Å´ÏÁ®¸¦ ÁØºñÇØ³õ´Â´Ù. */
+	/* ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½Ø³ï¿½ï¿½Â´ï¿½. */
 	m_pLevel_Manager = CLevel_Manager::Create();
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;
 
 
-	/* ¿ÀºêÁ§Æ® ¸Å´ÏÁ® »ç¿ëÇÒ ÁØºñ. . */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½. . */
 	m_pObject_Manager = CObject_Manager::Create(iNumLevels);
 	if (nullptr == m_pObject_Manager)
 		return E_FAIL;
 
-	/* ÄÄÆ÷³ÍÆ® ¸Å´ÏÁ® »ç¿ëÇÒ ÁØºñ. . */
+	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½. . */
 	m_pComponent_Manager = CComponent_Manager::Create(iNumLevels);
 	if (nullptr == m_pComponent_Manager)
 		return E_FAIL;
 
-	// Ui ¸Å´ÏÁ® »ç¿ëÇÒ ÁØºñ
+	// Ui ï¿½Å´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½
 	m_pUi_Manager = CUi_Manager::Create(*ppOut);
 	if (nullptr == m_pUi_Manager)
 		return E_FAIL;
@@ -86,7 +86,7 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	m_pUi_Manager->LateTick(fTimeDelta);
 
 	m_pCollision_Manager->Tick();
-	
+
 	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
 
 	m_pRenderer->Sort_AlphaBlendObj();
@@ -229,6 +229,7 @@ HRESULT CGameInstance::Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, 
 
 	return m_pUi_Manager->Add_Ui_LifePrototype(Ui_LifePrototypeTag, Ui_LifePrototype);
 }
+
 HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui_RenderType, CUi* Ui_Active)
 {
 	if (nullptr == m_pUi_Manager)
@@ -236,6 +237,7 @@ HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType 
 
 	return m_pUi_Manager->Add_Ui_Active(Ui_ActiveTag, Ui_RenderType, Ui_Active);
 }
+
 HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
 {
 	if (nullptr == m_pUi_Manager)
@@ -243,14 +245,15 @@ HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiR
 
 	return m_pUi_Manager->Add_Ui_LifeClone(Ui_LifePrototypeTag, UiRenderType, pArg);
 }
+
 CUi* CGameInstance::Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg)
 {
 	if (nullptr == m_pUi_Manager)
 		return nullptr;
 
-
 	return m_pUi_Manager->Add_Ui_PartClone(Ui_PartPrototypeTag, pArg);
 }
+
 void CGameInstance::Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY)
 {
 	m_pUi_Manager->Set_WinSize(iWinSizeX, iWinSizeY);
@@ -270,6 +273,22 @@ void CGameInstance::UiRender()
 	m_pUi_Manager->Ui_Render();
 	m_pUi_Manager->Ui_Render_End();
 }
+
+bool CGameInstance::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
+{
+	return m_pUi_Manager->Get_Ui_ActiveState(Ui_ActiveTag);
+}
+
+void CGameInstance::Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex)
+{
+	m_pUi_Manager->Set_Ui_ActiveTextureIndex(Ui_ActiveTag, _iTextureIndex);
+}
+
+int CGameInstance::Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag)
+{
+	return m_pUi_Manager->Get_Ui_ActiveTextureIndex(Ui_ActiveTag);
+}
+
 #pragma endregion
 
 #pragma region COLLISION_MANAGER

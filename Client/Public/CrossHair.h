@@ -4,12 +4,12 @@
 
 BEGIN(Client)
 
-class CMachine_Gun final : public CUi
+class CCrossHair final : public CUi
 {
 protected:
-	CMachine_Gun(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CMachine_Gun(const CMachine_Gun& rhs);
-	virtual ~CMachine_Gun() = default;
+	CCrossHair(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CCrossHair(const CCrossHair& rhs);
+	virtual ~CCrossHair() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();

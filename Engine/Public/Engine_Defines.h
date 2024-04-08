@@ -3,6 +3,7 @@
 #pragma warning (disable : 4005)
 #pragma warning (disable : 4251)
 #pragma warning (disable : 4828)
+#pragma warning (disable : 4819)
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -22,11 +23,16 @@
 #include "Engine_Macro.h"
 #include "Engine_Typedef.h"
 
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/videoio.hpp>
+#include <opencv2/highgui.hpp>
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
+
 
 #ifndef DBG_NEW 
 
@@ -38,3 +44,4 @@
 
 using namespace Engine;
 using namespace std;
+using namespace cv;
