@@ -39,7 +39,6 @@ HRESULT CVIBuffer::Render()
 	m_pGraphic_Device->SetIndices(m_pIB);
 	m_pGraphic_Device->SetFVF(m_FVF);
 
-
 	m_pGraphic_Device->DrawIndexedPrimitive(m_ePrimitiveType, 0, 0, m_iNumVertices, 0, m_iNumPrimitives);
 
 	return S_OK;

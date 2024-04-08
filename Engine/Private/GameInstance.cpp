@@ -86,7 +86,7 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	m_pUi_Manager->LateTick(fTimeDelta);
 
 	m_pCollision_Manager->Tick();
-	
+
 	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
 
 	m_pLevel_Manager->Tick(fTimeDelta);
@@ -233,6 +233,7 @@ HRESULT CGameInstance::Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, 
 
 	return m_pUi_Manager->Add_Ui_LifePrototype(Ui_LifePrototypeTag, Ui_LifePrototype);
 }
+
 HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui_RenderType, CUi* Ui_Active)
 {
 	if (nullptr == m_pUi_Manager)
@@ -240,6 +241,7 @@ HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType 
 
 	return m_pUi_Manager->Add_Ui_Active(Ui_ActiveTag, Ui_RenderType, Ui_Active);
 }
+
 HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
 {
 	if (nullptr == m_pUi_Manager)
@@ -247,14 +249,15 @@ HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiR
 
 	return m_pUi_Manager->Add_Ui_LifeClone(Ui_LifePrototypeTag, UiRenderType, pArg);
 }
+
 CUi* CGameInstance::Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg)
 {
 	if (nullptr == m_pUi_Manager)
 		return nullptr;
 
-
 	return m_pUi_Manager->Add_Ui_PartClone(Ui_PartPrototypeTag, pArg);
 }
+
 void CGameInstance::Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY)
 {
 	m_pUi_Manager->Set_WinSize(iWinSizeX, iWinSizeY);
@@ -264,6 +267,22 @@ void CGameInstance::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActi
 {
 	m_pUi_Manager->Set_Ui_ActiveState(Ui_ActiveTag, _isActive);
 }
+
+bool CGameInstance::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
+{
+	return m_pUi_Manager->Get_Ui_ActiveState(Ui_ActiveTag);
+}
+
+void CGameInstance::Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex)
+{
+	m_pUi_Manager->Set_Ui_ActiveTextureIndex(Ui_ActiveTag, _iTextureIndex);
+}
+
+int CGameInstance::Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag)
+{
+	return m_pUi_Manager->Get_Ui_ActiveTextureIndex(Ui_ActiveTag);
+}
+
 #pragma endregion
 
 #pragma region COLLISION_MANAGER

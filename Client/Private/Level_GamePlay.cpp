@@ -2,22 +2,20 @@
 
 #include "GameInstance.h"
 #include "Wall.h"
-#include "Machine_Gun.h"
+#include "CrossHair.h"
 #include "Core_Camera.h"
 #include "CUi_SpecialHit.h"
 #include "CUi_MonsterDie.h"
-
+#include "Player.h"
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device } 
 {
-
 }
 
 HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
-
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
@@ -55,30 +53,28 @@ HRESULT CLevel_GamePlay::Initialize()
 		}
 	}
 
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"),true);
-
-	//if (FAILED(Test_UiTexture_Loading()))
-	//	return E_FAIL;
-
-	//if (FAILED(Test_LifeUi_Clone()))
-	//	return E_FAIL;
-
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
-	//	return E_FAIL;
+	if(FAILED(Ready_Layer_Player()))
+		return E_FAIL;
 
 	return S_OK;
 }
 
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
+	m_pPlayer->PriorityTick(fTimeDelta);
+	m_pPlayer->Tick(fTimeDelta);
+	m_pPlayer->LateTick(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render()
 {
+
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨입니다."));
+
+	m_pPlayer->Render();
 
 	return S_OK;
 }
@@ -127,8 +123,21 @@ HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
 	return S_OK;
 }
 
+HRESULT CLevel_GamePlay::Ready_Layer_Player()
+{
+	if(m_pPlayer != nullptr)
+		return E_FAIL;
+
+	m_pPlayer = CPlayer::Create();
+
+	return S_OK;
+}
+
 void CLevel_GamePlay::Free()
 {
+
+	Safe_Release(m_pPlayer);
+
 	__super::Free();
 
 }

@@ -42,6 +42,8 @@ private:
 	_float m_fShakeTime = 0.f;
 	_float m_fShakePower = 0.f;
 
+	_float m_fVerticalAngle = 0.f;
+	_float m_fVerticalAngleLimit = 20.f;
 private:
 	_float4x4			m_ViewMatrix;
 	_float4x4			m_ProjMatrix;

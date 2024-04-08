@@ -203,9 +203,6 @@
     <ClCompile Include="..\private\Timer_Manager.cpp">
       <Filter>00.System\01.Timers\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\private\GameObject.cpp">
-      <Filter>01.Utility\02.GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="..\private\Object_Manager.cpp">
       <Filter>01.Utility\02.GameObjects\Manager</Filter>
     </ClCompile>
@@ -253,6 +250,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Collider.cpp">
       <Filter>01.Utility\04.Components\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\private\GameObject.cpp">
+      <Filter>01.Utility\02.GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

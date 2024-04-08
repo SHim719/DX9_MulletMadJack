@@ -16,7 +16,7 @@ private:
 
 public:
 	HRESULT Bind_Texture(_uint iTextureIndex);
-
+	POINT   Get_TextureSize(_uint iTextureIndex);
 public:
 	virtual HRESULT Initialize_Prototype(TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures);
 	virtual HRESULT Initialize(void* pArg) override;
@@ -26,9 +26,27 @@ public:
 
 private:
 	vector<LPDIRECT3DBASETEXTURE9>	m_Textures;
+	vector<POINT>					m_vTextureSizes;
+	
+	POINT test = { 0,0 };
+
 	typedef vector<LPDIRECT3DBASETEXTURE9> TEXTURES;
 
-	_uint	m_iMaxTextureNum;
+	_uint	m_iMaxTextureNum = 0;
+
+	string TCharToString(const TCHAR* pSource)
+	{
+		_uint iLength = lstrlen(pSource) + 1;
+		char* pDest = new char[iLength];
+		ZeroMemory(pDest, iLength);
+		WideCharToMultiByte(CP_ACP, 0, pSource, -1, pDest, iLength, nullptr, nullptr);
+
+		string strDest = pDest;
+		Safe_Delete_Array(pDest);
+
+		return strDest;
+	}
+
 
 public:
 	static CTexture* Create(LPDIRECT3DDEVICE9 pGraphic_Device, TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures = 1);

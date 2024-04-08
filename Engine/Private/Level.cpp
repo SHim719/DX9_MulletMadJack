@@ -13,6 +13,7 @@ CLevel::CLevel(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 HRESULT CLevel::Initialize()
 {
+
 	return S_OK;
 }
 

@@ -73,8 +73,17 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		if (iMouseMove = ptMouse.y - ptWindow.y)
 		{
-			if (fabs(iMouseMove) > m_MoveSensitivity)
-				m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+			if (fabs(iMouseMove) > m_MoveSensitivity && fabs(iMouseMove) < 400.f) {
+
+				if (m_fVerticalAngle <= m_fVerticalAngleLimit && iMouseMove > 0.f) {
+					m_fVerticalAngle += iMouseMove * m_CameraDesc.fMouseSensor;
+					m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+				} 
+				else if (m_fVerticalAngle >= -m_fVerticalAngleLimit && iMouseMove < 0.f) {
+					m_fVerticalAngle += iMouseMove * m_CameraDesc.fMouseSensor;
+					m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+				}
+			}
 		}
 
 		ClientToScreen(g_hWnd, &ptWindow);
@@ -84,9 +93,6 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
 
 		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
-		m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
-
-		m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 	
 		// 카메라 월드 행렬의 역행렬이 카메라의 view 행렬임
 		// 카메라 view 행렬의 y축 회전 성분을 추려냄
@@ -97,11 +103,7 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		// y축 회전 성분이 담긴 행렬을 역변환하면 y축 빌보드 행렬이 됨
 		D3DXMatrixInverse(&m_BillboardMatrix, nullptr, &m_BillboardMatrix);
-		
-		if (m_pGameInstance->GetKeyDown(eKeyCode::RButton))
-		{
-			Mouse_Ray();
-		}
+	
 	}
 
 	
@@ -115,6 +117,9 @@ void CFPS_Camera::LateTick(_float fTimeDelta)
 
 HRESULT CFPS_Camera::Render()
 {
+	m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
+
+	m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
 	return S_OK;
 }
@@ -226,8 +231,12 @@ void CFPS_Camera::Key_Input(_float fTimeDelta)
 		m_pTransformCom->Debug_State_Out2();
 	}
 
+	if (m_pGameInstance->GetKeyDown(eKeyCode::RButton))
+	{
+		Mouse_Ray();
+	}
 
-	if(CGameInstance::Get_Instance()->GetKey(eKeyCode::LButton))
+	if(m_pGameInstance->GetKey(eKeyCode::LButton))
 	{
 		m_pTransformCom->Camera_Gun_Shake(fTimeDelta, 160000.f);
 	}

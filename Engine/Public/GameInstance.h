@@ -77,6 +77,10 @@ public:
 	class CUi* Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg);
 	void Set_UiManager_Winsize(_uint iWinSizeX, _uint iWinSizeY);
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive = true);
+	bool Get_Ui_ActiveState(const wstring& Ui_ActiveTag);
+
+	void Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex);
+	int  Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag);
 #pragma endregion
 
 

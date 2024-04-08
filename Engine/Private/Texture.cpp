@@ -1,5 +1,6 @@
 #include "Texture.h"
 
+
 CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphic_Device)
     : CComponent { pGraphic_Device }
 {
@@ -8,10 +9,12 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphic_Device)
 CTexture::CTexture(const CTexture& rhs)
     : CComponent { rhs }
     , m_Textures { rhs.m_Textures }
+    , m_vTextureSizes{ rhs.m_vTextureSizes }
     , m_iMaxTextureNum{ rhs.m_iMaxTextureNum }
 {
     for (auto& pTexture : m_Textures)
         Safe_AddRef(pTexture);
+
 }
 
 HRESULT CTexture::Bind_Texture(_uint iTextureIndex)
@@ -22,33 +25,48 @@ HRESULT CTexture::Bind_Texture(_uint iTextureIndex)
     return m_pGraphic_Device->SetTexture(0, m_Textures[iTextureIndex]);
 }
 
+POINT CTexture::Get_TextureSize(_uint iTextureIndex)
+{
+    if (iTextureIndex >= (_uint)m_vTextureSizes.size())
+        return test;
+        //return { 0,0 };
+
+   return m_vTextureSizes[iTextureIndex];
+}
+
 HRESULT CTexture::Initialize_Prototype(TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures)
 {
     m_Textures.reserve(iNumTextures);
+    m_vTextureSizes.reserve(iNumTextures);
 
     for (_uint i = 0; i < iNumTextures; ++i)
     {
         _tchar  szFilePath[MAX_PATH] = TEXT("");
 
         wsprintf(szFilePath, strTextureFilePath.c_str(), i);
-
+       
+        Mat Texture  = imread(TCharToString(szFilePath), true);
         LPDIRECT3DBASETEXTURE9			pTexture = { nullptr };
 
         HRESULT hr = S_OK;
-        if (eTextureType == TYPE_TEXTURE2D)
-            hr = D3DXCreateTextureFromFileEx(m_pGraphic_Device, szFilePath
-                , D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2,
-                D3DX_FROM_FILE, 0, D3DFMT_FROM_FILE, D3DPOOL_MANAGED
-                , D3DX_FILTER_NONE, D3DX_FILTER_NONE,
-                0, nullptr, NULL, (LPDIRECT3DTEXTURE9*)&pTexture);
-        else
-            hr = D3DXCreateCubeTextureFromFile(m_pGraphic_Device, szFilePath, (LPDIRECT3DCUBETEXTURE9*)&pTexture);
+          if (eTextureType == TYPE_TEXTURE2D)
+              hr = D3DXCreateTextureFromFileEx(m_pGraphic_Device, szFilePath
+                  , D3DX_DEFAULT_NONPOW2, D3DX_DEFAULT_NONPOW2,
+                  D3DX_FROM_FILE, 0, D3DFMT_FROM_FILE, D3DPOOL_MANAGED
+                  , D3DX_FILTER_NONE, D3DX_FILTER_NONE,
+                  0, nullptr, NULL, (LPDIRECT3DTEXTURE9*)&pTexture);
+          else
+              hr = D3DXCreateCubeTextureFromFile(m_pGraphic_Device, szFilePath, (LPDIRECT3DCUBETEXTURE9*)&pTexture);
       
-        if (FAILED(hr))
-            return E_FAIL;
+          if (FAILED(hr))
+              return E_FAIL;
 
+        POINT pt = { Texture.cols, Texture.rows };
+        
         m_Textures.push_back(pTexture);
-
+        m_vTextureSizes.push_back(pt);
+        Texture.release();
+        Texture.deallocate();
         m_iMaxTextureNum = i;   // 텍스처 번호 최대값을 구하기 위해 i 대입
     }
 
@@ -93,5 +111,9 @@ void CTexture::Free()
     for (auto& pTexture : m_Textures)
         Safe_Release(pTexture);
 
+   /*for (auto& pTextureSize : m_vTextureSizes) 
+		Safe_Release(pTextureSize);*/
+
     m_Textures.clear();
+    m_vTextureSizes.clear();
 }

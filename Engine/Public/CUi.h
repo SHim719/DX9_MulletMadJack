@@ -39,7 +39,6 @@ protected:
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) PURE;
 	virtual void Initialize_Set_Speed() PURE;
 
-
 	virtual void Default_Set_LifeTime() PURE;
 	virtual void Default_Set_Size() PURE;
 
@@ -65,9 +64,13 @@ public:
 		m_bActive = _isActive; 
 	}
 
+	void Set_Texture_Index(_uint iIndex) { m_iTexture_Index = iIndex; }
+	_uint Get_Texture_Index() { return m_iTexture_Index; }
+
 protected:
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;
 	class CGameInstance* m_pGameInstance = { nullptr };
+
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
 	CTransform* m_pTransformCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };

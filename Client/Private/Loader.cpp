@@ -1,8 +1,5 @@
 #include "..\Public\Loader.h"
 #include "GameInstance.h"
-#include "Machine_Gun.h"
-
-#include "GameInstance.h"
 #include "Enemy.h"
 #include "Enemy_Bullet.h"
 
@@ -106,9 +103,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
 	
 	lstrcpy(m_szLoadingText, TEXT("UI을(를) 로딩 중 입니다."));
-
-	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CMachine_Gun::Create(m_pGraphic_Device))))
-		return E_FAIL;
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
 
