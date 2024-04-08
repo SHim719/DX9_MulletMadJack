@@ -280,6 +280,8 @@ void CUi_Manager::Set_Enter(bool _Enter)
 
 	for (auto& Pair : m_Ui_ActiveBlend)
 		Pair.second->Enter(_Enter);
+}
+
 bool CUi_Manager::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
 {
 	auto iter = m_Ui_Active.find(Ui_ActiveTag);

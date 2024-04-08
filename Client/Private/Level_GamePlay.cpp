@@ -126,7 +126,6 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
 		return E_FAIL;
 
-	pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Get_CurCamera());
 
 	return S_OK;
 }
@@ -135,13 +134,13 @@ HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
 {
 	CEnemy::ENEMY_DESC	EnemyDesc{};
 
-	EnemyDesc.vPosition = _float3(5.f, 0.f, 5.f);
-	EnemyDesc.vAt = _float3(pFPS_Camera->Get_CAMERA_DESC().vEye);
-	EnemyDesc.fSpeedPerSec = 2.f;
-	EnemyDesc.fRotationPerSec = D3DXToRadian(90.f);
-
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy"), &EnemyDesc))
-		return E_FAIL;
+	//EnemyDesc.vPosition = _float3(5.f, 0.f, 5.f);
+	//EnemyDesc.vAt = _float3(pFPS_Camera->Get_CAMERA_DESC().vEye);
+	//EnemyDesc.fSpeedPerSec = 2.f;
+	//EnemyDesc.fRotationPerSec = D3DXToRadian(90.f);
+	//
+	//if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy"), &EnemyDesc))
+	//	return E_FAIL;
 
 	return S_OK;
 }

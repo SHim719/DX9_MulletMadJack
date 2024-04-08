@@ -28,8 +28,7 @@ HRESULT CTexture::Bind_Texture(_uint iTextureIndex)
 POINT CTexture::Get_TextureSize(_uint iTextureIndex)
 {
     if (iTextureIndex >= (_uint)m_vTextureSizes.size())
-        return test;
-        //return { 0,0 };
+        return { 0,0 };
 
    return m_vTextureSizes[iTextureIndex];
 }

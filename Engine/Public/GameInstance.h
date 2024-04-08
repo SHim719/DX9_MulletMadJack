@@ -79,7 +79,7 @@ public:
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive = true);
 	// for UiClear
 	void Set_Enter(bool _Enter);
-	void UiRender();
+	void Ui_Render();
 	bool Get_Ui_ActiveState(const wstring& Ui_ActiveTag);
 
 	void Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex);

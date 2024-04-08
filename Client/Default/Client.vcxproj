@@ -200,7 +200,6 @@
     <ClInclude Include="..\Public\Ui_Pos.h" />
     <ClInclude Include="..\Public\TriggerObject.h" />
     <ClInclude Include="..\Public\Pistol.h" />
-    <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\Public\Pistol_Right_Hand.h" />
     <ClInclude Include="..\Public\Wall.h" />
     <ClInclude Include="Client.h" />
@@ -242,7 +241,6 @@
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\TriggerObject.cpp" />
     <ClCompile Include="..\Private\Pistol.cpp" />
-    <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />
     <ClCompile Include="Client.cpp" />

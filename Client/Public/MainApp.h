@@ -50,16 +50,12 @@ public:
 	HRESULT Render();
 
 private:
-	CGameInstance* m_pGameInstance = { nullptr };
+	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
 
 private:
 	HRESULT Open_Level(LEVEL eStartLevelID);
 
-private:
-	bool m_bClear = { false };
-	D3DVIEWPORT9 m_UiViewPort;
-	D3DVIEWPORT9 m_MainViewPort;
 public:
 	static CMainApp* Create();
 	virtual void Free() override;

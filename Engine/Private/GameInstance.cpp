@@ -267,7 +267,7 @@ void CGameInstance::Set_Enter(bool _Enter)
 {
 	m_pUi_Manager->Set_Enter(_Enter);
 }
-void CGameInstance::UiRender()
+void CGameInstance::Ui_Render()
 {
 	m_pUi_Manager->Ui_Render_Begin();
 	m_pUi_Manager->Ui_Render();

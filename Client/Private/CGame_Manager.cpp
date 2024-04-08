@@ -9,7 +9,6 @@
 #include "Animation.h"
 #include "CUi_SpecialHit_Part.h"
 #include "CUi_PEACE.h"
-#include "Machine_Gun.h"
 #include "CUi_Fine.h"
 #include "CUi_Heart.h"
 #include "CUi_Heart_BackGround.h"
@@ -19,6 +18,10 @@
 #include "CUi_LiveStream.h"
 #include "CUi_Announcer.h"
 #include "CUi_Floor_F.h"
+#include "Pistol_Right_Hand.h"
+#include "Pistol.h"
+#include "CrossHair.h"
+
 
 
 IMPLEMENT_SINGLETON(CGame_Manager)
@@ -84,7 +87,7 @@ void CGame_Manager::Render()
 	{
 		m_pGameInstance->Render_Begin();
 		m_pGameInstance->Draw();
-		m_pGameInstance->UiRender();
+		m_pGameInstance->Ui_Render();
 		m_pGameInstance->Render_End();
 	}
 	else
@@ -93,7 +96,7 @@ void CGame_Manager::Render()
 		m_pGraphic_Device->SetViewport(&m_MainViewPort);
 		m_pGameInstance->Draw();
 		m_pGraphic_Device->SetViewport(&m_UiViewPort);
-		m_pGameInstance->UiRender();
+		m_pGameInstance->Ui_Render();
 		m_pGameInstance->Render_End();
 	}
 	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -172,6 +175,22 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 	/* For.Prototype_Component_VIBuffer_Rect*/
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"),
 		CVIBuffer_Rect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_RectX_Default"),
+		CVIBuffer_RectX::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_RectXY_Default"),
+		CVIBuffer_RectXY::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Box_Default"),
+		CVIBuffer_Box::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Box_Collider_Default"),
+		CBoxCollider::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	/* For Prototype_Component_Animation */
@@ -314,6 +333,15 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Ui/Crosshair/Crosshair%d.png", 7))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Hand_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Hand/Pistol/HAND_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/PISTOL_IDLE%d.png", 3))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -369,6 +397,15 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_F"),
 		eUiRenderType::Render_NonBlend,
 		CUi_Floor_F::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Right_Hand", eUiRenderType::Render_NonBlend, CPistol_Right_Hand::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
