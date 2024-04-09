@@ -178,6 +178,7 @@
     <ClInclude Include="..\Public\CUi_Heart_Line.h" />
     <ClInclude Include="..\Public\CUi_LiveStream.h" />
     <ClInclude Include="..\Public\CUi_Shop.h" />
+    <ClInclude Include="..\Public\CUi_Shop_Noise_Part.h" />
     <ClInclude Include="..\Public\Enemy.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
@@ -223,6 +224,7 @@
     <ClCompile Include="..\Private\CUi_Heart_Line.cpp" />
     <ClCompile Include="..\Private\CUi_LiveStream.cpp" />
     <ClCompile Include="..\Private\CUi_Shop.cpp" />
+    <ClCompile Include="..\Private\CUi_Shop_Noise_Part.cpp" />
     <ClCompile Include="..\Private\Enemy.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />

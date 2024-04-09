@@ -12,6 +12,8 @@ public:
 	{
 		OnGoing,
 		Clear,
+		Shopping,
+		Changing,
 		Start,
 		End
 	};
@@ -32,22 +34,36 @@ private:
 	void Change_Check();
 	void Reduce_ViewPort(_float fTimeDelta);
 	void Extend_ViewPort(_float fTimeDelta);
-
+	void Adjust_ViewPort(_float fTimeDelta);
+	void Call_Shop(_float fTimeDelta);
+	void Cal_Change_Time(_float fTimeDelta);
 
 public:
 	void Set_StageProgress(StageProgress Progress) { m_eProgress = Progress; }
 
 
 public:
+	void Player_UpGrade(void* pArg);
+
+
+public:
 	HRESULT Ready_Prototype_GameObjects();
 	HRESULT Ready_Prototype_Components();
 	//Custom Prototype
-	HRESULT Ready_Prototype_Ui_Life();
 	HRESULT Ready_Static_Texture_Prototype();
 	HRESULT Ready_Clear_Texture();
 	HRESULT Ready_Shop_Texture();
 	HRESULT Ready_Start_Texture();
+
+
+	HRESULT Ready_Prototype_Ui_Life();
+
+
 	HRESULT Ready_Active_Ui();
+	HRESULT Ready_Active_Clear();
+	HRESULT Ready_Active_Shop();
+	HRESULT Ready_Life_Shop();
+	HRESULT Ready_Active_Gun();
 
 
 private:
@@ -55,13 +71,15 @@ private:
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
 	StageProgress m_eProgress = { StageProgress::End };
 	StageProgress m_eOldProgress = { StageProgress::End };
-	_float m_fStageClearTime = { 0.f };
 
 
 private:
 	D3DVIEWPORT9 m_MainViewPort;
 	D3DVIEWPORT9 m_UiViewPort;
-	_float m_fAdjustTime = {0};
+	_float m_fShopTime = {0.5f};
+	_float m_fStageClearTime = { 0.f };
+	_float m_fChangeTime = { 4.5f };
+
 
 public:
 	virtual void Free() override;

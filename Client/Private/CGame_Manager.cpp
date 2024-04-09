@@ -22,6 +22,8 @@
 #include "Pistol.h"
 #include "CrossHair.h"
 #include "CUi_Floor.h"
+#include "CUi_Shop.h"
+#include "CUi_Shop_Noise_Part.h"
 
 
 IMPLEMENT_SINGLETON(CGame_Manager)
@@ -43,11 +45,11 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	m_UiViewPort = { 0, 0, g_iWinSizeX, g_iWinSizeY, 0, 1 };
 	m_pGameInstance->Set_UiManager_Winsize(g_iWinSizeX, g_iWinSizeY);
 
-
 	Ready_Prototype_GameObjects();
 	Ready_Prototype_Components();
 	Ready_Static_Texture_Prototype();
 	Ready_Prototype_Ui_Life();
+	Ready_Life_Shop();
 	Ready_Active_Ui();
 }
 
@@ -56,16 +58,9 @@ void CGame_Manager::Tick(_float fTimeDelta)
 	m_pGameInstance->Tick_Engine(fTimeDelta);
 
 	Change_Check();
-
-	if (m_eOldProgress == StageProgress::Clear)
-	{
-		Reduce_ViewPort(fTimeDelta);
-	}
-	else if (m_eOldProgress == StageProgress::Start)
-	{
-		Extend_ViewPort(fTimeDelta);
-	}
-
+	Adjust_ViewPort(fTimeDelta);
+	Call_Shop(fTimeDelta);
+	Cal_Change_Time(fTimeDelta);
 }
 
 void CGame_Manager::Clear()
@@ -81,8 +76,6 @@ void CGame_Manager::Start()
 
 void CGame_Manager::Render()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
 	if (m_eProgress == StageProgress::OnGoing)
 	{
 		m_pGameInstance->Render_Begin();
@@ -95,11 +88,12 @@ void CGame_Manager::Render()
 		m_pGameInstance->Render_Begin();
 		m_pGraphic_Device->SetViewport(&m_MainViewPort);
 		m_pGameInstance->Draw();
+		m_pGameInstance->Ui_Shop_Render();
 		m_pGraphic_Device->SetViewport(&m_UiViewPort);
 		m_pGameInstance->Ui_Render();
 		m_pGameInstance->Render_End();
 	}
-	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
 }
 
 void CGame_Manager::Change_Check()
@@ -112,6 +106,12 @@ void CGame_Manager::Change_Check()
 			break;
 		case StageProgress::Clear:
 			Clear();
+			break;
+		case StageProgress::Shopping:
+			m_pGameInstance->Set_Ui_ShopState(TEXT("CUi_Shop"));
+			break;
+		case StageProgress::Changing:
+			m_fChangeTime = 3.f;
 			break;
 		case StageProgress::Start:
 			Start();
@@ -127,7 +127,6 @@ void CGame_Manager::Change_Check()
 
 void CGame_Manager::Reduce_ViewPort(_float fTimeDelta)
 {
-	m_fAdjustTime += fTimeDelta;
 	if (m_MainViewPort.Width > g_iWinSizeX - 300)
 	{
 		m_MainViewPort.Width -= DWORD(fTimeDelta * 1500);
@@ -152,8 +151,46 @@ void CGame_Manager::Extend_ViewPort(_float fTimeDelta)
 	{
 		m_MainViewPort.Width = g_iWinSizeX;
 		m_MainViewPort.Height = g_iWinSizeY;
-		Set_StageProgress(StageProgress::OnGoing);
 	}
+}
+
+void CGame_Manager::Adjust_ViewPort(_float fTimeDelta)
+{
+	if (m_eProgress == StageProgress::Clear)
+	{
+		Reduce_ViewPort(fTimeDelta);
+	}
+	else if (m_eProgress == StageProgress::Start)
+	{
+		Extend_ViewPort(fTimeDelta);
+	}
+}
+
+void CGame_Manager::Call_Shop(_float fTimeDelta)
+{
+	if (m_eProgress == StageProgress::Clear)
+	{
+		m_fShopTime -= fTimeDelta;
+		if (m_fShopTime < 0)
+		{
+			m_eProgress = StageProgress::Shopping;
+			m_fShopTime = 0.5f;
+		}
+	}
+}
+
+void CGame_Manager::Cal_Change_Time(_float fTimeDelta)
+{
+	m_fChangeTime -= fTimeDelta;
+	if (m_fChangeTime < 0 && m_eProgress == StageProgress::Changing)
+	{
+		Set_StageProgress(StageProgress::Start);
+	}
+}
+
+void CGame_Manager::Player_UpGrade(void* pArg)
+{
+	// for player
 }
 
 HRESULT CGame_Manager::Ready_Prototype_GameObjects()
@@ -207,30 +244,26 @@ HRESULT CGame_Manager::Ready_Prototype_Ui_Life()
 		CUi_MonsterDie::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_BackGround"),
 		CUi_Background::Create(m_pGraphic_Device))))
 		return E_FAIL;
-
 
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Special3Sec"),
 		CUi_Special3Sec::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_SpecialHit"),
 		CUi_SpecialHit::Create(m_pGraphic_Device))))
 		return E_FAIL;
-
 
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_SpecialHit_Part"),
 		CUi_SpecialHit_Part::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Floor_Part"),
 		CUi_Floor_Part::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -358,11 +391,16 @@ HRESULT CGame_Manager::Ready_Clear_Texture()
 
 HRESULT CGame_Manager::Ready_Shop_Texture()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_Test_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Clear/Shop/Clear_Shop.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_NoisePart_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/Noise/Noise%d.png", 2))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 
@@ -397,8 +435,21 @@ HRESULT CGame_Manager::Ready_Start_Texture()
 	return S_OK;
 }
 
-
 HRESULT CGame_Manager::Ready_Active_Ui()
+{
+	if (FAILED(Ready_Active_Clear()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Active_Shop()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Active_Gun()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Active_Clear()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Peace"),
 		eUiRenderType::Render_NonBlend,
@@ -450,6 +501,29 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 		CUi_Floor::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Active_Shop()
+{
+	if (FAILED(m_pGameInstance->Add_Ui_Shop(TEXT("CUi_Shop"),
+		CUi_Shop::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Life_Shop()
+{
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Shop_Noise_Part"),
+		CUi_Shop_Noise_Part::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Active_Gun()
+{
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
@@ -458,11 +532,6 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
 		return E_FAIL;
-
-	//if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_Part"),
-	//	eUiRenderType::Render_NonBlend,
-	//	CUi_Floor_Part::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
 
 	return S_OK;
 }

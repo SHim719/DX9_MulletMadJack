@@ -35,6 +35,15 @@ protected:
 
 private:
 	void Move(_float fTimeDelta);
+	void Scaling(_float fTimeDelta);
+	void Player_Shopping();
+	void Player_Choice();
+
+
+private:
+	_float m_fScaleTime = {0.f};
+	_float m_fMoveTime = { 1.f };
+	bool m_bEnd = { false };
 
 
 public:

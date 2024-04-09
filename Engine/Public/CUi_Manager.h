@@ -22,7 +22,7 @@ public:
 	HRESULT Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
 	class CUi* Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg);
 	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType UiRenderType, class CUi* Ui_Active);
-
+	HRESULT Add_Ui_Shop(const wstring& Ui_ShopTag, class CUi* Ui_Shop);
 
 
 
@@ -31,6 +31,9 @@ public:
 	void Tick(_float fTimeDelta);
 	void LateTick(_float fTimeDelta);
 	void Ui_Render_Begin();
+	void Ui_Shop_Render_Begin();
+	HRESULT Ui_Shop_Render();
+	void Ui_Shop_Render_End();
 	HRESULT Ui_Render();
 	void Ui_Render_End();
 	void Set_WinSize(_uint iWinSizeX, _uint iWinSizeY);
@@ -38,6 +41,7 @@ public:
 //for UiActive
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive);
 	bool Get_Ui_ActiveState(const wstring& Ui_ActiveTag);
+	void Set_Ui_ShopState(const wstring& Ui_ShopTag, bool _isActive = true);
 
 	void Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex);
 	int  Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag);
@@ -55,6 +59,7 @@ private:
 	map<const wstring, class CUi*> m_Ui_Active;
 	map<const wstring, class CUi*> m_Ui_ActiveBlend;
 
+	map<const wstring, class CUi*> m_Ui_Shop;
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;
 private:
 	_float4x4 m_ViewMatrix;

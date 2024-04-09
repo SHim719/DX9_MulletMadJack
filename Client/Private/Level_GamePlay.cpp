@@ -27,11 +27,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
 
-	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
+	//	return E_FAIL;
 
-	if (FAILED(Ready_Layer_Player()))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Player()))
+	//	return E_FAIL;
 	
 	//if (FAILED(Test_UiTexture_Loading()))
 	//	return E_FAIL;
@@ -39,8 +39,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Test_LifeUi_Clone()))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
+	//	return E_FAIL;
 
 	return S_OK;
 }
@@ -97,8 +97,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 
-	if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
+	//	return E_FAIL;
 
 
 	return S_OK;
@@ -156,15 +156,14 @@ HRESULT CLevel_GamePlay::Test_LifeUi_Clone()
 	//	return E_FAIL;
 
 
-	CUi_SpecialHit::SpecialHit_Desc Arg;
+	//CUi_SpecialHit::SpecialHit_Desc Arg;
 
-	Arg.Hit = eSpecialHit::HEADSHOT;
-	Arg.iCount = 4;
-	if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
-		eUiRenderType::Render_NonBlend,
-		&Arg)))
-		return E_FAIL;
-	//CUi_Peace_Texture
+	//Arg.Hit = eSpecialHit::HEADSHOT;
+	//Arg.iCount = 4;
+	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
+	//	eUiRenderType::Render_NonBlend,
+	//	&Arg)))
+	//	return E_FAIL;
 
 	return S_OK;
 }

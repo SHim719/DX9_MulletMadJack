@@ -172,6 +172,9 @@
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Shop">
       <UniqueIdentifier>{4d7212f4-9a04-4c85-8ebd-148c2b070984}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\CUi_Life\Part\Shop_Noise">
+      <UniqueIdentifier>{cc1f8b33-329e-4b51-82f8-9844b550863d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -306,6 +309,9 @@
     <ClInclude Include="..\Public\CUi_Shop.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi_Shop_Noise_Part.h">
+      <Filter>Ui\CUi_Life\Part\Shop_Noise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -424,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Shop.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Shop_Noise_Part.cpp">
+      <Filter>Ui\CUi_Life\Part\Shop_Noise</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
