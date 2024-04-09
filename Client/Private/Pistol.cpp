@@ -68,7 +68,7 @@ void CPistol::Tick(_float fTimeDelta)
 
 void CPistol::LateTick(_float fTimeDelta)
 {
-	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 2, 2, 3, 1, 2, 3);
+	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1.5f, 2, 3, 1, 2, 6);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
 }
 
@@ -88,7 +88,7 @@ HRESULT CPistol::Render()
 
 void CPistol::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	Set_Ui_Pos(260, -250);
+	Set_Ui_Pos(260, -270);
 	Set_Divide(2.0f);
 
 	m_fScale = { m_UiDesc.m_fSizeX / Get_Divide() , m_UiDesc.m_fSizeY / Get_Divide(), 1.f };
@@ -118,7 +118,7 @@ POINT CPistol::Get_Texture_Info()
 	if (m_pTextureCom == nullptr)
 		return { 0, 0 };
 
-	return m_pTextureCom->Get_TextureSize(m_iTexture_Index);
+	return { 2048, 2048 };
 }
 
 _float2 CPistol::Lissajous_Curve(_float _fTimeDelta, _float& _fLissajousTime, _float _fPosX, _float _fPosY, _float _fWitth, _float _fHeight, _float _fLagrangianX, _float _fLagrangianY, _float _fPhaseDelta, _float _fLissajousSpeed)

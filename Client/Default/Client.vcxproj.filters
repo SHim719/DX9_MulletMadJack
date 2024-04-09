@@ -115,9 +115,6 @@
     <Filter Include="Ui\Player">
       <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon">
-      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Fine">
       <UniqueIdentifier>{dd98ff7d-a669-4cb0-8619-dbf193ad27e9}</UniqueIdentifier>
     </Filter>
@@ -175,14 +172,23 @@
     <Filter Include="Ui\CUi_Clear\CUi_Finish">
       <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Weapon">
+      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Weapon\CrossHair">
       <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol_Right_Hand">
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol">
+      <UniqueIdentifier>{11156e82-39ea-4081-9f7e-77e4ba9d6038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle">
+      <UniqueIdentifier>{c391c9fa-046a-4fa4-be10-c6d872ae2107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand">
       <UniqueIdentifier>{05041a46-e88d-4ab7-9921-af4da25cac7e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon\Pistol">
-      <UniqueIdentifier>{c391c9fa-046a-4fa4-be10-c6d872ae2107}</UniqueIdentifier>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot">
+      <UniqueIdentifier>{eef9dca0-50e6-406e-af3f-099b069fba6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,20 +267,14 @@
     <ClInclude Include="..\Public\CUi_Announcer.h">
       <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Machine_Gun.h">
-      <Filter>Ui\CUi_Active\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Private\CUi_Heart.h">
-      <Filter>Ui\CUi_Clear\CUi_Heart</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CrossHair.h">
-      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Weapon\CrossHair</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Right_Hand.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol_Right_Hand</Filter>
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol.h">
-      <Filter>Ui\CUi_Active\Weapon\Pistol</Filter>
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Heart.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
@@ -317,6 +317,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\TriggerObject.h">
       <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Shot.h">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -389,20 +392,14 @@
     <ClCompile Include="..\Private\CUi_Announcer.cpp">
       <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Machine_Gun.cpp">
-      <Filter>Ui\CUi_Active\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Public\CUi_Heart.cpp">
-      <Filter>Ui\CUi_Clear\CUi_Heart</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\CrossHair.cpp">
-      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Weapon\CrossHair</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol_Right_Hand</Filter>
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol.cpp">
-      <Filter>Ui\CUi_Active\Weapon\Pistol</Filter>
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Heart.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
@@ -436,6 +433,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\TriggerObject.cpp">
       <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Shot.cpp">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

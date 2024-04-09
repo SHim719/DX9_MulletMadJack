@@ -50,6 +50,7 @@ public:
 		std::cout << "REAL Up :" << m_WorldMatrix._21 << " " << m_WorldMatrix._22 << " " << m_WorldMatrix._23 << std::endl;
 		std::cout << "REAL Look :" << m_WorldMatrix._31 << " " << m_WorldMatrix._32 << " " << m_WorldMatrix._33 << std::endl;
 		std::cout << "REAL Position :" << m_WorldMatrix._41 << " " << m_WorldMatrix._42 << " " << m_WorldMatrix._43 << std::endl;
+		std::system("cls");
 	}
 
 	void Debug_State_Out2() {
@@ -123,6 +124,8 @@ public:
 	void Head_Roll(_float fTimeDelta, _float Degree);
 
 	void Set_View_RollBack();
+	void Set_HeadUp_Initialize();
+
 
 	void Turn(const _float3& vAxis, _float fTimeDelta);
 	void UnOffset_Turn(const _float3& vAxis, _float fTimeDelta);

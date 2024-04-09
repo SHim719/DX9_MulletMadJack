@@ -5,6 +5,7 @@
 #include "Wall.h"
 #include "Floor.h"
 #include "MapObject.h"
+#include "Player.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -194,7 +195,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
-
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
 		CWall::Create(m_pGraphic_Device))))

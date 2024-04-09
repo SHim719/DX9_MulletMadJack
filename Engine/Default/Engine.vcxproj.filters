@@ -100,6 +100,9 @@
     <Filter Include="01.Utility\04.Components\VIBuffer\Box">
       <UniqueIdentifier>{dca43b6a-95ce-451d-bd6f-344a0d4cbca0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\97. PlayerManager">
+      <UniqueIdentifier>{0af5cf2c-5ddd-4df7-92b8-5cf5229bbc11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Base.h">
@@ -201,6 +204,9 @@
     <ClInclude Include="..\Public\VIBuffer_Box.h">
       <Filter>01.Utility\04.Components\VIBuffer\Box</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\PlayerManager.h">
+      <Filter>01.Utility\97. PlayerManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -286,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="..\private\GameObject.cpp">
       <Filter>01.Utility\02.GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\PlayerManager.cpp">
+      <Filter>01.Utility\97. PlayerManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

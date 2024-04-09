@@ -206,20 +206,36 @@ void CTransform::Head_Roll(_float fTimeDelta, _float Degree)
 
 	_float4x4	RotationMatrix;
 	
-	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, To_Radian(Degree) * fTimeDelta);
+	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, To_Radian(Degree));
 
 	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
 	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
 
-	Set_UnOffset_State(STATE_RIGHT, &vRight);
-	Set_UnOffset_State(STATE_UP, &vUp);
-	Set_UnOffset_State(STATE_LOOK, &vLook);
+	Set_State(STATE_RIGHT, &vRight);
+	Set_State(STATE_UP, &vUp);
+	Set_State(STATE_LOOK, &vLook);
 }
 
 void CTransform::Set_View_RollBack()
 {
 	//Set_State(STATE_POSITION, &m_vOffset_Position);
 	m_WorldMatrix = m_WorldMatrix_Offset;
+}
+
+void CTransform::Set_HeadUp_Initialize()
+{
+	_float3		vRight = Get_State(STATE_RIGHT);
+	_float3		vUp = Get_State(STATE_UP);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	_float4x4	RotationMatrix;
+
+	D3DXMatrixRotationAxis(&RotationMatrix, &vRight, 0.f);
+	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+	D3DXVec3TransformNormal(&vLook, &vLook, &RotationMatrix);
+
+	Set_State(STATE_UP, &vUp);
+	Set_State(STATE_LOOK, &vLook);
 }
 
 void CTransform::Camera_Shake(_float fTimeDelta, _float fShakePower)

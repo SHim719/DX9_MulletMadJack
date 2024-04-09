@@ -116,9 +116,9 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;opencv_world490.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../EngineSDK/Lib/;C:\opencv\build\x64\vc16\lib</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>opencv_world490.dll;opencv_world490d.dll;opencv_core246d.dll;opencv_highgui246d.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../EngineSDK/Lib/</AdditionalLibraryDirectories>
+      <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -196,6 +196,7 @@
     <ClInclude Include="..\Public\CrossHair.h" />
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\Public\MapObject.h" />
+    <ClInclude Include="..\Public\Pistol_Shot.h" />
     <ClInclude Include="..\public\Player.h" />
     <ClInclude Include="..\Public\Ui_Pos.h" />
     <ClInclude Include="..\Public\TriggerObject.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="..\Private\CrossHair.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\Private\MapObject.cpp" />
+    <ClCompile Include="..\Private\Pistol_Shot.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
     <ClCompile Include="..\Private\TriggerObject.cpp" />
     <ClCompile Include="..\Private\Pistol.cpp" />

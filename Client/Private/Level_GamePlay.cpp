@@ -31,6 +31,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	if(FAILED(Ready_Layer_Player()))
+		return E_FAIL;
 	
 	//if (FAILED(Test_UiTexture_Loading()))
 	//	return E_FAIL;
@@ -55,17 +56,12 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Start);
 	}
 	
-	m_pPlayer->PriorityTick(fTimeDelta);
-	m_pPlayer->Tick(fTimeDelta);
-	m_pPlayer->LateTick(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render()
 {
 
 	SetWindowText(g_hWnd, TEXT("게임플레이레벨."));
-
-	m_pPlayer->Render();
 
 	return S_OK;
 }
@@ -87,9 +83,9 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 {
 	CCoreCamera::CAMERA_DESC			CameraDesc{};
 
-	CameraDesc.vEye = _float3(0.f, 0.2f, -1.f);
-	CameraDesc.vAt = _float3(10.f, 0.f, 10.f);
-	CameraDesc.fFovy = D3DXToRadian(60.0f);
+	CameraDesc.vEye = _float3(0.f, 0.65f, 1.7f);
+	CameraDesc.vAt = _float3(0.5f, 0.5f, 10.f);
+	CameraDesc.fFovy = D3DXToRadian(90.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1000.0f;
 	CameraDesc.fSpeedPerSec = 10.f;
@@ -123,7 +119,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 	if(m_pPlayer != nullptr)
 		return E_FAIL;
 
-	m_pPlayer = CPlayer::Create();
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player")))
+		return E_FAIL;
 
 	return S_OK;
 }

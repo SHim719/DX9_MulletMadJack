@@ -65,7 +65,7 @@ private:
 	_float3 m_fScale = { 0.f , 0.f, 1.f };
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
-	_float m_fLissajousTime = 0.f;
+	_float m_fLissajousTime = 5.f;
 public:
 	virtual void Free() override;
 };

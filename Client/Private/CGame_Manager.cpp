@@ -21,8 +21,8 @@
 #include "Pistol_Right_Hand.h"
 #include "Pistol.h"
 #include "CrossHair.h"
-
-
+#include "Pistol_Shot.h"
+#include "Player.h"
 
 IMPLEMENT_SINGLETON(CGame_Manager)
 
@@ -160,6 +160,10 @@ HRESULT CGame_Manager::Ready_Prototype_GameObjects()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(L"Background"
 		, CBackGround::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(L"Prototype_Player"
+		, CPlayer::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -340,7 +344,12 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/PISTOL_IDLE%d.png", 3))))
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Shot_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Shot/PISTOL_SHOT%d.png", 6))))
 		return E_FAIL;
 
 	return S_OK;
@@ -406,6 +415,9 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Shot", eUiRenderType::Render_NonBlend, CPistol_Shot::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

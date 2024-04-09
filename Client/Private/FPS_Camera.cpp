@@ -40,6 +40,8 @@ HRESULT CFPS_Camera::Initialize(void* pArg)
 	// 빌보드 행렬을 단위행렬로 초기화
 	D3DXMatrixIdentity(&m_BillboardMatrix);
 
+	Camera_Shake_Order(0.f, 0.f);
+
 	return S_OK;
 }
 
@@ -176,27 +178,27 @@ HRESULT CFPS_Camera::Add_Components()
 void CFPS_Camera::Key_Input(_float fTimeDelta)
 {
 
-	if (GetKeyState('W') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Straight(fTimeDelta);
-	}
+	//if (GetKeyState('W') & 0x8000)
+	//{
+	//	m_pTransformCom->Go_Floor_Straight(fTimeDelta);
+	//}
 
-	if (GetKeyState('S') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Backward(fTimeDelta);
-	}
+	//if (GetKeyState('S') & 0x8000)
+	//{
+	//	m_pTransformCom->Go_Floor_Backward(fTimeDelta);
+	//}
 
-	if (GetKeyState('A') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Left(fTimeDelta);
-	}
+	//if (GetKeyState('A') & 0x8000)
+	//{
+	//	m_pTransformCom->Go_Floor_Left(fTimeDelta);
+	//}
 
-	if (GetKeyState('D') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Right(fTimeDelta);
-	}
+	//if (GetKeyState('D') & 0x8000)
+	//{
+	//	m_pTransformCom->Go_Floor_Right(fTimeDelta);
+	//}
 
-	if (GetKeyState('Z') & 0x8000)
+	/*if (GetKeyState('Z') & 0x8000)
 	{
 		m_pTransformCom->Go_Straight(fTimeDelta);
 	}
@@ -204,17 +206,17 @@ void CFPS_Camera::Key_Input(_float fTimeDelta)
 	if (GetKeyState('X') & 0x8000)
 	{
 		m_pTransformCom->Go_Backward(fTimeDelta);
-	}
+	}*/
 
-	if (GetKeyState('Q') & 0x8000)
-	{
-		m_pTransformCom->Head_Roll(fTimeDelta, 160.f);
-	}
+	//if (m_pGameInstance->GetKeyDown(eKeyCode::Q))
+	//{
+	//	m_pTransformCom->Head_Roll(fTimeDelta, 320.f);
+	//}
 
-	if (GetKeyState('E') & 0x8000)
-	{
-		m_pTransformCom->Head_Roll(fTimeDelta, -160.f);
-	}
+	//if (m_pGameInstance->GetKeyDown(eKeyCode::E))
+	//{
+	//	m_pTransformCom->Head_Roll(fTimeDelta, -320.f);
+	//}
 
 	if (GetKeyState('T') & 0x8000)
 	{
