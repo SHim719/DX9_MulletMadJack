@@ -17,11 +17,11 @@
 #include "CUi_Chat.h"
 #include "CUi_LiveStream.h"
 #include "CUi_Announcer.h"
-#include "CUi_Floor_F.h"
+#include "CUi_Floor_Part.h"
 #include "Pistol_Right_Hand.h"
 #include "Pistol.h"
 #include "CrossHair.h"
-
+#include "CUi_Floor.h"
 
 
 IMPLEMENT_SINGLETON(CGame_Manager)
@@ -46,8 +46,8 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 	Ready_Prototype_GameObjects();
 	Ready_Prototype_Components();
-	Ready_Prototype_Ui_Life();
 	Ready_Static_Texture_Prototype();
+	Ready_Prototype_Ui_Life();
 	Ready_Active_Ui();
 }
 
@@ -76,7 +76,7 @@ void CGame_Manager::Clear()
 void CGame_Manager::Start()
 {
 	m_pGameInstance->Set_Enter(false);
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor_F"));
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor"));
 }
 
 void CGame_Manager::Render()
@@ -228,6 +228,9 @@ HRESULT CGame_Manager::Ready_Prototype_Ui_Life()
 		return E_FAIL;
 
 
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Floor_Part"),
+		CUi_Floor_Part::Create(m_pGraphic_Device))))
+		return E_FAIL;
 	return S_OK;
 }
 
@@ -268,6 +271,30 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Ui/Life/FINISHED.png"))))
 		return E_FAIL;
 
+	Ready_Clear_Texture();
+
+	Ready_Start_Texture();
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CrossHair_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Crosshair/Crosshair%d.png", 7))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Hand_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Hand/Pistol/HAND_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/PISTOL_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Clear_Texture()
+{
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Peace_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Clear/Logo/Green_Peace.png"))))
@@ -323,24 +350,48 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Ui/Clear/Sheet/Sheet%d.png", 4))))
 		return E_FAIL;
 
+	if (FAILED(Ready_Shop_Texture()))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Shop_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/Clear_Shop.png"))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Start_Texture()
+{
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_F_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Start/Active_F.png"))))
+			L"../Bin/Resources/Textures/Ui/Start/Start_F%d.png", 2))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CrossHair_Textures",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_L_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Crosshair/Crosshair%d.png", 7))))
+			L"../Bin/Resources/Textures/Ui/Start/Start_L%d.png", 2))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Hand_Textures",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_O_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Hand/Pistol/HAND_IDLE%d.png", 3))))
+			L"../Bin/Resources/Textures/Ui/Start/Start_O%d.png", 2))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Textures",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_R_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/PISTOL_IDLE%d.png", 3))))
+			L"../Bin/Resources/Textures/Ui/Start/Start_R%d.png", 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_0_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Start/Start%d.png", 6))))
 		return E_FAIL;
 
 	return S_OK;
@@ -394,9 +445,9 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 		CUi_Announcer::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_F"),
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor"),
 		eUiRenderType::Render_NonBlend,
-		CUi_Floor_F::Create(m_pGraphic_Device))))
+		CUi_Floor::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
@@ -407,6 +458,11 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	//if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_Part"),
+	//	eUiRenderType::Render_NonBlend,
+	//	CUi_Floor_Part::Create(m_pGraphic_Device))))
+	//	return E_FAIL;
 
 	return S_OK;
 }

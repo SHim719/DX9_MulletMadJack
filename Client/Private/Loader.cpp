@@ -171,20 +171,20 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/bullet_sprites_4_%d.png"), 4))))
 	//	return E_FAIL;
 	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
-		return E_FAIL;
-	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Floor_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
-		return E_FAIL;
-	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Objects/Object%d.png", 13))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+	//		L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
+	//	return E_FAIL;
+	//
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Floor_Textures",
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+	//		L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
+	//	return E_FAIL;
+	//
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+	//		L"../Bin/Resources/Textures/Objects/Object%d.png", 13))))
+	//	return E_FAIL;
 
 
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));

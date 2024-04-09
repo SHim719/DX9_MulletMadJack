@@ -171,9 +171,6 @@
     <ClInclude Include="..\Public\Key_Manager.h">
       <Filter>01.Utility\05.Key</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi.h">
-      <Filter>01.Utility\99. Ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_Manager.h">
       <Filter>01.Utility\99. Ui\Manager</Filter>
     </ClInclude>
@@ -200,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Box.h">
       <Filter>01.Utility\04.Components\VIBuffer\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi.h">
+      <Filter>01.Utility\99. Ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

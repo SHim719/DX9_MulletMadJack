@@ -25,18 +25,19 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-	Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
+	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 
-	if(FAILED(Ready_Layer_Player()))
+	if (FAILED(Ready_Layer_Player()))
+		return E_FAIL;
 	
 	//if (FAILED(Test_UiTexture_Loading()))
 	//	return E_FAIL;
 
-	//if (FAILED(Test_LifeUi_Clone()))
-	//	return E_FAIL;
+	if (FAILED(Test_LifeUi_Clone()))
+		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
 		return E_FAIL;
@@ -155,14 +156,14 @@ HRESULT CLevel_GamePlay::Test_LifeUi_Clone()
 	//	return E_FAIL;
 
 
-	//CUi_SpecialHit::SpecialHit_Desc Arg;
+	CUi_SpecialHit::SpecialHit_Desc Arg;
 
-	//Arg.Hit = eSpecialHit::HEADSHOT;
-	//Arg.iCount = 4;
-	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
-	//	eUiRenderType::Render_NonBlend,
-	//	&Arg)))
-	//	return E_FAIL;
+	Arg.Hit = eSpecialHit::HEADSHOT;
+	Arg.iCount = 4;
+	if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
+		eUiRenderType::Render_NonBlend,
+		&Arg)))
+		return E_FAIL;
 	//CUi_Peace_Texture
 
 	return S_OK;

@@ -4,12 +4,12 @@
 
 BEGIN(Client)
 
-class CUi_Floor_F final : public CUi
+class CUi_Shop final : public CUi
 {
 protected:
-	CUi_Floor_F(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Floor_F(const CUi_Floor_F& rhs);
-	virtual ~CUi_Floor_F() = default;
+	CUi_Shop(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Shop(const CUi_Shop& rhs);
+	virtual ~CUi_Shop() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -34,20 +34,11 @@ protected:
 
 
 private:
-	void Sub_Speed(_float fTimeDelta);
 	void Move(_float fTimeDelta);
-	void Rotation(_float fTimeDelta);
-
-
-private:
-	_float m_fSpeed = { 0.f };
-	_float m_fRotationTime = { 0.f };
-	_float m_fAngle = { 0.f };
-	bool m_bTemp = true;
 
 
 public:
-	static CUi_Floor_F* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_Shop* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

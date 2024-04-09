@@ -12,8 +12,10 @@ CUi::CUi(LPDIRECT3DDEVICE9 pGraphic_Device)
 CUi::CUi(const CUi& rhs)
 	: m_pGraphic_Device(rhs.m_pGraphic_Device)
 	, m_pGameInstance(rhs.m_pGameInstance)
+	, m_fLifeTime(rhs.m_fLifeTime)
 {
 	memcpy(&m_UiDesc, &rhs.m_UiDesc, sizeof(Ui_Pos_Size_Rotation));
+	
 	Safe_AddRef(m_pGraphic_Device);
 	Safe_AddRef(m_pGameInstance);
 }
@@ -81,7 +83,7 @@ void CUi::Default_Set_Size()
 void CUi::Cal_Life_Blink(_float fTimeDelta)
 {
 	m_fLifeTime -= fTimeDelta;
-	m_iBlink += fTimeDelta;
+	m_fBlink += fTimeDelta;
 
 	if (m_fLifeTime < 0)
 	{
@@ -98,9 +100,9 @@ bool CUi::Cal_BlinkRender(_float BlinkGap)
 {
 	if (m_bBlink)
 	{
-		if (m_iBlink > BlinkGap)
+		if (m_fBlink > BlinkGap)
 		{
-			m_iBlink = 0.f;
+			m_fBlink = 0.f;
 			return true;
 		}
 		return false;

@@ -349,18 +349,20 @@ void CUi_Manager::Free()
 	m_Ui_LifeBlendClonelist.clear();
 
 
-	for (auto& Pair : m_Ui_LifePrototypes)
-		Safe_Release(Pair.second);
-	m_Ui_LifePrototypes.clear();
-
-
 	for (auto& Pair : m_Ui_Active)
 		Safe_Release(Pair.second);
 	m_Ui_Active.clear();
 
+
 	for (auto& Pair : m_Ui_ActiveBlend)
 		Safe_Release(Pair.second);
 	m_Ui_ActiveBlend.clear();
+
+
+	for (auto& Pair : m_Ui_LifePrototypes)
+		Safe_Release(Pair.second);
+	m_Ui_LifePrototypes.clear();
+
 
 	Safe_Release(m_pGraphic_Device);
 }

@@ -40,6 +40,7 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 
 	if (true == m_pLoader->isFinished())
 	{
+		int a = 10;
 		if (GetKeyState(VK_SPACE) & 0x8000)
 		{
 			CLevel*		pLevel = { nullptr };
