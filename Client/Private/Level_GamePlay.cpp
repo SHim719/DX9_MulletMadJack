@@ -98,7 +98,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fFovy = D3DXToRadian(90.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1000.0f;
-	CameraDesc.fSpeedPerSec = 10.f;
+	CameraDesc.fSpeedPerSec = 6.f;
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 

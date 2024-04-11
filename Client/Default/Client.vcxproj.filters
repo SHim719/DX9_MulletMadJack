@@ -274,6 +274,12 @@
     <Filter Include="Ui\CUi_Active\Kick">
       <UniqueIdentifier>{481e1707-b28d-4bf1-af4f-9bbd53ad0be4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\CUi_Active\Camera_Filter">
+      <UniqueIdentifier>{a74d9362-43ca-44f5-b595-e2af6e50e029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Camera_Filter\Dash">
+      <UniqueIdentifier>{a94963dc-aa79-4a65-9063-350d749bb585}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -492,6 +498,9 @@
     <ClInclude Include="..\Public\FPS_Camera.h">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Dash_Effect.h">
+      <Filter>Ui\CUi_Active\Camera_Filter\Dash</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\Kick.h">
       <Filter>Ui\CUi_Active\Kick</Filter>
     </ClInclude>
@@ -694,6 +703,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Kick.cpp">
       <Filter>Ui\CUi_Active\Kick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Dash_Effect.cpp">
+      <Filter>Ui\CUi_Active\Camera_Filter\Dash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

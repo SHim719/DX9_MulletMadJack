@@ -25,10 +25,12 @@ public:
 	void Set_Player_WeaponType(CPlayer::WEAPON_TYPE eWeaponType) { m_pPlayer->Set_WeaponType(eWeaponType); }
 	void Set_Player_HandType(CPlayer::HAND_TYPE eHandType) { m_pPlayer->Set_HandType(eHandType); }
 	void Set_Player_AnimationType(CPlayer::ANIMATION_TYPE eAnimationType) { m_pPlayer->Set_AnimationType(eAnimationType); }
+	void Set_Player_MoveState(CPlayer::PLAYER_STATE ePlayerState) { m_pPlayer->Set_PlayerState(ePlayerState); }
 
 	CPlayer::WEAPON_TYPE Get_Player_WeaponType() { CPlayer::WEAPON_TYPE eWeaponType; m_pPlayer->Get_WeaponType(eWeaponType); return eWeaponType; }
 	CPlayer::HAND_TYPE Get_Player_HandType() { CPlayer::HAND_TYPE eHandType; m_pPlayer->Get_HandType(eHandType); return eHandType; }
 	CPlayer::ANIMATION_TYPE Get_Player_AnimationType() { CPlayer::ANIMATION_TYPE eAnimationType; m_pPlayer->Get_AnimationType(eAnimationType); return eAnimationType; }
+	CPlayer::PLAYER_STATE Get_Player_MoveState() { CPlayer::PLAYER_STATE ePlayerState; m_pPlayer->Get_PlayerState(ePlayerState); return ePlayerState; }
 
 	void Set_Player_TextureIndex(_int iTextureindex) { m_iTextureindex = iTextureindex; }
 	_int Get_Player_TextureIndex() { return m_iTextureindex; }

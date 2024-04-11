@@ -20,7 +20,7 @@ public:
 	enum WEAPON_TYPE { PISTOL, WEAPON_END };
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, ANIMATION_END };
-	enum PLAYER_STATE { IDLE_STATE, RUN_STATE, PLAYER_STATE_END };
+	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, JUMP_STATE, PLAYER_STATE_END };
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -42,6 +42,10 @@ public:
 		Active_Reset();
 		this->eAnimationType = eAnimationType; }
 
+	void Set_PlayerState(PLAYER_STATE ePlayerState) {
+		Camera_Reset();
+		this->ePlayerState = ePlayerState; }
+
 	void Get_WeaponType(WEAPON_TYPE& eWeaponType) { eWeaponType = this->eWeaponType; }
 	void Get_HandType(HAND_TYPE& eHandType) { eHandType = this->eHandType; }
 	void Get_AnimationType(ANIMATION_TYPE& eAnimationType) { eAnimationType = this->eAnimationType; }
@@ -55,8 +59,12 @@ private:
 	void Render_Hand();
 	
 	void Active_Reset();
+	void Camera_Reset();
+
 	void Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime);
 	void Camera_Event(_float fTimeDelta);
+
+	void Jump(_float fTimeDelta);
 
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 

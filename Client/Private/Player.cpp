@@ -63,6 +63,10 @@ void CPlayer::Tick(_float fTimeDelta)
 	Render_Hand();
 
 	Camera_Event(fTimeDelta);
+
+
+
+
 }
 
 void CPlayer::LateTick(_float fTimeDelta)
@@ -150,9 +154,26 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
+		Camera_Shake_Order(600000.f, 0.4f);
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);
 	}
 
+	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift))
+	{
+		m_pTransformCom->Set_Speed(10.f);
+		CPlayer_Manager::Get_Instance()->Set_Player_MoveState(CPlayer::PLAYER_STATE::DASH_STATE);
+	}
+
+	if (m_pGameInstance->GetKeyUp(eKeyCode::LShift))
+	{
+		m_pTransformCom->Set_Speed(6.f);
+		CPlayer_Manager::Get_Instance()->Set_Player_MoveState(CPlayer::PLAYER_STATE::IDLE_STATE);
+	}
+
+	if (m_pGameInstance->GetKeyUp(eKeyCode::Space))
+	{
+		Jump(fTimeDelta);
+	}
 	if (GetKeyState('T') & 0x8000)
 	{
 		Camera_Shake_Order(100.f, 0.5f);
@@ -225,6 +246,11 @@ void CPlayer::Active_Reset()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload"), false);
 }
 
+void CPlayer::Camera_Reset()
+{
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), false);
+}
+
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CPlayer* pInstance = new CPlayer(pGraphic_Device);
@@ -252,7 +278,17 @@ CGameObject* CPlayer::Clone(void* pArg)
 }
 void  CPlayer::Camera_Event(_float fTimeDelta)
 {
-	if (m_fShakeTime >= 0.f) Camera_Shake(fTimeDelta, 250000.f, m_fShakeTime);
+	if (m_fShakeTime >= 0.f) Camera_Shake(fTimeDelta, m_fShakePower, m_fShakeTime);
+
+	if (ePlayerState == PLAYER_STATE::DASH_STATE)
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), true);
+	}
+}
+
+void CPlayer::Jump(_float fTimeDelta)
+{
+	Set_PlayerState(CPlayer::PLAYER_STATE::JUMP_STATE);
 }
 
 void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime)
