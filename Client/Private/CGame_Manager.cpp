@@ -674,7 +674,7 @@ HRESULT CGame_Manager::Ready_Active_Gun()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Shot", eUiRenderType::Render_NonBlend, CPistol_Shot::Create(m_pGraphic_Device))))
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Shot", eUiRenderType::Render_Blend, CPistol_Shot::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Spin", eUiRenderType::Render_NonBlend, CPistol_Spin::Create(m_pGraphic_Device))))

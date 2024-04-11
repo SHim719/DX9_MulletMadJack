@@ -91,7 +91,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 	{
 		m_pTransformCom->Go_Floor_Left(fTimeDelta);
-		HeadTilt(fTimeDelta, -1.f);
+		HeadTilt(fTimeDelta, -2.f);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::A))
@@ -104,7 +104,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKey(eKeyCode::D))
 	{
 		m_pTransformCom->Go_Floor_Right(fTimeDelta);
-		HeadTilt(fTimeDelta, 1.f);
+		HeadTilt(fTimeDelta, 2.f);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::D))

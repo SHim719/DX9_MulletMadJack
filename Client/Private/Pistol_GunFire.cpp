@@ -72,12 +72,12 @@ void CPistol_Gunfire::LateTick(_float fTimeDelta)
 
 HRESULT CPistol_Gunfire::Render()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	/*m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	m_pGraphic_Device->SetRenderState(D3DRS_BLENDOP, 10);
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 123);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 123);*/
 
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
@@ -86,7 +86,7 @@ HRESULT CPistol_Gunfire::Render()
 		return E_FAIL;
 
 	m_pVIBufferCom->Render();
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	/*m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);*/
 	return S_OK;
 }
 
