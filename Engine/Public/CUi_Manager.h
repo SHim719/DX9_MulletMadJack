@@ -11,7 +11,7 @@ enum class eUiRenderType
 };
 class CUi_Manager final : public CBase
 {
-	
+
 private:
 	CUi_Manager(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual ~CUi_Manager() = default;
@@ -23,14 +23,16 @@ public:
 	class CUi* Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg);
 	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType UiRenderType, class CUi* Ui_Active);
 
-
-
+	HRESULT Add_Ui_ShopActive(const wstring& Ui_ShopTag, class CUi* Ui_Shop);
 
 public:
 	void PriorityTick(_float fTimeDelta);
 	void Tick(_float fTimeDelta);
 	void LateTick(_float fTimeDelta);
 	void Ui_Render_Begin();
+	void Ui_Shop_Render_Begin();
+	HRESULT Ui_Shop_Render();
+	void Ui_Shop_Render_End();
 	HRESULT Ui_Render();
 	void Ui_Render_End();
 	void Set_WinSize(_uint iWinSizeX, _uint iWinSizeY);
@@ -38,6 +40,7 @@ public:
 //for UiActive
 	void Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive);
 	bool Get_Ui_ActiveState(const wstring& Ui_ActiveTag);
+	void Set_Ui_ShopActiveState(const wstring& Ui_ShopTag, bool _isActive = true);
 
 	void Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex);
 	int  Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag);
@@ -54,6 +57,9 @@ private:
 
 	map<const wstring, class CUi*> m_Ui_Active;
 	map<const wstring, class CUi*> m_Ui_ActiveBlend;
+
+	map<const wstring, class CUi*> m_Ui_ShopActive;
+
 
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;
 private:

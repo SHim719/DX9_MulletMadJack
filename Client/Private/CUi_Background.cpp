@@ -1,5 +1,6 @@
 #include "CUi_Background.h"
 
+
 CUi_Background::CUi_Background(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CUi(pGraphic_Device)
 {
@@ -23,10 +24,8 @@ HRESULT CUi_Background::Initialize(void* pArg)
 	if (FAILED(Add_Components(pArg)))
 		return E_FAIL;
 
-
 	Initialize_Set_Scale_Pos_Rotation(pArg);
 	Initialize_Set_Speed();
-
 
 	return S_OK;
 }
@@ -81,14 +80,6 @@ HRESULT CUi_Background::Add_Texture(void* pArg)
 		return E_FAIL;
 
 	return S_OK;
-}
-
-void CUi_Background::Default_Set_LifeTime()
-{
-}
-
-void CUi_Background::Default_Set_Size()
-{
 }
 
 void CUi_Background::Initialize_Set_Scale_Pos_Rotation(void* pArg)

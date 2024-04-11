@@ -58,10 +58,8 @@ HRESULT CUi_PEACE::Render()
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
-
 	m_pTextureCom->Bind_Texture(m_iTexture_Index);
 	m_pVIBufferCom->Render();
-
 
 	return S_OK;
 }
@@ -72,7 +70,6 @@ HRESULT CUi_PEACE::Initialize_Active()
 	Initialize_Set_Size();
 	Initialize_Set_Speed();
 	Initialize_Set_Scale_Pos_Rotation(nullptr);
-
 
 	return S_OK;
 }
@@ -97,10 +94,8 @@ void CUi_PEACE::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
-
 	m_UiDesc.m_fX = 483.f;
 	m_UiDesc.m_fY = -493.f;
-
 
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
@@ -145,10 +140,7 @@ void CUi_PEACE::Enter(bool _Enter)
 	m_bActive = true;
 	if (m_bEnter)
 	{
-		Initialize_Set_ActiveTime();
-		Initialize_Set_Size();
-		Initialize_Set_Speed();
-		Initialize_Set_Scale_Pos_Rotation(nullptr);
+		Initialize_Active();
 	}
 	else
 	{

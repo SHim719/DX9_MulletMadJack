@@ -210,12 +210,12 @@ void CUi_SpecialHit::Move(_float fTimeDelta)
 void CUi_SpecialHit::Scaling(_float fTimeDelta)
 {	
 	m_fScaleTime += fTimeDelta;
-	if (m_fScaleTime < 0.3f && m_pTransformCom->Get_Scale().x < m_fScaleUpperLimit)
+	if (m_fScaleTime < 0.3f)
 	{
-		_float3 ScaleUp = { 1.1f, 1.1f, 0.f };
+		_float3 ScaleUp = { 1.1f, 1.1f, 1.f };
 		m_pTransformCom->Set_Scale(ScaleUp);
 	}
-	else if (m_fScaleTime > 0.3f && m_fScaleTime < 1.f && m_pTransformCom->Get_Scale().x > m_fScaleDownLimit)
+	else if (m_fScaleTime > 0.3f && m_fScaleTime < 1.f)
 	{
 		_float3 ScaleDown = { 0.95f, 0.95f, 0.f };
 		m_pTransformCom->Set_Scale(ScaleDown);

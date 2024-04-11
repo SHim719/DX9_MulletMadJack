@@ -97,7 +97,7 @@ protected:
 
 protected:
 	_float m_fLifeTime = { 0.f };
-	_float m_iBlink = { 0.f };
+	_float m_fBlink = { 0.f };
 	bool m_bBlink = { false };
 
 

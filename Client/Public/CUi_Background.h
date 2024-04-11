@@ -26,12 +26,6 @@ protected:
 	virtual HRESULT Add_Components(void* pArg) override;
 	virtual HRESULT Add_Texture(void* pArg) override;
 
-
-protected:
-	virtual void Default_Set_LifeTime() override;
-	virtual void Default_Set_Size() override;
-
-
 protected:
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
 	virtual void Initialize_Set_Speed() override;

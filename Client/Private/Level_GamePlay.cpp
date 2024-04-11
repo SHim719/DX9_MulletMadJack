@@ -28,21 +28,16 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-	Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
+	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
 
-	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-		return E_FAIL;
-
-	if(FAILED(Ready_Layer_Player()))
-	
-	//if (FAILED(Test_UiTexture_Loading()))
+	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 	//	return E_FAIL;
 
-	//if (FAILED(Test_LifeUi_Clone()))
+	//if (FAILED(Ready_Layer_Player()))
 	//	return E_FAIL;
 
-	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
+	//	return E_FAIL;
 
 	Initialize_SodaMachine();
 	return S_OK;
@@ -50,15 +45,7 @@ HRESULT CLevel_GamePlay::Initialize()
 
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
-	if (m_pGameInstance->GetKeyDown(eKeyCode::U))
-	{
-		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Clear);
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::I))
-	{
-		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Start);
-	}
-	
+	Test_Ui();
 	m_pPlayer->PriorityTick(fTimeDelta);
 	m_pPlayer->Tick(fTimeDelta);
 	m_pPlayer->LateTick(fTimeDelta);
@@ -117,8 +104,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 
-	if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
+	//	return E_FAIL;
 
 
 	return S_OK;
@@ -158,34 +145,32 @@ void CLevel_GamePlay::Free()
 
 }
 
-HRESULT CLevel_GamePlay::Test_LifeUi_Clone()
+void CLevel_GamePlay::Test_Ui()
 {
-	//CUi_MonsterDie::MonsterDie_Arg Arg;
-	//Arg.MonsterDiePosX = -200;
-	//Arg.MonsterDiePosY = -200;
-	//Arg.MonsterGrade = eMonsterGrade::High;
-	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_MonsterDie"),
-	//	eUiRenderType::Render_Blend,
-	//	&Arg)))
-	//	return E_FAIL;
-
-
-	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_Special3Sec"),
-	//	eUiRenderType::Render_Blend,
-	//	nullptr)))
-	//	return E_FAIL;
-
-
-	//CUi_SpecialHit::SpecialHit_Desc Arg;
-
-	//Arg.Hit = eSpecialHit::HEADSHOT;
-	//Arg.iCount = 4;
-	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
-	//	eUiRenderType::Render_NonBlend,
-	//	&Arg)))
-	//	return E_FAIL;
-	//CUi_Peace_Texture
-
-	return S_OK;
+	if (m_pGameInstance->GetKeyDown(eKeyCode::U))
+	{
+		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Clear);
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::J))
+	{
+		CUi_MonsterDie::MonsterDie_Arg Arg;
+		Arg.MonsterDiePosX = -200;
+		Arg.MonsterDiePosY = -200;
+		Arg.MonsterGrade = eMonsterGrade::High;
+		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_MonsterDie"),
+			eUiRenderType::Render_Blend, &Arg);
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::I))
+	{
+		CUi_SpecialHit::SpecialHit_Desc Arg;
+		Arg.Hit = eSpecialHit::HEADSHOT;
+		Arg.iCount = 4;
+		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
+			eUiRenderType::Render_NonBlend, &Arg);
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::K))
+	{
+		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_Special3Sec"),
+			eUiRenderType::Render_Blend, nullptr);
+	}
 }
-

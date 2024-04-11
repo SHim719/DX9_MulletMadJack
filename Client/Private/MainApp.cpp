@@ -15,7 +15,6 @@ CMainApp::CMainApp()
 HRESULT CMainApp::Initialize()
 {
 	GRAPHIC_DESC		GraphicDesc{};
-
 	GraphicDesc.hWnd = g_hWnd;
 	GraphicDesc.iWinSizeX = g_iWinSizeX;
 	GraphicDesc.iWinSizeY = g_iWinSizeY;

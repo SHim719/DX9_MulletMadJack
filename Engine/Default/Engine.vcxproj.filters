@@ -174,9 +174,6 @@
     <ClInclude Include="..\Public\Key_Manager.h">
       <Filter>01.Utility\05.Key</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi.h">
-      <Filter>01.Utility\99. Ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_Manager.h">
       <Filter>01.Utility\99. Ui\Manager</Filter>
     </ClInclude>

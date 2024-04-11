@@ -36,6 +36,17 @@ HRESULT CUi_Manager::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui
 	return S_OK;
 }
 
+HRESULT CUi_Manager::Add_Ui_ShopActive(const wstring& Ui_ShopTag, CUi* Ui_Shop)
+{
+	if (m_Ui_ShopActive.end() != m_Ui_ShopActive.find(Ui_ShopTag))
+		return E_FAIL;
+
+	m_Ui_ShopActive.emplace(Ui_ShopTag, Ui_Shop);
+
+	return S_OK;
+}
+
+
 HRESULT CUi_Manager::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
 {
 	auto pLife = m_Ui_LifePrototypes.find(Ui_LifePrototypeTag);
@@ -117,6 +128,11 @@ void CUi_Manager::PriorityTick(_float fTimeDelta)
 		if (iter.second->Get_Active())
 			iter.second->PriorityTick(fTimeDelta);
 	}
+
+	for (auto& iter : m_Ui_ShopActive) {
+		if (iter.second->Get_Active())
+			iter.second->PriorityTick(fTimeDelta);
+	}
 }
 
 void CUi_Manager::Tick(_float fTimeDelta)
@@ -157,6 +173,11 @@ void CUi_Manager::Tick(_float fTimeDelta)
 	}
 
 	for (auto& iter : m_Ui_ActiveBlend) {
+		if (iter.second->Get_Active())
+			iter.second->Tick(fTimeDelta);
+	}
+
+	for (auto& iter : m_Ui_ShopActive) {
 		if (iter.second->Get_Active())
 			iter.second->Tick(fTimeDelta);
 	}
@@ -203,6 +224,11 @@ void CUi_Manager::LateTick(_float fTimeDelta)
 		if (iter.second->Get_Active())
 			iter.second->LateTick(fTimeDelta);
 	}
+
+	for (auto& iter : m_Ui_ShopActive) {
+		if (iter.second->Get_Active())
+			iter.second->LateTick(fTimeDelta);
+	}
 }
 
 void CUi_Manager::Ui_Render_Begin()
@@ -210,14 +236,43 @@ void CUi_Manager::Ui_Render_Begin()
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixIdentity(&m_ProjMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, (_float)m_iWinSizeX, (_float)m_iWinSizeY, 0.0f, 100.f);
+	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 254);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
 
+}
+
+void CUi_Manager::Ui_Shop_Render_Begin()
+{
+	D3DXMatrixIdentity(&m_ViewMatrix);
+	D3DXMatrixIdentity(&m_ProjMatrix);
+	D3DXMatrixOrthoLH(&m_ProjMatrix, (_float)m_iWinSizeX, (_float)m_iWinSizeY, 0.0f, 100.f);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
+	m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
+	m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
+}
+
+HRESULT CUi_Manager::Ui_Shop_Render()
+{
+	Ui_Shop_Render_Begin();
+	for (auto& iter : m_Ui_ShopActive) {
+		if (iter.second->Get_Active() == true)
+			iter.second->Render();
+	}
+	Ui_Shop_Render_End();
+	return S_OK;
+}
+
+void CUi_Manager::Ui_Shop_Render_End()
+{
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
 HRESULT CUi_Manager::Ui_Render()
@@ -232,21 +287,31 @@ HRESULT CUi_Manager::Ui_Render()
 
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
+
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+
+
+	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND,
+		D3DBLEND_SRCALPHA);
+	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND,
+		D3DBLEND_INVSRCALPHA);
+
+
 	for (auto& BlendClone : m_Ui_LifeBlendClonelist)
 		BlendClone->Render();
-
 
 	for (auto& iter : m_Ui_ActiveBlend) {
 		if(iter.second->Get_Active() == true)
 			iter.second->Render();
 	}
 
-
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	return S_OK;
 }
 
 void CUi_Manager::Ui_Render_End()
 {
+	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 
@@ -299,6 +364,15 @@ bool CUi_Manager::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
 	return false;
 }
 
+void CUi_Manager::Set_Ui_ShopActiveState(const wstring& Ui_ShopTag, bool _isActive)
+{
+	auto iter = m_Ui_ShopActive.find(Ui_ShopTag);
+	if (m_Ui_ShopActive.end() != iter)
+	{
+		iter->second->Set_Active(_isActive);
+	}
+}
+
 void CUi_Manager::Set_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag, int _iTextureIndex)
 {
 	auto iter = m_Ui_Active.find(Ui_ActiveTag);
@@ -349,18 +423,22 @@ void CUi_Manager::Free()
 	m_Ui_LifeBlendClonelist.clear();
 
 
-	for (auto& Pair : m_Ui_LifePrototypes)
-		Safe_Release(Pair.second);
-	m_Ui_LifePrototypes.clear();
-
-
 	for (auto& Pair : m_Ui_Active)
 		Safe_Release(Pair.second);
 	m_Ui_Active.clear();
 
+
 	for (auto& Pair : m_Ui_ActiveBlend)
 		Safe_Release(Pair.second);
 	m_Ui_ActiveBlend.clear();
+
+	for (auto& Pair : m_Ui_ShopActive)
+		Safe_Release(Pair.second);
+	m_Ui_ShopActive.clear();
+
+	for (auto& Pair : m_Ui_LifePrototypes)
+		Safe_Release(Pair.second);
+	m_Ui_LifePrototypes.clear();
 
 	Safe_Release(m_pGraphic_Device);
 }

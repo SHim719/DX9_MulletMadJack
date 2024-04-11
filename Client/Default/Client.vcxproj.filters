@@ -97,9 +97,6 @@
     <Filter Include="Ui\CUi_Active\CUi_Clear">
       <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Finish">
-      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Peace">
       <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
     </Filter>
@@ -108,9 +105,6 @@
     </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart">
       <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\ClearLevel">
-      <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Ui\Player">
       <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
@@ -160,21 +154,6 @@
     <Filter Include="Ui\CUi_Active\Hand\RIght_Hand">
       <UniqueIdentifier>{27a86044-790e-4178-90cf-77e5b62e25ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Clear">
-      <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Clear\CUi_Peace">
-      <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Clear\CUi_Announcer">
-      <UniqueIdentifier>{83d683fb-8760-4861-8946-e864a1d4cf54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Clear\CUi_Heart">
-      <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Clear\CUi_Finish">
-      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
       <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
     </Filter>
@@ -198,6 +177,42 @@
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\CVIBuffer_Border">
       <UniqueIdentifier>{9bd1b528-320c-4af8-9936-bc7e9c54741c}</UniqueIdentifier>
+     </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_Floor_Part">
+      <UniqueIdentifier>{29cd8a57-2a25-45f8-90f0-1a2800f521bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Finish">
+      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Shop">
+      <UniqueIdentifier>{4d7212f4-9a04-4c85-8ebd-148c2b070984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_Shop_UpGrade">
+      <UniqueIdentifier>{494593a2-4b88-479e-a07d-030d4159da6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part">
+      <UniqueIdentifier>{bd4cf482-873c-4728-a58d-c5a2916b2116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo">
+      <UniqueIdentifier>{87fb42e8-bf0f-4864-ab55-9b031728bc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Clear_Time">
+      <UniqueIdentifier>{56a7764b-9ed5-446e-b2cc-8023a3d5a7a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word">
+      <UniqueIdentifier>{bf923210-7434-4423-85aa-b399c0dcd0c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_Floor_Logo_Num">
+      <UniqueIdentifier>{33902df2-9720-4d1f-8037-9ae6acecb8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_Real_ClearTime">
+      <UniqueIdentifier>{2baf4bf4-d3ed-44ee-8e93-60f31b3c8266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_ClearTime_BackGround">
+      <UniqueIdentifier>{b71a33eb-8d69-45de-a8ce-a91d88295eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
+      <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -315,9 +330,6 @@
     <ClInclude Include="..\Public\CUi_LiveStream.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi_Floor_F.h">
-      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
-    </ClInclude>
     <ClInclude Include="..\public\Loader.h">
       <Filter>01.Levels\99.Loading\Loader</Filter>
     </ClInclude>
@@ -341,6 +353,57 @@
     </ClInclude>
     <ClInclude Include="..\Public\Client_Components.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Floor.h">
+      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Floor_Part.h">
+      <Filter>Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Announcer.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_PEACE.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Finish.h">
+      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Shop.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Shop_UpGrade.h">
+      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Ui_Include.h">
+      <Filter>Ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_UpGrade_Select.h">
+      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_UpGrade_Focus.h">
+      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Floor_Logo.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Floor_Logo_Word.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Floor_Logo_Num.h">
+      <Filter>Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Clear_Time.h">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Real_ClearTime.h">
+      <Filter>Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_ClearTime_BackGround.h">
+      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Time_Division.h">
+      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -446,9 +509,6 @@
     <ClCompile Include="..\Private\CUi_LiveStream.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CUi_Floor_F.cpp">
-      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\MapObject.cpp">
       <Filter>02.GameObjects\01. MapObject\MapObject</Filter>
     </ClCompile>
@@ -466,6 +526,54 @@
     </ClCompile>
     <ClCompile Include="..\Private\Border.cpp">
       <Filter>02.GameObjects\01. MapObject\Border</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Floor.cpp">
+      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Floor_Part.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Announcer.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_PEACE.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Finish.cpp">
+      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Shop.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Shop_UpGrade.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_UpGrade_Focus.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Floor_Logo.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Floor_Logo_Word.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Floor_Logo_Num.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Clear_Time.cpp">
+      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Real_ClearTime.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_ClearTime_BackGround.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Time_Division.cpp">
+      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
