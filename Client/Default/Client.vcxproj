@@ -172,6 +172,7 @@
     <ClInclude Include="..\Public\Client_Components.h" />
     <ClInclude Include="..\Public\Chainsaw_Monster.h" />
     <ClInclude Include="..\Public\Drone_Monster.h" />
+    <ClInclude Include="..\Public\FPS_Camera.h" />
     <ClInclude Include="..\Public\Pawn.h" />
     <ClInclude Include="..\Public\CUi_Border.h" />
     <ClInclude Include="..\Public\CUi_Chat.h" />
@@ -193,7 +194,7 @@
     <ClInclude Include="..\Public\CUi_Time_Division.h" />
     <ClInclude Include="..\Public\CUi_UpGrade_Focus.h" />
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h" />
-    <ClInclude Include="..\Public\Enemy.h" />
+    <ClInclude Include="..\Public\VIBuffer_Floor_Border.h" />
     <ClInclude Include="..\Public\White_Suit_Monster.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
@@ -206,7 +207,6 @@
     <ClInclude Include="..\Public\Enemy_Bullet.h" />
     <ClInclude Include="..\Public\CUi_SpecialHit_Part.h" />
     <ClInclude Include="..\Public\Floor.h" />
-    <ClInclude Include="..\Public\FPS_Camera.h" />
     <ClInclude Include="..\Public\Level_GamePlay.h" />
     <ClInclude Include="..\Public\Level_Loading.h" />
     <ClInclude Include="..\public\Level_Logo.h" />
@@ -228,7 +228,6 @@
     <ClInclude Include="..\Public\TriggerObject.h" />
     <ClInclude Include="..\Public\Pistol.h" />
     <ClInclude Include="..\Public\Pistol_Right_Hand.h" />
-    <ClInclude Include="..\Public\VIBuffer_Floor_Border.h" />
     <ClInclude Include="..\Public\Wall.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -236,13 +235,13 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\SR_TOOL\Client\Private\VIBuffer_Floor_Border.cpp" />
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp" />
     <ClCompile Include="..\Private\Drone_Monster.cpp" />
+    <ClCompile Include="..\Private\FPS_Camera.cpp" />
     <ClCompile Include="..\Private\Pawn.cpp" />
     <ClCompile Include="..\Private\CUi_Border.cpp" />
     <ClCompile Include="..\Private\CUi_Chat.cpp" />
@@ -264,7 +263,7 @@
     <ClCompile Include="..\Private\CUi_Time_Division.cpp" />
     <ClCompile Include="..\Private\CUi_UpGrade_Focus.cpp" />
     <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp" />
-    <ClCompile Include="..\Private\Enemy.cpp" />
+    <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp" />
     <ClCompile Include="..\Private\White_Suit_Monster.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />
@@ -276,7 +275,6 @@
     <ClCompile Include="..\Private\Enemy_Bullet.cpp" />
     <ClCompile Include="..\Private\CUi_SpecialHit_Part.cpp" />
     <ClCompile Include="..\Private\Floor.cpp" />
-    <ClCompile Include="..\Private\FPS_Camera.cpp" />
     <ClCompile Include="..\Private\Level_GamePlay.cpp" />
     <ClCompile Include="..\Private\Level_Loading.cpp" />
     <ClCompile Include="..\private\Level_Logo.cpp" />

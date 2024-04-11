@@ -31,7 +31,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
+	Load_MapObject(L"../Bin/Resources/DataFiles/Test.dat", OBJTYPE_END);
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
@@ -39,8 +39,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_Pawns()))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Pawns()))
+	//	return E_FAIL;
 
 	Initialize_SodaMachine();
 	return S_OK;
@@ -61,8 +61,8 @@ HRESULT CLevel_GamePlay::Render()
 
 void CLevel_GamePlay::Initialize_SodaMachine()
 {
-	CLayer* pMachineLayer = m_pGameInstance->Find_Layer(m_pGameInstance->Get_CurrentLevelID(), L"SodaMachine");
-	CLayer* pBannerLayer = m_pGameInstance->Find_Layer(m_pGameInstance->Get_CurrentLevelID(), L"SodaMachine_Banner");
+	CLayer* pMachineLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine");
+	CLayer* pBannerLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine_Banner");
 
 	auto MachineLayerObjects = pMachineLayer->Get_GameObjects();
 	auto BannerLayerObjects = pBannerLayer->Get_GameObjects();
@@ -102,8 +102,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 
-	//if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
-	//	return E_FAIL;
+	if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
+		return E_FAIL;
 
 	return S_OK;
 }

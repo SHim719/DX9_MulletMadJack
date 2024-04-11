@@ -73,10 +73,6 @@ HRESULT CLevel::Load_MapObject(const wstring& strFilePath, _uint iMaxObjType)
 				pBoxCollider->Set_Offset(vColliderOffset);
 			}
 
-			
-			
-			
-			
 			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>(pObj->Find_Component(L"VIBuffer"));
 			pVIBuffer->Scaling_Texcoord(pObj->Get_Transform()->Get_Scale());
 

@@ -204,6 +204,9 @@
     <ClInclude Include="..\Public\VIBuffer_Mesh.h">
       <Filter>01.Utility\04.Components\VIBuffer\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi.h">
+      <Filter>01.Utility\99. Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">

@@ -106,9 +106,6 @@
     <Filter Include="Ui\Player">
       <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon">
-      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
-     </Filter>
     <Filter Include="01.Levels\ClearLevel">
       <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
     </Filter>
@@ -154,7 +151,6 @@
     <Filter Include="Ui\CUi_Active\Hand\RIght_Hand">
       <UniqueIdentifier>{27a86044-790e-4178-90cf-77e5b62e25ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
     <Filter Include="Ui\CUi_Clear">
       <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
     </Filter>
@@ -169,12 +165,6 @@
     </Filter>
     <Filter Include="Ui\CUi_Clear\CUi_Finish">
       <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Weapon">
-      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Weapon\CrossHair">
-      <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol">
       <UniqueIdentifier>{11156e82-39ea-4081-9f7e-77e4ba9d6038}</UniqueIdentifier>
@@ -226,7 +216,7 @@
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\CVIBuffer_Border">
       <UniqueIdentifier>{9bd1b528-320c-4af8-9936-bc7e9c54741c}</UniqueIdentifier>
-     </Filter>
+    </Filter>
     <Filter Include="Ui\CUi_Life\Part\CUi_Floor_Part">
       <UniqueIdentifier>{29cd8a57-2a25-45f8-90f0-1a2800f521bf}</UniqueIdentifier>
     </Filter>
@@ -274,6 +264,12 @@
     </Filter>
     <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster">
       <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Weapon">
+      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
+      <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -350,7 +346,7 @@
       <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CrossHair.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Weapon\CrossHair</Filter>
+      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Right_Hand.h">
       <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
@@ -363,9 +359,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Fine.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\FPS_Camera.h">
-      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Heart_BackGround.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
@@ -402,9 +395,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\SodaMachine.h">
       <Filter>02.GameObjects\01. MapObject\SodaMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\VIBuffer_Floor_Border.h">
-      <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Border.h">
       <Filter>02.GameObjects\01. MapObject\Border</Filter>
@@ -493,6 +483,12 @@
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Floor_Border.h">
+      <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\FPS_Camera.h">
+      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -537,9 +533,6 @@
     <ClCompile Include="..\Private\CUi_Special3Sec.cpp">
       <Filter>Ui\CUi_Life\Special3Sec</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\FPS_Camera.cpp">
-      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Animation.cpp">
       <Filter>03. Client_Components\Animation</Filter>
     </ClCompile>
@@ -562,7 +555,7 @@
       <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CrossHair.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Weapon\CrossHair</Filter>
+      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp">
       <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
@@ -605,9 +598,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\SodaMachine_Banner.cpp">
       <Filter>02.GameObjects\01. MapObject\SodaMachine\Banner</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\SR_TOOL\Client\Private\VIBuffer_Floor_Border.cpp">
-      <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Border.cpp">
       <Filter>02.GameObjects\01. MapObject\Border</Filter>
@@ -689,6 +679,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp">
+      <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\FPS_Camera.cpp">
+      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -181,18 +181,18 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_aim/air_aim%d.png"), 6))))
 	//	return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Attack"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_attack/air_attack%d.png"), 10))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Idle"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_brain/Air_brain%d.png"), 6))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Reveal"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_reveal/air_reveal%d.png"), 6))))
-		return E_FAIL;
-
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Attack"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_attack/air_attack%d.png"), 10))))
+	//	return E_FAIL;
+	//
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Idle"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_brain/Air_brain%d.png"), 6))))
+	//	return E_FAIL;
+	//
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Reveal"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_reveal/air_reveal%d.png"), 6))))
+	//	return E_FAIL;
+	//
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Drone_Monster_Flyback"),
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/drone_flyback/drone_flyback%d.png"), 4))))
 	//	return E_FAIL;
@@ -312,21 +312,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/SodaMachine/SodaMachine%d.png", 2))))
 		return E_FAIL;
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-	//		L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Floor_Textures",
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-	//		L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
-	//	return E_FAIL;
-	//
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-	//		L"../Bin/Resources/Textures/Objects/Object%d.png", 13))))
-	//	return E_FAIL;
-
 
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
 
@@ -360,10 +345,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		CBorder::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-
-	/* For Prototype_GameObject_Enemy */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy"),
-		CEnemy::Create(m_pGraphic_Device))))
 	/* For Prototype_GameObject_White_Suit_Monster */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_White_Suit_Monster"),
 		CWhite_Suit_Monster::Create(m_pGraphic_Device))))

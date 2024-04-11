@@ -5,17 +5,6 @@
 #include "FPS_Camera.h"
 #include "Animation.h"
 
-#include "CUi_SpecialHit_Part.h"
-#include "CUi_PEACE.h"
-#include "CUi_Fine.h"
-#include "CUi_Heart.h"
-#include "CUi_Heart_BackGround.h"
-#include "CUi_Heart_Line.h"
-#include "CUi_Border.h"
-#include "CUi_Chat.h"
-#include "CUi_LiveStream.h"
-#include "CUi_Announcer.h"
-#include "CUi_Floor_F.h"
 #include "Pistol_Right_Hand.h"
 #include "Pistol.h"
 #include "CrossHair.h"
@@ -380,7 +369,7 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/PISTOL_IDLE%d.png", 3))))
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
 		return E_FAIL;
 
 	return S_OK;
@@ -476,6 +465,10 @@ HRESULT CGame_Manager::Ready_Clear_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Time_Division_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Clear/Logo/Time_Division.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Idle_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
 		return E_FAIL;
 
