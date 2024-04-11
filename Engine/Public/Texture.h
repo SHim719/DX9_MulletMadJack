@@ -17,7 +17,7 @@ private:
 
 public:
 	HRESULT Bind_Texture(_uint iTextureIndex);
-	POINT   Get_TextureSize(_uint iTextureIndex);
+	//POINT   Get_TextureSize(_uint iTextureIndex);
 public:
 	virtual HRESULT Initialize_Prototype(TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures);
 	virtual HRESULT Initialize(void* pArg) override;
@@ -30,7 +30,7 @@ private:
 	vector<LPDIRECT3DBASETEXTURE9>	m_Textures;
 	typedef vector<LPDIRECT3DBASETEXTURE9> TEXTURES;
 
-	vector<POINT>					m_vTextureSizes;
+	/*vector<POINT>					m_vTextureSizes;*/
 	_uint							m_iMaxTextureNum = 0;
 
 public:

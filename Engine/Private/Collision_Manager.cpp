@@ -18,10 +18,8 @@ HRESULT CCollision_Manager::Initialize()
 
 void CCollision_Manager::Tick()
 {
-	
-	//Collision_Box(4, L"Player", L"Wall");
-	//Collision_Box(4, L"Player", L"Floor");
-	// 콜리젼 다음에 Ray 
+	Collision_Box(3, L"Player", L"Wall");
+	Collision_Box(3, L"Player", L"Floor");
 	Intersect_Ray();
 }
 

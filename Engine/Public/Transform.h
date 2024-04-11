@@ -50,6 +50,7 @@ public:
 		std::cout << "REAL Up :" << m_WorldMatrix._21 << " " << m_WorldMatrix._22 << " " << m_WorldMatrix._23 << std::endl;
 		std::cout << "REAL Look :" << m_WorldMatrix._31 << " " << m_WorldMatrix._32 << " " << m_WorldMatrix._33 << std::endl;
 		std::cout << "REAL Position :" << m_WorldMatrix._41 << " " << m_WorldMatrix._42 << " " << m_WorldMatrix._43 << std::endl;
+		std::system("cls");
 	}
 
 	void Debug_State_Out2() {
@@ -123,6 +124,8 @@ public:
 	void Head_Roll(_float fTimeDelta, _float Degree);
 
 	void Set_View_RollBack();
+	void Set_HeadUp_Initialize();
+
 
 	void Turn(const _float3& vAxis, _float fTimeDelta);
 	void UnOffset_Turn(const _float3& vAxis, _float fTimeDelta);
@@ -143,8 +146,9 @@ private:
 //Camera Action
 public:
 	void Camera_Shake(_float fTimeDelta, _float fShakePower);
+	void Camera_Shake_Init();
 	void Camera_Gun_Shake(_float fTimeDelta, _float fShakePower);
-
+	void Camera_Shake_End();
 public:
 	void AddSpeedPerSec(_float Speed) { m_fSpeedPerSec += Speed; }
 	void Set_Speed(_float Speed) { m_fSpeedPerSec = Speed; }
@@ -157,6 +161,9 @@ private:
 private:
 	_float				m_fSpeedPerSec = { 0.0f };
 	_float				m_fRotationPerSec = { 0.0f };
+
+	_float              m_fShakePowerReverse = 0.f;
+	_int			    m_iShakeDirection = 0;
 public:
 	static CTransform* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CComponent* Clone(void* pArg) override;

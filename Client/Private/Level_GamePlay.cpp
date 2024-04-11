@@ -14,6 +14,7 @@
 #include "Core_Camera.h"
 #include "CUi_SpecialHit.h"
 #include "CUi_MonsterDie.h"
+#include "PlayerManager.h"
 #include "Player.h"
 
 #include "SodaMachine.h"
@@ -30,14 +31,11 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	//Load_MapObject(L"../Bin/Resources/DataFiles/TestMap.dat", OBJTYPE_END);
 
-	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
+		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Player()))
-	//	return E_FAIL;
-
-	//if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
-	//	return E_FAIL;
+	if(FAILED(Ready_Layer_Player()))
+		return E_FAIL;
 
 	Initialize_SodaMachine();
 	return S_OK;
@@ -46,17 +44,12 @@ HRESULT CLevel_GamePlay::Initialize()
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
 	Test_Ui();
-	m_pPlayer->PriorityTick(fTimeDelta);
-	m_pPlayer->Tick(fTimeDelta);
-	m_pPlayer->LateTick(fTimeDelta);
 }
 
 HRESULT CLevel_GamePlay::Render()
 {
 
-	SetWindowText(g_hWnd, TEXT("게임플레이레벨."));
-
-	m_pPlayer->Render();
+	SetWindowText(g_hWnd, TEXT("GAMEPLAY.."));
 
 	return S_OK;
 }
@@ -95,9 +88,9 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 {
 	CCoreCamera::CAMERA_DESC			CameraDesc{};
 
-	CameraDesc.vEye = _float3(0.f, 0.2f, -1.f);
-	CameraDesc.vAt = _float3(10.f, 0.f, 10.f);
-	CameraDesc.fFovy = D3DXToRadian(60.0f);
+	CameraDesc.vEye = _float3(0.f, 0.65f, 1.7f);
+	CameraDesc.vAt = _float3(0.5f, 0.5f, 10.f);
+	CameraDesc.fFovy = D3DXToRadian(90.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1000.0f;
 	CameraDesc.fSpeedPerSec = 10.f;
@@ -128,18 +121,21 @@ HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Player()
 {
-	if(m_pPlayer != nullptr)
+	if(CPlayer_Manager::Get_Instance()->Get_Player())
 		return E_FAIL;
 
-	m_pPlayer = CPlayer::Create();
+	CPlayer_Manager::Get_Instance()->Set_Player(dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player"))));
+
+	if (nullptr == CPlayer_Manager::Get_Instance()->Get_Player()) {
+		MSG_BOX(TEXT("Failed to Create Player"));
+		return E_FAIL;
+	}
 
 	return S_OK;
 }
 
 void CLevel_GamePlay::Free()
 {
-
-	Safe_Release(m_pPlayer);
 
 	__super::Free();
 

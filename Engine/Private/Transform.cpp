@@ -206,20 +206,36 @@ void CTransform::Head_Roll(_float fTimeDelta, _float Degree)
 
 	_float4x4	RotationMatrix;
 	
-	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, To_Radian(Degree) * fTimeDelta);
+	D3DXMatrixRotationAxis(&RotationMatrix, &vLook, To_Radian(Degree));
 
 	D3DXVec3TransformNormal(&vRight, &vRight, &RotationMatrix);
 	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
 
-	Set_UnOffset_State(STATE_RIGHT, &vRight);
-	Set_UnOffset_State(STATE_UP, &vUp);
-	Set_UnOffset_State(STATE_LOOK, &vLook);
+	Set_State(STATE_RIGHT, &vRight);
+	Set_State(STATE_UP, &vUp);
+	Set_State(STATE_LOOK, &vLook);
 }
 
 void CTransform::Set_View_RollBack()
 {
 	//Set_State(STATE_POSITION, &m_vOffset_Position);
 	m_WorldMatrix = m_WorldMatrix_Offset;
+}
+
+void CTransform::Set_HeadUp_Initialize()
+{
+	_float3		vRight = Get_State(STATE_RIGHT);
+	_float3		vUp = Get_State(STATE_UP);
+	_float3		vLook = Get_State(STATE_LOOK);
+
+	_float4x4	RotationMatrix;
+
+	D3DXMatrixRotationAxis(&RotationMatrix, &vRight, 0.f);
+	D3DXVec3TransformNormal(&vUp, &vUp, &RotationMatrix);
+	D3DXVec3TransformNormal(&vLook, &vLook, &RotationMatrix);
+
+	Set_State(STATE_UP, &vUp);
+	Set_State(STATE_LOOK, &vLook);
 }
 
 void CTransform::Camera_Shake(_float fTimeDelta, _float fShakePower)
@@ -235,18 +251,39 @@ void CTransform::Camera_Shake(_float fTimeDelta, _float fShakePower)
 	if ( 0 >= (dis(gen) - 500) / 500.f) i = -1;
 	else i = 1;
 
-	Set_View_RollBack();
+	Camera_Shake_Init();
 
 	if (dis(gen) % 2 == 0) {
-		UnOffset_Turn(Get_State(STATE_RIGHT), fShakePower * i);
-	
+		Turn(Get_State(STATE_RIGHT), fShakePower * i);
+		m_iShakeDirection = 1;
 	}
 	else {
-		UnOffset_Turn(_float3(0.f, 1.f, 0.f), fShakePower * i);
+		Turn(_float3(0.f, 1.f, 0.f), fShakePower * i);
+		m_iShakeDirection = -1;
 	}
+
+	m_fShakePowerReverse = fShakePower * i;
+
 	return;
 
 }
+
+void CTransform::Camera_Shake_Init()
+{
+	if(m_iShakeDirection == 1)
+		Turn(Get_State(STATE_RIGHT), -m_fShakePowerReverse);
+	else if(m_iShakeDirection == -1)
+		Turn(_float3(0.f, 1.f, 0.f), -m_fShakePowerReverse);
+}
+
+void CTransform::Camera_Shake_End()
+{
+	Camera_Shake_Init();
+	m_iShakeDirection = 0;
+	m_fShakePowerReverse = 0.f;
+}
+
+
 
 void CTransform::Camera_Gun_Shake(_float fTimeDelta, _float fShakePower)
 {

@@ -5,6 +5,26 @@
 #include "FPS_Camera.h"
 #include "Animation.h"
 
+#include "CUi_SpecialHit_Part.h"
+#include "CUi_PEACE.h"
+#include "CUi_Fine.h"
+#include "CUi_Heart.h"
+#include "CUi_Heart_BackGround.h"
+#include "CUi_Heart_Line.h"
+#include "CUi_Border.h"
+#include "CUi_Chat.h"
+#include "CUi_LiveStream.h"
+#include "CUi_Announcer.h"
+#include "CUi_Floor_F.h"
+#include "Pistol_Right_Hand.h"
+#include "Pistol.h"
+#include "CrossHair.h"
+#include "Pistol_Shot.h"
+#include "Pistol_Spin.h"
+#include "Pistol_Reload.h"
+#include "Pistol_Gunfire.h"
+#include "Pistol_Barrel.h"
+#include "Player.h"
 
 IMPLEMENT_SINGLETON(CGame_Manager)
 
@@ -35,6 +55,7 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 	Ready_Prototype_Ui_Life();
 	Ready_Active_Ui();
+	Ready_Prototype_Effect();
 }
 
 void CGame_Manager::Tick(_float fTimeDelta)
@@ -195,6 +216,10 @@ HRESULT CGame_Manager::Ready_Prototype_GameObjects()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(L"Background"
 		, CBackGround::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(L"Prototype_Player"
+		, CPlayer::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -452,6 +477,46 @@ HRESULT CGame_Manager::Ready_Clear_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Time_Division_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Clear/Logo/Time_Division.png"))))
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Shot_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Shot/PISTOL_SHOT%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Spin_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Spin/SPIN_AIR%d.png", 9))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Reload_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload/PISTOL_RELOAD%d.png", 16))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Fire_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Gunfire/PISTOL_MUZZLE%d.png", 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Barrel_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Barrel/BARREL%d.png", 6))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Prototype_Effect()
+{
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CPistol_Gunfire"),
+		CPistol_Gunfire::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -615,6 +680,18 @@ HRESULT CGame_Manager::Ready_Active_Gun()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol", eUiRenderType::Render_NonBlend, CPistol::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Shot", eUiRenderType::Render_NonBlend, CPistol_Shot::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Spin", eUiRenderType::Render_NonBlend, CPistol_Spin::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload", eUiRenderType::Render_NonBlend, CPistol_Reload::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Barrel", eUiRenderType::Render_NonBlend, CPistol_Barrel::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

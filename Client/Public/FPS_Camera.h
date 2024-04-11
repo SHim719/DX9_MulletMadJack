@@ -27,20 +27,7 @@ public:
 	virtual void LateTick(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
-//Public Camera Event Order
-public:
-	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { m_fShakePower = fShakePower; m_fShakeTime = fShakeTime; }
-
-//Private Camera Event List
-
-
 private:
-	void Camera_Shake(_float fTimeDelta, _float m_fShakePower, _float& m_fShakeTime);
-
-//Custom Camera Event Variable
-private:
-	_float m_fShakeTime = 0.f;
-	_float m_fShakePower = 0.f;
 
 	_float m_fVerticalAngle = 0.f;
 	_float m_fVerticalAngleLimit = 20.f;
@@ -62,7 +49,6 @@ private:
 protected:
 	virtual HRESULT Add_Components() override;
 	virtual void	Key_Input(_float fTimeDelta) override;
-	virtual void    Camera_Event(_float fTimeDelta) override;
 	//virtual void Update_Matrix() {};
 	//virtual void Update_Info() {};
 

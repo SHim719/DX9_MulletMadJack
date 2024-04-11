@@ -35,10 +35,6 @@ private:
 	HRESULT Ready_Layer_Enemy(const wstring& strLayerTag);
 
 	HRESULT Ready_Layer_Player();
-	
-	class CPlayer* m_pPlayer = { nullptr };
-
-	
 };
 
 END

@@ -1,7 +1,7 @@
 #include "FPS_Camera.h"
 #include "Core_Camera.h"
 #include "GameObject.h"
-
+#include "PlayerManager.h"
 CFPS_Camera::CFPS_Camera(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CCoreCamera{ pGraphic_Device }
 {
@@ -46,7 +46,6 @@ HRESULT CFPS_Camera::Initialize(void* pArg)
 void CFPS_Camera::PriorityTick(_float fTimeDelta)
 {
 	Key_Input(fTimeDelta);
-	Camera_Event(fTimeDelta);
 }
 
 void CFPS_Camera::Tick(_float fTimeDelta)
@@ -104,7 +103,7 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		// y축 회전 성분이 담긴 행렬을 역변환하면 y축 빌보드 행렬이 됨
 		D3DXMatrixInverse(&m_BillboardMatrix, nullptr, &m_BillboardMatrix);
-	
+
 	}
 
 	
@@ -125,29 +124,10 @@ HRESULT CFPS_Camera::Render()
 	return S_OK;
 }
 
-void CFPS_Camera::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime)
-{
-	if(fShakeTime > 0.f)
-	{	
-		m_pTransformCom->Camera_Shake(fTimeDelta, fShakePower);
-
-		fShakeTime -= fTimeDelta;
-		fShakePower = fShakePower * 0.9f;
-		if(fShakeTime < 0.f) m_pTransformCom->Set_View_RollBack();
-	}
-	else
-	{
-		m_pTransformCom->Set_View_RollBack();
-		fShakeTime = 0.f;
-	}
-
-	return;
-}
-
 void CFPS_Camera::Mouse_Ray()
 {
-	_float3 fMouseNDC_Near = _float3(_float(g_iWinSizeX) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY) * 2.0f / g_iWinSizeY + 1, 0.f);
-	_float3 fMouseNDC_Far = _float3(_float(g_iWinSizeX) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY) * 2.0f / g_iWinSizeY + 1, 1.f);
+	_float3 fMouseNDC_Near = _float3(_float(g_iWinSizeX/2) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY/2) * 2.0f / g_iWinSizeY + 1, 0.f);
+	_float3 fMouseNDC_Far = _float3(_float(g_iWinSizeX/2) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY/2) * 2.0f / g_iWinSizeY + 1, 1.f);
 
 	_float4x4 inverseProjView;
 	D3DXMatrixInverse(&inverseProjView, nullptr, &(m_ViewMatrix * m_ProjMatrix));
@@ -176,51 +156,6 @@ HRESULT CFPS_Camera::Add_Components()
 void CFPS_Camera::Key_Input(_float fTimeDelta)
 {
 
-	if (GetKeyState('W') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Straight(fTimeDelta);
-	}
-
-	if (GetKeyState('S') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Backward(fTimeDelta);
-	}
-
-	if (GetKeyState('A') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Left(fTimeDelta);
-	}
-
-	if (GetKeyState('D') & 0x8000)
-	{
-		m_pTransformCom->Go_Floor_Right(fTimeDelta);
-	}
-
-	if (GetKeyState('Z') & 0x8000)
-	{
-		m_pTransformCom->Go_Straight(fTimeDelta);
-	}
-
-	if (GetKeyState('X') & 0x8000)
-	{
-		m_pTransformCom->Go_Backward(fTimeDelta);
-	}
-
-	if (GetKeyState('Q') & 0x8000)
-	{
-		m_pTransformCom->Head_Roll(fTimeDelta, 160.f);
-	}
-
-	if (GetKeyState('E') & 0x8000)
-	{
-		m_pTransformCom->Head_Roll(fTimeDelta, -160.f);
-	}
-
-	if (GetKeyState('T') & 0x8000)
-	{
-		Camera_Shake_Order(100.f, 0.5f);
-	}
-
 	if (GetKeyState('Y') & 0x8000)
 	{
 		m_pTransformCom->Set_View_RollBack();
@@ -236,16 +171,6 @@ void CFPS_Camera::Key_Input(_float fTimeDelta)
 	{
 		Mouse_Ray();
 	}
-
-	if(m_pGameInstance->GetKey(eKeyCode::LButton))
-	{
-		m_pTransformCom->Camera_Gun_Shake(fTimeDelta, 160000.f);
-	}
-}
-
-void CFPS_Camera::Camera_Event(_float fTimeDelta)
-{
-	if(m_fShakeTime >= 0.f) Camera_Shake(fTimeDelta, 250000.f, m_fShakeTime);
 }
 
 CFPS_Camera* CFPS_Camera::Create(LPDIRECT3DDEVICE9 pGraphic_Device, void* pArg)

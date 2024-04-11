@@ -41,8 +41,6 @@ protected:
 protected:
 	CGameObject* m_pTarget = { nullptr };
 
-	CTransform* m_pTransformCom = { nullptr };
-
 	wstring		m_strKey;
 
 	CAMERA_DESC m_CameraDesc;

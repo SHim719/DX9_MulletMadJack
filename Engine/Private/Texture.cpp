@@ -9,7 +9,6 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphic_Device)
 CTexture::CTexture(const CTexture& rhs)
     : CComponent { rhs }
     , m_Textures { rhs.m_Textures }
-    , m_vTextureSizes{ rhs.m_vTextureSizes }
     , m_iMaxTextureNum{ rhs.m_iMaxTextureNum }
 {
     for (auto& pTexture : m_Textures)
@@ -25,18 +24,9 @@ HRESULT CTexture::Bind_Texture(_uint iTextureIndex)
     return m_pGraphic_Device->SetTexture(0, m_Textures[iTextureIndex]);
 }
 
-POINT CTexture::Get_TextureSize(_uint iTextureIndex)
-{
-    if (iTextureIndex >= (_uint)m_vTextureSizes.size())
-        return { 0,0 };
-
-   return m_vTextureSizes[iTextureIndex];
-}
-
 HRESULT CTexture::Initialize_Prototype(TYPE eTextureType, const wstring& strTextureFilePath, _uint iNumTextures)
 {
     m_Textures.reserve(iNumTextures);
-    m_vTextureSizes.reserve(iNumTextures);
 
     for (_uint i = 0; i < iNumTextures; ++i)
     {
@@ -44,7 +34,6 @@ HRESULT CTexture::Initialize_Prototype(TYPE eTextureType, const wstring& strText
 
         wsprintf(szFilePath, strTextureFilePath.c_str(), i);
        
-       // Mat Texture  = imread(TCharToString(szFilePath), true);
         LPDIRECT3DBASETEXTURE9			pTexture = { nullptr };
 
         HRESULT hr = S_OK;
@@ -60,13 +49,9 @@ HRESULT CTexture::Initialize_Prototype(TYPE eTextureType, const wstring& strText
           if (FAILED(hr))
               return E_FAIL;
 
-        //POINT pt = { Texture.cols, Texture.rows };
         
         m_Textures.push_back(pTexture);
-        //m_vTextureSizes.push_back(pt);
-       // Texture.release();
-       // Texture.deallocate();
-        m_iMaxTextureNum = i;   // 텍스처 번호 최대값을 구하기 위해 i 대입
+        m_iMaxTextureNum = i;  
     }
 
     return S_OK;
@@ -110,9 +95,5 @@ void CTexture::Free()
     for (auto& pTexture : m_Textures)
         Safe_Release(pTexture);
 
-   /*for (auto& pTextureSize : m_vTextureSizes) 
-		Safe_Release(pTextureSize);*/
-
     m_Textures.clear();
-    m_vTextureSizes.clear();
 }

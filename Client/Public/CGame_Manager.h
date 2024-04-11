@@ -58,6 +58,7 @@ public:
 	HRESULT Ready_Shop_Texture();
 	HRESULT Ready_Start_Texture();
 	HRESULT Ready_Prototype_Ui_Life();
+	HRESULT Ready_Prototype_Effect();
 	HRESULT Ready_Active_Ui();
 	HRESULT Ready_Active_Clear();
 	HRESULT Ready_Active_Shop();

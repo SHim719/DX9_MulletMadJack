@@ -15,19 +15,14 @@ CGameInstance::CGameInstance()
 
 HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& GraphicDesc, _Out_ LPDIRECT3DDEVICE9* ppOut)
 {
-	/* ������ ����ϱ����� �ʿ��� ��Ÿ �ʱ�ȭ �۾����� ��ģ��. */
 
-	/* �׷��� ����̽� �ʱ�ȭ. */
 	m_pGraphic_Device = CGraphic_Device::Create(GraphicDesc, ppOut);
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
 
-	/* ��ǲ ����̽� �ʱ�ȭ. */
 	m_pKey_Manager = CKey_Manager::Create();
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
-
-	/* ���� ����̽� �ʱ�ȭ. */
 
 	m_pRenderer = CRenderer::Create(*ppOut);
 	if (nullptr == m_pRenderer)
@@ -37,23 +32,18 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	if (nullptr == m_pTimer_Manager)
 		return E_FAIL;
 
-	/* ���� �Ŵ����� �غ��س��´�. */
 	m_pLevel_Manager = CLevel_Manager::Create();
 	if (nullptr == m_pLevel_Manager)
 		return E_FAIL;
 
-
-	/* ������Ʈ �Ŵ��� ����� �غ�. . */
 	m_pObject_Manager = CObject_Manager::Create(iNumLevels);
 	if (nullptr == m_pObject_Manager)
 		return E_FAIL;
 
-	/* ������Ʈ �Ŵ��� ����� �غ�. . */
 	m_pComponent_Manager = CComponent_Manager::Create(iNumLevels);
 	if (nullptr == m_pComponent_Manager)
 		return E_FAIL;
 
-	// Ui �Ŵ��� ����� �غ�
 	m_pUi_Manager = CUi_Manager::Create(*ppOut);
 	if (nullptr == m_pUi_Manager)
 		return E_FAIL;

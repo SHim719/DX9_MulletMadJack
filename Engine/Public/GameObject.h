@@ -51,7 +51,7 @@ protected:
 	class CTransform* m_pTransformCom = { nullptr }; // 모든 게임 오브젝트들은 Transform 컴포넌트를 가지고 있다는 가정
 
 public:
-	class CTransform* Get_Transform() { return m_pTransformCom; };
+	class CTransform* Get_Transform() { return m_pTransformCom; }
 
 #pragma endregion  
 
