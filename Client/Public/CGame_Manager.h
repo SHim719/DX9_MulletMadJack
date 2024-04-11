@@ -44,6 +44,7 @@ public:
 	//Custom Prototype
 	HRESULT Ready_Prototype_Ui_Life();
 	HRESULT Ready_Static_Texture_Prototype();
+	HRESULT Ready_Prototype_Effect();
 	HRESULT Ready_Active_Ui();
 
 

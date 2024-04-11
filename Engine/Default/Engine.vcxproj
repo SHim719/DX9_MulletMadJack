@@ -205,7 +205,6 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClInclude Include="..\public\Level.h" />
     <ClInclude Include="..\public\Level_Manager.h" />
     <ClInclude Include="..\public\Object_Manager.h" />
-    <ClInclude Include="..\Public\PlayerManager.h" />
     <ClInclude Include="..\public\Renderer.h" />
     <ClInclude Include="..\Public\Texture.h" />
     <ClInclude Include="..\Public\Timer.h" />
@@ -236,7 +235,6 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClCompile Include="..\private\Level.cpp" />
     <ClCompile Include="..\private\Level_Manager.cpp" />
     <ClCompile Include="..\private\Object_Manager.cpp" />
-    <ClCompile Include="..\Private\PlayerManager.cpp" />
     <ClCompile Include="..\private\Renderer.cpp" />
     <ClCompile Include="..\Private\Texture.cpp" />
     <ClCompile Include="..\Private\Timer.cpp" />

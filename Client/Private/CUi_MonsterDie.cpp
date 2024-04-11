@@ -30,6 +30,7 @@ HRESULT CUi_MonsterDie::Initialize(void* pArg)
 	Initialize_Set_Speed();
 	Initialize_Set_Background();
 
+	m_fLifeTime = 2.f;
 	return S_OK;
 }
 

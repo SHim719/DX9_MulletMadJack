@@ -33,7 +33,7 @@ private:
 
 	HRESULT Ready_Layer_Player();
 	
-	class CPlayer* m_pPlayer = { nullptr };
+	//class CPlayer* m_pPlayer = { nullptr };
 };
 
 END

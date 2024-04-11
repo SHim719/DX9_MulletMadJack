@@ -196,8 +196,13 @@
     <ClInclude Include="..\Public\CrossHair.h" />
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\Public\MapObject.h" />
+    <ClInclude Include="..\Public\Pistol_Barrel.h" />
+    <ClInclude Include="..\Public\Pistol_GunFire.h" />
+    <ClInclude Include="..\Public\Pistol_Reload.h" />
     <ClInclude Include="..\Public\Pistol_Shot.h" />
+    <ClInclude Include="..\Public\Pistol_Spin.h" />
     <ClInclude Include="..\public\Player.h" />
+    <ClInclude Include="..\Public\PlayerManager.h" />
     <ClInclude Include="..\Public\Ui_Pos.h" />
     <ClInclude Include="..\Public\TriggerObject.h" />
     <ClInclude Include="..\Public\Pistol.h" />
@@ -239,8 +244,13 @@
     <ClCompile Include="..\Private\CrossHair.cpp" />
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\Private\MapObject.cpp" />
+    <ClCompile Include="..\Private\Pistol_Barrel.cpp" />
+    <ClCompile Include="..\Private\Pistol_GunFire.cpp" />
+    <ClCompile Include="..\Private\Pistol_Reload.cpp" />
     <ClCompile Include="..\Private\Pistol_Shot.cpp" />
+    <ClCompile Include="..\Private\Pistol_Spin.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
+    <ClCompile Include="..\Private\PlayerManager.cpp" />
     <ClCompile Include="..\Private\TriggerObject.cpp" />
     <ClCompile Include="..\Private\Pistol.cpp" />
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp" />

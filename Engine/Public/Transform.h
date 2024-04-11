@@ -146,8 +146,9 @@ private:
 //Camera Action
 public:
 	void Camera_Shake(_float fTimeDelta, _float fShakePower);
+	void Camera_Shake_Init();
 	void Camera_Gun_Shake(_float fTimeDelta, _float fShakePower);
-
+	void Camera_Shake_End();
 public:
 	void AddSpeedPerSec(_float Speed) { m_fSpeedPerSec += Speed; }
 	void Set_Speed(_float Speed) { m_fSpeedPerSec = Speed; }
@@ -160,6 +161,9 @@ private:
 private:
 	_float				m_fSpeedPerSec = { 0.0f };
 	_float				m_fRotationPerSec = { 0.0f };
+
+	_float              m_fShakePowerReverse = 0.f;
+	_int			    m_iShakeDirection = 0;
 public:
 	static CTransform* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CComponent* Clone(void* pArg) override;

@@ -71,9 +71,14 @@ public:
 
  	bool Get_Active() { return m_bActive; }
 	void Set_Active(bool _isActive) {
+		if (_isActive == true && m_bActive == true) {
+			return;
+		}
+		
 		if (_isActive == true){
 			Initialize_Active();
 		}
+
 		m_bActive = _isActive; 
 	}
 

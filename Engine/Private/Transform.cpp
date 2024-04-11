@@ -251,18 +251,39 @@ void CTransform::Camera_Shake(_float fTimeDelta, _float fShakePower)
 	if ( 0 >= (dis(gen) - 500) / 500.f) i = -1;
 	else i = 1;
 
-	Set_View_RollBack();
+	Camera_Shake_Init();
 
 	if (dis(gen) % 2 == 0) {
-		UnOffset_Turn(Get_State(STATE_RIGHT), fShakePower * i);
-	
+		Turn(Get_State(STATE_RIGHT), fShakePower * i);
+		m_iShakeDirection = 1;
 	}
 	else {
-		UnOffset_Turn(_float3(0.f, 1.f, 0.f), fShakePower * i);
+		Turn(_float3(0.f, 1.f, 0.f), fShakePower * i);
+		m_iShakeDirection = -1;
 	}
+
+	m_fShakePowerReverse = fShakePower * i;
+
 	return;
 
 }
+
+void CTransform::Camera_Shake_Init()
+{
+	if(m_iShakeDirection == 1)
+		Turn(Get_State(STATE_RIGHT), -m_fShakePowerReverse);
+	else if(m_iShakeDirection == -1)
+		Turn(_float3(0.f, 1.f, 0.f), -m_fShakePowerReverse);
+}
+
+void CTransform::Camera_Shake_End()
+{
+	Camera_Shake_Init();
+	m_iShakeDirection = 0;
+	m_fShakePowerReverse = 0.f;
+}
+
+
 
 void CTransform::Camera_Gun_Shake(_float fTimeDelta, _float fShakePower)
 {

@@ -32,7 +32,7 @@ HRESULT CPistol_Right_Hand::Initialize(void* pArg)
 
 HRESULT CPistol_Right_Hand::Initialize_Active()
 {
-
+	m_iTexture_Index = 0;
 	Default_Set_Size();
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 
@@ -69,6 +69,7 @@ void CPistol_Right_Hand::Tick(_float fTimeDelta)
 void CPistol_Right_Hand::LateTick(_float fTimeDelta)
 {
 	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 4, 1, 1, 2, 4);
+	_float2 fLissajousPos2 = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 4, 1, 1, 2, 4);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
 }
 

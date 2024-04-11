@@ -14,6 +14,7 @@
 #include "Core_Camera.h"
 #include "CUi_SpecialHit.h"
 #include "CUi_MonsterDie.h"
+#include "PlayerManager.h"
 #include "Player.h"
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -36,8 +37,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	//if (FAILED(Test_UiTexture_Loading()))
 	//	return E_FAIL;
 
-	//if (FAILED(Test_LifeUi_Clone()))
-	//	return E_FAIL;
+	/*if (FAILED(Test_LifeUi_Clone()))
+		return E_FAIL;*/
 
 	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
 		return E_FAIL;
@@ -116,11 +117,15 @@ HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Player()
 {
-	if(m_pPlayer != nullptr)
+	if(CPlayer_Manager::Get_Instance()->Get_Player())
 		return E_FAIL;
 
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player")))
+	CPlayer_Manager::Get_Instance()->Set_Player(dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player"))));
+
+	if (nullptr == CPlayer_Manager::Get_Instance()->Get_Player()) {
+		MSG_BOX(TEXT("Failed to Create Player"));
 		return E_FAIL;
+	}
 
 	return S_OK;
 }
@@ -128,22 +133,20 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 void CLevel_GamePlay::Free()
 {
 
-	Safe_Release(m_pPlayer);
-
 	__super::Free();
 
 }
 
 HRESULT CLevel_GamePlay::Test_LifeUi_Clone()
 {
-	//CUi_MonsterDie::MonsterDie_Arg Arg;
-	//Arg.MonsterDiePosX = -200;
-	//Arg.MonsterDiePosY = -200;
-	//Arg.MonsterGrade = eMonsterGrade::High;
-	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_MonsterDie"),
-	//	eUiRenderType::Render_Blend,
-	//	&Arg)))
-	//	return E_FAIL;
+	/*CUi_MonsterDie::MonsterDie_Arg Arg;
+	Arg.MonsterDiePosX = -200;
+	Arg.MonsterDiePosY = -200;
+	Arg.MonsterGrade = eMonsterGrade::High;
+	if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_MonsterDie"),
+		eUiRenderType::Render_Blend,
+		&Arg)))
+		return E_FAIL;*/
 
 
 	//if (FAILED(m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_Special3Sec"),
@@ -164,4 +167,3 @@ HRESULT CLevel_GamePlay::Test_LifeUi_Clone()
 
 	return S_OK;
 }
-

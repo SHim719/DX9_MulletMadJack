@@ -1,5 +1,5 @@
 #include "Pistol_Shot.h"
-
+#include "PlayerManager.h"
 CPistol_Shot::CPistol_Shot(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CUi(pGraphic_Device)
 {
@@ -23,7 +23,7 @@ HRESULT CPistol_Shot::Initialize(void* pArg)
 		return E_FAIL;
 
 	Default_Set_Size();
-	Default_Set_Delay(0.1f);
+	Default_Set_Delay(0.05f);
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 	Set_Texture_Index(0);
 
@@ -32,7 +32,7 @@ HRESULT CPistol_Shot::Initialize(void* pArg)
 
 HRESULT CPistol_Shot::Initialize_Active()
 {
-
+	Set_Texture_Index(0);
 	Default_Set_Size();
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 
@@ -54,8 +54,9 @@ void CPistol_Shot::Tick(_float fTimeDelta)
 		AnimationDelayReset();
 	}
 
+	//Animation End
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
-		m_iTexture_Index = 0;
+		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::IDLE);
 		AnimationDelayReset();
 	}
 
@@ -88,8 +89,8 @@ HRESULT CPistol_Shot::Render()
 
 void CPistol_Shot::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	Set_Ui_Pos(260, -270);
-	Set_Divide(2.0f);
+	Set_Ui_Pos(350, -270);
+	Set_Divide(1.5f);
 
 	m_fScale = { m_UiDesc.m_fSizeX / Get_Divide() , m_UiDesc.m_fSizeY / Get_Divide(), 1.f };
 	m_fRotation = { 0.f, 0.f, 0.f };
@@ -109,8 +110,8 @@ void CPistol_Shot::Default_Set_LifeTime()
 
 void CPistol_Shot::Default_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 840;
-	m_UiDesc.m_fSizeY = 1514;
+	m_UiDesc.m_fSizeX = 2048;
+	m_UiDesc.m_fSizeY = 2048;
 }
 
 POINT CPistol_Shot::Get_Texture_Info()

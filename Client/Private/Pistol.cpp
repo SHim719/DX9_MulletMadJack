@@ -32,7 +32,7 @@ HRESULT CPistol::Initialize(void* pArg)
 
 HRESULT CPistol::Initialize_Active()
 {
-
+	m_iTexture_Index = 0;
 	Default_Set_Size();
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 

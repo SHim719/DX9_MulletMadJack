@@ -112,9 +112,6 @@
     <Filter Include="01.Levels\ClearLevel">
       <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\Player">
-      <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Fine">
       <UniqueIdentifier>{dd98ff7d-a669-4cb0-8619-dbf193ad27e9}</UniqueIdentifier>
     </Filter>
@@ -189,6 +186,30 @@
     </Filter>
     <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot">
       <UniqueIdentifier>{eef9dca0-50e6-406e-af3f-099b069fba6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerManager">
+      <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
+      <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Right_Hand">
+      <UniqueIdentifier>{d3cc0a4b-154c-4bfd-b484-187a9bd3c31a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin">
+      <UniqueIdentifier>{7aa55d93-132d-41c4-8449-9786e5fbf7b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload">
+      <UniqueIdentifier>{448e1174-689f-43c0-b72d-c24d14ebc093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\Effect">
+      <UniqueIdentifier>{6201846d-6c5a-4edb-b439-25185ca88092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\Effect\GunFire">
+      <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel">
+      <UniqueIdentifier>{d50b68ab-833c-40d2-99b0-9de1165b2952}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -321,6 +342,21 @@
     <ClInclude Include="..\Public\Pistol_Shot.h">
       <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\PlayerManager.h">
+      <Filter>PlayerManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Spin.h">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Reload.h">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_GunFire.h">
+      <Filter>Ui\Effect\GunFire</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Barrel.h">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -436,6 +472,21 @@
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Shot.cpp">
       <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\PlayerManager.cpp">
+      <Filter>PlayerManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Spin.cpp">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Reload.cpp">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_GunFire.cpp">
+      <Filter>Ui\Effect\GunFire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Barrel.cpp">
+      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
