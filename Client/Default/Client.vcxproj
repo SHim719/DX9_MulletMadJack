@@ -170,6 +170,9 @@
     <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
     <ClInclude Include="..\Public\Client_Components.h" />
+    <ClInclude Include="..\Public\Chainsaw_Monster.h" />
+    <ClInclude Include="..\Public\Drone_Monster.h" />
+    <ClInclude Include="..\Public\Pawn.h" />
     <ClInclude Include="..\Public\CUi_Border.h" />
     <ClInclude Include="..\Public\CUi_Chat.h" />
     <ClInclude Include="..\Public\CUi_ClearTime_BackGround.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="..\Public\CUi_UpGrade_Focus.h" />
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h" />
     <ClInclude Include="..\Public\Enemy.h" />
+    <ClInclude Include="..\Public\White_Suit_Monster.h" />
     <ClInclude Include="..\Public\Client_Defines.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
     <ClInclude Include="..\Public\CUi_Background.h" />
@@ -237,6 +241,9 @@
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
+    <ClCompile Include="..\Private\Chainsaw_Monster.cpp" />
+    <ClCompile Include="..\Private\Drone_Monster.cpp" />
+    <ClCompile Include="..\Private\Pawn.cpp" />
     <ClCompile Include="..\Private\CUi_Border.cpp" />
     <ClCompile Include="..\Private\CUi_Chat.cpp" />
     <ClCompile Include="..\Private\CUi_ClearTime_BackGround.cpp" />
@@ -258,6 +265,7 @@
     <ClCompile Include="..\Private\CUi_UpGrade_Focus.cpp" />
     <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp" />
     <ClCompile Include="..\Private\Enemy.cpp" />
+    <ClCompile Include="..\Private\White_Suit_Monster.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Background.cpp" />
     <ClCompile Include="..\Private\CUi_Finish.cpp" />

@@ -79,9 +79,6 @@
     <Filter Include="02.GameObjects\04. EnemyObject">
       <UniqueIdentifier>{9fc429b0-8228-49fe-ad25-49aa487f48d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Enemy">
-      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
       <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
     </Filter>
@@ -266,6 +263,18 @@
     <Filter Include="Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
       <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Pawns">
+      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster">
+      <UniqueIdentifier>{967ebb23-2cbc-4697-aef7-c9792331ae04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Drone_Monster">
+      <UniqueIdentifier>{039f30b6-647a-4871-b011-9f392df52a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster">
+      <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -321,9 +330,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Animation.h">
       <Filter>03. Client_Components\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Enemy.h">
-      <Filter>02.GameObjects\04. EnemyObject\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Enemy_Bullet.h">
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
@@ -475,6 +481,18 @@
     <ClInclude Include="..\Public\Pistol_Barrel.h">
       <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\White_Suit_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pawn.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Drone_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Chainsaw_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -524,9 +542,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\Animation.cpp">
       <Filter>03. Client_Components\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Enemy.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Bullet.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
@@ -662,6 +677,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Barrel.cpp">
       <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\White_Suit_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pawn.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Drone_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

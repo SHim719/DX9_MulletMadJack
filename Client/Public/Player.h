@@ -65,9 +65,7 @@ public:
 	}
 
 public:
-	/* 원형을 생성하기위한 함수. */
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
-	/* 사본을 생성한다. */
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 

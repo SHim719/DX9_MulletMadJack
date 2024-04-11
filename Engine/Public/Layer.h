@@ -17,6 +17,10 @@ public:
 	void Tick(_float fTimeDelta);
 	void LateTick(_float fTimeDelta);
 
+public:
+	class CComponent* Find_Component(const wstring& strComponentTag, _uint iIndex);
+	class CGameObject* Find_GameObject(_uint iIndex);
+
 private:
 	list<class CGameObject*>			m_GameObjects;
 

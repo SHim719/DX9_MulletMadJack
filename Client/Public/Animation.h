@@ -24,14 +24,14 @@ public:
     HRESULT         Insert_Textures(_uint iLevelIndex, const wstring& strPrototypeTag, const wstring& strAnimeTag);
     CTexture*       Find_Texture(const wstring& strPrototypeTag);
     HRESULT         Bind_Texture(_uint iTextureIndex);
-    void            Play_Animation(const wstring& strPrototypeTag, _float fTimeAcc, bool bLoop);
+    void            Play_Animation(const wstring& strAnimeTag, _float fTimeAcc, bool bLoop);
 
 public:
     _uint           Get_TextureNum() { return m_iTextureNum; }
-    CTexture* Get_Texture() { return m_pCurTexture; }
+    CTexture*       Get_Texture() { return m_pCurTexture; }
 
 public:
-    void            Update(_float fTimeDelta);
+    void            Update(_float fTimeDelta, bool& IsPlaying);
     void            Render();
 
 private:

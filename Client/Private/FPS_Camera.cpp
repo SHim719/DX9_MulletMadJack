@@ -90,16 +90,16 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		SetCursorPos(ptWindow.x, ptWindow.y);
 
-		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
-
 		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
+
+		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
 	
 		// 카메라 월드 행렬의 역행렬이 카메라의 view 행렬임
 		// 카메라 view 행렬의 y축 회전 성분을 추려냄
-		m_BillboardMatrix._11 = m_pTransformCom->Get_WorldMatrix_Inverse()._11;
-		m_BillboardMatrix._13 = m_pTransformCom->Get_WorldMatrix_Inverse()._13;
-		m_BillboardMatrix._31 = m_pTransformCom->Get_WorldMatrix_Inverse()._31;
-		m_BillboardMatrix._33 = m_pTransformCom->Get_WorldMatrix_Inverse()._33;
+		m_BillboardMatrix._11 = m_ViewMatrix._11;
+		m_BillboardMatrix._13 = m_ViewMatrix._13;
+		m_BillboardMatrix._31 = m_ViewMatrix._31;
+		m_BillboardMatrix._33 = m_ViewMatrix._33;
 
 		// y축 회전 성분이 담긴 행렬을 역변환하면 y축 빌보드 행렬이 됨
 		D3DXMatrixInverse(&m_BillboardMatrix, nullptr, &m_BillboardMatrix);

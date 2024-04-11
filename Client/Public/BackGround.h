@@ -26,6 +26,9 @@ public:
 	virtual HRESULT Render() override;
 
 private:
+	
+	
+	
 	CVIBuffer_Rect*				m_pVIBufferCom = { nullptr };
 	CTransform*					m_pTransformCom = { nullptr };
 

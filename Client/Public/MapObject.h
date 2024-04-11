@@ -4,7 +4,10 @@
 #include "GameObject.h"
 
 BEGIN(Engine)
-class CVIBuffer_Rect;
+class 
+	
+	
+	IBuffer_Rect;
 class CTexture;
 class CBoxCollider;
 END
