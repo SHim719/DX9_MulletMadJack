@@ -189,6 +189,20 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 		CVIBuffer_Box::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+#pragma region Model
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Door_Default"),
+	//	CVIBuffer_Mesh::Create(m_pGraphic_Device, L"../Bin/Resources/Models/DoorLeft.obj"))))
+	//	return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_SodaMachine_Default"),
+		CVIBuffer_Mesh::Create(m_pGraphic_Device, L"../Bin/Resources/Models/SodaMachine.obj"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Floor_Border_Default"),
+		CVIBuffer_Floor_Border::Create(m_pGraphic_Device))))
+		return E_FAIL;
+#pragma endregion
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Box_Collider_Default"),
 		CBoxCollider::Create(m_pGraphic_Device))))
 		return E_FAIL;

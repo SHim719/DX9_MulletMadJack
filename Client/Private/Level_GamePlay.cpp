@@ -16,6 +16,9 @@
 #include "CUi_MonsterDie.h"
 #include "Player.h"
 
+#include "SodaMachine.h"
+
+
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device }
 {
@@ -41,6 +44,7 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
 		return E_FAIL;
 
+	Initialize_SodaMachine();
 	return S_OK;
 }
 
@@ -68,6 +72,23 @@ HRESULT CLevel_GamePlay::Render()
 	m_pPlayer->Render();
 
 	return S_OK;
+}
+
+void CLevel_GamePlay::Initialize_SodaMachine()
+{
+	CLayer* pMachineLayer = m_pGameInstance->Find_Layer(m_pGameInstance->Get_CurrentLevelID(), L"SodaMachine");
+	CLayer* pBannerLayer = m_pGameInstance->Find_Layer(m_pGameInstance->Get_CurrentLevelID(), L"SodaMachine_Banner");
+
+	auto MachineLayerObjects = pMachineLayer->Get_GameObjects();
+	auto BannerLayerObjects = pBannerLayer->Get_GameObjects();
+	
+	auto BannerIt = BannerLayerObjects.begin();
+	for (auto it = MachineLayerObjects.begin(); it != MachineLayerObjects.end(); ++it)
+	{
+		dynamic_cast<CSodaMachine*>(*it)->Set_Banner(*BannerIt);
+
+		++BannerIt;
+	}
 }
 
 CLevel_GamePlay* CLevel_GamePlay::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

@@ -79,13 +79,14 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 
 	m_pObject_Manager->PriorityTick(fTimeDelta);
 	m_pObject_Manager->Tick(fTimeDelta);
-	m_pObject_Manager->LateTick(fTimeDelta);
-
+	
 	m_pUi_Manager->PriorityTick(fTimeDelta);
 	m_pUi_Manager->Tick(fTimeDelta);
 	m_pUi_Manager->LateTick(fTimeDelta);
 
 	m_pCollision_Manager->Tick();
+
+	m_pObject_Manager->LateTick(fTimeDelta);
 
 	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
 

@@ -19,6 +19,9 @@ public:
 	virtual HRESULT Render() override;
 
 public:
+	void Initialize_SodaMachine();
+
+public:
 	static CLevel_GamePlay* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 
@@ -34,6 +37,8 @@ private:
 	HRESULT Ready_Layer_Player();
 	
 	class CPlayer* m_pPlayer = { nullptr };
+
+	
 };
 
 END

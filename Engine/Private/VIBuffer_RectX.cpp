@@ -20,8 +20,8 @@ HRESULT CVIBuffer_RectX::Initialize(void* pArg)
 	Safe_Release(m_pVB);
 
 	m_iNumVertices = 4;
-	m_iVertexStride = sizeof(VTXTEX);
-	m_FVF = D3DFVF_XYZ | D3DFVF_TEX1; //| D3DFVF_TEXCOORDSIZE2(0);
+	m_iVertexStride = sizeof(VTXNORMAL);
+	m_FVF = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1; //| D3DFVF_TEXCOORDSIZE2(0);
 	m_ePrimitiveType = D3DPT_TRIANGLELIST;
 	m_iNumPrimitives = 2;
 
@@ -29,7 +29,7 @@ HRESULT CVIBuffer_RectX::Initialize(void* pArg)
 	if (FAILED(__super::Create_VertexBuffer()))
 		return E_FAIL;
 
-	VTXTEX* pVertices = { nullptr };
+	VTXNORMAL* pVertices = { nullptr };
 
 	/* 내ㅔ가 할당한 공간에 값을 채운다. */
 	/* 할당해놨던 정점 배열의 주소를 pVertices에 저장한다. */
@@ -40,15 +40,19 @@ HRESULT CVIBuffer_RectX::Initialize(void* pArg)
 
 	pVertices[0].vPosition = _float3(-0.5f, 0.5f, 0.f);
 	pVertices[0].vTexcoord = _float2(0.0f, 0.f);
+	pVertices[0].vNormal = _float3(0.0f, 0.f, -1.f);
 
 	pVertices[1].vPosition = _float3(0.5f, 0.5f, 0.f);
 	pVertices[1].vTexcoord = _float2(1.0f, 0.f);
+	pVertices[1].vNormal = _float3(0.0f, 0.f, -1.f);
 
 	pVertices[2].vPosition = _float3(0.5f, -0.5f, 0.f);
 	pVertices[2].vTexcoord = _float2(1.0f, 1.0f);
+	pVertices[2].vNormal = _float3(0.0f, 0.f, -1.f);
 
 	pVertices[3].vPosition = _float3(-0.5f, -0.5f, 0.f);
 	pVertices[3].vTexcoord = _float2(0.0f, 1.0f);
+	pVertices[3].vNormal = _float3(0.0f, 0.f, -1.f);
 
 	m_pVB->Unlock();
 
@@ -84,7 +88,7 @@ void CVIBuffer_RectX::Scaling_Texcoord(const _float3& vScale)
 	if (vScale.x < 1.f)
 		return;
 
-	VTXTEX* pVertices = { nullptr };
+	VTXNORMAL* pVertices = { nullptr };
 
 	m_pVB->Lock(0, 0, (void**)&pVertices, 0);
 

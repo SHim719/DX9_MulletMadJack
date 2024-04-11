@@ -5,6 +5,9 @@
 #include "Wall.h"
 #include "Floor.h"
 #include "MapObject.h"
+#include "SodaMachine.h"
+#include "SodaMachine_Banner.h"
+#include "Border.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -180,10 +183,20 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Border_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Border/Border%d.png", 1))))
+		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Objects/Object%d.png", 13))))
+			L"../Bin/Resources/Textures/Objects/Object%d.png", 16))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Soda_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/SodaMachine/SodaMachine%d.png", 2))))
 		return E_FAIL;
 
 
@@ -207,6 +220,20 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_MapObject"),
 		CMapObject::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SodaMachine"),
+		CSodaMachine::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SodaMachine_Banner"),
+		CSodaMachine_Banner::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Border"),
+		CBorder::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+
 	/* For Prototype_GameObject_Enemy */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy"),
 		CEnemy::Create(m_pGraphic_Device))))

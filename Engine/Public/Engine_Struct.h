@@ -37,6 +37,13 @@ namespace Engine
 		D3DXVECTOR2		vTexcoord; /* 텍스쳐의 상대적인 좌표.(0 ~ 1) */
 		D3DXVECTOR3		vTexcoord1; /* 텍스쳐의 상대적인 좌표.(0 ~ 1) */
 	}VTXTEX;
+
+	typedef struct
+	{
+		D3DXVECTOR3		vPosition;
+		D3DXVECTOR3		vNormal;
+		D3DXVECTOR2		vTexcoord;
+	}VTXNORMAL;
 	
 	typedef struct tagVertexCubeTexture
 	{

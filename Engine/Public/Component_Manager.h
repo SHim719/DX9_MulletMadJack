@@ -4,6 +4,7 @@
 #include "VIBuffer_Rect.h"
 #include "VIBuffer_RectX.h"
 #include "VIBuffer_RectXY.h"
+#include "VIBuffer_Mesh.h"
 #include "VIBuffer_Box.h"
 #include "Texture.h"
 #include "BoxCollider.h"

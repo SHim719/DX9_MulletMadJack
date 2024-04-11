@@ -167,7 +167,9 @@
   <ItemGroup>
     <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
+    <ClInclude Include="..\Public\Client_Components.h" />
     <ClInclude Include="..\Public\CUi_Border.h" />
     <ClInclude Include="..\Public\CUi_Chat.h" />
     <ClInclude Include="..\Public\CUi_Fine.h" />
@@ -197,10 +199,13 @@
     <ClInclude Include="..\Public\MainApp.h" />
     <ClInclude Include="..\Public\MapObject.h" />
     <ClInclude Include="..\public\Player.h" />
+    <ClInclude Include="..\Public\SodaMachine.h" />
+    <ClInclude Include="..\Public\SodaMachine_Banner.h" />
     <ClInclude Include="..\Public\Ui_Pos.h" />
     <ClInclude Include="..\Public\TriggerObject.h" />
     <ClInclude Include="..\Public\Pistol.h" />
     <ClInclude Include="..\Public\Pistol_Right_Hand.h" />
+    <ClInclude Include="..\Public\VIBuffer_Floor_Border.h" />
     <ClInclude Include="..\Public\Wall.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="Resource.h" />
@@ -208,8 +213,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\SR_TOOL\Client\Private\VIBuffer_Floor_Border.cpp" />
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
     <ClCompile Include="..\Private\CUi_Border.cpp" />
     <ClCompile Include="..\Private\CUi_Chat.cpp" />
@@ -239,6 +246,8 @@
     <ClCompile Include="..\Private\MainApp.cpp" />
     <ClCompile Include="..\Private\MapObject.cpp" />
     <ClCompile Include="..\private\Player.cpp" />
+    <ClCompile Include="..\Private\SodaMachine.cpp" />
+    <ClCompile Include="..\Private\SodaMachine_Banner.cpp" />
     <ClCompile Include="..\Private\TriggerObject.cpp" />
     <ClCompile Include="..\Private\Pistol.cpp" />
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp" />

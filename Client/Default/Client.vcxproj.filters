@@ -184,6 +184,21 @@
     <Filter Include="Ui\CUi_Active\Weapon\Pistol">
       <UniqueIdentifier>{c391c9fa-046a-4fa4-be10-c6d872ae2107}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\SodaMachine">
+      <UniqueIdentifier>{080dc5e1-e497-4e7a-9b4e-7edac65ecad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\SodaMachine\Banner">
+      <UniqueIdentifier>{6c873ab4-1a31-4a3c-8d5f-980a4832deaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Border">
+      <UniqueIdentifier>{ece3a37e-3646-4c28-b81c-0bff274dc67f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers">
+      <UniqueIdentifier>{f98235cf-4e29-4313-8fc4-7a025f727aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\CVIBuffer_Border">
+      <UniqueIdentifier>{9bd1b528-320c-4af8-9936-bc7e9c54741c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -261,12 +276,6 @@
     <ClInclude Include="..\Public\CUi_Announcer.h">
       <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Machine_Gun.h">
-      <Filter>Ui\CUi_Active\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Private\CUi_Heart.h">
-      <Filter>Ui\CUi_Clear\CUi_Heart</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CrossHair.h">
       <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
     </ClInclude>
@@ -317,6 +326,21 @@
     </ClInclude>
     <ClInclude Include="..\Public\TriggerObject.h">
       <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SodaMachine_Banner.h">
+      <Filter>02.GameObjects\01. MapObject\SodaMachine\Banner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SodaMachine.h">
+      <Filter>02.GameObjects\01. MapObject\SodaMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Floor_Border.h">
+      <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Border.h">
+      <Filter>02.GameObjects\01. MapObject\Border</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Client_Components.h">
+      <Filter>99.Defines</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -389,12 +413,6 @@
     <ClCompile Include="..\Private\CUi_Announcer.cpp">
       <Filter>Ui\CUi_Clear\CUi_Announcer</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Machine_Gun.cpp">
-      <Filter>Ui\CUi_Active\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Public\CUi_Heart.cpp">
-      <Filter>Ui\CUi_Clear\CUi_Heart</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\CrossHair.cpp">
       <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
     </ClCompile>
@@ -436,6 +454,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\TriggerObject.cpp">
       <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SodaMachine.cpp">
+      <Filter>02.GameObjects\01. MapObject\SodaMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SodaMachine_Banner.cpp">
+      <Filter>02.GameObjects\01. MapObject\SodaMachine\Banner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\SR_TOOL\Client\Private\VIBuffer_Floor_Border.cpp">
+      <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Border.cpp">
+      <Filter>02.GameObjects\01. MapObject\Border</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

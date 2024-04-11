@@ -3,6 +3,8 @@
 #include "../Default/stdafx.h"
 #include <process.h>
 
+#include "Client_Components.h"
+
 /* 클라이언트에서 제작하는 모든 클래스들이 공통적으로 자주 사용하는 정의들을 모아둔다. */
 namespace Client
 {
@@ -28,6 +30,9 @@ namespace Client
 		FLOOR,
 		OBJECT,
 		DOOR,
+		SODAMACHINE,
+		SODAMACHINE_BANNER,
+		BORDER,
 		OBJTYPE_END,
 	};
 }
