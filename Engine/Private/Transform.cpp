@@ -69,9 +69,11 @@ void CTransform::Set_Scale(const _float3& vScale)
 	Set_State(STATE_LOOK, &vLook);
 }
 
-void CTransform::Set_Target(const _float3& vWorldPoint)
+void CTransform::Set_Target(const _float3& vCurPoint, const _float3& vWorldPoint)
 {
-	Set_State(STATE_LOOK, &vWorldPoint);
+	_float3 vDir = vWorldPoint - vCurPoint;
+
+	Set_State(STATE_LOOK, &vDir);
 }
 
 HRESULT CTransform::Initialize_Prototype()

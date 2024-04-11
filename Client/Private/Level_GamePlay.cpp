@@ -6,7 +6,9 @@
 #include "CUi_PEACE.h"
 #include "Level_Loading.h"
 #include "CGame_Manager.h"
-#include "Enemy.h"
+#include "White_Suit_Monster.h"
+#include "Drone_Monster.h"
+#include "Chainsaw_Monster.h"
 #include "Enemy_Bullet.h"
 
 #include "Wall.h"
@@ -30,15 +32,16 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 
-	if(FAILED(Ready_Layer_Player()))
-	
+	if (FAILED(Ready_Layer_Player()))
+		return E_FAIL;
+
 	//if (FAILED(Test_UiTexture_Loading()))
 	//	return E_FAIL;
 
 	//if (FAILED(Test_LifeUi_Clone()))
 	//	return E_FAIL;
 
-	if (FAILED(Ready_Layer_Enemy(TEXT("Layer_Enemy"))))
+	if (FAILED(Ready_Layer_Pawns()))
 		return E_FAIL;
 
 	return S_OK;
@@ -99,31 +102,74 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	if (FAILED(m_pGameInstance->Create_Camera(strLayerTag, CFPS_Camera::Create(m_pGraphic_Device, &CameraDesc))))
 		return E_FAIL;
 
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Layer_Enemy(const wstring& strLayerTag)
-{
-	CEnemy::ENEMY_DESC	EnemyDesc{};
-
-	//EnemyDesc.vPosition = _float3(5.f, 0.f, 5.f);
-	//EnemyDesc.vAt = _float3(pFPS_Camera->Get_CAMERA_DESC().vEye);
-	//EnemyDesc.fSpeedPerSec = 2.f;
-	//EnemyDesc.fRotationPerSec = D3DXToRadian(90.f);
-	//
-	//if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Enemy"), &EnemyDesc))
-	//	return E_FAIL;
-
 	return S_OK;
 }
 
 HRESULT CLevel_GamePlay::Ready_Layer_Player()
 {
-	if(m_pPlayer != nullptr)
+	if (m_pPlayer != nullptr)
 		return E_FAIL;
 
 	m_pPlayer = CPlayer::Create();
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Pawns()
+{
+	if (FAILED(Ready_Layer_White_Suit_Monster(TEXT("Layer_White_Suit_Monster"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Drone_Monster(TEXT("Layer_Drone_Monster"))))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Chainsaw_Monster(TEXT("Layer_Chainsaw_Monster"))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_White_Suit_Monster(const wstring& strLayerTag)
+{
+	CWhite_Suit_Monster::PAWN_DESC	White_Suit_MonsterDesc{};
+
+	White_Suit_MonsterDesc.vPosition = _float3(0.f, 0.45f, 20.f);
+	White_Suit_MonsterDesc.vAt = _float3(0.f, 0.f, 0.f);
+	White_Suit_MonsterDesc.fSpeedPerSec = 0.3f;
+	White_Suit_MonsterDesc.fRotationPerSec = D3DXToRadian(90.f);
+	
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_White_Suit_Monster"), &White_Suit_MonsterDesc))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Drone_Monster(const wstring& strLayerTag)
+{
+	CDrone_Monster::PAWN_DESC	Drone_MonsterDesc{};
+
+	Drone_MonsterDesc.vPosition = _float3(1.f, 1.f, 20.f);
+	Drone_MonsterDesc.vAt = _float3(0.f, 0.f, 0.f);
+	Drone_MonsterDesc.fSpeedPerSec = 0.3f;
+	Drone_MonsterDesc.fRotationPerSec = D3DXToRadian(90.f);
+
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Drone_Monster"), &Drone_MonsterDesc))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Chainsaw_Monster(const wstring& strLayerTag)
+{
+	CChainsaw_Monster::PAWN_DESC	Chainsaw_MonsterDesc{};
+
+	Chainsaw_MonsterDesc.vPosition = _float3(-1.f, 0.45f, 20.f);
+	Chainsaw_MonsterDesc.vAt = _float3(0.f, 0.f, 0.f);
+	Chainsaw_MonsterDesc.fSpeedPerSec = 0.3f;
+	Chainsaw_MonsterDesc.fRotationPerSec = D3DXToRadian(90.f);
+
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_GameObject_Chainsaw_Monster"), &Chainsaw_MonsterDesc))
+		return E_FAIL;
 
 	return S_OK;
 }

@@ -28,12 +28,14 @@ HRESULT CEnemy_Bullet::Initialize(void* pArg)
 	if (FAILED(Add_Components()))
 		return E_FAIL;
 
-	m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Get_CurCamera());
+	//m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Find_GameObject(LEVEL_GAMEPLAY, TEXT("Main_Camera")));
+
+	m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera());
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_Enemy_BulletDesc.vPosition);
 
 	// 카메라 위치로 목표점을 잡음
-	m_pTransformCom->Set_Target(m_pFPS_Camera->Get_TransformCom()->Get_State(CTransform::STATE_POSITION));
+	m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
 
 	return S_OK;
 }
@@ -49,7 +51,8 @@ void CEnemy_Bullet::Tick(_float fTimeDelta)
 
 void CEnemy_Bullet::LateTick(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
+	// Sort_AlphaBlendObj()에서 터지므로 임시로 RENDER_NONBLEND으로 둠
+	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
 HRESULT CEnemy_Bullet::Render()

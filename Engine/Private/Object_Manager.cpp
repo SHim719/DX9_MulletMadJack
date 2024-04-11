@@ -97,6 +97,44 @@ void CObject_Manager::LateTick(_float fTimeDelta)
 	}
 }
 
+CComponent* CObject_Manager::Find_Component(_uint iLevelIndex, const wstring& strLayerTag, const wstring& strComponentTag, _uint iIndex)
+{
+	if (iLevelIndex >= m_iNumLevels)
+		return nullptr;
+
+	auto iter = m_pLayers[iLevelIndex].find(strLayerTag);
+
+	if (iter == m_pLayers[iLevelIndex].end())
+		return nullptr;
+
+	return iter->second->Find_Component(strComponentTag, iIndex);
+}
+
+CGameObject* CObject_Manager::Find_GameObject(_uint iLevelIndex, const wstring& strLayerTag, _uint iIndex)
+{
+	if (iLevelIndex >= m_iNumLevels)
+		return nullptr;
+
+	auto iter = m_pLayers[iLevelIndex].find(strLayerTag);
+
+	if (iter == m_pLayers[iLevelIndex].end())
+		return nullptr;
+
+	return iter->second->Find_GameObject(iIndex);
+}
+
+CLayer* CObject_Manager::Find_Layer(_uint iLevelIndex, const wstring& strLayerTag)
+{
+	if (iLevelIndex >= m_iNumLevels)
+		return nullptr;
+
+	auto	iter = m_pLayers[iLevelIndex].find(strLayerTag);
+	if (iter == m_pLayers[iLevelIndex].end())
+		return nullptr;
+
+	return iter->second;
+}
+
 CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
 {
 	auto	iter = m_Prototypes.find(strPrototypeTag);
@@ -107,18 +145,6 @@ CGameObject * CObject_Manager::Find_Prototype(const wstring & strPrototypeTag)
 		std::cout << "Prototype Tag : "; std::wcout << strPrototypeTag << std::endl;
 		return nullptr;
 	}
-
-	return iter->second;	
-}
-
-CLayer * CObject_Manager::Find_Layer(_uint iLevelIndex, const wstring & strLayerTag)
-{
-	if (iLevelIndex >= m_iNumLevels)
-		return nullptr;
-
-	auto	iter = m_pLayers[iLevelIndex].find(strLayerTag);
-	if (iter == m_pLayers[iLevelIndex].end())
-		return nullptr;
 
 	return iter->second;	
 }

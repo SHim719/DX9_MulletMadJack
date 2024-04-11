@@ -184,6 +184,22 @@ CGameObject* CGameInstance::Add_Clone(_uint iLevelIndex, const wstring & strLaye
 	return m_pObject_Manager->Add_Clone(iLevelIndex, strLayerTag, strPrototypeTag, pArg);
 }
 
+CComponent* CGameInstance::Find_Component(_uint iLevelIndex, const wstring& strLayerTag, const wstring& strComponentTag, _uint iIndex)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Find_Component(iLevelIndex, strLayerTag, strComponentTag, iIndex);
+}
+
+CGameObject* CGameInstance::Find_GameObject(_uint iLevelIndex, const wstring& strLayerTag, _uint iIndex)
+{
+	if (nullptr == m_pObject_Manager)
+		return nullptr;
+
+	return m_pObject_Manager->Find_GameObject(iLevelIndex, strLayerTag, iIndex);
+}
+
 CLayer* CGameInstance::Find_Layer(_uint iLevelIndex, const wstring& strLayerTag)
 {
 	if (nullptr == m_pObject_Manager)

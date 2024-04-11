@@ -51,7 +51,7 @@ private:
 
 public:
 	_float4x4		Get_Billboard_Matrix() { return m_BillboardMatrix; }
-	CTransform*		Get_TransformCom() { return m_pTransformCom; }
+	CTransform*		Get_Camera_TransformCom() { return m_pTransformCom; }
 	
 
 private:

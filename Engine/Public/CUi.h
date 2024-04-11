@@ -88,7 +88,6 @@ protected:
 	CTransform* m_pTransformCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 
-
 protected:
 	void Set_Lifetime(_float Lifetime) { m_fLifeTime = Lifetime; }
 	void Cal_Life_Blink(_float fTimeDelta);

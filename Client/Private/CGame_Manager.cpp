@@ -234,8 +234,7 @@ HRESULT CGame_Manager::Ready_Prototype_Ui_Life()
 HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Background_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background.png"))))
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Ui/Life/Ui_Life_Background.png"))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterLowGrade_Texture",

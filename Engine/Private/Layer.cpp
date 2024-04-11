@@ -42,6 +42,38 @@ void CLayer::LateTick(_float fTimeDelta)
 	}
 }
 
+CComponent* CLayer::Find_Component(const wstring& strComponentTag, _uint iIndex)
+{
+	if (iIndex >= m_GameObjects.size())
+		return nullptr;
+
+	auto	iter = m_GameObjects.begin();
+
+	for (size_t i = 0; i < iIndex; ++i)
+		++iter;
+
+	if (iter == m_GameObjects.end())
+		return nullptr;
+
+	return (*iter)->Find_Component(strComponentTag);
+}
+
+CGameObject* CLayer::Find_GameObject(_uint iIndex)
+{
+	if (iIndex >= m_GameObjects.size())
+		return nullptr;
+
+	auto iter = m_GameObjects.begin();
+
+	for (size_t i = 0; i < iIndex; ++i)
+		++iter;
+
+	if (iter == m_GameObjects.end())
+		return nullptr;
+
+	return (*iter);
+}
+
 CLayer * CLayer::Create()
 {
 	return new CLayer();

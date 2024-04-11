@@ -120,7 +120,11 @@ CVIBuffer_Rect * CVIBuffer_Rect::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 // CGameObject*	p사본 = 원형->Clone();
 
-CComponent * CVIBuffer_Rect::Clone(void* pArg)
+CComponent * 
+
+
+
+CVIBuffer_Rect::Clone(void* pArg)
 {
 	CVIBuffer_Rect*	pInstance = new CVIBuffer_Rect(*this);
 

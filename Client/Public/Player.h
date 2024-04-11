@@ -6,7 +6,11 @@
 //BEGIN(Engine)
 //class CTexture;
 //class CTransform;
-//class CVIBuffer_Rect;
+//class 
+// 
+// 
+// 
+// IBuffer_Rect;
 //END
 
 BEGIN(Client)

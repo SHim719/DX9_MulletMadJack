@@ -37,6 +37,9 @@ void CCollision_Manager::Intersect_Ray()
 
 		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
+			
+			
+			
 			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
 			if (nullptr == pVIBuffer)
 				continue;
