@@ -153,10 +153,7 @@ void CUi_Heart_Line::Enter(bool _Enter)
 	m_bActive = true;
 	if (m_bEnter)
 	{
-		Initialize_Set_ActiveTime();
-		Initialize_Set_Size();
-		Initialize_Set_Speed();
-		Initialize_Set_Scale_Pos_Rotation(nullptr);
+		Initialize_Active();
 	}
 	else
 	{

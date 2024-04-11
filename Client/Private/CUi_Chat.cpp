@@ -101,10 +101,8 @@ void CUi_Chat::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
-
 	m_UiDesc.m_fX = 730.f;
 	m_UiDesc.m_fY = -500.f;
-
 
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
@@ -149,10 +147,7 @@ void CUi_Chat::Enter(bool _Enter)
 	m_bActive = true;
 	if (m_bEnter)
 	{
-		Initialize_Set_ActiveTime();
-		Initialize_Set_Size();
-		Initialize_Set_Speed();
-		Initialize_Set_Scale_Pos_Rotation(nullptr);
+		Initialize_Active();
 	}
 	else
 	{

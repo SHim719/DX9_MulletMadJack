@@ -13,6 +13,7 @@ CUi::CUi(const CUi& rhs)
 	: m_pGraphic_Device(rhs.m_pGraphic_Device)
 	, m_pGameInstance(rhs.m_pGameInstance)
 	, m_fLifeTime(rhs.m_fLifeTime)
+	, m_fActiveTime(rhs.m_fActiveTime)
 {
 	memcpy(&m_UiDesc, &rhs.m_UiDesc, sizeof(Ui_Pos_Size_Rotation));
 	

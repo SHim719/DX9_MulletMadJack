@@ -15,7 +15,6 @@ CUi_Floor_Part::CUi_Floor_Part(const CUi_Floor_Part& rhs)
 HRESULT CUi_Floor_Part::Initialize_Prototype()
 {
 	Default_Set_LifeTime();
-	Default_Set_Size();
 
 	return S_OK;
 }
@@ -231,6 +230,7 @@ HRESULT CUi_Floor_Part::Add_Texture(void* pArg)
 	{
 		int temp = 0;
 		temp = m_pGameInstance->Get_CurrentLevelID();
+		temp -= (_uint)LEVEL::LEVEL_GAMEPLAY;
 		Set_NumberTexture(temp);
 	}
 	return S_OK;
@@ -238,41 +238,11 @@ HRESULT CUi_Floor_Part::Add_Texture(void* pArg)
 
 HRESULT CUi_Floor_Part::Set_NumberTexture(_uint LevelId)
 {
-	switch (LevelId)
-	{
-	case 1:
-		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("CUi_Floor_0_Texture"),
-			(CComponent**)&m_pTextureCom)))
-			return E_FAIL;
-		break;
-	case 2:
-		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("CUi_Floor_0_Texture"),
-			(CComponent**)&m_pTextureCom)))
-			return E_FAIL;
-		break;
-	case 3:
-		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("CUi_Floor_0_Texture"),
-			(CComponent**)&m_pTextureCom)))
-			return E_FAIL;
-		break;
-	case 4:
-		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("CUi_Floor_0_Texture"),
-			(CComponent**)&m_pTextureCom)))
-			return E_FAIL;
-		break;
-	case 5:
-		if (FAILED(Add_Component(LEVEL_STATIC,
-			TEXT("CUi_Floor_0_Texture"),
-			(CComponent**)&m_pTextureCom)))
-			return E_FAIL;
-		break;
-	default:
-		break;
-	}
+	if (FAILED(Add_Component(LEVEL_STATIC,
+		TEXT("CUi_Floor_0_Texture"),
+		(CComponent**)&m_pTextureCom)))
+		return E_FAIL;
+
 	m_iTexture_Index = LevelId;
 
 	return S_OK;

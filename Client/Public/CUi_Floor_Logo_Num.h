@@ -2,15 +2,14 @@
 #include "Client_Defines.h"
 #include "CUi.h"
 
-
 BEGIN(Client)
 
-class CUi_Shop_Noise_Part final : public CUi
+class CUi_Floor_Logo_Num final : public CUi
 {
 private:
-	CUi_Shop_Noise_Part(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Shop_Noise_Part(const CUi_Shop_Noise_Part& rhs);
-	virtual ~CUi_Shop_Noise_Part() = default;
+	CUi_Floor_Logo_Num(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Floor_Logo_Num(const CUi_Floor_Logo_Num& rhs);
+	virtual ~CUi_Floor_Logo_Num() = default;
 
 
 public:
@@ -25,11 +24,7 @@ public:
 protected:
 	virtual HRESULT Add_Components(void* pArg) override;
 	virtual HRESULT Add_Texture(void* pArg) override;
-
-
-protected:
-	virtual void Default_Set_LifeTime() override;
-	virtual void Default_Set_Size() override;
+	virtual void Default_Set_Size();
 
 
 protected:
@@ -39,14 +34,14 @@ protected:
 
 public:
 	void Set_Pos(_float3 Position);
-	void Set_Rotation(_float3 Rotation);
-	void Set_Scale(_float3 Scale);
+	void Set_LevelTexture();
 
 
 public:
-	static CUi_Shop_Noise_Part* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_Floor_Logo_Num* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CUi* Clone(void* pArg); // pArg -> Ui_Pos_Size_Rotation
 	virtual void Free() override;
 };
 
 END
+

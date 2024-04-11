@@ -24,7 +24,7 @@ public:
 
 
 public:
-	HRESULT Test_LifeUi_Clone();
+	void Test_Ui();
 
 
 private:

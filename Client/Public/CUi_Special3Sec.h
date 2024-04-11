@@ -48,7 +48,7 @@ private:
 
 private:
 	_float m_fMoveTime = { 0 };
-	class CUi_SpecialHit_Part* m_pSpecialHit_Part = { nullptr };
+	class CUi_Background* m_pBackGround = { nullptr };
 
 public:
 	static CUi_Special3Sec* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

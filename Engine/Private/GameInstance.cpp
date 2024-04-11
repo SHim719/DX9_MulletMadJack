@@ -246,12 +246,12 @@ HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiR
 	return m_pUi_Manager->Add_Ui_LifeClone(Ui_LifePrototypeTag, UiRenderType, pArg);
 }
 
-HRESULT CGameInstance::Add_Ui_Shop(const wstring& Ui_ShopTag, CUi* Ui_Shop)
+HRESULT CGameInstance::Add_Ui_ShopActive(const wstring& Ui_ShopTag, CUi* Ui_Shop)
 {
 	if (nullptr == m_pUi_Manager)
 		return E_FAIL;
 
-	return m_pUi_Manager->Add_Ui_Shop(Ui_ShopTag, Ui_Shop);
+	return m_pUi_Manager->Add_Ui_ShopActive(Ui_ShopTag, Ui_Shop);
 }
 
 CUi* CGameInstance::Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg)
@@ -271,9 +271,9 @@ void CGameInstance::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActi
 {
 	m_pUi_Manager->Set_Ui_ActiveState(Ui_ActiveTag, _isActive);
 }
-void CGameInstance::Set_Ui_ShopState(const wstring& Ui_ShopTag, bool _isActive)
+void CGameInstance::Set_Ui_ShopActiveState(const wstring& Ui_ShopTag, bool _isActive)
 {
-	m_pUi_Manager->Set_Ui_ShopState(Ui_ShopTag, _isActive);
+	m_pUi_Manager->Set_Ui_ShopActiveState(Ui_ShopTag, _isActive);
 }
 void CGameInstance::Set_Enter(bool _Enter)
 {

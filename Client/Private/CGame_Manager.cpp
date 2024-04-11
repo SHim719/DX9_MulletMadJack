@@ -1,29 +1,9 @@
 #include "CGame_Manager.h"
 #include "GameInstance.h"
 #include "BackGround.h"
-#include "CUi_MonsterDie.h"
-#include "CUi_Background.h"
-#include "CUi_Special3Sec.h"
-#include "CUi_SpecialHit.h"
+#include "Ui_Include.h"
 #include "FPS_Camera.h"
 #include "Animation.h"
-#include "CUi_SpecialHit_Part.h"
-#include "CUi_PEACE.h"
-#include "CUi_Fine.h"
-#include "CUi_Heart.h"
-#include "CUi_Heart_BackGround.h"
-#include "CUi_Heart_Line.h"
-#include "CUi_Border.h"
-#include "CUi_Chat.h"
-#include "CUi_LiveStream.h"
-#include "CUi_Announcer.h"
-#include "CUi_Floor_Part.h"
-#include "Pistol_Right_Hand.h"
-#include "Pistol.h"
-#include "CrossHair.h"
-#include "CUi_Floor.h"
-#include "CUi_Shop.h"
-#include "CUi_Shop_Noise_Part.h"
 
 
 IMPLEMENT_SINGLETON(CGame_Manager)
@@ -47,9 +27,13 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 	Ready_Prototype_GameObjects();
 	Ready_Prototype_Components();
+
 	Ready_Static_Texture_Prototype();
+	Ready_Clear_Texture();
+	Ready_Shop_Texture();
+	Ready_Start_Texture();
+
 	Ready_Prototype_Ui_Life();
-	Ready_Life_Shop();
 	Ready_Active_Ui();
 }
 
@@ -61,6 +45,7 @@ void CGame_Manager::Tick(_float fTimeDelta)
 	Adjust_ViewPort(fTimeDelta);
 	Call_Shop(fTimeDelta);
 	Cal_Change_Time(fTimeDelta);
+	Cal_StageClear_Time(fTimeDelta);
 }
 
 void CGame_Manager::Clear()
@@ -108,7 +93,7 @@ void CGame_Manager::Change_Check()
 			Clear();
 			break;
 		case StageProgress::Shopping:
-			m_pGameInstance->Set_Ui_ShopState(TEXT("CUi_Shop"));
+			m_pGameInstance->Set_Ui_ShopActiveState(TEXT("CUi_Shop"));
 			break;
 		case StageProgress::Changing:
 			m_fChangeTime = 3.f;
@@ -188,6 +173,19 @@ void CGame_Manager::Cal_Change_Time(_float fTimeDelta)
 	}
 }
 
+void CGame_Manager::Cal_StageClear_Time(_float fTimeDelta)
+{
+	if (m_eProgress == StageProgress::OnGoing)
+	{
+		m_fStageClearTime += fTimeDelta;
+	}
+	else if (m_eProgress == StageProgress::Start)
+	{
+		m_fStageClearTime = 0;
+	}
+
+}
+
 void CGame_Manager::Player_UpGrade(void* pArg)
 {
 	// for player
@@ -264,6 +262,34 @@ HRESULT CGame_Manager::Ready_Prototype_Ui_Life()
 		CUi_Floor_Part::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Shop_UpGrade"),
+		CUi_Shop_UpGrade::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_UpGrade_Select"),
+		CUi_UpGrade_Select::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_UpGrade_Focus"),
+		CUi_UpGrade_Focus::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Floor_Logo_Num"),
+		CUi_Floor_Logo_Num::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Real_ClearTime"),
+		CUi_Real_ClearTime::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_ClearTime_BackGround"),
+		CUi_ClearTime_BackGround::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Time_Division"),
+		CUi_Time_Division::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -284,7 +310,7 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Ui/Life/2Sec.png"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterSpecialGrade_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_MonsterHighGrade_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Life/3Sec.png"))))
 		return E_FAIL;
@@ -303,10 +329,6 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Life/FINISHED.png"))))
 		return E_FAIL;
-
-	Ready_Clear_Texture();
-
-	Ready_Start_Texture();
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CrossHair_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
@@ -383,7 +405,39 @@ HRESULT CGame_Manager::Ready_Clear_Texture()
 			L"../Bin/Resources/Textures/Ui/Clear/Sheet/Sheet%d.png", 4))))
 		return E_FAIL;
 
-	if (FAILED(Ready_Shop_Texture()))
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_Logo_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/Clear_Right_Middle.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_Logo_Word_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/Clear_Floor.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_Logo_Num_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Clear_Font/Clear_%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Clear_Time_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Victory/FloorTime.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Real_ClearTime_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Victory/Green_%d.png", 10))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_ClearTime_BackGround_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/Time_BackGround.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Time_Division_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/Time_Division.png"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -391,22 +445,31 @@ HRESULT CGame_Manager::Ready_Clear_Texture()
 
 HRESULT CGame_Manager::Ready_Shop_Texture()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_Test_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Clear/Shop/Clear_Shop.png"))))
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/Clear_Shop%d.png", 8))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_NoisePart_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_UpGrade_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Clear/Shop/Noise/Noise%d.png", 2))))
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/UpGrade/UpGrade%d.png", 9))))
 		return E_FAIL;
-	
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_UpGrade_Select_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/UpGrade/UpGrade_Select%d.png", 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_UpGrade_Focus_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/UpGrade/UpGrade_Focus.png"))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
 HRESULT CGame_Manager::Ready_Start_Texture()
 {
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_F_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Start/Start_F%d.png", 2))))
@@ -496,9 +559,24 @@ HRESULT CGame_Manager::Ready_Active_Clear()
 		CUi_Announcer::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_Logo"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Floor_Logo::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor_Logo_Word"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Floor_Logo_Word::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Floor"),
 		eUiRenderType::Render_NonBlend,
 		CUi_Floor::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Clear_Time"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Clear_Time::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -506,21 +584,13 @@ HRESULT CGame_Manager::Ready_Active_Clear()
 
 HRESULT CGame_Manager::Ready_Active_Shop()
 {
-	if (FAILED(m_pGameInstance->Add_Ui_Shop(TEXT("CUi_Shop"),
+	if (FAILED(m_pGameInstance->Add_Ui_ShopActive(TEXT("CUi_Shop"),
 		CUi_Shop::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CGame_Manager::Ready_Life_Shop()
-{
-	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Shop_Noise_Part"),
-		CUi_Shop_Noise_Part::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	return S_OK;
-}
 
 HRESULT CGame_Manager::Ready_Active_Gun()
 {

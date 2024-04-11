@@ -36,15 +36,16 @@ HRESULT CUi_Manager::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui
 	return S_OK;
 }
 
-HRESULT CUi_Manager::Add_Ui_Shop(const wstring& Ui_ShopTag, CUi* Ui_Shop)
+HRESULT CUi_Manager::Add_Ui_ShopActive(const wstring& Ui_ShopTag, CUi* Ui_Shop)
 {
-	if (m_Ui_Shop.end() != m_Ui_Shop.find(Ui_ShopTag))
+	if (m_Ui_ShopActive.end() != m_Ui_ShopActive.find(Ui_ShopTag))
 		return E_FAIL;
 
-	m_Ui_Shop.emplace(Ui_ShopTag, Ui_Shop);
+	m_Ui_ShopActive.emplace(Ui_ShopTag, Ui_Shop);
 
 	return S_OK;
 }
+
 
 HRESULT CUi_Manager::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
 {
@@ -128,7 +129,7 @@ void CUi_Manager::PriorityTick(_float fTimeDelta)
 			iter.second->PriorityTick(fTimeDelta);
 	}
 
-	for (auto& iter : m_Ui_Shop) {
+	for (auto& iter : m_Ui_ShopActive) {
 		if (iter.second->Get_Active())
 			iter.second->PriorityTick(fTimeDelta);
 	}
@@ -176,7 +177,7 @@ void CUi_Manager::Tick(_float fTimeDelta)
 			iter.second->Tick(fTimeDelta);
 	}
 
-	for (auto& iter : m_Ui_Shop) {
+	for (auto& iter : m_Ui_ShopActive) {
 		if (iter.second->Get_Active())
 			iter.second->Tick(fTimeDelta);
 	}
@@ -224,7 +225,7 @@ void CUi_Manager::LateTick(_float fTimeDelta)
 			iter.second->LateTick(fTimeDelta);
 	}
 
-	for (auto& iter : m_Ui_Shop) {
+	for (auto& iter : m_Ui_ShopActive) {
 		if (iter.second->Get_Active())
 			iter.second->LateTick(fTimeDelta);
 	}
@@ -261,7 +262,7 @@ void CUi_Manager::Ui_Shop_Render_Begin()
 HRESULT CUi_Manager::Ui_Shop_Render()
 {
 	Ui_Shop_Render_Begin();
-	for (auto& iter : m_Ui_Shop) {
+	for (auto& iter : m_Ui_ShopActive) {
 		if (iter.second->Get_Active() == true)
 			iter.second->Render();
 	}
@@ -363,10 +364,10 @@ bool CUi_Manager::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
 	return false;
 }
 
-void CUi_Manager::Set_Ui_ShopState(const wstring& Ui_ShopTag, bool _isActive)
+void CUi_Manager::Set_Ui_ShopActiveState(const wstring& Ui_ShopTag, bool _isActive)
 {
-	auto iter = m_Ui_Shop.find(Ui_ShopTag);
-	if (m_Ui_Shop.end() != iter)
+	auto iter = m_Ui_ShopActive.find(Ui_ShopTag);
+	if (m_Ui_ShopActive.end() != iter)
 	{
 		iter->second->Set_Active(_isActive);
 	}
@@ -431,9 +432,9 @@ void CUi_Manager::Free()
 		Safe_Release(Pair.second);
 	m_Ui_ActiveBlend.clear();
 
-	for (auto& Pair : m_Ui_Shop)
+	for (auto& Pair : m_Ui_ShopActive)
 		Safe_Release(Pair.second);
-	m_Ui_Shop.clear();
+	m_Ui_ShopActive.clear();
 
 	for (auto& Pair : m_Ui_LifePrototypes)
 		Safe_Release(Pair.second);
