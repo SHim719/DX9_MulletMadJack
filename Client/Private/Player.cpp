@@ -148,6 +148,10 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
 	}
 
+	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);
+	}
 
 	if (GetKeyState('T') & 0x8000)
 	{

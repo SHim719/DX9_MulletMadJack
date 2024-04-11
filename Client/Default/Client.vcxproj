@@ -173,6 +173,7 @@
     <ClInclude Include="..\Public\Chainsaw_Monster.h" />
     <ClInclude Include="..\Public\Drone_Monster.h" />
     <ClInclude Include="..\Public\FPS_Camera.h" />
+    <ClInclude Include="..\Public\Kick.h" />
     <ClInclude Include="..\Public\Pawn.h" />
     <ClInclude Include="..\Public\CUi_Border.h" />
     <ClInclude Include="..\Public\CUi_Chat.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp" />
     <ClCompile Include="..\Private\Drone_Monster.cpp" />
     <ClCompile Include="..\Private\FPS_Camera.cpp" />
+    <ClCompile Include="..\Private\Kick.cpp" />
     <ClCompile Include="..\Private\Pawn.cpp" />
     <ClCompile Include="..\Private\CUi_Border.cpp" />
     <ClCompile Include="..\Private\CUi_Chat.cpp" />

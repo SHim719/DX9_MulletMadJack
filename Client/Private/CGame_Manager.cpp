@@ -14,6 +14,7 @@
 #include "Pistol_Gunfire.h"
 #include "Pistol_Barrel.h"
 #include "Player.h"
+#include "Kick.h"
 
 IMPLEMENT_SINGLETON(CGame_Manager)
 
@@ -372,6 +373,11 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Kick_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Kick/Kick%d.png", 2))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -650,6 +656,7 @@ HRESULT CGame_Manager::Ready_Active_Clear()
 		CUi_Clear_Time::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+
 	return S_OK;
 }
 
@@ -684,6 +691,9 @@ HRESULT CGame_Manager::Ready_Active_Gun()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Barrel", eUiRenderType::Render_NonBlend, CPistol_Barrel::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Kick", eUiRenderType::Render_NonBlend, CKick::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

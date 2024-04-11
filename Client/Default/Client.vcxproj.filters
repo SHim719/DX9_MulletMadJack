@@ -271,6 +271,9 @@
     <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
       <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\CUi_Active\Kick">
+      <UniqueIdentifier>{481e1707-b28d-4bf1-af4f-9bbd53ad0be4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -489,6 +492,9 @@
     <ClInclude Include="..\Public\FPS_Camera.h">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Kick.h">
+      <Filter>Ui\CUi_Active\Kick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -685,6 +691,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Kick.cpp">
+      <Filter>Ui\CUi_Active\Kick</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
