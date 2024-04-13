@@ -50,6 +50,7 @@ HRESULT CLevel_GamePlay::Initialize()
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
 	Test_Ui();
+	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
 }
 
 HRESULT CLevel_GamePlay::Render()
@@ -99,7 +100,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.fFovy = D3DXToRadian(90.0f);
 	CameraDesc.fNear = 0.1f;
 	CameraDesc.fFar = 1000.0f;
-	CameraDesc.fSpeedPerSec = 10.f;
+	CameraDesc.fSpeedPerSec = 6.f;
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
 

@@ -69,8 +69,13 @@ void CPistol_Right_Hand::Tick(_float fTimeDelta)
 void CPistol_Right_Hand::LateTick(_float fTimeDelta)
 {
 	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 4, 1, 1, 2, 4);
-	_float2 fLissajousPos2 = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 4, 1, 1, 2, 4);
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+
+	_float2 fLissajousRun = CPlayer_Manager::Get_Instance()->Get_Lissajous_Run(m_UiDesc.m_fX, m_UiDesc.m_fY);
+
+	if(CPlayer_Manager::Get_Instance()->Get_Player_MoveState() == CPlayer::MOVE_STATE::MOVE)
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x +  fLissajousRun.x, m_UiDesc.m_fY + fLissajousPos.y + fLissajousRun.y, 0.f));
+	else
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
 }
 
 HRESULT CPistol_Right_Hand::Render()

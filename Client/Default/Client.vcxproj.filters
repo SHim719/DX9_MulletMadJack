@@ -283,6 +283,15 @@
     <Filter Include="MapLoader">
       <UniqueIdentifier>{16581d3a-7611-4303-ab6c-61c29d5407cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Ui\CUi_Active\Kick">
+      <UniqueIdentifier>{481e1707-b28d-4bf1-af4f-9bbd53ad0be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Camera_Filter">
+      <UniqueIdentifier>{a74d9362-43ca-44f5-b595-e2af6e50e029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ui\CUi_Active\Camera_Filter\Dash">
+      <UniqueIdentifier>{a94963dc-aa79-4a65-9063-350d749bb585}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -516,6 +525,12 @@
     <ClInclude Include="..\Public\MapLoader.h">
       <Filter>MapLoader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Dash_Effect.h">
+      <Filter>Ui\CUi_Active\Camera_Filter\Dash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Kick.h">
+      <Filter>Ui\CUi_Active\Kick</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -727,6 +742,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\MapLoader.cpp">
       <Filter>MapLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Kick.cpp">
+      <Filter>Ui\CUi_Active\Kick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Dash_Effect.cpp">
+      <Filter>Ui\CUi_Active\Camera_Filter\Dash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

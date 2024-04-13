@@ -90,7 +90,14 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 		SetCursorPos(ptWindow.x, ptWindow.y);
 
-		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, m_CameraDesc.fFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
+		_float fTempFovy = m_CameraDesc.fFovy;
+		if (CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::DASH_STATE) {
+			fTempFovy = D3DXToRadian(80.0f);
+		}
+
+
+
+		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, fTempFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
 
 		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
 	

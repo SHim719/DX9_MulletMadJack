@@ -23,7 +23,7 @@ HRESULT CPistol_Reload::Initialize(void* pArg)
 		return E_FAIL;
 
 	Default_Set_Size();
-	Default_Set_Delay(0.01f);
+	Default_Set_Delay(0.015f);
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 	Set_Texture_Index(0);
 
@@ -47,7 +47,7 @@ void CPistol_Reload::PriorityTick(_float fTimeDelta)
 void CPistol_Reload::Tick(_float fTimeDelta)
 {
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.1f));
 
 	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
 		if (m_iTexture_Index == 2) { 
