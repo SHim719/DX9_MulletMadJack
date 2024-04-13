@@ -44,10 +44,13 @@ private:
 
 private:
 	void Move(_float fTimeDelta);
-
+	void Scaling(_float fTimeDelta);
+	void Set_BackGround_Pos();
 
 private:
 	_float m_fMoveTime = { 0 };
+	_float m_fScaleTime = { 0.3f };
+	_float3 m_ScaleDownLimit = { 150, 32, 0 };
 	class CUi_Background* m_pBackGround = { nullptr };
 
 public:

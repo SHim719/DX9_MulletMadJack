@@ -40,6 +40,7 @@ void CUi_Floor_Logo_Word::Tick(_float fTimeDelta)
 	}
 	else if (m_fActiveTime < 0 && m_bEnter)
 	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_OriginPos);
 	}
 	else if (m_fActiveTime < 0 && !m_bEnter)
 	{
@@ -49,14 +50,12 @@ void CUi_Floor_Logo_Word::Tick(_float fTimeDelta)
 
 void CUi_Floor_Logo_Word::LateTick(_float fTimeDelta)
 {
-
 	for (size_t i = 0; i < m_pLogoNum.size(); ++i)
 	{
 		_float3 Pos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-		Pos.x += (i * 40) + 90;
+		Pos.x += (i * 43) +105;
 		m_pLogoNum[i]->Set_Pos(Pos);
 	}
-
 }
 
 HRESULT CUi_Floor_Logo_Word::Render()
@@ -91,7 +90,7 @@ void CUi_Floor_Logo_Word::Initialize_Set_ActiveTime()
 
 void CUi_Floor_Logo_Word::Initialize_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 200;
+	m_UiDesc.m_fSizeX = 160;
 	m_UiDesc.m_fSizeY = 40;
 }
 

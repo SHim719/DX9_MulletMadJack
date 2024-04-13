@@ -46,6 +46,7 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Start_Texture();
 	Ready_Camera_Effect_Texture();
 
+	Ready_PlayerGun_Texture();
 	Ready_Prototype_Ui_Life();
 	Ready_Active_Ui();
 	Ready_Prototype_Effect();
@@ -483,34 +484,9 @@ HRESULT CGame_Manager::Ready_Clear_Texture()
 			L"../Bin/Resources/Textures/Ui/Clear/Logo/Time_Division.png"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Idle_Textures",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Clear_Victory_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Shot_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/Shot/PISTOL_SHOT%d.png", 6))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Spin_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/Spin/SPIN_AIR%d.png", 9))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Reload_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload/PISTOL_RELOAD%d.png", 16))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Fire_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Gunfire/PISTOL_MUZZLE%d.png", 1))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Barrel_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Barrel/BARREL%d.png", 6))))
+			L"../Bin/Resources/Textures/Ui/Clear/Victory/Victory.png"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -575,6 +551,46 @@ HRESULT CGame_Manager::Ready_Start_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Floor_0_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Start/Start%d.png", 6))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_PlayerGun_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Idle_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Shot_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Shot/PISTOL_SHOT%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Spin_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Spin/SPIN_AIR%d.png", 9))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Reload_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload/PISTOL_RELOAD%d.png", 16))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Fire_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Gunfire/PISTOL_MUZZLE%d.png", 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Barrel_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Barrel/BARREL%d.png", 6))))
 		return E_FAIL;
 
 	return S_OK;
@@ -661,6 +677,10 @@ HRESULT CGame_Manager::Ready_Active_Clear()
 		CUi_Clear_Time::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Clear_Victory"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Clear_Victory::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	return S_OK;
 }

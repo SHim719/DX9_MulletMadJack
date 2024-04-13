@@ -178,9 +178,7 @@ void CUi_Floor::Dead_Check()
     if (m_fActiveTime < 0)
     {
         m_bActive = false;
-
     }
-
 }
 
 CUi_Floor* CUi_Floor::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

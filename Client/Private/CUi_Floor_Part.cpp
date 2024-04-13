@@ -39,22 +39,7 @@ void CUi_Floor_Part::PriorityTick(_float fTimeDelta)
 void CUi_Floor_Part::Tick(_float fTimeDelta)
 {
 	m_fLifeTime -= fTimeDelta;
-	m_fMoveTime -= fTimeDelta;
-	if (m_iPart != (_uint)Part::Number1
-		&& m_iPart != (_uint)Part::Number2)
-	{
-		if (m_fMoveTime > 0)
-		{
-			Sub_Speed(fTimeDelta);
-			Move(fTimeDelta);
-			Rotation(fTimeDelta);
-		}
-		else if (m_fLifeTime < 2.5 && 0 < m_fLifeTime)
-		{
-			m_pTransformCom->Set_Speed(1500);
-			Finale(fTimeDelta);
-		}
-	}
+	Execute(fTimeDelta);
 	if (m_fLifeTime <= 0)
 	{
 		Set_Dead();
@@ -109,6 +94,7 @@ void CUi_Floor_Part::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 		m_fRotationTime = 0;
 		break;
 	}
+	m_fRotationTimeEnd = 1.5f;
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, 
 		&_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 1.f));
@@ -248,7 +234,30 @@ HRESULT CUi_Floor_Part::Set_NumberTexture(_uint LevelId)
 	return S_OK;
 }
 
+void CUi_Floor_Part::Execute(_float fTimeDelta)
+{
+	m_fMoveTime -= fTimeDelta;
+	if (m_iPart != (_uint)Part::Number1
+		&& m_iPart != (_uint)Part::Number2)
+	{
+		if (m_fMoveTime > 0)
+		{
+			Sub_Speed(fTimeDelta);
+			Move(fTimeDelta);
+			Rotation(fTimeDelta);
+		}
+		else if(m_fMoveTime <= 0 && m_fLifeTime > 2.5)
+		{
+			Set_Regular_Pos();
+		}
 
+		if (m_fLifeTime < 2.5 && 0 < m_fLifeTime)
+		{
+			m_pTransformCom->Set_Speed(1500);
+			Finale(fTimeDelta);
+		}
+	}
+}
 
 void CUi_Floor_Part::Sub_Speed(_float fTimeDelta)
 {
@@ -288,7 +297,7 @@ void CUi_Floor_Part::Rotation(_float fTimeDelta)
 			m_pTransformCom->Rotation_XYZ(Reverse);
 			++m_iTexture_Index;
 		}
-
+		
 		if (m_bReverse)
 		{
 			_float3 Scale = { -m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1 };
@@ -301,6 +310,12 @@ void CUi_Floor_Part::Rotation(_float fTimeDelta)
 		}
 	}
 
+}
+
+void CUi_Floor_Part::Set_Regular_Pos()
+{
+	_float3 RegularPos = { m_OriginPos.x + 100 * m_iPart, m_OriginPos.y, 1.f };
+	m_pTransformCom->Set_Position(RegularPos);
 }
 
 void CUi_Floor_Part::Finale(_float fTimeDelta)

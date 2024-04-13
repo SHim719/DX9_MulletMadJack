@@ -34,19 +34,24 @@ protected:
 
 
 private:
+	void Execute(_float fTimeDelta);
 	void Sub_Speed(_float fTimeDelta);
 	void Move(_float fTimeDelta);
 	void Rotation(_float fTimeDelta);
+	void Set_Regular_Pos();
 	void Finale(_float fTimeDelta);
 
 
 private:
 	_float m_fSpeed = { 0.f };
 	_float m_fAngle = { 0.f };
+	_float3 m_OriginScale = { 80, 80, 0 };
+	_float3 m_OriginPos = { -207, 177, 0 };
 	_float m_fRotationTime = { 0.f };
+	_float m_fRotationTimeEnd = { 0 };
 	bool m_bReverse = { false };
 	_uint m_iPart = {0};
-	_float m_fMoveTime = { 0.5 };
+	_float m_fMoveTime = { 0.5f };
 
 
 public:

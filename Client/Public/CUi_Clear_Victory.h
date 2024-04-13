@@ -4,12 +4,12 @@
 
 BEGIN(Client)
 
-class CUi_Clear_Time final : public CUi
+class CUi_Clear_Victory final : public CUi
 {
 protected:
-	CUi_Clear_Time(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Clear_Time(const CUi_Clear_Time& rhs);
-	virtual ~CUi_Clear_Time() = default;
+	CUi_Clear_Victory(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Clear_Victory(const CUi_Clear_Victory& rhs);
+	virtual ~CUi_Clear_Victory() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -42,13 +42,11 @@ private:
 
 private:
 	_float m_fScaleTime = { 0 };
-	_float m_fCallClearTime = {0.5};
-	_float3 m_OriginScale = {400, 65, 0};
-	bool m_bCallClearTime = { false };
+	_float3 m_OriginScale = { 550, 80, 0 };
 
 
 public:
-	static CUi_Clear_Time* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_Clear_Victory* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

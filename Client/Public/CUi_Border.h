@@ -56,7 +56,8 @@ private:
 	CVIBuffer_Rect* m_pUniqueVIBufferCom = { nullptr };
 	CTransform* m_pUniqueTransformCom = { nullptr };
 	UniqueDesc m_UniqueUiDesc = {};
-
+	_float3 m_OriginScale = { 280, 320, 1 };
+	_float3 m_OriginUniqueScale = { 960, 580, 1 };
 public:
 	static CUi_Border* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

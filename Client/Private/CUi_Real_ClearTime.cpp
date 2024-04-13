@@ -46,7 +46,13 @@ void CUi_Real_ClearTime::Tick(_float fTimeDelta)
 	m_fScaleTime -= fTimeDelta;
 
 	if (m_fScaleTime > 0)
+	{
 		Scaling(fTimeDelta);
+	}
+	else
+	{
+		m_pTransformCom->Set_Scale(m_OriginScale);
+	}
 
 	if (m_fLifeTime < 0)
 		m_bDead = true;

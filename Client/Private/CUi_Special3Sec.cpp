@@ -39,9 +39,9 @@ void CUi_Special3Sec::PriorityTick(_float fTimeDelta)
 
 void CUi_Special3Sec::Tick(_float fTimeDelta)
 {
-	m_fMoveTime += fTimeDelta;
 	Move(fTimeDelta);
-	m_pBackGround->Set_Pos(m_pTransformCom->Get_State(CTransform::STATE::STATE_POSITION));
+	Scaling(fTimeDelta);
+	Set_BackGround_Pos();
 	Cal_Life_Blink(fTimeDelta);
 }
 
@@ -68,6 +68,7 @@ HRESULT CUi_Special3Sec::Render()
 
 void CUi_Special3Sec::Move(_float fTimeDelta)
 {
+	m_fMoveTime += fTimeDelta;
 	if (m_fMoveTime < 0.5)
 	{
 		m_pTransformCom->Go_Up(fTimeDelta);
@@ -79,11 +80,31 @@ void CUi_Special3Sec::Move(_float fTimeDelta)
 	}
 }
 
+void CUi_Special3Sec::Scaling(_float fTimeDelta)
+{
+	m_fScaleTime -= fTimeDelta;
+	if (m_fScaleTime > 0)
+	{
+		_float3 ScaleDown = { 0.97f, 0.97f, 0 };
+		m_pTransformCom->Multiply_Scale(ScaleDown);
+	}
+	else
+	{
+		m_pTransformCom->Set_Scale(m_ScaleDownLimit);
+	}
+}
+
+void CUi_Special3Sec::Set_BackGround_Pos()
+{
+	_float3 BackPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	BackPos.x -= 10;
+	m_pBackGround->Set_Pos(BackPos);
+}
+
 void CUi_Special3Sec::Initialize_Set_Background()
 {
 	m_pBackGround = (CUi_Background*)m_pGameInstance->
 		Add_Ui_PartClone(TEXT("CUi_BackGround"), &m_UiDesc);
-	int a = 10;
 }
 
 HRESULT CUi_Special3Sec::Add_Components(void* pArg)
@@ -135,7 +156,7 @@ void CUi_Special3Sec::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	m_UiDesc.m_fY = -150;
 
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 0.f };
-	m_pTransformCom->Set_Scale(Scale);
+	m_pTransformCom->Set_Scale(Scale*2);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 }
 
