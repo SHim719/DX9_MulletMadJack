@@ -139,7 +139,7 @@ void CFPS_Camera::Mouse_Ray()
 
 	RAY_DESC rayDesc{};
 	rayDesc.iLevel = LEVEL_GAMEPLAY;
-	rayDesc.strDstLayer = L"Wall";
+	rayDesc.strDstLayer = L"Pawn";
 	rayDesc.vRayDir = vRayDir;
 	rayDesc.vRayWorldPos = fMouseWorld_Near;
 
@@ -148,7 +148,7 @@ void CFPS_Camera::Mouse_Ray()
 
 HRESULT CFPS_Camera::Add_Components()
 {
-	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Com_Transform"), &m_CameraDesc));
+	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), &m_CameraDesc));
 
 	return S_OK;
 }

@@ -32,7 +32,6 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTransform* m_pTransformCom = { nullptr };
 	CAnimation* m_pAnimationCom = { nullptr };
 
 	CFPS_Camera* m_pFPS_Camera = { nullptr };

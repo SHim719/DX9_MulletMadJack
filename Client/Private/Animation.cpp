@@ -74,7 +74,7 @@ void CAnimation::Play_Animation(const wstring& strAnimeTag, _float fTimeGap, boo
     m_iTextureNum = 0;
 }
 
-void CAnimation::Update(_float fTimeDelta, bool& IsPlaying)
+void CAnimation::Update(_float fTimeDelta, bool& IsPlaying, bool& IsDead)
 {
     m_fTimeAcc += fTimeDelta;
 

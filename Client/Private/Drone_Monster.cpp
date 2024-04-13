@@ -55,7 +55,7 @@ void CDrone_Monster::Tick(_float fTimeDelta)
 
     Set_Motions(fTimeDelta);
 
-    m_pAnimationCom->Update(fTimeDelta, IsPlaying);
+    m_pAnimationCom->Update(fTimeDelta, IsPlaying, m_bDead);
 }
 
 void CDrone_Monster::LateTick(_float fTimeDelta)
@@ -86,11 +86,11 @@ HRESULT CDrone_Monster::Render()
 
 HRESULT CDrone_Monster::Add_Components()
 {
-    m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("Com_VIBuffer")));
+    m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
 
-    m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Com_Transform"), &m_Drone_Monster_Desc));
+    m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), &m_Drone_Monster_Desc));
 
-    m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Animation"), TEXT("Com_Animation"), this));
+    m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Animation"), TEXT("Animation"), this));
 
     return S_OK;
 }

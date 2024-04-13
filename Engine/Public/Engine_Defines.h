@@ -15,6 +15,7 @@
 #include <string>
 #include <assert.h>
 #include <iostream>
+#include <ctime>
 #include <random>
 #include <unordered_map>
 
