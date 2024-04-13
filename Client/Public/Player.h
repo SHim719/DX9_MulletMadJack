@@ -21,6 +21,7 @@ public:
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, ANIMATION_END };
 	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, JUMP_STATE, PLAYER_STATE_END };
+	enum MOVE_STATE { STOP, MOVE, MOVE_END };
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -46,10 +47,22 @@ public:
 		Camera_Reset();
 		this->ePlayerState = ePlayerState; }
 
-	void Get_WeaponType(WEAPON_TYPE& eWeaponType) { eWeaponType = this->eWeaponType; }
-	void Get_HandType(HAND_TYPE& eHandType) { eHandType = this->eHandType; }
-	void Get_AnimationType(ANIMATION_TYPE& eAnimationType) { eAnimationType = this->eAnimationType; }
-	void Get_PlayerState(PLAYER_STATE& ePlayerState) { ePlayerState = this->ePlayerState; }
+	void Set_MoveState(MOVE_STATE eMoveState) { 
+		Move_Reset();
+		this->eMoveState = eMoveState; 
+	}
+
+	//void Get_WeaponType(WEAPON_TYPE& eWeaponType) { eWeaponType = this->eWeaponType; }
+	//void Get_HandType(HAND_TYPE& eHandType) { eHandType = this->eHandType; }
+	//void Get_AnimationType(ANIMATION_TYPE& eAnimationType) { eAnimationType = this->eAnimationType; }
+	//void Get_PlayerState(PLAYER_STATE& ePlayerState) { ePlayerState = this->ePlayerState; }
+	//void Get_MoveState(MOVE_STATE& eMoveState) { eMoveState = this->eMoveState; }
+
+	WEAPON_TYPE		Get_WeaponType() { return eWeaponType; }
+	HAND_TYPE		Get_HandType() { return eHandType; }
+	ANIMATION_TYPE	Get_AnimationType() { return eAnimationType; }
+	PLAYER_STATE	Get_PlayerState() { return ePlayerState; }
+	MOVE_STATE		Get_MoveState() { return eMoveState; }
 
 private:
 	void Key_Input(_float fTimeDelta);
@@ -60,6 +73,7 @@ private:
 	
 	void Active_Reset();
 	void Camera_Reset();
+	void Move_Reset();
 
 	void Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime);
 	void Camera_Event(_float fTimeDelta);
@@ -89,6 +103,7 @@ private:
 	HAND_TYPE eHandType = IDLE_HAND;
 	ANIMATION_TYPE eAnimationType = IDLE;
 	PLAYER_STATE ePlayerState = IDLE_STATE;
+	MOVE_STATE eMoveState = STOP;
 
 	_float m_fShakePower = 0.f;
 	_float m_fShakeTime = 0.f;

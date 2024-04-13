@@ -46,6 +46,16 @@ _float CPlayer_Manager::Get_PlayerToTarget(_float3 _Target)
 	return (_float)sqrt(pow(fabs(Pos.x - _Target.x), 2) + pow(fabs(Pos.y - _Target.y), 2) + pow(fabs(Pos.z - _Target.z), 2));
 }
 
+_float2 CPlayer_Manager::Lissajous_Adjust(_float& _fLissajousTime, _float _fPosX, _float _fPosY, _float _fWitth, _float _fHeight, _float _fLagrangianX, _float _fLagrangianY, _float _fPhaseDelta)
+{
+	//_fLissajousTime += _fTimeDelta * _fLissajousSpeed;
+
+	_fPosX = _fWitth * sin(_fLagrangianX * _fLissajousTime + 3.14f / _fPhaseDelta);
+	_fPosY = _fHeight * cos(_fLagrangianY * _fLissajousTime);
+
+	return { _fPosX , _fPosY };
+}
+
 void CPlayer_Manager::Free()
 {
 	Safe_Release(m_pGameInstance);

@@ -66,8 +66,8 @@ void CPistol_Gunfire::Tick(_float fTimeDelta)
 
 void CPistol_Gunfire::LateTick(_float fTimeDelta)
 {
-	//_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 3, 3, 1, 2, 6);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+	_float2 fLissajousRun = CPlayer_Manager::Get_Instance()->Get_Lissajous_Run(m_UiDesc.m_fX, m_UiDesc.m_fY);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousRun.x, m_UiDesc.m_fY + fLissajousRun.y, 0.f));
 }
 
 HRESULT CPistol_Gunfire::Render()

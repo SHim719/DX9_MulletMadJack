@@ -24,7 +24,7 @@ HRESULT CPistol_Barrel::Initialize(void* pArg)
 		return E_FAIL;
 
 	Default_Set_Size();
-	Default_Set_Delay(0.f);
+	Default_Set_Delay(0.1f);
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 	Set_Texture_Index(0);
 
@@ -71,7 +71,7 @@ void CPistol_Barrel::Tick(_float fTimeDelta)
 
 void CPistol_Barrel::LateTick(_float fTimeDelta)
 {
-	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 800, 300, 2, 1, 2, 6);
+	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 400, 300, 2, 1, 2, 8);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
 }
 
@@ -91,10 +91,10 @@ HRESULT CPistol_Barrel::Render()
 
 void CPistol_Barrel::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	Set_Ui_Pos(260, -270);
+	Set_Ui_Pos(-100, -400);
 	Set_Divide(1.f);
 
-	m_fScale = { m_UiDesc.m_fSizeX / Get_Divide() , m_UiDesc.m_fSizeY / Get_Divide(), 1.f };
+	m_fScale = { Get_Texture_Info().x / m_fDivide , Get_Texture_Info().y / m_fDivide, 1.f };
 	m_fRotation = { 0.f, 0.f, 0.f };
 
 	m_pTransformCom->Set_Scale(m_fScale);

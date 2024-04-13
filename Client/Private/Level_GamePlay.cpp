@@ -49,6 +49,7 @@ HRESULT CLevel_GamePlay::Initialize()
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
 	Test_Ui();
+	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
 }
 
 HRESULT CLevel_GamePlay::Render()

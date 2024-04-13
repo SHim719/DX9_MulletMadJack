@@ -81,40 +81,52 @@ HRESULT CPlayer::Render()
 
 void CPlayer::Key_Input(_float fTimeDelta)
 {
-	if (GetKeyState('W') & 0x8000)
+	if (m_pGameInstance->GetKey(eKeyCode::W))
 	{
+		Set_MoveState(MOVE);
 		m_pTransformCom->Go_Floor_Straight(fTimeDelta);
 	}
 
-	if (GetKeyState('S') & 0x8000)
+	if (m_pGameInstance->GetKeyUp(eKeyCode::W))
 	{
+		Set_MoveState(STOP);
+	}
+
+	if (m_pGameInstance->GetKey(eKeyCode::S))
+	{
+		Set_MoveState(MOVE);
 		m_pTransformCom->Go_Floor_Backward(fTimeDelta);
+	}
+
+	if (m_pGameInstance->GetKeyUp(eKeyCode::S))
+	{
+		Set_MoveState(STOP);
 	}
 
 	//Left
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 	{
 		m_pTransformCom->Go_Floor_Left(fTimeDelta);
+		Set_MoveState(MOVE);
 		HeadTilt(fTimeDelta, -2.f);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::A))
 	{
-		//HeadTiltReset(fTimeDelta);
-		//HeadTiltReset(fTimeDelta);
+		Set_MoveState(STOP);
 		fHeadTilt = 0.f;
 	}
 
 	if (m_pGameInstance->GetKey(eKeyCode::D))
 	{
 		m_pTransformCom->Go_Floor_Right(fTimeDelta);
+		Set_MoveState(MOVE);
 		HeadTilt(fTimeDelta, 2.f);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::D))
 	{
-		//HeadTiltReset(fTimeDelta);
-		//HeadTiltReset(fTimeDelta);
+		Set_MoveState(STOP);
 		fHeadTilt = 0.f;
 	}
 
@@ -161,13 +173,13 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift))
 	{
 		m_pTransformCom->Set_Speed(10.f);
-		CPlayer_Manager::Get_Instance()->Set_Player_MoveState(CPlayer::PLAYER_STATE::DASH_STATE);
+		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::DASH_STATE);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::LShift))
 	{
 		m_pTransformCom->Set_Speed(6.f);
-		CPlayer_Manager::Get_Instance()->Set_Player_MoveState(CPlayer::PLAYER_STATE::IDLE_STATE);
+		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::IDLE_STATE);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::Space))
@@ -249,6 +261,10 @@ void CPlayer::Active_Reset()
 void CPlayer::Camera_Reset()
 {
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), false);
+}
+
+void CPlayer::Move_Reset()
+{
 }
 
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

@@ -1,5 +1,6 @@
 #pragma once
 #include "Client_Defines.h"
+#include "PlayerManager.h"
 #include "CUi.h"
 
 BEGIN(Client)
