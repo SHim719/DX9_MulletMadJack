@@ -31,7 +31,7 @@ public:
     CTexture*       Get_Texture() { return m_pCurTexture; }
 
 public:
-    void            Update(_float fTimeDelta, bool& IsPlaying);
+    void            Update(_float fTimeDelta, bool& IsPlaying, bool& IsDead);
     void            Render();
 
 private:
