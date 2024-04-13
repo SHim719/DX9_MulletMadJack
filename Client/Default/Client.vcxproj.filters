@@ -43,9 +43,6 @@
     <Filter Include="02.GameObjects\01. MapObject\Floor">
       <UniqueIdentifier>{c4fb5a17-6726-4303-bee1-2eb53f19ba32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97. Etc">
-      <UniqueIdentifier>{8eecaec7-1f07-4e34-8382-30db217e7173}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui">
       <UniqueIdentifier>{fc50c5ad-eb67-4e95-ae28-28a742bc0373}</UniqueIdentifier>
     </Filter>
@@ -124,9 +121,6 @@
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_LiveStream">
       <UniqueIdentifier>{9b36f8d2-aa8a-4c2c-b4d8-2351e8116e1f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameManager">
-      <UniqueIdentifier>{c86a67ad-2539-4748-b16d-257ac9d3ec15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Border">
       <UniqueIdentifier>{dbfeea87-563f-469c-ad82-b1a9282dd654}</UniqueIdentifier>
     </Filter>
@@ -177,9 +171,6 @@
     </Filter>
     <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot">
       <UniqueIdentifier>{eef9dca0-50e6-406e-af3f-099b069fba6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayerManager">
-      <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
     </Filter>
     <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
       <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
@@ -270,6 +261,27 @@
     </Filter>
     <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
       <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Soda">
+      <UniqueIdentifier>{b5f96136-11e5-47c6-86c7-e698715ba7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\Rigidbody">
+      <UniqueIdentifier>{919c6503-9fe5-4987-be73-c23f3c7142c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Door">
+      <UniqueIdentifier>{ee9c996b-dfaa-4282-a227-143caf2fc904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Door">
+      <UniqueIdentifier>{23a3b385-a1a6-42dd-bad9-401411a4bd39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerManager">
+      <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameManager">
+      <UniqueIdentifier>{c86a67ad-2539-4748-b16d-257ac9d3ec15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MapLoader">
+      <UniqueIdentifier>{16581d3a-7611-4303-ab6c-61c29d5407cc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -489,6 +501,21 @@
     <ClInclude Include="..\Public\FPS_Camera.h">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Soda.h">
+      <Filter>02.GameObjects\01. MapObject\Soda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Rigidbody.h">
+      <Filter>03. Client_Components\Rigidbody</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Door.h">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Door.h">
+      <Filter>02.GameObjects\01. MapObject\Door</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MapLoader.h">
+      <Filter>MapLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -685,6 +712,21 @@
     </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp">
       <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Soda.cpp">
+      <Filter>02.GameObjects\01. MapObject\Soda</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Rigidbody.cpp">
+      <Filter>03. Client_Components\Rigidbody</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Door.cpp">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Door.cpp">
+      <Filter>02.GameObjects\01. MapObject\Door</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\MapLoader.cpp">
+      <Filter>MapLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

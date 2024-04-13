@@ -20,6 +20,9 @@ void CCollision_Manager::Tick()
 {
 	Collision_Box(3, L"Player", L"Wall");
 	Collision_Box(3, L"Player", L"Floor");
+
+	Collision_Box(3, L"Soda", L"Soda");
+	Collision_Box(3, L"Soda", L"Floor");
 	Intersect_Ray();
 }
 
@@ -70,6 +73,9 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 
 	for (auto DstIt = DstObjects.begin(); DstIt != DstObjects.end(); ++DstIt)
 	{
+		if ((*DstIt)->Is_Destroyed())
+			continue;
+
 		CTransform* pDstTransform = (*DstIt)->Get_Transform();
 		CBoxCollider* pDstCollider = dynamic_cast<CBoxCollider*>((*DstIt)->Find_Component(L"Collider"));
 		if (nullptr == pDstCollider || false == pDstCollider->IsActive())
@@ -77,6 +83,9 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 
 		for (auto SrcIt = SrcObjects.begin(); SrcIt != SrcObjects.end(); ++SrcIt)
 		{
+			if (*SrcIt == *DstIt || (*SrcIt)->Is_Destroyed())
+				continue;
+
 			CTransform* pSrcTransform = (*SrcIt)->Get_Transform();
 			CBoxCollider* pSrcCollider = dynamic_cast<CBoxCollider*>((*SrcIt)->Find_Component(L"Collider"));
 			if (nullptr == pSrcCollider || false == pSrcCollider->IsActive())

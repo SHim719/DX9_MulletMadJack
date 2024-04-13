@@ -9,8 +9,8 @@ class ENGINE_DLL CBoxCollider final : public CCollider
 public:
 	typedef struct tagBoxCollisionDesc
 	{
-		_float3 vScale;
-		_float3 vOffset;
+		_float3 vScale = { 1.f, 1.f, 1.f };
+		_float3 vOffset = { 0.f, 0.f, 0.f };
 	} BOXCOLLISION_DESC;
 
 protected:

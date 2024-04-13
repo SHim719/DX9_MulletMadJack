@@ -1,14 +1,15 @@
 #include "SodaMachine.h"
-
 #include "GameInstance.h"
 
+#include "Soda.h"
+
 CSodaMachine::CSodaMachine(LPDIRECT3DDEVICE9 pGraphic_Device)
-	: CGameObject { pGraphic_Device }
+	: CGameObject{ pGraphic_Device }
 {
 }
 
 CSodaMachine::CSodaMachine(const CSodaMachine& rhs)
-	: CGameObject { rhs }
+	: CGameObject{ rhs }
 {
 }
 
@@ -31,6 +32,17 @@ void CSodaMachine::PriorityTick(_float fTimeDelta)
 
 void CSodaMachine::Tick(_float fTimeDelta)
 {
+	if (m_pGameInstance->GetKeyDown(eKeyCode::P))
+	{
+		m_eState = POURING;
+		m_iPourCount = 8;
+	}
+
+	if (POURING == m_eState)
+	{
+		Pouring_Soda(fTimeDelta);
+	}
+
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
@@ -86,6 +98,32 @@ void CSodaMachine::OnCollisionEnter(CGameObject* pOther)
 {
 }
 
+
+void CSodaMachine::Pouring_Soda(_float fTimeDelta)
+{
+	m_fPourTime += fTimeDelta;
+
+	if (m_fPourTime >= 0.2f)
+	{
+		CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Soda", L"Prototype_Soda");
+		pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vPourPos);
+		static_cast<CBoxCollider*>(pObj->Find_Component(L"Collider"))->Update_BoxCollider(pObj->Get_Transform()->Get_WorldMatrix());
+
+		_float3 vLook = m_pTransformCom->Get_State(CTransform::STATE_LOOK);
+		D3DXVec3Normalize(&vLook, &vLook);
+
+		_float3 vUp = { 0.f ,1.f, 0.f };
+
+		_float fUpSpeed = _float(rand() % 3);
+		_float fLookSpeed = _float(rand() % 1 + 1);
+		static_cast<CRigidbody*>(pObj->Find_Component(L"Rigidbody"))->Set_Velocity(vLook * fLookSpeed + vUp * fUpSpeed);
+		m_fPourTime = 0.f;
+		m_iPourCount--;
+	}
+
+	if (0 == m_iPourCount)
+		m_eState = BROKEN;
+}
 
 CSodaMachine* CSodaMachine::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {

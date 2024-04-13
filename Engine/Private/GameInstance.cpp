@@ -64,6 +64,8 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	if (nullptr == m_pLevel_Manager || 
 		nullptr == m_pObject_Manager)
 		return;
+	
+	m_pObject_Manager->Destroy_Objects();
 
 	m_pKey_Manager->Update();
 
@@ -76,9 +78,9 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 
 	m_pCollision_Manager->Tick();
 
-	m_pObject_Manager->LateTick(fTimeDelta);
-
 	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
+
+	m_pObject_Manager->LateTick(fTimeDelta);
 
 	m_pRenderer->Sort_AlphaBlendObj();
 

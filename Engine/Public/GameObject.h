@@ -67,6 +67,13 @@ public:
 	virtual void OnTriggerStay(CGameObject* pOther) {}
 	virtual void OnTriggerExit(CGameObject* pOther) {}
 
+protected:
+	_bool m_bDestroyed = { false };
+
+public:
+	void Set_Destroy(_bool b) { m_bDestroyed = b; }
+	_bool Is_Destroyed() { return m_bDestroyed; }
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

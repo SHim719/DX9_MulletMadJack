@@ -20,6 +20,7 @@
 #include "Player.h"
 
 #include "SodaMachine.h"
+#include "MapLoader.h"
 
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -31,7 +32,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-	Load_MapObject(L"../Bin/Resources/DataFiles/Test.dat", OBJTYPE_END);
+	CMapLoader::Get_Instance()->Load_MapObject(L"../Bin/Resources/DataFiles/Test.dat", (LEVEL)m_iLevelID);
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;

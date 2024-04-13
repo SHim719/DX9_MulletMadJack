@@ -86,6 +86,15 @@ HRESULT CFloor::Add_Components()
 	return S_OK;
 }
 
+void CFloor::OnCollisionEnter(CGameObject* pOther)
+{
+	CRigidbody* pRigidbody = dynamic_cast<CRigidbody*>(pOther->Find_Component(L"Rigidbody"));
+	if (pRigidbody)
+	{
+		pRigidbody->Set_OnGround();
+	}
+}
+
 CFloor* CFloor::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CFloor* pInstance = new CFloor(pGraphic_Device);

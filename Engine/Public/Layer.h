@@ -13,6 +13,8 @@ private:
 
 public:
 	HRESULT Add_GameObject(class CGameObject* pGameObject);
+
+	void Destroy_Objects();
 	void PriorityTick(_float fTimeDelta);
 	void Tick(_float fTimeDelta);
 	void LateTick(_float fTimeDelta);

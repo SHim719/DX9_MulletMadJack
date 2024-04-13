@@ -15,6 +15,25 @@ HRESULT CLayer::Add_GameObject(CGameObject * pGameObject)
 	return S_OK;
 }
 
+void CLayer::Destroy_Objects()
+{
+	for (auto it = m_GameObjects.begin(); it != m_GameObjects.end(); )
+	{
+		if (nullptr != *it)
+		{
+			if ((*it)->Is_Destroyed())
+			{
+				Safe_Release(*it);
+				it = m_GameObjects.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
+}
+
 void CLayer::PriorityTick(_float fTimeDelta)
 {
 	for (auto& pGameObject : m_GameObjects)

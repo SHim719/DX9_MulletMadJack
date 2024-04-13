@@ -10,6 +10,8 @@
 #include "SodaMachine.h"
 #include "SodaMachine_Banner.h"
 #include "Border.h"
+#include "Soda.h"
+#include "Door.h"
 #include "Player.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -281,13 +283,12 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 #pragma endregion
 
-
-
 	/* For Prototype_Component_Texture_Enemy_Bullet */
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Enemy_Bullet"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/bullet_sprites_4_%d.png"), 4))))
 		return E_FAIL;
 	
+#pragma region ObjectTextures
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
@@ -313,6 +314,17 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 			L"../Bin/Resources/Textures/SodaMachine/SodaMachine%d.png", 2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"SodaCan_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Soda/Soda0.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Door_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Door/Door%d.png", 5))))
+		return E_FAIL;
+#pragma endregion
+
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩 중 입니다."));
@@ -321,6 +333,7 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
 
+#pragma region MapObjectsPrototype
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
 		CWall::Create(m_pGraphic_Device))))
 		return E_FAIL;
@@ -344,6 +357,16 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Border"),
 		CBorder::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Soda"),
+		CSoda::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+    if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Door"),
+        CDoor::Create(m_pGraphic_Device))))
+        return E_FAIL;
+
+#pragma endregion
 
 	/* For Prototype_GameObject_White_Suit_Monster */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_White_Suit_Monster"),

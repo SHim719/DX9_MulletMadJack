@@ -23,6 +23,8 @@ namespace Engine
 	typedef D3DXVECTOR4				_float4;
 	typedef D3DXMATRIX				_float4x4;
 
+	typedef D3DXQUATERNION			_quat;
+
 	typedef float					_float;
 	typedef double					_double;
 }

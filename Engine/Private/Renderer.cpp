@@ -54,10 +54,23 @@ void CRenderer::Sort_AlphaBlendObj()
 	if (0 == m_RenderObjects[RENDER_BLEND].size())
 		return;
 
-	m_RenderObjects[RENDER_BLEND].sort([](CGameObject* pLeft, CGameObject* pRight)
+	_float4x4 ViewMatrix;
+	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
+
+	D3DXMatrixInverse(&ViewMatrix, nullptr, &ViewMatrix);
+
+	_float3 vCamPos;
+	memcpy(&vCamPos, &ViewMatrix.m[3], sizeof(_float3));
+
+	m_RenderObjects[RENDER_BLEND].sort([&](CGameObject* pLeft, CGameObject* pRight)
 		{
-			return pLeft->Get_Transform()->Get_State(CTransform::STATE_POSITION).z
-				< pRight->Get_Transform()->Get_State(CTransform::STATE_POSITION).z;
+			_float3 vLeftPos = pLeft->Get_Transform()->Get_State(CTransform::STATE_POSITION);
+			_float3 vRightPos = pRight->Get_Transform()->Get_State(CTransform::STATE_POSITION);
+
+			_float vLeftLength = D3DXVec3Length(&(vCamPos - vLeftPos));
+			_float vRightLength = D3DXVec3Length(&(vCamPos - vRightPos));
+
+			return vLeftLength < vRightLength;
 		});
 }
 

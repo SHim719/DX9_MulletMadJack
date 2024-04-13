@@ -69,6 +69,15 @@ CGameObject* CObject_Manager::Add_Clone(_uint iLevelIndex, const wstring & strLa
 	return pGameObject;
 }
 
+void CObject_Manager::Destroy_Objects()
+{
+	for (size_t i = 0; i < m_iNumLevels; i++)
+	{
+		for (auto& Pair : m_pLayers[i])
+			Pair.second->Destroy_Objects();
+	}
+}
+
 void CObject_Manager::PriorityTick(_float fTimeDelta)
 {
 	for (size_t i = 0; i < m_iNumLevels; i++)

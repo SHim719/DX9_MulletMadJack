@@ -59,6 +59,7 @@ namespace Engine
 
 	typedef struct tagRayDesc
 	{
+		//class CGameObject*	pSrcObject;
 		unsigned int		iLevel; // 현재 레벨 
 		std::wstring		strDstLayer; // 레이 피킹될 오브젝트 레이어 Tag
 		D3DXVECTOR3			vRayWorldPos; // 레이 시작점의 월드좌표
