@@ -42,7 +42,7 @@ void CUi_MonsterDie::Tick(_float fTimeDelta)
 {
 	Move(fTimeDelta);
 	Cal_Life_Blink(fTimeDelta);
-	
+	Scaling(fTimeDelta);
 }
 
 void CUi_MonsterDie::LateTick(_float fTimeDelta)
@@ -140,15 +140,16 @@ void CUi_MonsterDie::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 		m_UiDesc.m_fX = Position->MonsterDiePosX;
 		m_UiDesc.m_fY = Position->MonsterDiePosY;
 		m_UiDesc.m_Rotation = Position->MonsterRotation;
-		//if (rand() % 2)
-		//	m_UiDesc.m_fY = Position->MonsterDiePosY;
-		//else
-		//	m_UiDesc.m_fY = 100.f;
+		
+		if (rand() % 3 || m_eMoveLogic== eMoveLogic::Up)
+			m_UiDesc.m_fY = Position->MonsterDiePosY;
+		else
+			m_UiDesc.m_fY = 200.f;
 	}
 
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
-	m_pTransformCom->Set_Scale(Scale*1.25);
+	m_pTransformCom->Set_Scale(Scale*2.f);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 
 	if (m_UiDesc.m_fX >= 0)
@@ -174,6 +175,9 @@ void CUi_MonsterDie::Initialize_Set_Speed()
 	case eMoveLogic::Bound:
 		m_pTransformCom->Set_Speed(600);
 		break;
+	case eMoveLogic::Up:
+		m_pTransformCom->Set_Speed(100);
+		break;
 	case eMoveLogic::Random:
 		m_pTransformCom->Set_Speed(700);
 		break;
@@ -195,6 +199,9 @@ void CUi_MonsterDie::Initialize_MoveLogic_Select()
 		break;
 	case (_uint)eMoveLogic::Bound:
 		m_eMoveLogic = eMoveLogic::Bound;
+		break;
+	case (_uint)eMoveLogic::Up:
+		m_eMoveLogic = eMoveLogic::Up;
 		break;
 	case (_uint)eMoveLogic::Random:
 		m_eMoveLogic = eMoveLogic::Random;
@@ -224,6 +231,9 @@ void CUi_MonsterDie::Move(_float fTimeDelta)
 		break;
 	case eMoveLogic::Bound:
 		Move_Bound(fTimeDelta);
+		break;
+	case eMoveLogic::Up:
+		Move_Up(fTimeDelta);
 		break;
 	case eMoveLogic::Random:
 		Move_Random(fTimeDelta);
@@ -307,6 +317,12 @@ void CUi_MonsterDie::Move_Bound(_float fTimeDelta)
 	}
 }
 
+void CUi_MonsterDie::Move_Up(_float fTimeDelta)
+{
+	m_pTransformCom->Set_Speed(100);
+	m_pTransformCom->Go_Up(fTimeDelta);
+}
+
 void CUi_MonsterDie::Move_Random(_float fTimeDelta)
 {
 	m_fRandomLogicTimeGap += fTimeDelta;
@@ -341,25 +357,24 @@ void CUi_MonsterDie::Move_Random(_float fTimeDelta)
 
 void CUi_MonsterDie::Adjust_YPos(_float fTimeDelta)
 {
-
 	_float3 Pos = m_pTransformCom->Get_State(CTransform::STATE::STATE_POSITION);
-	if (Pos.y < (_uint)UIPOS::MonsterDieYpos - 10)
+	if (m_eMoveLogic != eMoveLogic::Up)
 	{
-		m_pTransformCom->MonsterDieUi_Go_Up(fTimeDelta, 2500);
-	}
-	else if (Pos.y > (_uint)UIPOS::MonsterDieYpos + 10)
-	{
-		m_pTransformCom->Go_Down(fTimeDelta);
+		if (Pos.y < (_uint)UIPOS::MonsterDieYpos - 10)
+		{
+			m_pTransformCom->MonsterDieUi_Go_Up(fTimeDelta, 2500);
+		}
+		else if (Pos.y > (_uint)UIPOS::MonsterDieYpos + 10)
+		{
+			m_pTransformCom->Go_Down(fTimeDelta);
+		}
 	}
 	else
 	{
-		if (!m_bScale)
+		if (Pos.y > (_uint)UIPOS::MonsterDieYpos + 10)
 		{
-			_float3 Scale = { 0.8f, 0.8f, 0.f };
-			m_bScale = !m_bScale;
-			m_pTransformCom->Set_Scale(Scale);
-		}	
-		return;
+			m_pTransformCom->Go_Down(fTimeDelta);
+		}
 	}
 }
 
@@ -387,7 +402,19 @@ void CUi_MonsterDie::Set_Pos(_float3 Position)
 	m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Position);
 }
 
-
+void CUi_MonsterDie::Scaling(_float fTimeDelta)
+{
+	m_fScaleTime -= fTimeDelta;
+	if (m_fScaleTime > 0)
+	{
+		_float3 DownScale = { 0.96f, 0.96f, 0 };
+		m_pTransformCom->Multiply_Scale(DownScale);
+	}
+	else
+	{
+		m_pTransformCom->Set_Scale(m_fScaleDownLimit);
+	}
+}
 
 CUi_MonsterDie* CUi_MonsterDie::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {

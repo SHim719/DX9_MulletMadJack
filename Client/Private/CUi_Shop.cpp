@@ -202,6 +202,8 @@ void CUi_Shop::Change_Progress(_float fTimeDelta)
 	else if (m_eProgress == ShopProgress::Approach && m_fChangeProgressTime < 0)
 	{
 		m_eProgress = ShopProgress::Noise;
+		m_pTransformCom->Set_Scale(m_OriginScale);
+		m_pTransformCom->Set_Position(m_OriginPos);
 		m_fChangeProgressTime = 0.5;
 	}
 	else if (m_eProgress == ShopProgress::Noise && m_fChangeProgressTime < 0)

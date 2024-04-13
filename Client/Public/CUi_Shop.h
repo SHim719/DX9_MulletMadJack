@@ -64,6 +64,8 @@ private:
 	_float m_fUniqueTextureSwitchingTime = { 0 };
 	_float m_fChangeProgressTime = { 1.f };
 	ShopProgress m_eProgress = { ShopProgress::End };
+	_float3 m_OriginScale = { 2900, 1200, 1 };
+	_float3 m_OriginPos = { 0, -139, 0 };
 
 
 private:

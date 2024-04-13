@@ -44,7 +44,7 @@ private:
 
 private:
 	_float m_fScaleTime = { 0 };
-
+	_float3 m_OriginScale = { 245, 80, 1 };
 public:
 	static CUi_LiveStream* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

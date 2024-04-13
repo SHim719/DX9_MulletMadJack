@@ -40,6 +40,8 @@ void CUi_Border::Tick(_float fTimeDelta)
 	}
 	else if (m_fActiveTime < 0 && m_bEnter)
 	{
+		m_pTransformCom->Set_Scale(m_OriginScale);
+		m_pUniqueTransformCom->Set_Scale(m_OriginUniqueScale);
 		m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::Border_Right);
 		m_pUniqueTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::Border_Left);
 	}

@@ -117,6 +117,13 @@ void CGameInstance::Render_End(HWND hWnd)
 		return;
 	m_pGraphic_Device->Render_End(hWnd);
 }
+LPD3DXFONT CGameInstance::Get_Font()
+{
+	if (nullptr == m_pGraphic_Device)
+		return nullptr;
+
+	return m_pGraphic_Device->Get_Font();
+}
 #pragma endregion
 
 #pragma region LEVEL_MANAGER

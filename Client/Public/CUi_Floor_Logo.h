@@ -41,6 +41,10 @@ private:
 	void Move(_float fTimeDelta);
 
 
+private:
+	_float3 m_OriginPos = { 470, -10, 0 };
+
+
 public:
 	static CUi_Floor_Logo* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

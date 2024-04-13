@@ -63,9 +63,9 @@ private:
 	class CUi_Background* m_pBackGround = { nullptr };
 	class CUi_SpecialHit_Part* m_pSpecialHit_Part = { nullptr };
 	_float m_fMoveTime = { 0.f };
-	_float m_fScaleTime = { 0.f };
-	_float m_fScaleUpperLimit = { 0.f };
-	_float m_fScaleDownLimit = { 0.f };
+	_float m_fScaleTime = { 1.f };
+	_float3 m_fScaleUpperLimit = { 0, 0, 0 };
+	_float3 m_fScaleDownLimit = { 0, 0, 0 };
 
 
 public:

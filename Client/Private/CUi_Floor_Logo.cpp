@@ -38,6 +38,7 @@ void CUi_Floor_Logo::Tick(_float fTimeDelta)
 	}
 	else if (m_fActiveTime < 0 && m_bEnter)
 	{
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_OriginPos);
 	}
 	else if (m_fActiveTime < 0 && !m_bEnter)
 	{
@@ -77,7 +78,7 @@ void CUi_Floor_Logo::Initialize_Set_ActiveTime()
 
 void CUi_Floor_Logo::Initialize_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 250;
+	m_UiDesc.m_fSizeX = 280;
 	m_UiDesc.m_fSizeY = 110;
 }
 

@@ -28,6 +28,7 @@ public:
 public: /* For.Graphic_Device */
 	void Render_Begin();
 	void Render_End(HWND hWnd = 0);
+	LPD3DXFONT Get_Font();
 #pragma endregion
 
 #pragma region LEVEL_MANAGER

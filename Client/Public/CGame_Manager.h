@@ -57,6 +57,8 @@ public:
 	HRESULT Ready_Clear_Texture();
 	HRESULT Ready_Shop_Texture();
 	HRESULT Ready_Start_Texture();
+	HRESULT Ready_PlayerGun_Texture();
+
 	HRESULT Ready_Prototype_Ui_Life();
 	HRESULT Ready_Prototype_Effect();
 	HRESULT Ready_Active_Ui();

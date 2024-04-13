@@ -15,6 +15,11 @@ public:
 	void Render_Begin();
 	void Render_End(HWND hWnd = 0);
 
+
+public:
+	LPD3DXFONT Get_Font() { return m_pFont; }
+
+
 private:
 	LPDIRECT3D9			m_pSDK;		// 장치를 조사하는 객체
 	LPDIRECT3DDEVICE9	m_pDevice;	// 그래픽 장치를 통해 렌더링을 제어하는 객체

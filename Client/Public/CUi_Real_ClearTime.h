@@ -47,7 +47,7 @@ private:
 
 private:
 	class CUi_ClearTime_BackGround* m_pBackGround = { nullptr };
-
+	_float3 m_OriginScale = { 60, 60, 0 };
 	_float m_fScaleTime = { 0 };
 	vector<_uint> m_Number;
 

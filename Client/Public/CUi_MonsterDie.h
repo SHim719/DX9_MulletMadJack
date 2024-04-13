@@ -19,6 +19,7 @@ enum class eMoveLogic
 	Slow,
 	Fast,
 	Bound,
+	Up,
 	Random,
 	End
 };
@@ -75,6 +76,7 @@ private:
 	void Move_Slow(_float fTimeDelta);
 	void Move_Fast(_float fTimeDelta);
 	void Move_Bound(_float fTimeDelta);
+	void Move_Up(_float fTimeDelta);
 	void Move_Random(_float fTimeDelta);
 	void Adjust_YPos(_float fTimeDelta);
 	void Random_Direction();
@@ -85,15 +87,15 @@ private:
 public:
 	void Set_Pos(_float3 Position);
 	void Set_Speed(_float Speed) { m_pTransformCom->Set_Speed(Speed); }
-
+	void Scaling(_float fTimeDelta);
 
 private:
 	eMoveLogic m_eMoveLogic = { eMoveLogic::End };
 	bool m_bStartPosRight = { false };
+	_float m_fScaleTime = { 0.2f };
 	_float m_fRandomLogicTimeGap = { 0 };
+	_float3 m_fScaleDownLimit = {128, 32, 0};
 	class CUi_Background* m_pBackGround = { nullptr };
-	bool m_bScale = { false };
-
 
 public:
 	static CUi_MonsterDie* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

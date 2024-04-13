@@ -103,9 +103,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 //		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/2hit/2hit%d.png"), 8))))
 //		return E_FAIL;
 //	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Aim"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/aim/aim%d.png"), 9))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Aim"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/aim/aim%d.png"), 9))))
+	//	return E_FAIL;
 //	
 //	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Blocking"),
 //		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/blocking/bg_blocking%d.png"), 5))))
@@ -147,17 +147,17 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 //		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/hit/hit%d.png"), 8))))
 //		return E_FAIL;
 //	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Idle"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/idle/idle%d.png"), 9))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Idle"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/idle/idle%d.png"), 9))))
+	//	return E_FAIL;
 //	
 //	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Backwards_Machinegun"),
 //		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/sd_backwards/sd_backwards%d.png"), 27))))
 //		return E_FAIL;
 //	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Shoot"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/shoot/shoot%d.png"), 8))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Shoot"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/shoot/shoot%d.png"), 8))))
+	//	return E_FAIL;
 //	
 //	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Walk"),
 //		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/walk/walk%d.png"), 13))))
@@ -255,9 +255,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Idle_down/Idle_down%d.png"), 10))))
 	//	return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Idle_Up"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Idle_up/Idle_up%d.png"), 7))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Idle_Up"),
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Idle_up/Idle_up%d.png"), 7))))
+	//	return E_FAIL;
 
 	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Shot_Floor"),
 	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/ZVG_fly/ZVG_fly%d.png"), 30))))

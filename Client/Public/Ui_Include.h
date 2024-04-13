@@ -29,3 +29,4 @@
 #include "CUi_Real_ClearTime.h"
 #include "CUi_ClearTime_BackGround.h"
 #include "CUi_Time_Division.h"
+#include "CUi_Clear_Victory.h"

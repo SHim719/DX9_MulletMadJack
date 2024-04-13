@@ -176,8 +176,8 @@ void CUi_SpecialHit::Initialize_Set_Background()
 
 void CUi_SpecialHit::Initialize_Set_Scale_Limit()
 {
-	m_fScaleUpperLimit = 600;
-	m_fScaleDownLimit = 256;
+	m_fScaleUpperLimit = { 800, 157, 0 };
+	m_fScaleDownLimit = { 246, 46, 0 };
 }
 
 void CUi_SpecialHit::Initialize_Set_SpecialHit_Part()
@@ -209,16 +209,23 @@ void CUi_SpecialHit::Move(_float fTimeDelta)
 
 void CUi_SpecialHit::Scaling(_float fTimeDelta)
 {	
-	m_fScaleTime += fTimeDelta;
-	if (m_fScaleTime < 0.3f)
+	m_fScaleTime -= fTimeDelta;
+	if (m_fScaleTime > 0.7f)
 	{
-		_float3 ScaleUp = { 1.1f, 1.1f, 1.f };
-		m_pTransformCom->Set_Scale(ScaleUp);
+		_float3 ScaleUp = { 1.07f, 1.07f, 1.f };
+		m_pTransformCom->Multiply_Scale(ScaleUp);
+		if (m_pTransformCom->Get_Scale() > m_fScaleUpperLimit)
+			m_pTransformCom->Set_Scale(m_fScaleUpperLimit);
 	}
-	else if (m_fScaleTime > 0.3f && m_fScaleTime < 1.f)
+	else if (m_fScaleTime > 0.3f)
 	{
 		_float3 ScaleDown = { 0.95f, 0.95f, 0.f };
-		m_pTransformCom->Set_Scale(ScaleDown);
+		_float3 b = m_pTransformCom->Get_Scale();
+		m_pTransformCom->Multiply_Scale(ScaleDown);	
+	}
+	else
+	{
+		m_pTransformCom->Set_Scale(m_fScaleDownLimit);
 	}
 }
 

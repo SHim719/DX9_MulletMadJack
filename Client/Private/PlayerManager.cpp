@@ -29,7 +29,7 @@ _float CPlayer_Manager::Get_PlayerToTargetY(_float _TargetY)
 
 _float CPlayer_Manager::Get_PlayerToTargetZ(_float _TargetZ)
 {
-	return _TargetZ - m_pPlayer->Get_Transform()->Get_State(CTransform::STATE_POSITION).y;
+	return _TargetZ - m_pPlayer->Get_Transform()->Get_State(CTransform::STATE_POSITION).z;
 }
 
 _float CPlayer_Manager::Get_PlayerToTarget(_float _TargetX, _float _TargetY, _float _TargetZ)

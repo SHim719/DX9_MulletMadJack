@@ -36,9 +36,11 @@ void CUi_LiveStream::Tick(_float fTimeDelta)
 	if (m_fActiveTime > 0)
 	{
 		Scaling(fTimeDelta);
+		Move(fTimeDelta);
 	}
 	else if (m_fActiveTime < 0 && m_bEnter)
 	{
+		m_pTransformCom->Set_Scale(m_OriginScale);
 		m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Ui_Pos::LiveStream);
 	}
 	else if (m_fActiveTime < 0 && !m_bEnter)
@@ -174,7 +176,6 @@ void CUi_LiveStream::Scaling(_float fTimeDelta)
 		_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 		m_pTransformCom->Set_Scale(Scale);
 	}
-	Move(fTimeDelta);
 }
 
 void CUi_LiveStream::Move(_float fTimeDelta)
