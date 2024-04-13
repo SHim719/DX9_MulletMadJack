@@ -43,24 +43,6 @@
     <Filter Include="02.GameObjects\01. MapObject\Floor">
       <UniqueIdentifier>{c4fb5a17-6726-4303-bee1-2eb53f19ba32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui">
-      <UniqueIdentifier>{fc50c5ad-eb67-4e95-ae28-28a742bc0373}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active">
-      <UniqueIdentifier>{1388391a-c46a-4bbb-9502-aa92c3f495d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life">
-      <UniqueIdentifier>{bb72b80f-e3a1-4930-93bc-5a37786ea700}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\MonsterDie">
-      <UniqueIdentifier>{a8281e90-d652-4ec1-99ce-929357b72936}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Special3Sec">
-      <UniqueIdentifier>{e35bf6f3-95d3-418e-aab6-f0f7fcdac7d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\SpeicialHit">
-      <UniqueIdentifier>{6bc5968f-f1e1-4c19-86b3-a03f409142b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\03. Camera">
       <UniqueIdentifier>{9204bc79-9a62-42ac-a0c7-89d3c6afe6db}</UniqueIdentifier>
     </Filter>
@@ -79,104 +61,14 @@
     <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
       <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Life\Part">
-      <UniqueIdentifier>{8e91680d-6cfe-4d4c-b8bb-00536ec8cce6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\Background">
-      <UniqueIdentifier>{413e9543-3dc0-4d7c-9efb-d2a205d3c4b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\SpecialHit">
-      <UniqueIdentifier>{a0103705-b4e5-4c9d-8e24-aa2324a1f85e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear">
-      <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Peace">
-      <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Announcer">
-      <UniqueIdentifier>{83d683fb-8760-4861-8946-e864a1d4cf54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart">
-      <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\Player">
-      <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Levels\ClearLevel">
       <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Fine">
-      <UniqueIdentifier>{dd98ff7d-a669-4cb0-8619-dbf193ad27e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine">
-      <UniqueIdentifier>{f50b077b-5fca-4141-b957-ad55c4b2e907}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background">
-      <UniqueIdentifier>{fefe55b3-cf37-4ccc-9cad-f2d19f020aa9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine\CUi_HeartLine_Part">
-      <UniqueIdentifier>{4b5599a9-59e3-43ab-973a-282ef2f45cb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_LiveStream">
-      <UniqueIdentifier>{9b36f8d2-aa8a-4c2c-b4d8-2351e8116e1f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Border">
-      <UniqueIdentifier>{dbfeea87-563f-469c-ad82-b1a9282dd654}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Chat">
-      <UniqueIdentifier>{e43af6de-a95a-4013-a65a-adef609b52f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Start">
-      <UniqueIdentifier>{30f36453-2343-443c-a983-5b6a2a6607b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Start\CUi_Floor">
-      <UniqueIdentifier>{692c0838-891e-4753-a8fe-9d0027138c4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\01. MapObject\MapObject">
       <UniqueIdentifier>{6ad062de-0955-446e-9bb6-08b98f57cb4a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\01. MapObject\TriggerObject">
       <UniqueIdentifier>{0f6b1636-a57c-4cca-8811-a45d18b0d2c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand">
-      <UniqueIdentifier>{da29112f-0a6b-482d-b7b1-a463ce1ddbb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand">
-      <UniqueIdentifier>{27a86044-790e-4178-90cf-77e5b62e25ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol">
-      <UniqueIdentifier>{11156e82-39ea-4081-9f7e-77e4ba9d6038}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle">
-      <UniqueIdentifier>{c391c9fa-046a-4fa4-be10-c6d872ae2107}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand">
-      <UniqueIdentifier>{05041a46-e88d-4ab7-9921-af4da25cac7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot">
-      <UniqueIdentifier>{eef9dca0-50e6-406e-af3f-099b069fba6e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
-      <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Right_Hand">
-      <UniqueIdentifier>{d3cc0a4b-154c-4bfd-b484-187a9bd3c31a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin">
-      <UniqueIdentifier>{7aa55d93-132d-41c4-8449-9786e5fbf7b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload">
-      <UniqueIdentifier>{448e1174-689f-43c0-b72d-c24d14ebc093}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\Effect">
-      <UniqueIdentifier>{6201846d-6c5a-4edb-b439-25185ca88092}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\Effect\GunFire">
-      <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel">
-      <UniqueIdentifier>{d50b68ab-833c-40d2-99b0-9de1165b2952}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\01. MapObject\SodaMachine">
       <UniqueIdentifier>{080dc5e1-e497-4e7a-9b4e-7edac65ecad8}</UniqueIdentifier>
@@ -193,42 +85,6 @@
     <Filter Include="03. Client_Components\VIBuffers\CVIBuffer_Border">
       <UniqueIdentifier>{9bd1b528-320c-4af8-9936-bc7e9c54741c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_Floor_Part">
-      <UniqueIdentifier>{29cd8a57-2a25-45f8-90f0-1a2800f521bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Finish">
-      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Shop">
-      <UniqueIdentifier>{4d7212f4-9a04-4c85-8ebd-148c2b070984}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_Shop_UpGrade">
-      <UniqueIdentifier>{494593a2-4b88-479e-a07d-030d4159da6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part">
-      <UniqueIdentifier>{bd4cf482-873c-4728-a58d-c5a2916b2116}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo">
-      <UniqueIdentifier>{87fb42e8-bf0f-4864-ab55-9b031728bc74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Clear_Time">
-      <UniqueIdentifier>{56a7764b-9ed5-446e-b2cc-8023a3d5a7a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word">
-      <UniqueIdentifier>{bf923210-7434-4423-85aa-b399c0dcd0c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_Floor_Logo_Num">
-      <UniqueIdentifier>{33902df2-9720-4d1f-8037-9ae6acecb8b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_Real_ClearTime">
-      <UniqueIdentifier>{2baf4bf4-d3ed-44ee-8e93-60f31b3c8266}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_ClearTime_BackGround">
-      <UniqueIdentifier>{b71a33eb-8d69-45de-a8ce-a91d88295eb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
-      <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\04. EnemyObject\Pawns">
       <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
     </Filter>
@@ -240,12 +96,6 @@
     </Filter>
     <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster">
       <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon">
-      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Ui\CUi_Active\Weapon\CrossHair">
-      <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\01. MapObject\Soda">
       <UniqueIdentifier>{b5f96136-11e5-47c6-86c7-e698715ba7b4}</UniqueIdentifier>
@@ -259,26 +109,182 @@
     <Filter Include="02.GameObjects\01. MapObject\Door">
       <UniqueIdentifier>{23a3b385-a1a6-42dd-bad9-401411a4bd39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayerManager">
+    <Filter Include="97. Manager">
+      <UniqueIdentifier>{917e7d2a-74dc-4341-a9d3-99dd0cb1e949}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\PlayerManager">
       <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameManager">
-      <UniqueIdentifier>{c86a67ad-2539-4748-b16d-257ac9d3ec15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MapLoader">
+    <Filter Include="97. Manager\MapLoader">
       <UniqueIdentifier>{16581d3a-7611-4303-ab6c-61c29d5407cc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Kick">
+    <Filter Include="97. Manager\GameManager">
+      <UniqueIdentifier>{c86a67ad-2539-4748-b16d-257ac9d3ec15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI">
+      <UniqueIdentifier>{05e2490f-83af-4688-86c7-d0def919f5ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui">
+      <UniqueIdentifier>{fc50c5ad-eb67-4e95-ae28-28a742bc0373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active">
+      <UniqueIdentifier>{1388391a-c46a-4bbb-9502-aa92c3f495d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear">
+      <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Peace">
+      <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Announcer">
+      <UniqueIdentifier>{83d683fb-8760-4861-8946-e864a1d4cf54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart">
+      <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine">
+      <UniqueIdentifier>{f50b077b-5fca-4141-b957-ad55c4b2e907}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine\CUi_HeartLine_Part">
+      <UniqueIdentifier>{4b5599a9-59e3-43ab-973a-282ef2f45cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background">
+      <UniqueIdentifier>{fefe55b3-cf37-4ccc-9cad-f2d19f020aa9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Fine">
+      <UniqueIdentifier>{dd98ff7d-a669-4cb0-8619-dbf193ad27e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_LiveStream">
+      <UniqueIdentifier>{9b36f8d2-aa8a-4c2c-b4d8-2351e8116e1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Border">
+      <UniqueIdentifier>{dbfeea87-563f-469c-ad82-b1a9282dd654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Chat">
+      <UniqueIdentifier>{e43af6de-a95a-4013-a65a-adef609b52f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop">
+      <UniqueIdentifier>{4d7212f4-9a04-4c85-8ebd-148c2b070984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo">
+      <UniqueIdentifier>{87fb42e8-bf0f-4864-ab55-9b031728bc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word">
+      <UniqueIdentifier>{bf923210-7434-4423-85aa-b399c0dcd0c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Time">
+      <UniqueIdentifier>{56a7764b-9ed5-446e-b2cc-8023a3d5a7a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory">
+      <UniqueIdentifier>{4527b87b-dfc7-4e0a-b39e-5432c4733454}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Start">
+      <UniqueIdentifier>{30f36453-2343-443c-a983-5b6a2a6607b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor">
+      <UniqueIdentifier>{692c0838-891e-4753-a8fe-9d0027138c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand">
+      <UniqueIdentifier>{da29112f-0a6b-482d-b7b1-a463ce1ddbb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand">
+      <UniqueIdentifier>{27a86044-790e-4178-90cf-77e5b62e25ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol">
+      <UniqueIdentifier>{11156e82-39ea-4081-9f7e-77e4ba9d6038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle">
+      <UniqueIdentifier>{c391c9fa-046a-4fa4-be10-c6d872ae2107}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand">
+      <UniqueIdentifier>{05041a46-e88d-4ab7-9921-af4da25cac7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot">
+      <UniqueIdentifier>{eef9dca0-50e6-406e-af3f-099b069fba6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
+      <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Right_Hand">
+      <UniqueIdentifier>{d3cc0a4b-154c-4bfd-b484-187a9bd3c31a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin">
+      <UniqueIdentifier>{7aa55d93-132d-41c4-8449-9786e5fbf7b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload">
+      <UniqueIdentifier>{448e1174-689f-43c0-b72d-c24d14ebc093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel">
+      <UniqueIdentifier>{d50b68ab-833c-40d2-99b0-9de1165b2952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Finish">
+      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Weapon">
+      <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Weapon\CrossHair">
+      <UniqueIdentifier>{ac0305c4-6f3d-4351-b7ef-972849ac35c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Kick">
       <UniqueIdentifier>{481e1707-b28d-4bf1-af4f-9bbd53ad0be4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Camera_Filter">
+    <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter">
       <UniqueIdentifier>{a74d9362-43ca-44f5-b595-e2af6e50e029}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\Camera_Filter\Dash">
+    <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\Dash">
       <UniqueIdentifier>{a94963dc-aa79-4a65-9063-350d749bb585}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory">
-      <UniqueIdentifier>{4527b87b-dfc7-4e0a-b39e-5432c4733454}</UniqueIdentifier>
+    <Filter Include="04. UI\Ui\CUi_Life">
+      <UniqueIdentifier>{bb72b80f-e3a1-4930-93bc-5a37786ea700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\MonsterDie">
+      <UniqueIdentifier>{a8281e90-d652-4ec1-99ce-929357b72936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Special3Sec">
+      <UniqueIdentifier>{e35bf6f3-95d3-418e-aab6-f0f7fcdac7d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\SpeicialHit">
+      <UniqueIdentifier>{6bc5968f-f1e1-4c19-86b3-a03f409142b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part">
+      <UniqueIdentifier>{8e91680d-6cfe-4d4c-b8bb-00536ec8cce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\Background">
+      <UniqueIdentifier>{413e9543-3dc0-4d7c-9efb-d2a205d3c4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\SpecialHit">
+      <UniqueIdentifier>{a0103705-b4e5-4c9d-8e24-aa2324a1f85e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Floor_Part">
+      <UniqueIdentifier>{29cd8a57-2a25-45f8-90f0-1a2800f521bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade">
+      <UniqueIdentifier>{494593a2-4b88-479e-a07d-030d4159da6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part">
+      <UniqueIdentifier>{bd4cf482-873c-4728-a58d-c5a2916b2116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Floor_Logo_Num">
+      <UniqueIdentifier>{33902df2-9720-4d1f-8037-9ae6acecb8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Real_ClearTime">
+      <UniqueIdentifier>{2baf4bf4-d3ed-44ee-8e93-60f31b3c8266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround">
+      <UniqueIdentifier>{b71a33eb-8d69-45de-a8ce-a91d88295eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
+      <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Player">
+      <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Effect">
+      <UniqueIdentifier>{6201846d-6c5a-4edb-b439-25185ca88092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Effect\GunFire">
+      <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -325,13 +331,13 @@
       <Filter>02.GameObjects\01. MapObject\Floor</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_MonsterDie.h">
-      <Filter>Ui\CUi_Life\MonsterDie</Filter>
+      <Filter>04. UI\Ui\CUi_Life\MonsterDie</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_SpecialHit.h">
-      <Filter>Ui\CUi_Life\SpeicialHit</Filter>
+      <Filter>04. UI\Ui\CUi_Life\SpeicialHit</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Special3Sec.h">
-      <Filter>Ui\CUi_Life\Special3Sec</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Special3Sec</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Animation.h">
       <Filter>03. Client_Components\Animation</Filter>
@@ -340,46 +346,46 @@
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Background.h">
-      <Filter>Ui\CUi_Life\Part\Background</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\Background</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_SpecialHit_Part.h">
-      <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\SpecialHit</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CrossHair.h">
-      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Weapon\CrossHair</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Right_Hand.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Heart.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Fine.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Heart_BackGround.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Heart_Line.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CGame_Manager.h">
-      <Filter>GameManager</Filter>
+      <Filter>97. Manager\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Border.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Ui_Pos.h">
-      <Filter>Ui</Filter>
+      <Filter>04. UI\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Chat.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Chat</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Chat</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_LiveStream.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Loader.h">
       <Filter>01.Levels\99.Loading\Loader</Filter>
@@ -403,73 +409,73 @@
       <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor.h">
-      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Part.h">
-      <Filter>Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Announcer.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_PEACE.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Finish.h">
-      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Finish</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Shop.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Shop_UpGrade.h">
-      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Ui_Include.h">
-      <Filter>Ui</Filter>
+      <Filter>04. UI\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h">
-      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_UpGrade_Focus.h">
-      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Logo.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Logo_Word.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Logo_Num.h">
-      <Filter>Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Clear_Time.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Real_ClearTime.h">
-      <Filter>Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_ClearTime_BackGround.h">
-      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Time_Division.h">
-      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Shot.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\PlayerManager.h">
-      <Filter>PlayerManager</Filter>
+      <Filter>97. Manager\PlayerManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Spin.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Reload.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_GunFire.h">
-      <Filter>Ui\Effect\GunFire</Filter>
+      <Filter>04. UI\Ui\Effect\GunFire</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Barrel.h">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\White_Suit_Monster.h">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster</Filter>
@@ -502,13 +508,13 @@
       <Filter>02.GameObjects\01. MapObject\Door</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\MapLoader.h">
-      <Filter>MapLoader</Filter>
+      <Filter>97. Manager\MapLoader</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Dash_Effect.h">
-      <Filter>Ui\CUi_Active\Camera_Filter\Dash</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Dash</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Kick.h">
-      <Filter>Ui\CUi_Active\Kick</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Kick</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Announcer.h">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
@@ -520,7 +526,7 @@
       <Filter>Ui\CUi_Active\CUi_Finish</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Clear_Victory.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -558,13 +564,13 @@
       <Filter>02.GameObjects\01. MapObject\Floor</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_MonsterDie.cpp">
-      <Filter>Ui\CUi_Life\MonsterDie</Filter>
+      <Filter>04. UI\Ui\CUi_Life\MonsterDie</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_SpecialHit.cpp">
-      <Filter>Ui\CUi_Life\SpeicialHit</Filter>
+      <Filter>04. UI\Ui\CUi_Life\SpeicialHit</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Special3Sec.cpp">
-      <Filter>Ui\CUi_Life\Special3Sec</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Special3Sec</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Animation.cpp">
       <Filter>03. Client_Components\Animation</Filter>
@@ -573,43 +579,43 @@
       <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
-      <Filter>Ui\CUi_Life\Part\Background</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\Background</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_SpecialHit_Part.cpp">
-      <Filter>Ui\CUi_Life\Part\SpecialHit</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\SpecialHit</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CrossHair.cpp">
-      <Filter>Ui\CUi_Active\Weapon\CrossHair</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Weapon\CrossHair</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Right_Hand</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Heart.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Fine.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Fine</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Heart_BackGround.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_Heart_Background</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Heart_Line.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart\CUi_HeartLine</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CGame_Manager.cpp">
-      <Filter>GameManager</Filter>
+      <Filter>97. Manager\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Border.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Border</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Chat.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Chat</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Chat</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_LiveStream.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\MapObject.cpp">
       <Filter>02.GameObjects\01. MapObject\MapObject</Filter>
@@ -627,70 +633,70 @@
       <Filter>02.GameObjects\01. MapObject\Border</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor.cpp">
-      <Filter>Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Part.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Announcer.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_PEACE.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Finish.cpp">
-      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Finish</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Shop.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Shop_UpGrade.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_UpGrade_Focus.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Logo.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Logo_Word.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Logo_Num.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Time.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Real_ClearTime.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_ClearTime_BackGround.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Time_Division.cpp">
-      <Filter>Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
+      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Shot.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\PlayerManager.cpp">
-      <Filter>PlayerManager</Filter>
+      <Filter>97. Manager\PlayerManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Spin.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Reload.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_GunFire.cpp">
-      <Filter>Ui\Effect\GunFire</Filter>
+      <Filter>04. UI\Ui\Effect\GunFire</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Barrel.cpp">
-      <Filter>Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\White_Suit_Monster.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster</Filter>
@@ -723,13 +729,13 @@
       <Filter>02.GameObjects\01. MapObject\Door</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\MapLoader.cpp">
-      <Filter>MapLoader</Filter>
+      <Filter>97. Manager\MapLoader</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Kick.cpp">
-      <Filter>Ui\CUi_Active\Kick</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Kick</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Dash_Effect.cpp">
-      <Filter>Ui\CUi_Active\Camera_Filter\Dash</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Dash</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Announcer.cpp">
       <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
@@ -741,7 +747,7 @@
       <Filter>Ui\CUi_Active\CUi_Finish</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

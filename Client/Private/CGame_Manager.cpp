@@ -578,10 +578,10 @@ HRESULT CGame_Manager::Ready_PlayerGun_Texture()
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload/PISTOL_RELOAD%d.png", 16))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
-		return E_FAIL;
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures",
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+	//		L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
+	//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Fire_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
