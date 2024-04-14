@@ -204,6 +204,7 @@
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h" />
     <ClInclude Include="..\Public\Pistol_Reload_Left_Arm.h" />
     <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h" />
+    <ClInclude Include="..\Public\Player_Include.h" />
     <ClInclude Include="..\Public\Rigidbody.h" />
     <ClInclude Include="..\Public\Soda.h" />
     <ClInclude Include="..\Public\VIBuffer_Door.h" />

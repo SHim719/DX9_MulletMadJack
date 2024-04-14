@@ -1,0 +1,13 @@
+#pragma once
+#include "Pistol_Right_Hand.h"
+#include "Pistol.h"
+#include "CrossHair.h"
+#include "Pistol_Shot.h"
+#include "Pistol_Spin.h"
+#include "Pistol_Reload.h"
+#include "Pistol_Gunfire.h"
+#include "Pistol_Barrel.h"
+#include "Player.h"
+#include "Kick.h"
+#include "Pistol_Reload_Left_Hand.h"
+#include "Pistol_Reload_Left_Arm.h"

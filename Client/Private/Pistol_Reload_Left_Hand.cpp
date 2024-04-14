@@ -58,7 +58,7 @@ void CPistol_Reload_Left_Hand::Tick(_float fTimeDelta)
 
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
 		m_iTexture_Index = 0;
-		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Pistol_Barrel"), false);
+		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload_Hand"), false);
 		AnimationDelayReset();
 	}
 
@@ -156,7 +156,7 @@ HRESULT CPistol_Reload_Left_Hand::Add_Components(void* pArg)
 
 HRESULT CPistol_Reload_Left_Hand::Add_Texture(void* pArg)
 {
-	if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Pistol_Barrel_Textures")
+	if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Pistol_Reload_Hand_Textures")
 		, (CComponent**)&m_pTextureCom)))
 		return E_FAIL;
 

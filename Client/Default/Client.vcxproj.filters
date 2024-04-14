@@ -534,6 +534,9 @@
     <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Player_Include.h">
+      <Filter>04. UI\Ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
