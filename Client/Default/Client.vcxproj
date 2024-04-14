@@ -202,6 +202,8 @@
     <ClInclude Include="..\Public\CUi_Time_Division.h" />
     <ClInclude Include="..\Public\CUi_UpGrade_Focus.h" />
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h" />
+    <ClInclude Include="..\Public\Pistol_Reload_Left_Arm.h" />
+    <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h" />
     <ClInclude Include="..\Public\Rigidbody.h" />
     <ClInclude Include="..\Public\Soda.h" />
     <ClInclude Include="..\Public\VIBuffer_Door.h" />
@@ -279,6 +281,8 @@
     <ClCompile Include="..\Private\CUi_Time_Division.cpp" />
     <ClCompile Include="..\Private\CUi_UpGrade_Focus.cpp" />
     <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp" />
+    <ClCompile Include="..\Private\Pistol_Reload_Left_Arm.cpp" />
+    <ClCompile Include="..\Private\Pistol_Reload_Left_Hand.cpp" />
     <ClCompile Include="..\Private\Rigidbody.cpp" />
     <ClCompile Include="..\Private\Soda.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Door.cpp" />

@@ -202,12 +202,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot">
       <UniqueIdentifier>{eef9dca0-50e6-406e-af3f-099b069fba6e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
-      <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Right_Hand">
-      <UniqueIdentifier>{d3cc0a4b-154c-4bfd-b484-187a9bd3c31a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Spin">
       <UniqueIdentifier>{7aa55d93-132d-41c4-8449-9786e5fbf7b2}</UniqueIdentifier>
     </Filter>
@@ -285,6 +279,12 @@
     </Filter>
     <Filter Include="04. UI\Ui\Effect\GunFire">
       <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Arm">
+      <UniqueIdentifier>{203f3e05-1ed1-411d-bdad-e50530c53db1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
+      <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -528,6 +528,12 @@
     <ClInclude Include="..\Public\CUi_Clear_Victory.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Reload_Left_Arm.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Arm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -748,6 +754,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Reload_Left_Arm.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Arm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Reload_Left_Hand.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
