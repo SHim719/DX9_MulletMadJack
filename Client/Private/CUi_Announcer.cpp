@@ -71,8 +71,8 @@ HRESULT CUi_Announcer::Render()
 	m_pUniqueTexture->Bind_Texture(m_iUniqueTextureIndex);
 	m_pVIBufferCom->Render();
 
-	if(CGame_Manager::Get_Instance()->get_
-	m_pTextManager->Print_Text(TextType::Tutorial, 0);
+	//m_pTextManager->Print_Text(TextType::Tutorial, 0);
+
 	return S_OK;
 }
 
