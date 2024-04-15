@@ -3,6 +3,10 @@
 #include "Base.h"
 #include "CText.h"
 
+BEGIN(ENGINE)
+class CGameInstance;
+END
+
 
 BEGIN(Client)
 enum class TextType

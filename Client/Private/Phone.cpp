@@ -48,6 +48,8 @@ void CPhone::PriorityTick(_float fTimeDelta)
 void CPhone::Tick(_float fTimeDelta)
 {
 
+
+
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 
 	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
@@ -65,18 +67,28 @@ void CPhone::Tick(_float fTimeDelta)
 
 	m_pTransformCom->Set_Scale(m_fScale);
 	m_pTransformCom->Rotation_XYZ(m_fRotation);
+	
 
 }
 
 void CPhone::LateTick(_float fTimeDelta)
 {
-	_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 3, 3, 1, 2, 6);
-	_float2 fLissajousRun = CPlayer_Manager::Get_Instance()->Get_Lissajous_Run_Phone(m_UiDesc.m_fX, m_UiDesc.m_fY);
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		//Temp Rotate
+		m_pTransformCom->Rotation_XYZ({ 0.f, 0.f, -40.f });
+		_float2 fOffSet = { -100, 150 };
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fOffSet.x, m_UiDesc.m_fY + fOffSet.y, 0.f));
+	}
+	else {
 
-	if (CPlayer_Manager::Get_Instance()->Get_Player_MoveState() == CPlayer::MOVE_STATE::MOVE)
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x + fLissajousRun.x, m_UiDesc.m_fY + fLissajousPos.y + fLissajousRun.y, 0.f));
-	else
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+		_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 3, 3, 1, 2, 6);
+		_float2 fLissajousRun = CPlayer_Manager::Get_Instance()->Get_Lissajous_Run_Phone(m_UiDesc.m_fX, m_UiDesc.m_fY);
+
+		if (CPlayer_Manager::Get_Instance()->Get_Player_MoveState() == CPlayer::MOVE_STATE::MOVE)
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x + fLissajousRun.x, m_UiDesc.m_fY + fLissajousPos.y + fLissajousRun.y, 0.f));
+		else
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+	}
 }
 
 HRESULT CPhone::Render()
@@ -89,7 +101,6 @@ HRESULT CPhone::Render()
 		return E_FAIL;
 
 	m_pVIBufferCom->Render();
-
 	return S_OK;
 }
 

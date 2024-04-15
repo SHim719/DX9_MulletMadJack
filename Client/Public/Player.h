@@ -75,10 +75,20 @@ private:
 	void Camera_Reset();
 	void Move_Reset();
 
+	void Jump_Tick(_float fTimeDelta);
 	void Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime);
 	void Camera_Event(_float fTimeDelta);
 
-	void Jump(_float fTimeDelta);
+	void Jump(_float _fJumpPower);
+	void ColliderCheck(_float fTimeDelta);
+
+	void ColliderTop(_float fTimeDelta);
+	void ColliderLeft(_float fTimeDelta);
+	void ColliderRight(_float fTimeDelta);
+	void ColliderBack(_float fTimeDelta);
+	void ColliderFront(_float fTimeDelta);
+
+
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
 		m_fShakePower = fShakePower; 
@@ -108,6 +118,8 @@ private:
 
 	_float m_fShakePower = 0.f;
 	_float m_fShakeTime = 0.f;
+
+	_float m_fJumpPower = 0.f;
 };
 
 END

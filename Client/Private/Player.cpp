@@ -64,7 +64,7 @@ void CPlayer::Tick(_float fTimeDelta)
 	Render_Hand();
 
 	Camera_Event(fTimeDelta);
-
+	Jump_Tick(fTimeDelta);
 
 
 
@@ -72,7 +72,7 @@ void CPlayer::Tick(_float fTimeDelta)
 
 void CPlayer::LateTick(_float fTimeDelta)
 {
-
+	ColliderCheck(fTimeDelta);
 }
 
 HRESULT CPlayer::Render()
@@ -207,16 +207,17 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKeyUp(eKeyCode::LShift))
 	{
 		m_pTransformCom->Set_Speed(6.f);
-		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::IDLE_STATE);
+		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::JUMP_STATE);
 	}
 
 
 
 
-	if (m_pGameInstance->GetKeyUp(eKeyCode::Space))
+	if (m_pGameInstance->GetKeyUp(eKeyCode::Space) && ePlayerState == IDLE_STATE)
 	{
-		Jump(fTimeDelta);
+		Jump(10);
 	}
+
 	if (GetKeyState('T') & 0x8000)
 	{
 		Camera_Shake_Order(100.f, 0.5f);
@@ -333,15 +334,177 @@ void  CPlayer::Camera_Event(_float fTimeDelta)
 {
 	if (m_fShakeTime >= 0.f) Camera_Shake(fTimeDelta, m_fShakePower, m_fShakeTime);
 
-	if (ePlayerState == PLAYER_STATE::DASH_STATE)
+	if (m_pGameInstance->GetKey(eKeyCode::LShift))
 	{
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), true);
 	}
 }
 
-void CPlayer::Jump(_float fTimeDelta)
+void CPlayer::Jump(_float _fJumpPower)
 {
 	Set_PlayerState(CPlayer::PLAYER_STATE::JUMP_STATE);
+	m_fJumpPower = _fJumpPower;
+}
+
+void CPlayer::ColliderCheck(_float fTimeDelta)
+{
+	ColliderTop(fTimeDelta);
+	ColliderLeft(fTimeDelta);
+	ColliderRight(fTimeDelta);
+	ColliderBack(fTimeDelta);
+	ColliderFront(fTimeDelta);
+}
+
+void CPlayer::ColliderTop(_float fTimeDelta)
+{
+	RAY_DESC rayDesc;
+	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+	rayDesc.strDstLayer = L"Floor";
+	rayDesc.vRayDir = { 0.f, 1.f, 0.f };
+	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	CGameObject* pHitObj = nullptr;
+	_float3 fHitWorldPos;
+	_float fDist = 0.f;
+
+	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
+	{
+		if (fDist <= 0.75f)
+		{
+			_float3 vPos = fHitWorldPos;
+			vPos.y -= 0.75f;
+			m_fJumpPower = -1.f;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
+		}
+	}
+}
+
+void CPlayer::ColliderLeft(_float fTimeDelta)
+{
+	RAY_DESC rayDesc;
+	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+	rayDesc.strDstLayer = L"Wall";
+	rayDesc.vRayDir = { -1.f, 0.f, 0.f };
+	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	CGameObject* pHitObj = nullptr;
+	_float3 fHitWorldPos;
+	_float fDist = 0.f;
+
+	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
+	{
+		if (fDist <= 0.75f)
+		{
+			_float3 vPos = fHitWorldPos;
+			vPos -= rayDesc.vRayDir * 0.75f;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
+		}
+	}
+}
+
+void CPlayer::ColliderRight(_float fTimeDelta)
+{
+	RAY_DESC rayDesc;
+	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+	rayDesc.strDstLayer = L"Wall";
+	rayDesc.vRayDir = { 1.f, 0.f, 0.f };
+	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	CGameObject* pHitObj = nullptr;
+	_float3 fHitWorldPos;
+	_float fDist = 0.f;
+
+	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
+	{
+		if (fDist <= 0.5f)
+		{
+			_float3 vPos = fHitWorldPos;
+			vPos -= rayDesc.vRayDir * 0.5f;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
+		}
+	}
+}
+
+void CPlayer::ColliderBack(_float fTimeDelta)
+{
+	RAY_DESC rayDesc;
+	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+	rayDesc.strDstLayer = L"Wall";
+	rayDesc.vRayDir = { 0.f, 0.f, -1.f };
+	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	CGameObject* pHitObj = nullptr;
+	_float3 fHitWorldPos;
+	_float fDist = 0.f;
+
+	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
+	{
+		if (fDist <= 0.5f)
+		{
+			_float3 vPos = fHitWorldPos;
+			vPos -= rayDesc.vRayDir * 0.5f;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
+		}
+	}
+}
+
+void CPlayer::ColliderFront(_float fTimeDelta)
+{
+	RAY_DESC rayDesc;
+	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+	rayDesc.strDstLayer = L"Wall";
+	rayDesc.vRayDir = { 0.f, 0.f, 1.f };
+	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	CGameObject* pHitObj = nullptr;
+	_float3 fHitWorldPos;
+	_float fDist = 0.f;
+
+	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
+	{
+		if (fDist <= 0.5f)
+		{
+			_float3 vPos = fHitWorldPos;
+			vPos -= rayDesc.vRayDir * 0.5f;
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
+		}
+	}
+}
+
+void CPlayer::Jump_Tick(_float fTimeDelta)
+{
+	if (ePlayerState == PLAYER_STATE::JUMP_STATE || ePlayerState == PLAYER_STATE::DASH_STATE)
+	{
+		m_pTransformCom->Go_Jump(m_fJumpPower, fTimeDelta);
+		m_fJumpPower -= 19.8f * fTimeDelta;
+	}
+
+	if(ePlayerState == PLAYER_STATE::JUMP_STATE || ePlayerState == PLAYER_STATE::DASH_STATE)
+	{
+		RAY_DESC rayDesc;
+		rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+		rayDesc.strDstLayer = L"Floor";
+		rayDesc.vRayDir = { 0.f, -1.f, 0.f };
+		rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+		CGameObject* pHitObj = nullptr;
+		_float3 fHitWorldPos;
+		_float fDist = 0.f;
+
+		if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
+		{
+			if (fDist <= 0.75f)
+			{
+				_float3 vPos = fHitWorldPos;
+				vPos.y += 0.75f;
+				m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
+				Set_PlayerState(CPlayer::PLAYER_STATE::IDLE_STATE);
+			}
+		}
+	}
+
+
+
 }
 
 void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime)

@@ -57,6 +57,7 @@ void CPistol_Spin::Tick(_float fTimeDelta)
 	//Animation End
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
 		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::RELOAD);
+		//CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload_Hand"), true);
 		AnimationDelayReset();
 	}
 

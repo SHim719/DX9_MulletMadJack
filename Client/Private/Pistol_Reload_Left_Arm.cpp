@@ -58,7 +58,7 @@ void CPistol_Reload_Left_Arm::Tick(_float fTimeDelta)
 
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
 		m_iTexture_Index = 0;
-		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload_Hand"), false);
+		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload_Arm"), false);
 		AnimationDelayReset();
 	}
 

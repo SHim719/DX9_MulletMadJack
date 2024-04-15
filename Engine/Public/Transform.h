@@ -121,6 +121,8 @@ public:
 	void Go_Up(_float fTimeDelta);
 	void Go_Down(_float fTimeDelta);
 
+	void Go_Jump(_float fTimeDelta, _float fJumpPower);
+
 	void Head_Roll(_float fTimeDelta, _float Degree);
 
 	void Set_View_RollBack();
