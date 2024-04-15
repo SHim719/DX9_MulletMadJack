@@ -15,7 +15,7 @@ BEGIN(Client)
 
 class CDrone_Monster final : public CPawn
 {
-	enum STATE { STATE_IDLE, STATE_REVEAL, STATE_AIM, STATE_ATTACK, STATE_FLYBACK, STATE_END };
+	enum STATE { STATE_IDLE, STATE_REVEAL, STATE_FLYING, STATE_ATTACK, STATE_FLYBACK, STATE_END };
 
 private:
 	CDrone_Monster(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -40,15 +40,17 @@ private:
 	PAWN_DESC		m_Drone_Monster_Desc{};
 
 	_float			m_fAttack_TimeGap;
+	_float			m_fFlying_TimeGap;
 
 	STATE			m_eState;
 
 	bool			IsPlaying;
 
+	bool			m_bIdle;
 	bool			m_bAttack;
 	bool			m_bReveal;
 	bool			m_bDead;
-	bool			m_bWalking;
+	bool			m_bFlying;
 
 private:
 	HRESULT			Add_Components();
@@ -56,11 +58,14 @@ private:
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
 
-	virtual void Set_Motions(_float fTimeDelta) override;
+	virtual void	Set_Motions(_float fTimeDelta) override;
+	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
 
 	void	Decide_Pawn_Motions(_float fTimeDelta);
 	void	Pawn_Reveal_Motion(_float fTimeDelta);
+	void	Pawn_Moving_Motion(_float fTimeDelta);
 	void	Pawn_Attack_Motion(_float fTimeDelta);
+	void	Pawn_Flyback_Motion(_float fTimeDelta);
 
 public:
 	static CDrone_Monster* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

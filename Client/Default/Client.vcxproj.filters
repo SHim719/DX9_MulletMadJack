@@ -292,6 +292,9 @@
     <Filter Include="97. Manager\CTextManager">
       <UniqueIdentifier>{cbac94b8-535b-45df-b197-90e8cb5c7c01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster">
+      <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -540,6 +543,9 @@
     <ClInclude Include="..\Public\CUi_PEACE.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Orange_Pants_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -763,6 +769,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_PEACE.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

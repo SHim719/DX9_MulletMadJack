@@ -10,6 +10,7 @@ CEnemy_Bullet::CEnemy_Bullet(LPDIRECT3DDEVICE9 pGraphic_Device)
 CEnemy_Bullet::CEnemy_Bullet(const CEnemy_Bullet& rhs)
 	: CGameObject{ rhs }
 	, m_fTimeAcc(0.f)
+	, m_fBulletDuration(3.f)
 {
 }
 
@@ -34,6 +35,9 @@ HRESULT CEnemy_Bullet::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_Enemy_BulletDesc.vPosition);
 
+	_float3 Scale = { (_float)1 / 16, (_float)1 / 16, (_float)1 / 16 };
+	m_pTransformCom->Set_Scale(Scale);
+
 	// 카메라 위치로 목표점을 잡음
 	m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
 
@@ -47,12 +51,15 @@ void CEnemy_Bullet::PriorityTick(_float fTimeDelta)
 
 void CEnemy_Bullet::Tick(_float fTimeDelta)
 {
+	m_fBulletDuration -= fTimeDelta;
+
+	if (m_fBulletDuration <= 0)
+		m_bDestroyed = true;
 }
 
 void CEnemy_Bullet::LateTick(_float fTimeDelta)
 {
-	// Sort_AlphaBlendObj()에서 터지므로 임시로 RENDER_NONBLEND으로 둠
-	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
 }
 
 HRESULT CEnemy_Bullet::Render()
@@ -98,6 +105,7 @@ HRESULT CEnemy_Bullet::Begin_RenderState()
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	m_pGraphic_Device->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
 
 	return S_OK;
 }

@@ -39,7 +39,6 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     if (FAILED(Add_Components()))
         return E_FAIL;
 
-    // Level_GamePlay °´Ã¼¿¡ Á¢±Ù
     if (FAILED(Add_Textures()))
         return E_FAIL;
 
@@ -47,6 +46,10 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
 
     m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_White_Suit_Monster_Desc.vPosition);
  
+
+    _float3 Scale = { (_float)1.1f, (_float)1.1f, (_float)1.1f };
+    m_pTransformCom->Set_Scale(Scale);
+
     m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
 
     m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Idle"), 0.1f, true);
@@ -65,12 +68,19 @@ void CWhite_Suit_Monster::Tick(_float fTimeDelta)
 
     Set_Motions(fTimeDelta);
 
-    m_pAnimationCom->Update(fTimeDelta, IsPlaying, m_bDead);
+    m_pAnimationCom->Update(fTimeDelta, IsPlaying);
+
+    if (m_bDead && !IsPlaying)
+    {
+        m_fCorpseDuration -= fTimeDelta;
+
+        if (m_fCorpseDuration <= 0)
+            m_bDestroyed = true;
+    }
 }
 
 void CWhite_Suit_Monster::LateTick(_float fTimeDelta)
 {
-    // ¸ó½ºÅÍ Ãâ·ÂÇÒ ¶§ÀÇ º¯È¯ Çà·ÄÀ» FPS Ä«¸Þ¶ó °´Ã¼¿¡¼­ ¸¸µç ºôº¸µå Çà·Ä·Î ¼¼ÆÃÇÔ
     m_pTransformCom->Set_Billboard_Matrix(m_pFPS_Camera->Get_Billboard_Matrix());
 
     m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
@@ -123,7 +133,7 @@ HRESULT CWhite_Suit_Monster::Add_Textures()
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Shotgun"), TEXT("White_Suit_Monster_Death_Shotgun"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Machinegun"), TEXT("White_Suit_Monster_Death_Machinegun"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_BodyShot"), TEXT("White_Suit_Monster_BodyShot"))))
         return E_FAIL;
 
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Headshot"), TEXT("White_Suit_Monster_Headshot"))))
@@ -204,6 +214,9 @@ void CWhite_Suit_Monster::Set_Motions(_float fTimeDelta)
     case STATE_HEADSHOT:
         break;
 
+    case STATE_BODYSHOT:
+        break;
+
     case STATE_GROINSHOT:
         break;
 
@@ -211,76 +224,29 @@ void CWhite_Suit_Monster::Set_Motions(_float fTimeDelta)
         break;
     }
 
-    /*if (GetAsyncKeyState('1') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_2nd_Hit"), 0.1f, false);
-
-    if (GetAsyncKeyState('1') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Aim"), 0.1f, false);
-
-    if (GetAsyncKeyState('3') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Blocking"), 0.1f, false);
-
-    if (GetAsyncKeyState('4') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Breathe"), 0.1f, true);
-
-    if (GetAsyncKeyState('5') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Shotgun"), 0.1f, false);
-
-    if (GetAsyncKeyState('6') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Machinegun"), 0.1f, false);
-
-    if (GetAsyncKeyState('7') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Headshot"), 0.1f, false);
-
-    if (GetAsyncKeyState('8') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Shot_Floor"), 0.1f, false);
-
-    if (GetAsyncKeyState('9') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Shot_Wall"), 0.1f, false);
-
-    if (GetAsyncKeyState('0') & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_GroinShot"), 0.1f, false);
-
-    if (GetAsyncKeyState(VK_NUMPAD0) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_HeadExplode"), 0.1f, false);
-
-    if (GetAsyncKeyState(VK_NUMPAD1) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_1st_Hit"), 0.1f, false);
-
-    if (GetAsyncKeyState(VK_NUMPAD2) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Idle"), 0.1f, true);
-
-    if (GetAsyncKeyState(VK_NUMPAD3) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Backwards_Machinegun"), 0.1f, false);
-
-    if (GetAsyncKeyState(VK_NUMPAD4) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Shoot"), 0.1f, true);
-
-    if (GetAsyncKeyState(VK_NUMPAD5) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Walk"), 0.1f, false);
-
-    if (GetAsyncKeyState(VK_NUMPAD6) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Push_Floor"), 0.1f, false);
-
-    if (GetAsyncKeyState(VK_NUMPAD7) & 0x8000)
-        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Death_Push_Wall"), 0.1f, false);*/
 }
 
 void CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
+    srand(unsigned(time(nullptr)));
+
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
     _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
 
-    if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.375f < vHitLocalPos.y && vHitLocalPos.y < 0.5f)
+    if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.375f <= vHitLocalPos.y && vHitLocalPos.y < 0.5f)
         m_eState = STATE_HEADSHOT;
 
-    else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.1f < vHitLocalPos.y && vHitLocalPos.y < 0.1f)
+    else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.1f <= vHitLocalPos.y && vHitLocalPos.y < 0.375f && rand() % 2 == 0)
+        m_eState = STATE_BLOCK;
+
+    else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.1f <= vHitLocalPos.y && vHitLocalPos.y < 0.375f && rand() % 2 == 1)
+        m_eState = STATE_BODYSHOT;
+
+    else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.1f <= vHitLocalPos.y && vHitLocalPos.y < 0.1f)
         m_eState = STATE_GROINSHOT;
-}
 
-void CWhite_Suit_Monster::Death_Check()
-{
-
+    else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.1f)
+        m_eState = STATE_BODYSHOT;
 }
 
 void CWhite_Suit_Monster::Decide_Pawn_Motions(_float fTimeDelta)
@@ -288,14 +254,14 @@ void CWhite_Suit_Monster::Decide_Pawn_Motions(_float fTimeDelta)
     Pawn_Aiming_Motion(fTimeDelta);
     Pawn_Shooting_Motion(fTimeDelta);
     Pawn_Walking_Motion(fTimeDelta);
-    //Pawn_Blocking_Motion(fTimeDelta);
+    Pawn_Blocking_Motion(fTimeDelta);
     Pawn_Dying_Motion(fTimeDelta);
 }
 
 void CWhite_Suit_Monster::Pawn_Aiming_Motion(_float fTimeDelta)
 {
-    if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) - m_White_Suit_Monster_Desc.vPosition)) < 3.f
-        && !m_bDead && !m_bAimed && !m_bShooting && !IsPlaying)
+    if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+        m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 3.f && !m_bDead && !m_bAimed && !m_bShooting && !IsPlaying)
     {
         m_eState = STATE_AIM;
 
@@ -304,7 +270,7 @@ void CWhite_Suit_Monster::Pawn_Aiming_Motion(_float fTimeDelta)
 
         m_bIdle = false;
 
-        // ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ÇÑ ¹ø ¿ÏÀüÈ÷ Àç»ýÇÒ ¶§±îÁö if¹®¿¡ ´Ù½Ã µé¾î¿À¸é ¾È µÊ
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ifï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½
         m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Aim"), 0.1f, false);
     }
 }
@@ -317,7 +283,7 @@ void CWhite_Suit_Monster::Pawn_Shooting_Motion(_float fTimeDelta)
 
     srand(unsigned(time(nullptr)));
 
-    if (rand() % 2 == 0)  // ÀÓ½Ã·Î Àý¹ÝÀÇ È®·ü·Î µÒ
+    if (rand() % 2 == 0)  // ï¿½Ó½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     {
         m_bWalking = true;
         m_bShooting = false;
@@ -342,7 +308,7 @@ void CWhite_Suit_Monster::Pawn_Shooting_Motion(_float fTimeDelta)
             CEnemy_Bullet::ENEMY_BULLET_DESC    Enemy_BulletDesc{};
             Enemy_BulletDesc.vPosition = _float3(m_pTransformCom->Get_State(CTransform::STATE_POSITION));
             Enemy_BulletDesc.vAt = _float3(m_pFPS_Camera->Get_CAMERA_DESC().vEye);
-            Enemy_BulletDesc.fSpeedPerSec = 10.f;
+            Enemy_BulletDesc.fSpeedPerSec = 5.f;
             Enemy_BulletDesc.fRotationPerSec = D3DXToRadian(90.f);
 
             if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Layer_Enemy_Bullet"), TEXT("Prototype_GameObject_Enemy_Bullet"), &Enemy_BulletDesc))
@@ -354,7 +320,8 @@ void CWhite_Suit_Monster::Pawn_Shooting_Motion(_float fTimeDelta)
         }
     }
 
-    if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) - m_White_Suit_Monster_Desc.vPosition)) >= 3.f)
+    if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+        m_pTransformCom->Get_State(CTransform::STATE_POSITION))) >= 3.f)
     {
         m_bShooting = false;
     }
@@ -385,29 +352,29 @@ void CWhite_Suit_Monster::Pawn_Walking_Motion(_float fTimeDelta)
 
 void CWhite_Suit_Monster::Pawn_Blocking_Motion(_float fTimeDelta)
 {
-    if (m_bBlock)
+    if (m_eState == STATE_BLOCK && !m_bDead)
     {
-        m_eState = STATE_BLOCK;
+        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Blocking"), 0.1f, false);
 
-        m_fBlocking_TimeGap += fTimeDelta;
-
-        if (m_bDead || m_fBlocking_TimeGap > 1.f)
-        {
-            m_bBlock = false;
-
-            m_fBlocking_TimeGap = 0.f;
-        }
+        m_eState = STATE_END;
     }
 }
 
 void CWhite_Suit_Monster::Pawn_Dying_Motion(_float fTimeDelta)
 {
-    // ÃÑ¾ËÀÌ ¾îµð¿¡ ¸Â¾Ò´ÂÁö¿¡ µû¶ó ¼¼ºÎ ¸ð¼ÇÀ» ±¸ºÐÇÒ °Í
+    // ï¿½Ñ¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Â¾Ò´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     if (m_eState == STATE_HEADSHOT && !m_bDead)
     {
         m_bDead = true;
 
         m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Headshot"), 0.1f, false);
+    }
+
+    if (m_eState == STATE_BODYSHOT && !m_bDead)
+    {
+        m_bDead = true;
+
+        m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_BodyShot"), 0.1f, false);
     }
 
     if (m_eState == STATE_GROINSHOT && !m_bDead)

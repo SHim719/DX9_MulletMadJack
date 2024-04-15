@@ -36,6 +36,9 @@ public:
 protected:
 	virtual void	Set_Motions(_float fTimeDelta);
 
+protected:
+	_float	m_fCorpseDuration = 5.f;
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

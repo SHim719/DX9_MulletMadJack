@@ -10,10 +10,13 @@ CDrone_Monster::CDrone_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
 CDrone_Monster::CDrone_Monster(const CDrone_Monster& rhs)
     : CPawn { rhs }
     , IsPlaying(false)
+    , m_bIdle(true)
     , m_bAttack(false)
     , m_bReveal(false)
     , m_bDead(false)
-    , m_bWalking(false)
+    , m_bFlying(false)
+    , m_fAttack_TimeGap(0.f)
+    , m_fFlying_TimeGap(0.f)
 {
 }
 
@@ -55,7 +58,15 @@ void CDrone_Monster::Tick(_float fTimeDelta)
 
     Set_Motions(fTimeDelta);
 
-    m_pAnimationCom->Update(fTimeDelta, IsPlaying, m_bDead);
+    m_pAnimationCom->Update(fTimeDelta, IsPlaying);
+
+    if (m_bDead && !IsPlaying)
+    {
+        m_fCorpseDuration -= fTimeDelta;
+
+        if (m_fCorpseDuration <= 0)
+            m_bDestroyed = true;
+    }
 }
 
 void CDrone_Monster::LateTick(_float fTimeDelta)
@@ -133,11 +144,44 @@ HRESULT CDrone_Monster::End_RenderState()
 
 void CDrone_Monster::Set_Motions(_float fTimeDelta)
 {
+    switch (m_eState)
+    {
+    case STATE_IDLE:
+        break;
+
+    case STATE_REVEAL:
+        break;
+
+    case STATE_FLYING:
+        m_pTransformCom->Go_Floor_Backward(fTimeDelta);
+        break;
+
+    case STATE_ATTACK:
+        break;
+
+    case STATE_FLYBACK:
+        break;
+
+    default:
+        break;
+    }
+}
+
+void CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+{
+    _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
+    _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
+
+    if (-0.2f < vHitLocalPos.x && vHitLocalPos.x < 0.2f && -0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.2f)
+        m_eState = STATE_FLYBACK;
 }
 
 void CDrone_Monster::Decide_Pawn_Motions(_float fTimeDelta)
 {
+    Pawn_Reveal_Motion(fTimeDelta);
+    Pawn_Moving_Motion(fTimeDelta);
     Pawn_Attack_Motion(fTimeDelta);
+    Pawn_Flyback_Motion(fTimeDelta);
 }
 
 void CDrone_Monster::Pawn_Reveal_Motion(_float fTimeDelta)
@@ -155,6 +199,37 @@ void CDrone_Monster::Pawn_Reveal_Motion(_float fTimeDelta)
     }
 }
 
+void CDrone_Monster::Pawn_Moving_Motion(_float fTimeDelta)
+{
+    m_fFlying_TimeGap += fTimeDelta;
+
+    if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+        m_pTransformCom->Get_State(CTransform::STATE_POSITION))) >= 1.f && !m_bIdle)
+    {
+        m_bFlying = true;
+    }
+
+    if (m_bFlying && !m_bIdle && !m_bDead && !m_bAttack && !IsPlaying)
+    {
+        m_eState = STATE_FLYING;
+
+        IsPlaying = m_bFlying;
+
+        m_fFlying_TimeGap += fTimeDelta;
+
+        m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Walk"), 0.1f, false);
+
+        if (m_fFlying_TimeGap > 1.f)
+        {
+            m_bFlying = false;
+
+            m_eState = STATE_END;
+
+            m_fFlying_TimeGap = 0.f;
+        }
+    }
+}
+
 void CDrone_Monster::Pawn_Attack_Motion(_float fTimeDelta)
 {
     m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION);
@@ -165,7 +240,7 @@ void CDrone_Monster::Pawn_Attack_Motion(_float fTimeDelta)
         return;
 
     if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) - m_Drone_Monster_Desc.vPosition)) < 5.f
-        && !m_bDead && !m_bWalking && !IsPlaying)
+        && !m_bDead && !m_bFlying && !IsPlaying)
     {
         m_eState = STATE_ATTACK;
 
@@ -173,6 +248,16 @@ void CDrone_Monster::Pawn_Attack_Motion(_float fTimeDelta)
         IsPlaying = m_bAttack;
 
         m_pAnimationCom->Play_Animation(TEXT("Drone_Monster_Attack"), 0.1f, false);
+    }
+}
+
+void CDrone_Monster::Pawn_Flyback_Motion(_float fTimeDelta)
+{
+    if (m_eState == STATE_FLYBACK && !m_bDead)
+    {
+        m_bDead = true;
+
+        m_pAnimationCom->Play_Animation(TEXT("Drone_Monster_Flyback"), 0.1f, false);
     }
 }
 

@@ -140,7 +140,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_White_Suit_Monster(const wstring& strLayerT
 {
 	CWhite_Suit_Monster::PAWN_DESC	White_Suit_MonsterDesc{};
 
-	White_Suit_MonsterDesc.vPosition = _float3(0.f, 0.45f, 3.f);
+	White_Suit_MonsterDesc.vPosition = _float3(0.f, 0.55f, 3.f);
 	White_Suit_MonsterDesc.vAt = _float3(0.f, 0.f, 0.f);
 	White_Suit_MonsterDesc.fSpeedPerSec = 0.3f;
 	White_Suit_MonsterDesc.fRotationPerSec = D3DXToRadian(90.f);
@@ -170,7 +170,7 @@ HRESULT CLevel_GamePlay::Ready_Layer_Chainsaw_Monster(const wstring& strLayerTag
 {
 	CChainsaw_Monster::PAWN_DESC	Chainsaw_MonsterDesc{};
 
-	Chainsaw_MonsterDesc.vPosition = _float3(-1.f, 0.45f, 3.f);
+	Chainsaw_MonsterDesc.vPosition = _float3(-1.f, 0.6f, 3.f);
 	Chainsaw_MonsterDesc.vAt = _float3(0.f, 0.f, 0.f);
 	Chainsaw_MonsterDesc.fSpeedPerSec = 0.3f;
 	Chainsaw_MonsterDesc.fRotationPerSec = D3DXToRadian(90.f);
