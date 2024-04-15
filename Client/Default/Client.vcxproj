@@ -171,10 +171,10 @@
     <ClInclude Include="..\Public\CGame_Manager.h" />
     <ClInclude Include="..\Public\Client_Components.h" />
     <ClInclude Include="..\Public\Chainsaw_Monster.h" />
+    <ClInclude Include="..\Public\CTextManager.h" />
     <ClInclude Include="..\Public\Door.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
     <ClInclude Include="..\Public\CUi_Clear_Victory.h" />
-    <ClInclude Include="..\Public\CUi_Finish.h" />
     <ClInclude Include="..\Public\CUi_PEACE.h" />
     <ClInclude Include="..\Public\Drone_Monster.h" />
     <ClInclude Include="..\Public\FPS_Camera.h" />
@@ -253,10 +253,10 @@
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp" />
+    <ClCompile Include="..\Private\CTextManager.cpp" />
     <ClCompile Include="..\Private\Door.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp" />
-    <ClCompile Include="..\Private\CUi_Finish.cpp" />
     <ClCompile Include="..\Private\CUi_PEACE.cpp" />
     <ClCompile Include="..\Private\Drone_Monster.cpp" />
     <ClCompile Include="..\Private\FPS_Camera.cpp" />

@@ -33,15 +33,15 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_iLevelID = LEVEL_GAMEPLAY;
 
 	CMapLoader::Get_Instance()->Load_MapObject(L"../Bin/Resources/DataFiles/Test.dat", (LEVEL)m_iLevelID);
-
+	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 	
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Pawns()))
-	//	return E_FAIL;
+	/*if (FAILED(Ready_Layer_Pawns()))
+		return E_FAIL;*/
 
 	Initialize_SodaMachine();
 	return S_OK;
@@ -192,7 +192,7 @@ void CLevel_GamePlay::Test_Ui()
 {
 	if (m_pGameInstance->GetKeyDown(eKeyCode::U))
 	{
-		CGame_Manager::Get_Instance()->Set_StageProgress(CGame_Manager::StageProgress::Clear);
+		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::Clear);
 	}
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::J))
 	{

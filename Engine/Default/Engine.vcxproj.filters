@@ -103,6 +103,9 @@
     <Filter Include="01.Utility\04.Components\VIBuffer\Mesh">
       <UniqueIdentifier>{c546af47-b92d-4dd2-90ff-b6275069c732}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utility\Text">
+      <UniqueIdentifier>{207d65b3-b77a-4873-998a-ba0802ce8f13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Public\Base.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="..\Public\CUi.h">
       <Filter>01.Utility\99. Ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CText.h">
+      <Filter>01.Utility\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -295,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Mesh.cpp">
       <Filter>01.Utility\04.Components\VIBuffer\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CText.cpp">
+      <Filter>01.Utility\Text</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

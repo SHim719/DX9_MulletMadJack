@@ -248,6 +248,8 @@ void CUi_Floor_Part::Execute(_float fTimeDelta)
 		}
 		else if(m_fMoveTime <= 0 && m_fLifeTime > 2.5)
 		{
+			m_pTransformCom->Set_Scale(_float3(95, 80, 1));
+			_float3 a = m_pTransformCom->Get_Scale();
 			Set_Regular_Pos();
 		}
 

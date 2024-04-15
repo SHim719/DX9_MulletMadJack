@@ -7,6 +7,7 @@
 
 #include "Player_Include.h"
 #include "Dash_Effect.h"
+#include "CTextManager.h"
 
 IMPLEMENT_SINGLETON(CGame_Manager)
 
@@ -27,6 +28,11 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	m_UiViewPort = { 0, 0, g_iWinSizeX, g_iWinSizeY, 0, 1 };
 	m_pGameInstance->Set_UiManager_Winsize(g_iWinSizeX, g_iWinSizeY);
 
+	m_pTextManager = CTextManager::Create();
+	if (m_pTextManager == nullptr)
+	{
+		assert("textmanager create failed");
+	}
 	Ready_Prototype_GameObjects();
 	Ready_Prototype_Components();
 
@@ -41,7 +47,6 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Active_Ui();
 	Ready_Prototype_Effect();
 	Ready_Active_Camera_Effect();
-
 }
 
 void CGame_Manager::Tick(_float fTimeDelta)
@@ -53,6 +58,7 @@ void CGame_Manager::Tick(_float fTimeDelta)
 	Call_Shop(fTimeDelta);
 	Cal_Change_Time(fTimeDelta);
 	Cal_StageClear_Time(fTimeDelta);
+
 }
 
 void CGame_Manager::Clear()
@@ -73,6 +79,7 @@ void CGame_Manager::Render()
 		m_pGameInstance->Render_Begin();
 		m_pGameInstance->Draw();
 		m_pGameInstance->Ui_Render();
+	
 		m_pGameInstance->Render_End();
 	}
 	else
@@ -758,6 +765,7 @@ HRESULT CGame_Manager::Ready_Active_Camera_Effect()
 
 void CGame_Manager::Free()
 {
+	Safe_Release(m_pTextManager);
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pGraphic_Device);
 	Destroy_Instance();

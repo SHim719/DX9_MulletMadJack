@@ -219,7 +219,7 @@ void CUi_Shop::Change_Progress(_float fTimeDelta)
 	else if (m_eProgress == ShopProgress::End && m_fChangeProgressTime <= 0)
 	{
 		CGame_Manager::Get_Instance()->
-			Set_StageProgress(CGame_Manager::StageProgress::Changing);
+			Set_StageProgress(StageProgress::Changing);
 		m_bActive = false;
 	}
 }

@@ -100,9 +100,65 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	
 #pragma region TEXTURE_WHITE_SUIT_MONSTER
-	/* For Prototype_Component_Texture_White_Suit_Monster */
-//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_2nd_Hit"),
-//		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/2hit/2hit%d.png"), 8))))
+//	/* For Prototype_Component_Texture_White_Suit_Monster */
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_2nd_Hit"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/2hit/2hit%d.png"), 8))))
+////		return E_FAIL;
+////	
+//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Aim"),
+//		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/aim/aim%d.png"), 9))))
+//		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Blocking"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/blocking/bg_blocking%d.png"), 5))))
+////		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Breathe"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/breathe/breathe%d.png"), 7))))
+////		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Shotgun"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/death_shotgun/death_shotgun%d.png"), 23))))
+////		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Machinegun"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/fb_death/fb_death%d.png"), 22))))
+////		return E_FAIL;
+//	
+//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Headshot"),
+//		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/flyb_death/flyb_death%d.png"), 21))))
+//		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Shot_Floor"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/flyback_endo/flyback_endo%d.png"), 31))))
+////		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Shot_Wall"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/flyback_wall_endo/flyback_wall_endo%d.png"), 28))))
+////		return E_FAIL;
+//	
+//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_GroinShot"),
+//		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/groinshot/BG_groinshot%d.png"), 23))))
+//		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_HeadExplode"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/headexplode/headexplode%d.png"), 22))))
+////		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_1st_Hit"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/hit/hit%d.png"), 8))))
+////		return E_FAIL;
+////	
+//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Idle"),
+//		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/idle/idle%d.png"), 9))))
+//		return E_FAIL;
+////	
+////	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Death_Backwards_Machinegun"),
+////		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/sd_backwards/sd_backwards%d.png"), 27))))
+////		return E_FAIL;
+////	
+//	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Shoot"),
+//		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/shoot/shoot%d.png"), 8))))
 //		return E_FAIL;
 //	
 //	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_White_Suit_Monster_Aim"),

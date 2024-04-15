@@ -6,6 +6,8 @@
 #include "CUi_Manager.h"
 #include "Layer.h"
 #include "Core_Camera.h"
+#include "CText.h"
+
 /* 클라이언트와 엔진의 중계자의 역활을 수행한다. */
 /* 클라이언트에서 엔진의 기능을 쓰고하자 한다라면 무조건 게임인스턴스를 떠올리면 되도록. */
 
@@ -104,7 +106,11 @@ public:
 	class CCoreCamera* Get_CurCamera();
 #pragma endregion
 
+#pragma region CText
+	void Print_Text(CText::Text_Info Text);
 
+
+#pragma endregion
 private:
 	class CGraphic_Device*			m_pGraphic_Device = { nullptr };
 	class CLevel_Manager*			m_pLevel_Manager = { nullptr };
@@ -116,7 +122,7 @@ private:
 	class CUi_Manager*				m_pUi_Manager = { nullptr };
 	class CCollision_Manager*		m_pCollision_Manager = { nullptr };
 	class CCamera_Manager*			m_pCamera_Manager = { nullptr };
-
+	class CText*					m_pText = { nullptr };
 
 public:
 	static void Release_Engine();
