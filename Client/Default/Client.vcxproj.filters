@@ -286,6 +286,9 @@
     <Filter Include="04. UI\Ui\Effect\GunFire">
       <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster">
+      <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -528,6 +531,9 @@
     <ClInclude Include="..\Public\CUi_Clear_Victory.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Orange_Pants_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -748,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

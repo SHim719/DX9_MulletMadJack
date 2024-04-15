@@ -10,9 +10,14 @@ CChainsaw_Monster::CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
 CChainsaw_Monster::CChainsaw_Monster(const CChainsaw_Monster& rhs)
 	: CPawn{ rhs }
 	, IsPlaying(false)
-	, m_bSlashing(false)
+	, m_bIdle(true)
 	, m_bDead(false)
 	, m_bWalking(false)
+	, m_bSlashing(false)
+	, m_bBlock(false)
+	, m_fWalking_TimeGap(0.f)
+	, m_fSlashing_TimeGap(0.f)
+	, m_fBlocking_TimeGap(0.f)
 {
 }
 
@@ -38,6 +43,11 @@ HRESULT CChainsaw_Monster::Initialize(void* pArg)
 
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_Chainsaw_Monster_Desc.vPosition);
 
+	_float3 Scale = { (_float)1.2f, (_float)1.2f, (_float)1.2f };
+	m_pTransformCom->Set_Scale(Scale);
+
+	m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
+
 	m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Idle_Up"), 0.1f, true);
 
 	return S_OK;
@@ -53,7 +63,15 @@ void CChainsaw_Monster::Tick(_float fTimeDelta)
 
 	Set_Motions(fTimeDelta);
 
-	m_pAnimationCom->Update(fTimeDelta, IsPlaying, m_bDead);
+	m_pAnimationCom->Update(fTimeDelta, IsPlaying);
+
+	if (m_bDead && !IsPlaying)
+	{
+		m_fCorpseDuration -= fTimeDelta;
+
+		if (m_fCorpseDuration <= 0)
+			m_bDestroyed = true;
+	}
 }
 
 void CChainsaw_Monster::LateTick(_float fTimeDelta)
@@ -101,7 +119,7 @@ HRESULT CChainsaw_Monster::Add_Textures()
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Slash"), TEXT("Chainsaw_Monster_Slash"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Machinegun"), TEXT("Chainsaw_Monster_Death_Machinegun"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_BodyShot"), TEXT("Chainsaw_Monster_BodyShot"))))
 		return E_FAIL;
 
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Blocking"), TEXT("Chainsaw_Monster_Blocking"))))
@@ -116,7 +134,7 @@ HRESULT CChainsaw_Monster::Add_Textures()
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Chainsaw_Monster_Start_Push_Floor"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Chainsaw_Monster_Start_Push_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Chainsaw_Monster_Death_Push_Wall"))))
 		return E_FAIL;
 
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_GetUp"), TEXT("Chainsaw_Monster_GetUp"))))
@@ -173,11 +191,124 @@ HRESULT CChainsaw_Monster::End_RenderState()
 
 void CChainsaw_Monster::Set_Motions(_float fTimeDelta)
 {
+	switch (m_eState)
+	{
+	case STATE_IDLE:
+		break;
+
+	case STATE_AIM:
+		break;
+
+	case STATE_WALK:
+		m_pTransformCom->Go_Floor_Backward(fTimeDelta);
+		break;
+
+	case STATE_SLASH:
+		break;
+
+	case STATE_BLOCK:
+		break;
+
+	case STATE_HEADSHOT:
+		break;
+
+	case STATE_BODYSHOT:
+		break;
+
+	case STATE_GROINSHOT:
+		break;
+
+	default:
+		break;
+	}
+
+	/*if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Headshot"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Slash"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_BodyShot"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Blocking"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_HeadExplode_Backward"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Push_Floor"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Start_Push_Floor"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Push_Wall"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_GetUp"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_GroinShot"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_HeadExplode_Forward"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Hit"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Idle_Down"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Idle_Up"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Shot_Floor"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Jump"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Shotgun"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Walk"), 0.1f, false);
+
+	if (GetAsyncKeyState('1') & 0x8000)
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Wall"), 0.1f, false);*/
+}
+
+void CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+{
+	srand(unsigned(time(nullptr)));
+
+	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
+	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
+
+	if (-0.05f < vHitLocalPos.x && vHitLocalPos.x < 0.05f && 0.18f <= vHitLocalPos.y && vHitLocalPos.y < 0.3f)
+		m_eState = STATE_HEADSHOT;
+
+	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.18f && rand() % 2 == 0)
+		m_eState = STATE_BLOCK;
+
+	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.18f && rand() % 2 == 1)
+		m_eState = STATE_BODYSHOT;
+
+	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.1f <= vHitLocalPos.y && vHitLocalPos.y < 0.f)
+		m_eState = STATE_GROINSHOT;
+
+	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.1f)
+		m_eState = STATE_BODYSHOT;
 }
 
 void CChainsaw_Monster::Decide_Pawn_Motions(_float fTimeDelta)
 {
 	Pawn_Slashing_Motion(fTimeDelta);
+	Pawn_Walking_Motion(fTimeDelta);
+	Pawn_Blocking_Motion(fTimeDelta);
+	Pawn_Dying_Motion(fTimeDelta);
 }
 
 void CChainsaw_Monster::Pawn_Slashing_Motion(_float fTimeDelta)
@@ -186,11 +317,14 @@ void CChainsaw_Monster::Pawn_Slashing_Motion(_float fTimeDelta)
 
 	m_fSlashing_TimeGap += fTimeDelta;
 
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) - m_Chainsaw_Monster_Desc.vPosition)) >= 5.f)
-		return;
+	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 5.f)
+	{
+		m_bIdle = false;
+	}
 
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) - m_Chainsaw_Monster_Desc.vPosition)) < 5.f
-		&& !m_bDead && !m_bWalking && !IsPlaying)
+	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 1.f && !m_bDead && !IsPlaying)
 	{
 		m_eState = STATE_SLASH;
 
@@ -198,6 +332,91 @@ void CChainsaw_Monster::Pawn_Slashing_Motion(_float fTimeDelta)
 		IsPlaying = m_bSlashing;
 
 		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Slash"), 0.1f, false);
+
+		if (m_fSlashing_TimeGap > 1.f)
+		{
+			m_bSlashing = false;
+
+			m_fSlashing_TimeGap = 0.f;
+		}
+	}
+
+	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) >= 1.f)
+	{
+		m_bSlashing = false;
+	}
+}
+
+void CChainsaw_Monster::Pawn_Walking_Motion(_float fTimeDelta)
+{
+	m_fWalking_TimeGap += fTimeDelta;
+
+	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) >= 1.f && !m_bIdle)
+	{
+		m_bWalking = true;
+	}
+
+	if (m_bWalking && !m_bIdle && !m_bDead && !m_bSlashing && !IsPlaying)
+	{
+		m_eState = STATE_WALK;
+
+		IsPlaying = m_bWalking;
+
+		m_fWalking_TimeGap += fTimeDelta;
+
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Walk"), 0.1f, false);
+
+		if (m_fWalking_TimeGap > 1.f)
+		{
+			m_bWalking = false;
+
+			m_eState = STATE_END;
+
+			m_fWalking_TimeGap = 0.f;
+		}
+	}
+
+	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
+		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 1.f)
+	{
+		m_bWalking = false;
+	}
+}
+
+void CChainsaw_Monster::Pawn_Blocking_Motion(_float fTimeDelta)
+{
+	if (m_eState == STATE_BLOCK && !m_bDead)
+	{
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Blocking"), 0.1f, false);
+
+		m_eState = STATE_END;
+	}
+}
+
+void CChainsaw_Monster::Pawn_Dying_Motion(_float fTimeDelta)
+{
+	// 총알이 어디에 맞았는지에 따라 세부 모션을 구분할 것
+	if (m_eState == STATE_HEADSHOT && !m_bDead)
+	{
+		m_bDead = true;
+
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Headshot"), 0.1f, false);
+	}
+
+	if (m_eState == STATE_BODYSHOT && !m_bDead)
+	{
+		m_bDead = true;
+
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_BodyShot"), 0.1f, false);
+	}
+
+	if (m_eState == STATE_GROINSHOT && !m_bDead)
+	{
+		m_bDead = true;
+
+		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_GroinShot"), 0.1f, false);
 	}
 }
 

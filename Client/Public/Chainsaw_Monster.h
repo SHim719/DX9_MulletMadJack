@@ -15,7 +15,7 @@ BEGIN(Client)
 
 class CChainsaw_Monster final : public CPawn
 {
-	enum STATE { STATE_IDLE, STATE_AIM, STATE_WALK, STATE_SLASH, STATE_BLOCK, STATE_HEADSHOT, STATE_END };
+	enum STATE { STATE_IDLE, STATE_AIM, STATE_WALK, STATE_SLASH, STATE_BLOCK, STATE_HEADSHOT, STATE_BODYSHOT, STATE_GROINSHOT, STATE_END };
 
 private:
 	CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -39,15 +39,19 @@ private:
 private:
 	PAWN_DESC		m_Chainsaw_Monster_Desc{};
 
+	_float			m_fWalking_TimeGap;
 	_float			m_fSlashing_TimeGap;
-
-	STATE			m_eState;
+	_float			m_fBlocking_TimeGap;
 
 	bool			IsPlaying;
 
-	bool			m_bSlashing;
+	bool			m_bIdle;
 	bool			m_bDead;
 	bool			m_bWalking;
+	bool			m_bSlashing;
+	bool			m_bBlock;
+
+	STATE			m_eState;
 
 private:
 	HRESULT			Add_Components();
@@ -55,10 +59,14 @@ private:
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
 
-	virtual void Set_Motions(_float fTimeDelta) override;
+	virtual void	Set_Motions(_float fTimeDelta) override;
+	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
 
 	void	Decide_Pawn_Motions(_float fTimeDelta);
 	void	Pawn_Slashing_Motion(_float fTimeDelta);
+	void	Pawn_Walking_Motion(_float fTimeDelta);
+	void	Pawn_Blocking_Motion(_float fTimeDelta);
+	void	Pawn_Dying_Motion(_float fTimeDelta);
 
 public:
 	static CChainsaw_Monster* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

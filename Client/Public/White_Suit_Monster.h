@@ -16,7 +16,7 @@ BEGIN(Client)
 
 class CWhite_Suit_Monster final : public CPawn
 {
-	enum STATE { STATE_IDLE, STATE_AIM, STATE_WALK, STATE_SHOOT, STATE_BLOCK, STATE_HEADSHOT, STATE_GROINSHOT, STATE_END };
+	enum STATE { STATE_IDLE, STATE_AIM, STATE_WALK, STATE_SHOOT, STATE_BLOCK, STATE_HEADSHOT, STATE_BODYSHOT, STATE_GROINSHOT, STATE_END };
 
 private:
 	CWhite_Suit_Monster(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -65,8 +65,6 @@ private:
 
 	virtual void	Set_Motions(_float fTimeDelta) override;
 	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-
-	void	Death_Check();
 
 	void	Decide_Pawn_Motions(_float fTimeDelta);
 	void	Pawn_Aiming_Motion(_float fTimeDelta);

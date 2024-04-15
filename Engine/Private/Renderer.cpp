@@ -51,7 +51,7 @@ void CRenderer::Clear()
 
 void CRenderer::Sort_AlphaBlendObj()
 {
-	if (0 == m_RenderObjects[RENDER_BLEND].size())
+	if (1 >= m_RenderObjects[RENDER_BLEND].size())
 		return;
 
 	_float4x4 ViewMatrix;

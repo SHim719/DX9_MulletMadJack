@@ -37,7 +37,6 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTransform* m_pTransformCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
 	CAnimation* m_pAnimationCom = { nullptr };
 	CFPS_Camera* m_pFPS_Camera = { nullptr };
@@ -45,6 +44,7 @@ private:
 private:
 	ENEMY_BULLET_DESC	m_Enemy_BulletDesc{};
 	_float				m_fTimeAcc;
+	_float				m_fBulletDuration;
 
 private:
 	HRESULT Add_Components();
