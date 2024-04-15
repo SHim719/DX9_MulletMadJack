@@ -32,7 +32,7 @@ HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
 
-	CMapLoader::Get_Instance()->Load_MapObject(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
+	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;

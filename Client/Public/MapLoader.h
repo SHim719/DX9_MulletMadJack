@@ -22,6 +22,7 @@ private:
 public:
 	HRESULT Load(const wstring& strFilePath, LEVEL eLevel);
 
+private:
 	HRESULT Load_Monster(HANDLE hFile, LEVEL eLevel);
 	HRESULT Load_Trigger(HANDLE hFile, LEVEL eLevel);
 	HRESULT Load_MapObject(HANDLE hFile, LEVEL eLevel);
