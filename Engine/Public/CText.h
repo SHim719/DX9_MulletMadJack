@@ -3,7 +3,7 @@
 
 BEGIN(Engine)
 
-class CText : public CBase
+class ENGINE_DLL CText : public CBase
 {
 public:
 	using Text_Info = struct TextInformation

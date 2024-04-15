@@ -55,7 +55,7 @@ private:
 	_float3			m_vPivot;
 public:
 	void Set_Direction(DIRECTION eDir) { m_eDir = eDir; }
-	void Open_Door() { m_bOpening = true; }
+	void Open_Door();
 
 	_bool isDirection_Right();
 public:

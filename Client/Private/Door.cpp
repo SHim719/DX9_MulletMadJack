@@ -81,7 +81,7 @@ HRESULT CDoor::Render()
 
 	m_pVIBuffer->Render();
 
-	//m_pBoxCollider->Render();
+	m_pBoxCollider->Render();
 
 	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	return S_OK;
@@ -90,7 +90,7 @@ HRESULT CDoor::Render()
 HRESULT CDoor::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), nullptr));
-	if (nullptr ==pTransformCom)
+	if (nullptr == m_pTransformCom)
 		return E_FAIL;
 
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Door*>(Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Door_Default"), TEXT("VIBuffer"), nullptr));
@@ -108,7 +108,7 @@ HRESULT CDoor::Add_Components()
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
 	if (nullptr == m_pBoxCollider)
 		return E_FAIL;
-	//m_pBoxCollider->Set_Trigger(true);
+	m_pBoxCollider->Set_Trigger(true);
 
 	return S_OK;
 }
@@ -123,9 +123,9 @@ void CDoor::OnTriggerEnter(CGameObject* pOther)
 
 void CDoor::Open_Door()
 {
-	m_OriginMatrix =pTransformCom->Get_WorldMatrix();
+	m_OriginMatrix = m_pTransformCom->Get_WorldMatrix();
 
-	_float fMagicNumber = 0.492f *pTransformCom->Get_Scale().x;
+	_float fMagicNumber = 0.492f * m_pTransformCom->Get_Scale().x;
 
 	_float3 vRight = { 1.0f, 0.f, 0.f };
 	m_vPivot = vRight * fMagicNumber;

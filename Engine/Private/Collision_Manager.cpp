@@ -20,12 +20,12 @@ void CCollision_Manager::Tick()
 {
 	//Collision_Box(4, L"Player", L"Wall");
 	//Collision_Box(4, L"Player", L"Floor");
-	Collision_Box(4, L"Player", L"Door");
-	Collision_Box(4, L"Player", L"SodaMachine");
+	Collision_Box(3, L"Player", L"Door");
+	Collision_Box(3, L"Player", L"SodaMachine");
 
-	Collision_Box(4, L"Soda", L"Wall");
-	Collision_Box(4, L"Soda", L"Floor");
-	Collision_Box(4, L"Soda", L"Soda");
+	Collision_Box(3, L"Soda", L"Wall");
+	Collision_Box(3, L"Soda", L"Floor");
+	Collision_Box(3, L"Soda", L"Soda");
 	Intersect_Ray();
 }
 
