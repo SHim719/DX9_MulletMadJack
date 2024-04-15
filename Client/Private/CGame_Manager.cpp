@@ -5,17 +5,7 @@
 #include "FPS_Camera.h"
 #include "Animation.h"
 
-#include "Pistol_Right_Hand.h"
-#include "Pistol.h"
-#include "CrossHair.h"
-#include "Pistol_Shot.h"
-#include "Pistol_Spin.h"
-#include "Pistol_Reload.h"
-#include "Pistol_Gunfire.h"
-#include "Pistol_Barrel.h"
-#include "Player.h"
-#include "Kick.h"
-
+#include "Player_Include.h"
 #include "Dash_Effect.h"
 
 IMPLEMENT_SINGLETON(CGame_Manager)
@@ -389,6 +379,11 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Player/Kick/Kick%d.png", 2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/LeftArm/LeftArm%d.png", 10))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -593,6 +588,16 @@ HRESULT CGame_Manager::Ready_PlayerGun_Texture()
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Barrel/BARREL%d.png", 6))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Reload_Arm_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Arm/Reload_Arm%d.png", 5))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Reload_Hand_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Hand/HAND_PISTOL_RELOAD%d.png", 5))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -606,6 +611,8 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 
 	if (FAILED(Ready_Active_Gun()))
 		return E_FAIL;
+
+
 
 	return S_OK;
 }
@@ -719,6 +726,15 @@ HRESULT CGame_Manager::Ready_Active_Gun()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Kick", eUiRenderType::Render_NonBlend, CKick::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Arm", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Arm::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Hand", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Hand::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Phone", eUiRenderType::Render_NonBlend, CPhone::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

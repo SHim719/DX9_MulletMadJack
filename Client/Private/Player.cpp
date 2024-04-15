@@ -40,6 +40,7 @@ HRESULT CPlayer::Initialize(void * pArg)
  	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), true);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Phone"), true);
 	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
 
 
@@ -154,7 +155,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 	{
-		Camera_Shake_Order(1000.f, 0.2f);
+		Camera_Shake_Order(100000.f, 0.2f);
 		for (int i=0; i < 6; i++) {	m_pGameInstance->Add_Ui_LifeClone(TEXT("CPistol_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
 		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SHOT);
 	}
@@ -172,6 +173,33 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift))
 	{
+		Camera_Shake_Order(200000.f, 0.2f);
+		if (m_pGameInstance->GetKey(eKeyCode::W)){
+			m_pTransformCom->Set_Speed(15.f);
+			m_pTransformCom->Go_Floor_Straight(fTimeDelta);
+			m_pTransformCom->Go_Floor_Straight(fTimeDelta);
+		}
+		else if (m_pGameInstance->GetKey(eKeyCode::S)) {
+			m_pTransformCom->Set_Speed(15.f);
+			m_pTransformCom->Go_Floor_Backward(fTimeDelta);
+			m_pTransformCom->Go_Floor_Backward(fTimeDelta);
+		}
+		else if (m_pGameInstance->GetKey(eKeyCode::A)) {
+			m_pTransformCom->Set_Speed(15.f);
+			m_pTransformCom->Go_Floor_Left(fTimeDelta);
+			m_pTransformCom->Go_Floor_Left(fTimeDelta);
+		}
+		else if (m_pGameInstance->GetKey(eKeyCode::D)) {
+			m_pTransformCom->Set_Speed(15.f);
+			m_pTransformCom->Go_Floor_Right(fTimeDelta);
+			m_pTransformCom->Go_Floor_Right(fTimeDelta);
+		}
+		else {
+			m_pTransformCom->Set_Speed(15.f);
+			m_pTransformCom->Go_Floor_Straight(fTimeDelta);
+			m_pTransformCom->Go_Floor_Straight(fTimeDelta);
+		}
+
 		m_pTransformCom->Set_Speed(10.f);
 		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::DASH_STATE);
 	}
@@ -181,6 +209,9 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		m_pTransformCom->Set_Speed(6.f);
 		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::IDLE_STATE);
 	}
+
+
+
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::Space))
 	{
