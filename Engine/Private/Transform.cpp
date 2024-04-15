@@ -156,6 +156,16 @@ void CTransform::Go_Down(_float fTimeDelta)
 	Set_State(STATE_POSITION, &vPosition);
 }
 
+void CTransform::Go_Jump(_float fTimeDelta, _float fJumpPower)
+{
+	_float3		vPosition = Get_State(STATE_POSITION);
+	_float3		vUp = Get_State(STATE_UP);
+
+	vPosition += *D3DXVec3Normalize(&vUp, &vUp) * fJumpPower * fTimeDelta;
+
+	Set_State(STATE_POSITION, &vPosition);
+}
+
 void CTransform::Go_Floor_Straight(_float fTimeDelta)
 {
 	_float3		vPosition = Get_State(STATE_POSITION);

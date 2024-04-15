@@ -51,13 +51,13 @@ public:
 	}
 
 	_float2 Get_Lissajous_Run_Phone(_float _fPosX, _float _fPosY) {
-		return Lissajous_Adjust(m_fAdjustTime, _fPosX, _fPosY, 35, 20, 1, 2, 2);
+		return Lissajous_Adjust(m_fAdjustTime, _fPosX, _fPosY, 20, 20, 1, 2, 2);
 	}
 	void Set_AdjustTime(_float _fAdjustTime) { m_fAdjustTime = _fAdjustTime; }
 	void Tick_AdjustTime(_float _fTimeDelta, _float _fTimeSpeed) { m_fAdjustTime += _fTimeDelta * _fTimeSpeed; }
 	_float Get_AdjustTime() { return m_fAdjustTime; }
 
-
+	_float Get_LeftArmRotate() {return m_fLeftArmRotate; }
 
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
@@ -66,6 +66,7 @@ private:
 	_int						m_iTextureindex = { 0 };
 	_float						m_fAdjustTime = { 0 };
 
+	_float						m_fLeftArmRotate = 30.f;
 private:
 
 	CPlayer* m_pPlayer = nullptr;
