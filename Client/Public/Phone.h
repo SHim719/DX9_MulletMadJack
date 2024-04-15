@@ -66,6 +66,73 @@ private:
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
+
+
+	//for Phone_BackGround
+private:
+	void Initialize_BackGround();
+	void Default_Set_BackGroundSize();
+	void Set_BackGround();
+	void Set_BackGroundPos();
+	void Set_BackGroundRotation();
+	void Set_BackGroundTexture();
+	HRESULT Render_BackGround();
+
+
+private:
+	CVIBuffer_Rect* m_pBackGroundVIBufferCom = { nullptr };
+	CTransform* m_pBackGroundTransformCom = { nullptr };
+	CTexture* m_pBackGroundTextureCom = { nullptr };
+	_float m_fBackGroundChangeTime = { 0 };
+	_uint m_iBackGroundTexture = { 0 };
+	Ui_Pos_Size_Rotation m_BackGround = {};
+
+//for phone number
+private:
+	void Intialize_PhoneNumber();
+	void Default_Set_PhoneSize();
+	void Set_PhoneNumber();
+	void Set_PhonePos();
+	void Set_PhoneRotation();
+	void Synchronize_PlayerLife_Number();
+	HRESULT Render_Number();
+
+private:
+	CVIBuffer_Rect* m_pFirstNumVIBufferCom = { nullptr };
+	CTransform* m_pFirstNumTransformCom = { nullptr };
+	CTexture* m_pFirstNumTextureCom = { nullptr };
+	Ui_Pos_Size_Rotation m_FirstNumDesc = {};
+	_uint m_iFirstNumTextureNum = { 0 };
+
+private:
+	CVIBuffer_Rect* m_pSecondNumVIBufferCom = { nullptr };
+	CTransform* m_pSecondNumTransformCom = { nullptr };
+	CTexture* m_pSecondNumTextureCom = { nullptr };
+	Ui_Pos_Size_Rotation m_SecondNumDesc = {};
+	_uint m_iSecondNumTextureNum = { 0 };
+	_uint m_fLifeTime = { 15 };
+	_float m_fTestDelta = { 0 };
+
+
+// for Phone PlayerFace
+private:
+	void Initialize_Face();
+	void Default_Set_FaceSize();
+	void Set_Face(_float fTimeDelta);
+	void Set_FacePos();
+	void Set_FaceRotation();
+	void Set_FaceTexture();
+	HRESULT Render_Face();
+
+private:
+	CVIBuffer_Rect* m_pFaceVIBufferCom = { nullptr };
+	CTransform* m_pFaceTransformCom = { nullptr };
+	CTexture* m_pFaceTextureCom = { nullptr };
+	_float m_fFaceChangeTime = { 0 };
+	_uint m_iFaceTexture = { 0 };
+	Ui_Pos_Size_Rotation m_Face = {};
+
+
 public:
 	virtual void Free() override;
 };

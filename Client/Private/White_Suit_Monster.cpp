@@ -1,5 +1,4 @@
 #include "White_Suit_Monster.h"
-
 #include "GameInstance.h"
 #include "Enemy_Bullet.h"
 
