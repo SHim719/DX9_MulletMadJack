@@ -286,6 +286,12 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
       <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\Left_Hand">
+      <UniqueIdentifier>{84aa6d77-e955-4de2-b0c0-b087a670d183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\Left_Hand\Phone">
+      <UniqueIdentifier>{326528ad-9a72-4958-b32e-656895c1e2b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -537,6 +543,9 @@
     <ClInclude Include="..\Public\Player_Include.h">
       <Filter>04. UI\Ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Phone.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\Left_Hand\Phone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -689,9 +698,6 @@
     <ClCompile Include="..\Private\CUi_Time_Division.cpp">
       <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Pistol_Shot.cpp">
-      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\PlayerManager.cpp">
       <Filter>97. Manager\PlayerManager</Filter>
     </ClCompile>
@@ -763,6 +769,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Reload_Left_Hand.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Phone.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\Left_Hand\Phone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Shot.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

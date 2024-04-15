@@ -50,6 +50,9 @@ public:
 		return Lissajous_Adjust(m_fAdjustTime, _fPosX, _fPosY, 50, 30, 1, 2, 2);
 	}
 
+	_float2 Get_Lissajous_Run_Phone(_float _fPosX, _float _fPosY) {
+		return Lissajous_Adjust(m_fAdjustTime, _fPosX, _fPosY, 35, 20, 1, 2, 2);
+	}
 	void Set_AdjustTime(_float _fAdjustTime) { m_fAdjustTime = _fAdjustTime; }
 	void Tick_AdjustTime(_float _fTimeDelta, _float _fTimeSpeed) { m_fAdjustTime += _fTimeDelta * _fTimeSpeed; }
 	_float Get_AdjustTime() { return m_fAdjustTime; }

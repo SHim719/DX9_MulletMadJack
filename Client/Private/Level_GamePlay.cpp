@@ -40,8 +40,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_Pawns()))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Pawns()))
+	//	return E_FAIL;
 
 	Initialize_SodaMachine();
 	return S_OK;

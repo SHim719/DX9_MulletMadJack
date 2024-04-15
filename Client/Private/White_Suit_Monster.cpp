@@ -46,7 +46,7 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera());
 
     m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_White_Suit_Monster_Desc.vPosition);
-
+ 
     m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
 
     m_pAnimationCom->Play_Animation(TEXT("White_Suit_Monster_Idle"), 0.1f, true);

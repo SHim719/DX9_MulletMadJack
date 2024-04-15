@@ -379,6 +379,11 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Player/Kick/Kick%d.png", 2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/LeftArm/LeftArm%d.png", 10))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -607,6 +612,8 @@ HRESULT CGame_Manager::Ready_Active_Ui()
 	if (FAILED(Ready_Active_Gun()))
 		return E_FAIL;
 
+
+
 	return S_OK;
 }
 
@@ -725,6 +732,9 @@ HRESULT CGame_Manager::Ready_Active_Gun()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Hand", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Hand::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Phone", eUiRenderType::Render_NonBlend, CPhone::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
