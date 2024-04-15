@@ -185,6 +185,7 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClInclude Include="..\Public\Base.h" />
     <ClInclude Include="..\Public\BoxCollider.h" />
     <ClInclude Include="..\Public\Camera_Manager.h" />
+    <ClInclude Include="..\Public\CText.h" />
     <ClInclude Include="..\Public\Collider.h" />
     <ClInclude Include="..\Public\Collision_Manager.h" />
     <ClInclude Include="..\public\Component.h" />
@@ -221,6 +222,7 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClCompile Include="..\Private\Base.cpp" />
     <ClCompile Include="..\Private\BoxCollider.cpp" />
     <ClCompile Include="..\Private\Camera_Manager.cpp" />
+    <ClCompile Include="..\Private\CText.cpp" />
     <ClCompile Include="..\Private\Collider.cpp" />
     <ClCompile Include="..\Private\Collision_Manager.cpp" />
     <ClCompile Include="..\private\Component.cpp" />

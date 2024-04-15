@@ -1,5 +1,6 @@
 #include "CUi_Announcer.h"
 #include "Ui_Pos.h"
+#include "CGame_Manager.h"
 
 
 CUi_Announcer::CUi_Announcer(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -70,6 +71,8 @@ HRESULT CUi_Announcer::Render()
 	m_pUniqueTexture->Bind_Texture(m_iUniqueTextureIndex);
 	m_pVIBufferCom->Render();
 
+	if(CGame_Manager::Get_Instance()->get_
+	m_pTextManager->Print_Text(TextType::Tutorial, 0);
 	return S_OK;
 }
 
@@ -79,7 +82,7 @@ HRESULT CUi_Announcer::Initialize_Active()
 	Initialize_Set_Size();
 	Initialize_Set_Speed();
 	Initialize_Set_Scale_Pos_Rotation(nullptr);
-
+	
 
 	return S_OK;
 }

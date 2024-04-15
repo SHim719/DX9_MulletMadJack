@@ -3,20 +3,19 @@
 #include "Base.h"
 
 BEGIN(Client)
-
+enum class StageProgress
+{
+	OnGoing,
+	Clear,
+	Shopping,
+	Changing,
+	Start,
+	End
+};
 class CGame_Manager : public CBase
 {
 DECLARE_SINGLETON(CGame_Manager)
-public:
-	enum class StageProgress
-	{
-		OnGoing,
-		Clear,
-		Shopping,
-		Changing,
-		Start,
-		End
-	};
+
 private:
 	CGame_Manager();
 	virtual ~CGame_Manager() = default;
@@ -47,7 +46,7 @@ public:
 public:
 	void Player_UpGrade(void* pArg);
 	_float Get_StageClearTime() { return m_fStageClearTime; }
-
+	StageProgress Get_StageProgress() const { return m_eProgress; }
 
 public:
 	HRESULT Ready_Prototype_GameObjects();
@@ -81,6 +80,10 @@ private:
 	_float m_fShopTime = {0.5f};
 	_float m_fStageClearTime = { 32.14f };
 	_float m_fChangeTime = { 3.5f };
+
+
+private:
+	class CTextManager* m_pTextManager = { nullptr };
 
 
 public:

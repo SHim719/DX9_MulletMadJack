@@ -61,9 +61,6 @@
     <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
       <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Levels\ClearLevel">
-      <UniqueIdentifier>{43c5b991-9e2f-4647-a48f-fbe9818fa83a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\01. MapObject\MapObject">
       <UniqueIdentifier>{6ad062de-0955-446e-9bb6-08b98f57cb4a}</UniqueIdentifier>
     </Filter>
@@ -132,12 +129,6 @@
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear">
       <UniqueIdentifier>{8c35cf2b-70d2-4e4f-948f-40f1c7197e55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Peace">
-      <UniqueIdentifier>{bdd31e1c-a5ba-4209-a7bb-b581cfea134d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Announcer">
-      <UniqueIdentifier>{83d683fb-8760-4861-8946-e864a1d4cf54}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Heart">
       <UniqueIdentifier>{bd0eb880-6d05-4872-895c-b61756f85a93}</UniqueIdentifier>
@@ -217,9 +208,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel">
       <UniqueIdentifier>{d50b68ab-833c-40d2-99b0-9de1165b2952}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\CUi_Finish">
-      <UniqueIdentifier>{92c9fed8-d201-4032-87ee-a8d42a534554}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Weapon">
       <UniqueIdentifier>{b502d0dd-6219-4399-9c02-a1bb6c328f96}</UniqueIdentifier>
     </Filter>
@@ -285,6 +273,15 @@
     </Filter>
     <Filter Include="04. UI\Ui\Effect\GunFire">
       <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\Peace">
+      <UniqueIdentifier>{6ad94e07-0715-4aa7-8441-49d8b2e56f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\Announcer">
+      <UniqueIdentifier>{e74126b2-4fa3-461c-a924-77b831fd8c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\CTextManager">
+      <UniqueIdentifier>{cbac94b8-535b-45df-b197-90e8cb5c7c01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -414,15 +411,6 @@
     <ClInclude Include="..\Public\CUi_Floor_Part.h">
       <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi_Announcer.h">
-      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\CUi_PEACE.h">
-      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\CUi_Finish.h">
-      <Filter>04. UI\Ui\CUi_Active\CUi_Finish</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_Shop.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClInclude>
@@ -516,17 +504,19 @@
     <ClInclude Include="..\Public\Kick.h">
       <Filter>04. UI\Ui\CUi_Active\Kick</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\CUi_Announcer.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\CUi_PEACE.h">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\CUi_Finish.h">
-      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\CUi_Clear_Victory.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Announcer.h" />
+    <ClInclude Include="..\Public\CUi_PEACE.h" />
+    <ClInclude Include="..\Public\CTextManager.h">
+      <Filter>97. Manager\CTextManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Announcer.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Announcer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_PEACE.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -638,15 +628,6 @@
     <ClCompile Include="..\Private\CUi_Floor_Part.cpp">
       <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CUi_Announcer.cpp">
-      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\CUi_PEACE.cpp">
-      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\CUi_Finish.cpp">
-      <Filter>04. UI\Ui\CUi_Active\CUi_Finish</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\CUi_Shop.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClCompile>
@@ -737,17 +718,19 @@
     <ClCompile Include="..\Private\Dash_Effect.cpp">
       <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Dash</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\CUi_Announcer.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Announcer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\CUi_PEACE.cpp">
-      <Filter>Ui\CUi_Active\CUi_Clear\CUi_Peace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\CUi_Finish.cpp">
-      <Filter>Ui\CUi_Active\CUi_Finish</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Announcer.cpp" />
+    <ClCompile Include="..\Private\CUi_PEACE.cpp" />
+    <ClCompile Include="..\Private\CTextManager.cpp">
+      <Filter>97. Manager\CTextManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Announcer.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Announcer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_PEACE.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

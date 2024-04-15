@@ -64,13 +64,15 @@ HRESULT CGraphic_Device::Initialize(const GRAPHIC_DESC& GraphicDesc, _Out_ LPDIR
 	// 폰트 객체 생성
 	D3DXFONT_DESCW		tFontInfo;
 	ZeroMemory(&tFontInfo, sizeof(D3DXFONT_DESCW));
-
-	tFontInfo.Height = 50;
-	tFontInfo.Width = 50;
-	tFontInfo.Weight = FW_HEAVY;
+	//tFontInfo.Height = 20;
+	//tFontInfo.Width = 10;
+	tFontInfo.Height = 30;
+	tFontInfo.Width = 15;
+	//tFontInfo.Weight = FW_HEAVY;
+	tFontInfo.Weight = FW_MEDIUM;
 	tFontInfo.CharSet = HANGEUL_CHARSET;
-	lstrcpy(tFontInfo.FaceName, L"궁서");
-
+	//lstrcpy(tFontInfo.FaceName, L"궁서");
+	lstrcpy(tFontInfo.FaceName, L"고딕");
 	// D3DXCreateFont : 얻어온 폰트 핸들을 토대로 폰트 객체를 생성하는 함수
 	// D3DXCreateFontIndirect : 폰트 구조체 정보를 토대로 폰트 객체를 생성하는 함수
 
@@ -97,6 +99,7 @@ void CGraphic_Device::Render_Begin()
 					D3DCOLOR_ARGB(0, 0, 0, 0), // 후면 버퍼 텍스처의 색상
 					1.f,	// 깊어 버퍼 초기화 값
 					0);		// 스텐실 버퍼 초기화 값
+
 
 	m_pDevice->BeginScene();	
 }
