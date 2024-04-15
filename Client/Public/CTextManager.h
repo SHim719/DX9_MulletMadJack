@@ -4,6 +4,10 @@
 #include "CText.h"
 
 
+BEGIN(Engine)
+class CGameInstance;
+END
+
 BEGIN(Client)
 enum class TextType
 {
@@ -31,7 +35,7 @@ public:
 private:
 	vector<CText::Text_Info> m_TutorialText;
 	vector<CText::Text_Info> m_ShopText;
-	class CGameInstance* m_pGameInstance = { nullptr };
+	CGameInstance* m_pGameInstance = { nullptr };
 
 public:
 	static CTextManager* Create();

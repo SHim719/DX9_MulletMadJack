@@ -391,6 +391,20 @@ HRESULT CGame_Manager::Ready_Static_Texture_Prototype()
 			L"../Bin/Resources/Textures/Player/LeftArm/LeftArm%d.png", 10))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_Number_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/LeftArm/Phone_Font_%d.png", 10))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_Face_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/LeftArm/PhoneFace%d.png", 6))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_BackGround_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/LeftArm/Phone_BackGround%d.png", 3))))
+		return E_FAIL;
 	return S_OK;
 }
 
