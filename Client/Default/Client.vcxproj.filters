@@ -546,6 +546,9 @@
     <ClInclude Include="..\Public\Orange_Pants_Monster.h">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Monster_Headers.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

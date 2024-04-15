@@ -108,7 +108,6 @@ HRESULT CDoor::Add_Components()
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
 	if (nullptr == m_pBoxCollider)
 		return E_FAIL;
-	m_pBoxCollider->Set_Trigger(true);
 
 	return S_OK;
 }

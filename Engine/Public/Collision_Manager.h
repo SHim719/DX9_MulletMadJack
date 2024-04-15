@@ -18,6 +18,13 @@ private:
 
 		UINT64 id;
 	};
+
+	enum CollisionType
+	{
+		Trigger,
+		Collision,
+		CT_END,
+	};
 private:
 	CCollision_Manager();
 	virtual ~CCollision_Manager() = default;
@@ -42,7 +49,7 @@ private:
 	unordered_map<UINT64, bool> m_CollisionInfo;
 
 private:
-	void Collision_Box(_uint iLevel, const wstring& strDstLayer, const wstring& strSrcLayer);
+	void Collision_Box(_uint iLevel, const wstring& strDstLayer, const wstring& strSrcLayer, CollisionType eCollisionType);
 
 	bool Check_Intersect_AABB(class CBoxCollider* pDstCollider, CBoxCollider* pSrcCollider, OUT _float3& _fDist);
 

@@ -32,15 +32,11 @@ public:
 	_uint Get_CollisionID() { return m_iCollisionID; }
 
 private:
-	_bool m_bIsTrigger = { false }; // 통과하느냐
 	_bool m_bActive = { true }; // 활성화 되어있느냐
 
 public:
-	_bool IsTrigger() { return m_bIsTrigger; }
 	_bool IsActive() { return m_bActive; }
-
 	void Set_Active(_bool bActive) { m_bActive = bActive; }
-	void Set_Trigger(_bool bTrigger) { m_bIsTrigger = bTrigger; }
 
 public:
 	virtual CComponent* Clone(void* pArg) = 0;

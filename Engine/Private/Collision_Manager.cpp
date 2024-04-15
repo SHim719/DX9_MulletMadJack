@@ -20,12 +20,13 @@ void CCollision_Manager::Tick()
 {
 	//Collision_Box(4, L"Player", L"Wall");
 	//Collision_Box(4, L"Player", L"Floor");
-	Collision_Box(3, L"Player", L"Door");
-	Collision_Box(3, L"Player", L"SodaMachine");
 
-	Collision_Box(3, L"Soda", L"Wall");
-	Collision_Box(3, L"Soda", L"Floor");
-	Collision_Box(3, L"Soda", L"Soda");
+	Collision_Box(3, L"Player", L"Door", Trigger);
+	Collision_Box(3, L"Player", L"SodaMachine", Collision);
+
+	Collision_Box(3, L"Soda", L"Wall", Collision);
+	Collision_Box(3, L"Soda", L"Floor", Collision);
+	Collision_Box(3, L"Soda", L"Soda", Collision);
 	Intersect_Ray();
 }
 
@@ -89,7 +90,7 @@ _bool CCollision_Manager::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pO
 	return false;
 }
 
-void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer, const wstring& strSrcLayer)
+void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer, const wstring& strSrcLayer, CollisionType eCollisionType)
 {
 	CLayer* pDstLayer = m_pGameInstance->Find_Layer(iLevel, strDstLayer);
 	CLayer* pSrcLayer = m_pGameInstance->Find_Layer(iLevel, strSrcLayer);
@@ -134,49 +135,33 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 			{
 				if (false == it->second)
 				{
-					if (pDstCollider->IsTrigger())
+					if (Trigger == eCollisionType)
 					{
 						(*DstIt)->OnTriggerEnter(*SrcIt);
+						(*SrcIt)->OnTriggerEnter(*DstIt);
 					}
 
 					else
 					{
 						pDstTransform->Add_Pos(fDist);
 						(*DstIt)->OnCollisionEnter(*SrcIt);
-					}
 
-
-					if (pSrcCollider->IsTrigger())
-					{
-						(*SrcIt)->OnTriggerEnter(*DstIt);
-					}
-					else
-					{
 						(*SrcIt)->OnCollisionEnter(*DstIt);
 					}
-
-
 					it->second = true;
 				}
 				else
 				{
-					if (pDstCollider->IsTrigger())
+					if (Trigger == eCollisionType)
 					{
 						(*DstIt)->OnTriggerStay(*SrcIt);
+						(*SrcIt)->OnTriggerStay(*DstIt);
 					}
 					else
 					{
 						(*DstIt)->OnCollisionStay(*SrcIt);
 						pDstTransform->Add_Pos(fDist);
-					}
 
-
-					if (pSrcCollider->IsTrigger())
-					{
-						(*SrcIt)->OnTriggerStay(*DstIt);
-					}
-					else
-					{
 						(*SrcIt)->OnCollisionStay(*DstIt);
 					}
 				}
@@ -184,22 +169,14 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 
 			else if (it->second)
 			{
-				if (pDstCollider->IsTrigger())
+				if (Trigger == eCollisionType)
 				{
 					(*DstIt)->OnTriggerExit(*SrcIt);
-				}
-				else
-				{
-					(*DstIt)->OnCollisionExit(*SrcIt);
-				}
-
-
-				if (pSrcCollider->IsTrigger())
-				{
 					(*SrcIt)->OnTriggerExit(*DstIt);
 				}
 				else
 				{
+					(*DstIt)->OnCollisionExit(*SrcIt);
 					(*SrcIt)->OnCollisionExit(*DstIt);
 				}
 				it->second = false;

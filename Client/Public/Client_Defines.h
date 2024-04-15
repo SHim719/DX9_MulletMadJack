@@ -26,6 +26,8 @@ namespace Client
 
 	enum OBJTYPE
 	{
+		MONSTER,
+		EVENT_TRIGGER,
 		WALL,
 		FLOOR,
 		OBJECT,
@@ -34,6 +36,12 @@ namespace Client
 		SODAMACHINE_BANNER,
 		BORDER,
 		OBJTYPE_END,
+	};
+
+	enum MONSTERTYPE
+	{
+		WHITE_SUIT,
+		DRONE,
 	};
 }
 

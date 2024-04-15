@@ -5,6 +5,8 @@
 #include "Door.h"
 #include "SodaMachine.h"
 
+#include "Monster_Headers.h"
+
 IMPLEMENT_SINGLETON(CMapLoader)
 
 CMapLoader::CMapLoader()
@@ -12,7 +14,7 @@ CMapLoader::CMapLoader()
 {
 }
 
-HRESULT CMapLoader::Load_MapObject(const wstring& strFilePath, LEVEL eLevel)
+HRESULT CMapLoader::Load(const wstring& strFilePath, LEVEL eLevel)
 {
 	HANDLE		hFile = CreateFile(strFilePath.c_str(), // 파일 경로와 이름을 명시
 		GENERIC_READ, // 파일 접근 모드(GENERIC_WRITE : 쓰기 전용, GENERIC_READ : 읽기 전용)
@@ -28,13 +30,130 @@ HRESULT CMapLoader::Load_MapObject(const wstring& strFilePath, LEVEL eLevel)
 		return E_FAIL;
 	}
 
+	if (FAILED(Load_Monster(hFile, eLevel)))
+	{
+		assert(false);
+		return E_FAIL;
+	}
+	if (FAILED(Load_Trigger(hFile, eLevel)))
+	{
+		assert(false);
+		return E_FAIL;
+	}
+	if (FAILED(Load_MapObject(hFile, eLevel)))
+	{
+		assert(false);
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
+
+HRESULT CMapLoader::Load_Monster(HANDLE hFile, LEVEL eLevel)
+{
+	DWORD dwByte(0);
+
+	_uint iVecSize = 0;
+	int iReadFlag = (int)ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
+	if (FALSE == iReadFlag)
+		return E_FAIL;
+
+	for (_uint j = 0; j < iVecSize; ++j)
+	{
+		_float4x4 worldMatrix = {};
+		_uint iTextureIndex = 0;
+		_uint iLayerStrLength = 0;
+		_tchar szLayer[MAX_PATH] = {};
+		_uint iPrototypeTagLength = 0;
+		_tchar szPrototypeTag[MAX_PATH] = {};
+		_float3 vColliderOffset;
+		_float3 vColliderScale;
+
+		iReadFlag += (int)ReadFile(hFile, &worldMatrix, sizeof(_float4x4), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &iTextureIndex, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &iLayerStrLength, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, szLayer, sizeof(_tchar) * iLayerStrLength, &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &iPrototypeTagLength, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
+
+		CGameObject* pMonster = nullptr;
+		switch (MONSTERTYPE(iTextureIndex))
+		{
+
+		case WHITE_SUIT:
+			pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_White_Suit");
+			break;
+		case DRONE:
+			pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_Drone");
+			break;
+		}
+		pMonster->Get_Transform()->Set_WorldMatrix(worldMatrix);
+
+		iReadFlag = 1;
+	}
+	
+	return S_OK;
+}
+
+HRESULT CMapLoader::Load_Trigger(HANDLE hFile, LEVEL eLevel)
+{
+	DWORD dwByte(0);
+
+	_uint iVecSize = 0;
+	int iReadFlag = (int)ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
+	if (FALSE == iReadFlag)
+		return E_FAIL;
+
+	for (_uint j = 0; j < iVecSize; ++j)
+	{
+		//_float4x4 worldMatrix = {};
+		//_uint iTextureIndex = 0;
+		//_uint iLayerStrLength = 0;
+		//_tchar szLayer[MAX_PATH] = {};
+		//_uint iPrototypeTagLength = 0;
+		//_tchar szPrototypeTag[MAX_PATH] = {};
+		//_float3 vColliderOffset;
+		//_float3 vColliderScale;
+		//
+		//iReadFlag += (int)ReadFile(hFile, &worldMatrix, sizeof(_float4x4), &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, &iTextureIndex, sizeof(_uint), &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, &iLayerStrLength, sizeof(_uint), &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, szLayer, sizeof(_tchar) * iLayerStrLength, &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, &iPrototypeTagLength, sizeof(_uint), &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
+		//iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
+		//
+		//CGameObject* pMonster = nullptr;
+		//switch (MONSTERTYPE(iTextureIndex))
+		//{
+		//
+		//case WHITE_SUIT:
+		//	pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_White_Suit");
+		//	break;
+		//case DRONE:
+		//	pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_Drone");
+		//	break;
+		//}
+		//pMonster->Get_Transform()->Set_WorldMatrix(worldMatrix);
+		//
+		//iReadFlag = 1;
+	}
+
+	return S_OK;
+}
+
+HRESULT CMapLoader::Load_MapObject(HANDLE hFile, LEVEL eLevel)
+{
 	DWORD dwByte(0);
 
 	int iReadFlag = 0;
 
-	for (_uint i = 0; i < (_uint)OBJTYPE_END; ++i)
+	for (_uint i = WALL; i < (_uint)OBJTYPE_END; ++i)
 	{
- 		_uint iVecSize = 0;
+		_uint iVecSize = 0;
 		int iReadFlag = (int)ReadFile(hFile, &iVecSize, sizeof(_uint), &dwByte, nullptr);
 
 		for (_uint j = 0; j < iVecSize; ++j)
@@ -99,6 +218,8 @@ HRESULT CMapLoader::Load_MapObject(const wstring& strFilePath, LEVEL eLevel)
 		ReadFile(hFile, &vPourPos, sizeof(_float3), &dwByte, nullptr);
 		static_cast<CSodaMachine*>(pObj)->Set_PourPos(vPourPos);
 	}
+
+
 
 	CloseHandle(hFile);
 	return S_OK;

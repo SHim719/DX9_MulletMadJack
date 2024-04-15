@@ -70,7 +70,7 @@ void CRenderer::Sort_AlphaBlendObj()
 			_float vLeftLength = D3DXVec3Length(&(vCamPos - vLeftPos));
 			_float vRightLength = D3DXVec3Length(&(vCamPos - vRightPos));
 
-			return vLeftLength < vRightLength;
+			return vLeftLength > vRightLength;
 		});
 }
 
