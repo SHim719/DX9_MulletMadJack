@@ -204,6 +204,7 @@
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h" />
     <ClInclude Include="..\Public\Rigidbody.h" />
     <ClInclude Include="..\Public\Soda.h" />
+    <ClInclude Include="..\Public\Terrain_Collider.h" />
     <ClInclude Include="..\Public\VIBuffer_Door.h" />
     <ClInclude Include="..\Public\VIBuffer_Floor_Border.h" />
     <ClInclude Include="..\Public\White_Suit_Monster.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp" />
     <ClCompile Include="..\Private\Rigidbody.cpp" />
     <ClCompile Include="..\Private\Soda.cpp" />
+    <ClCompile Include="..\Private\Terrain_Collider.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Door.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp" />
     <ClCompile Include="..\Private\White_Suit_Monster.cpp" />

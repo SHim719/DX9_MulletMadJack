@@ -33,8 +33,10 @@ private:
 	void Intersect_Ray();		// 매프레임마다 호출돼서 만약 레이와 피킹됐으면 Collider 컴포넌트에 On_Ray_Intersect호출
 	// Collider의 On_Ray_Intersect는 GameObject의 On_Ray_Intersect를 호출
 	// On_Ray_Intersect는 가상함수이므로 상속받아서 사용하면 됨.
+
 public:
 	void Add_RayDesc(const RAY_DESC& RayDesc) { m_RayDescs.push_back(RayDesc); }
+	_bool Ray_Cast(const RAY_DESC& RayDesc, OUT class CGameObject*& pOutHit, OUT _float3& fHitWorldPos, OUT _float& fDist);
 
 private:
 	unordered_map<UINT64, bool> m_CollisionInfo;

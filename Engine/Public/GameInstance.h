@@ -94,6 +94,7 @@ public:
 
 #pragma region COLLISION_MANAGER
 	void Add_RayDesc(const RAY_DESC& RayDesc);
+	_bool Ray_Cast(const RAY_DESC& RayDesc, OUT class CGameObject*& pOutHit, OUT _float3& fHitWorldPos, OUT _float& fDist);
 #pragma endregion
 
 

@@ -46,6 +46,7 @@ public:
 	void Set_VelocityZ(const _float fZ) { m_vVelocity.z = fZ; }
 
 	void Set_OnGround();
+	_bool IsGround() { return m_bGround; }
 
 	void Set_Gravity(const _float3& _vGravity) { m_vGravity = _vGravity; }
 

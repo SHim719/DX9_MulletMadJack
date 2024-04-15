@@ -18,11 +18,14 @@ HRESULT CCollision_Manager::Initialize()
 
 void CCollision_Manager::Tick()
 {
-	Collision_Box(3, L"Player", L"Wall");
-	Collision_Box(3, L"Player", L"Floor");
+	//Collision_Box(4, L"Player", L"Wall");
+	//Collision_Box(4, L"Player", L"Floor");
+	Collision_Box(4, L"Player", L"Door");
+	Collision_Box(4, L"Player", L"SodaMachine");
 
-	Collision_Box(3, L"Soda", L"Soda");
-	Collision_Box(3, L"Soda", L"Floor");
+	Collision_Box(4, L"Soda", L"Wall");
+	Collision_Box(4, L"Soda", L"Floor");
+	Collision_Box(4, L"Soda", L"Soda");
 	Intersect_Ray();
 }
 
@@ -40,9 +43,6 @@ void CCollision_Manager::Intersect_Ray()
 
 		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
-			
-			
-			
 			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
 			if (nullptr == pVIBuffer)
 				continue;
@@ -60,6 +60,35 @@ void CCollision_Manager::Intersect_Ray()
 	m_RayDescs.clear();
 }
 
+_bool CCollision_Manager::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pOutHit, OUT _float3& fHitWorldPos, OUT _float& fDist)
+{
+	CLayer* pLayer = m_pGameInstance->Find_Layer(RayDesc.iLevel, RayDesc.strDstLayer);
+	if (pLayer == nullptr)
+		return false;
+
+	auto& gameObjects = pLayer->Get_GameObjects();
+
+
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
+	{
+		CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
+		if (nullptr == pVIBuffer)
+			continue;
+
+		_float3 _fHitWorldPos;
+		_float _fDist;
+		if (pVIBuffer->Intersect_Ray((*it)->Get_Transform(), RayDesc.vRayWorldPos, RayDesc.vRayDir, &_fHitWorldPos, &_fDist))
+		{
+			pOutHit = *it;
+			fHitWorldPos = _fHitWorldPos;
+			fDist = _fDist;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer, const wstring& strSrcLayer)
 {
 	CLayer* pDstLayer = m_pGameInstance->Find_Layer(iLevel, strDstLayer);
@@ -75,7 +104,6 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 	{
 		if ((*DstIt)->Is_Destroyed())
 			continue;
-
 		CTransform* pDstTransform = (*DstIt)->Get_Transform();
 		CBoxCollider* pDstCollider = dynamic_cast<CBoxCollider*>((*DstIt)->Find_Component(L"Collider"));
 		if (nullptr == pDstCollider || false == pDstCollider->IsActive())

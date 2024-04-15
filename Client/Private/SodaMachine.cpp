@@ -3,6 +3,8 @@
 
 #include "Soda.h"
 
+#include "Player.h"
+
 CSodaMachine::CSodaMachine(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
 {
@@ -32,12 +34,6 @@ void CSodaMachine::PriorityTick(_float fTimeDelta)
 
 void CSodaMachine::Tick(_float fTimeDelta)
 {
-	if (m_pGameInstance->GetKeyDown(eKeyCode::P))
-	{
-		m_eState = POURING;
-		m_iPourCount = 8;
-	}
-
 	if (POURING == m_eState)
 	{
 		Pouring_Soda(fTimeDelta);
@@ -96,6 +92,15 @@ HRESULT CSodaMachine::Add_Components()
 
 void CSodaMachine::OnCollisionEnter(CGameObject* pOther)
 {
+	if (IDLE != m_eState)
+		return;
+
+	static_cast<CPlayer*>(pOther)->Kick();
+
+	m_eState = POURING;
+	m_iPourCount = 6;
+
+	m_pBanner->Set_Destroy(true);
 }
 
 

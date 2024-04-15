@@ -267,6 +267,12 @@ void CPlayer::Move_Reset()
 {
 }
 
+void CPlayer::Kick()
+{
+	Camera_Shake_Order(6000000.f, 0.4f);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);
+}
+
 CPlayer* CPlayer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CPlayer* pInstance = new CPlayer(pGraphic_Device);

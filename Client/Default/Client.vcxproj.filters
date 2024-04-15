@@ -286,6 +286,9 @@
     <Filter Include="04. UI\Ui\Effect\GunFire">
       <UniqueIdentifier>{4518becb-52c0-4062-97dc-ebc3202788dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Client_Components\Terrain_Collider">
+      <UniqueIdentifier>{de1fdb4e-8880-4849-b438-81c0c43b0146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -528,6 +531,9 @@
     <ClInclude Include="..\Public\CUi_Clear_Victory.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Terrain_Collider.h">
+      <Filter>03. Client_Components\Terrain_Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -748,6 +754,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Terrain_Collider.cpp">
+      <Filter>03. Client_Components\Terrain_Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

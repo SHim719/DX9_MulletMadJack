@@ -35,7 +35,7 @@ public:
 private:
 	HRESULT Add_Components();
 
-	void OnCollisionEnter(CGameObject* pOther)	override;
+	void OnTriggerEnter(CGameObject* pOther)	override;
 
 private:
 	CVIBuffer*		m_pVIBuffer = { nullptr };

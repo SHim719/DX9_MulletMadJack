@@ -2,6 +2,8 @@
 
 #include "GameInstance.h"
 
+#include "Player.h"
+
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
 {
@@ -34,23 +36,10 @@ void CDoor::PriorityTick(_float fTimeDelta)
 
 void CDoor::Tick(_float fTimeDelta)
 {
-	if (m_pGameInstance->GetKeyDown(eKeyCode::L))
-	{
-		m_bOpening = true;
-
-		m_OriginMatrix = m_pTransformCom->Get_WorldMatrix();
-
-		_float fMagicNumber = 0.492f * m_pTransformCom->Get_Scale().x;
-
-		_float3 vRight = { 1.0f, 0.f, 0.f };
-		m_vPivot = vRight * fMagicNumber;
-		m_fStartTheta = m_fTheta = 0.f;
-	}
-		
 	if (m_bOpening)
 	{
 		m_fTheta -= 700.f * (_float)m_eDir * fTimeDelta;
-		
+
 		if (fabsf(m_fTheta - m_fStartTheta) > 85.f)
 		{
 			m_bOpening = false;
@@ -60,13 +49,13 @@ void CDoor::Tick(_float fTimeDelta)
 
 		_quat quat;
 		D3DXQuaternionRotationAxis(&quat, &_float3(0.f, 1.f, 0.f), D3DXToRadian(m_fTheta));
-		
+
 		auto x = *D3DXMatrixTranslation(&_float4x4(), m_vPivot.x, m_vPivot.y, m_vPivot.z);
 		auto y = *D3DXMatrixRotationQuaternion(&_float4x4(), &quat);
 		auto z = *D3DXMatrixTranslation(&_float4x4(), -m_vPivot.x, -m_vPivot.y, -m_vPivot.z);
-		
+
 		_float4x4 PivotMatrix = x * y * z;
-		 
+
 		m_pTransformCom->Set_WorldMatrix(PivotMatrix * m_OriginMatrix);
 	}
 
@@ -92,7 +81,7 @@ HRESULT CDoor::Render()
 
 	m_pVIBuffer->Render();
 
-	m_pBoxCollider->Render();
+	//m_pBoxCollider->Render();
 
 	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	return S_OK;
@@ -101,7 +90,7 @@ HRESULT CDoor::Render()
 HRESULT CDoor::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), nullptr));
-	if (nullptr == m_pTransformCom)
+	if (nullptr ==pTransformCom)
 		return E_FAIL;
 
 	m_pVIBuffer = dynamic_cast<CVIBuffer_Door*>(Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Door_Default"), TEXT("VIBuffer"), nullptr));
@@ -119,16 +108,30 @@ HRESULT CDoor::Add_Components()
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
 	if (nullptr == m_pBoxCollider)
 		return E_FAIL;
-	m_pBoxCollider->Set_Trigger(true);
+	//m_pBoxCollider->Set_Trigger(true);
 
 	return S_OK;
 }
 
-void CDoor::OnCollisionEnter(CGameObject* pOther)
+void CDoor::OnTriggerEnter(CGameObject* pOther)
 {
-	//if (dynamic_cast<CPlayer>pOther)
+	static_cast<CPlayer*>(pOther)->Kick();
 	m_bOpening = true;
+	m_pBoxCollider->Set_Active(false);
+	Open_Door();
+}
 
+void CDoor::Open_Door()
+{
+	m_OriginMatrix =pTransformCom->Get_WorldMatrix();
+
+	_float fMagicNumber = 0.492f *pTransformCom->Get_Scale().x;
+
+	_float3 vRight = { 1.0f, 0.f, 0.f };
+	m_vPivot = vRight * fMagicNumber;
+	m_fStartTheta = m_fTheta = 0.f;
+
+	m_bOpening = true;
 }
 
 _bool CDoor::isDirection_Right()

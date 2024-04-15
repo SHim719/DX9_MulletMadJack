@@ -331,6 +331,13 @@ void CGameInstance::Add_RayDesc(const RAY_DESC& RayDesc)
 {
 	m_pCollision_Manager->Add_RayDesc(RayDesc);
 }
+_bool CGameInstance::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pOutHit, OUT _float3& fHitWorldPos, OUT _float& fDist)
+{
+	if (nullptr == m_pCollision_Manager)
+		return false;
+
+	return m_pCollision_Manager->Ray_Cast(RayDesc, pOutHit, fHitWorldPos, fDist);
+}
 #pragma endregion
 
 #pragma region CAMERA_MANAGER

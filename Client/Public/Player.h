@@ -79,12 +79,13 @@ private:
 	void Camera_Event(_float fTimeDelta);
 
 	void Jump(_float fTimeDelta);
-
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
 		m_fShakePower = fShakePower; 
 		m_fShakeTime = fShakeTime; 
 	}
+
+	void Kick();
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
