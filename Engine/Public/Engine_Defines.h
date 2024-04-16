@@ -24,9 +24,6 @@
 #include "Engine_Macro.h"
 #include "Engine_Typedef.h"
 
-//#include <opencv2/imgcodecs.hpp>
-//#include <opencv2/videoio.hpp>
-//#include <opencv2/highgui.hpp>
 
 #ifdef _DEBUG
 
@@ -45,4 +42,3 @@
 
 using namespace Engine;
 using namespace std;
-//using namespace cv;
