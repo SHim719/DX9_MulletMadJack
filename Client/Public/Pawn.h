@@ -14,11 +14,21 @@ BEGIN(Client)
 class CPawn abstract: public CGameObject
 {
 public:
-	typedef struct tagPawn : public CTransform::TRANSFORM_DESC
+	enum HITTYPE
 	{
-		_float3 vPosition;
-		_float3 vAt;
-	}PAWN_DESC;
+		HEAD_SHOT,
+		BODY_SHOT,
+		EGG_SHOT,
+		HITTYPE_END,
+	};
+
+	typedef struct tagEnemyHitDesc
+	{
+		// WeaponType;
+		HITTYPE eHitType;
+		_float3 fHitWorldPos;
+		_float fDist;
+	}ENEMYHIT_DESC;
 
 protected:
 	CPawn(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -34,10 +44,8 @@ public:
 	virtual HRESULT Render() override;
 
 protected:
-	virtual void	Set_Motions(_float fTimeDelta);
-
-protected:
-	_float	m_fCorpseDuration = 5.f;
+	class CFPS_Camera* m_pCamera = { nullptr };
+	class CPlayer* m_pTarget = { nullptr };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

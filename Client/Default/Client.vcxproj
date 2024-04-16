@@ -169,20 +169,30 @@
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
+    <ClInclude Include="..\Public\Chainsaw_Monster.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Public\Client_Components.h" />
-    <ClInclude Include="..\Public\Chainsaw_Monster.h" />
+    <ClInclude Include="..\Public\Client_Struct.h" />
     <ClInclude Include="..\Public\CTextManager.h" />
+    <ClInclude Include="..\Public\Drone_Monster.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Public\Monster_Headers.h" />
-    <ClInclude Include="..\Public\Orange_Pants_Monster.h" />
     <ClInclude Include="..\Public\Door.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
     <ClInclude Include="..\Public\CUi_Clear_Victory.h" />
     <ClInclude Include="..\Public\CUi_PEACE.h" />
-    <ClInclude Include="..\Public\Drone_Monster.h" />
     <ClInclude Include="..\Public\FPS_Camera.h" />
     <ClInclude Include="..\Public\MapLoader.h" />
     <ClInclude Include="..\Public\Dash_Effect.h" />
     <ClInclude Include="..\Public\Kick.h" />
+    <ClInclude Include="..\Public\Orange_Pants_Monster.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\Public\Pawn.h" />
     <ClInclude Include="..\Public\CUi_Border.h" />
     <ClInclude Include="..\Public\CUi_Chat.h" />
@@ -254,18 +264,27 @@
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
-    <ClCompile Include="..\Private\Chainsaw_Monster.cpp" />
+    <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Private\CTextManager.cpp" />
-    <ClCompile Include="..\Private\Orange_Pants_Monster.cpp" />
     <ClCompile Include="..\Private\Door.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp" />
     <ClCompile Include="..\Private\CUi_PEACE.cpp" />
-    <ClCompile Include="..\Private\Drone_Monster.cpp" />
+    <ClCompile Include="..\Private\Drone_Monster.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp" />
     <ClCompile Include="..\Private\MapLoader.cpp" />
     <ClCompile Include="..\Private\Dash_Effect.cpp" />
     <ClCompile Include="..\Private\Kick.cpp" />
+    <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Private\Pawn.cpp" />
     <ClCompile Include="..\Private\CUi_Border.cpp" />
     <ClCompile Include="..\Private\CUi_Chat.cpp" />

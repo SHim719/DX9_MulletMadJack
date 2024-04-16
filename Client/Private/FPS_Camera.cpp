@@ -146,7 +146,7 @@ void CFPS_Camera::Mouse_Ray()
 
 	RAY_DESC rayDesc{};
 	rayDesc.iLevel = LEVEL_GAMEPLAY;
-	rayDesc.strDstLayer = L"Pawn";
+	rayDesc.strDstLayer = L"Enemy";
 	rayDesc.vRayDir = vRayDir;
 	rayDesc.vRayWorldPos = fMouseWorld_Near;
 

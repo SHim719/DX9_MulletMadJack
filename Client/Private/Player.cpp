@@ -2,6 +2,8 @@
 #include "GameInstance.h"
 #include "PlayerManager.h"
 
+#include "White_Suit_Monster.h"
+
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
@@ -19,13 +21,15 @@ HRESULT CPlayer::Initialize_Prototype()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
 	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
+
+	m_strTag = "Player";
 	return S_OK;
 }
 
 HRESULT CPlayer::Initialize(void * pArg)
 {
 	CBoxCollider::BOXCOLLISION_DESC desc;
-	desc.vScale = { 1.f, 1.5f, 1.f };
+	desc.vScale = { 0.3f, 1.5f, 0.3f };
 	desc.vOffset = { 0.f, 0.f, 0.f };
 
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
@@ -73,6 +77,8 @@ void CPlayer::Tick(_float fTimeDelta)
 void CPlayer::LateTick(_float fTimeDelta)
 {
 	ColliderCheck(fTimeDelta);
+
+	Shot();
 }
 
 HRESULT CPlayer::Render()
@@ -201,7 +207,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		}
 
 		m_pTransformCom->Set_Speed(10.f);
-		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::DASH_STATE);
+ 		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::DASH_STATE);
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::LShift))
@@ -346,6 +352,38 @@ void CPlayer::Jump(_float _fJumpPower)
 	m_fJumpPower = _fJumpPower;
 }
 
+void CPlayer::Shot()
+{
+	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
+	{
+		_float3 fMouseNDC_Near = _float3(_float(g_iWinSizeX / 2) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY / 2) * 2.0f / g_iWinSizeY + 1, 0.f);
+		_float3 fMouseNDC_Far = _float3(_float(g_iWinSizeX / 2) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY / 2) * 2.0f / g_iWinSizeY + 1, 1.f);
+
+		_float4x4 ViewMatrix, ProjMatrix;
+		m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
+		m_pGraphic_Device->GetTransform(D3DTS_PROJECTION, &ProjMatrix);
+
+		_float4x4 inverseProjView;
+		D3DXMatrixInverse(&inverseProjView, nullptr, &(ViewMatrix * ProjMatrix));
+
+		_float3 fMouseWorld_Near = *D3DXVec3TransformCoord(&fMouseWorld_Near, &fMouseNDC_Near, &inverseProjView);
+		_float3 fMouseWorld_Far = *D3DXVec3TransformCoord(&fMouseWorld_Far, &fMouseNDC_Far, &inverseProjView);
+
+		_float3 vRayDir = *D3DXVec3Normalize(&vRayDir, &(fMouseWorld_Far - fMouseWorld_Near));
+
+		RAY_DESC rayDesc{};
+		rayDesc.iLevel = LEVEL_GAMEPLAY;
+		rayDesc.strDstLayer = L"Monster";
+		rayDesc.vRayDir = vRayDir;
+		rayDesc.vRayWorldPos = fMouseWorld_Near;
+		
+		CPawn::ENEMYHIT_DESC pDesc;
+		rayDesc.pArg = &pDesc;
+
+		m_pGameInstance->Add_RayDesc(rayDesc);
+	}
+}
+
 void CPlayer::ColliderCheck(_float fTimeDelta)
 {
 	ColliderTop(fTimeDelta);
@@ -393,10 +431,10 @@ void CPlayer::ColliderLeft(_float fTimeDelta)
 
 	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
 	{
-		if (fDist <= 0.75f)
+		if (fDist <= 0.5f)
 		{
 			_float3 vPos = fHitWorldPos;
-			vPos -= rayDesc.vRayDir * 0.75f;
+			vPos -= rayDesc.vRayDir * 0.5f;
 			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
 		}
 	}
@@ -408,6 +446,7 @@ void CPlayer::ColliderRight(_float fTimeDelta)
 	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
 	rayDesc.strDstLayer = L"Wall";
 	rayDesc.vRayDir = { 1.f, 0.f, 0.f };
+	rayDesc.vRayDir = m_pTransformCom->Get_State(CTransform::STATE_RIGHT);
 	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 
 	CGameObject* pHitObj = nullptr;
@@ -469,6 +508,18 @@ void CPlayer::ColliderFront(_float fTimeDelta)
 			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
 		}
 	}
+}
+
+void CPlayer::OnCollisionEnter(CGameObject* pOther)
+{
+	auto str = pOther->Get_Tag(); 
+	if (str == "Monster")
+	{
+		static_cast<CWhite_Suit_Monster*>(pOther)->SetState_Pushed(m_pTransformCom->Get_Look());
+		Kick();
+
+	}
+
 }
 
 void CPlayer::Jump_Tick(_float fTimeDelta)

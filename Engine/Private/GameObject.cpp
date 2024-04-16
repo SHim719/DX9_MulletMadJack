@@ -83,6 +83,10 @@ CComponent* CGameObject::Find_Component(const wstring& strComponentTag)
 	return iter->second;
 }
 
+void CGameObject::Hit(void* pArg)
+{
+}
+
 void CGameObject::Free()
 {
 	for (auto& Pair : m_Components)

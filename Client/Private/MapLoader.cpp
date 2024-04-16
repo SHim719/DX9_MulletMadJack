@@ -81,7 +81,6 @@ HRESULT CMapLoader::Load_Monster(HANDLE hFile, LEVEL eLevel)
 		CGameObject* pMonster = nullptr;
 		switch (MONSTERTYPE(iTextureIndex))
 		{
-
 		case WHITE_SUIT:
 			pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_White_Suit");
 			break;

@@ -37,7 +37,7 @@ private:
 	CFPS_Camera* m_pFPS_Camera = { nullptr };
 
 private:
-	PAWN_DESC		m_Drone_Monster_Desc{};
+	//PAWN_DESC		m_Drone_Monster_Desc{};
 
 	_float			m_fAttack_TimeGap;
 	_float			m_fFlying_TimeGap;
@@ -58,7 +58,6 @@ private:
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
 
-	virtual void	Set_Motions(_float fTimeDelta) override;
 	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
 
 	void	Decide_Pawn_Motions(_float fTimeDelta);

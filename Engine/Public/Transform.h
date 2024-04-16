@@ -29,6 +29,24 @@ public:
 		return *(_float3*)&m_WorldMatrix.m[eState][0];
 	}
 
+	_float3 Get_Pos()
+	{
+		return *(_float3*)&m_WorldMatrix.m[STATE_POSITION][0];
+	}
+
+	_float3 Get_Look()
+	{
+		return *(_float3*)&m_WorldMatrix.m[STATE_LOOK][0];
+	}
+	_float3 Get_Right()
+	{
+		return *(_float3*)&m_WorldMatrix.m[STATE_RIGHT][0];
+	}
+	_float3 Get_Up()
+	{
+		return *(_float3*)&m_WorldMatrix.m[STATE_UP][0];
+	}
+
 	_float3 Get_Scale()
 	{
 		return _float3(D3DXVec3Length(&Get_State(STATE_RIGHT)),

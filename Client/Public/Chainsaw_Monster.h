@@ -37,8 +37,6 @@ private:
 	CFPS_Camera* m_pFPS_Camera = { nullptr };
 
 private:
-	PAWN_DESC		m_Chainsaw_Monster_Desc{};
-
 	_float			m_fWalking_TimeGap;
 	_float			m_fSlashing_TimeGap;
 	_float			m_fBlocking_TimeGap;
@@ -59,7 +57,7 @@ private:
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
 
-	virtual void	Set_Motions(_float fTimeDelta) override;
+	//virtual void	Set_Motions(_float fTimeDelta) override;
 	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
 
 	void	Decide_Pawn_Motions(_float fTimeDelta);

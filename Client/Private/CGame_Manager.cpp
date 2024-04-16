@@ -232,7 +232,7 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 		return E_FAIL;
 
 	/* For Prototype_Component_Animation */
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Prototype_Component_Animation"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Animation_Default"),
 		CAnimation::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
@@ -264,7 +264,6 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Floor_Border_Default"),
 		CVIBuffer_Floor_Border::Create(m_pGraphic_Device))))
 		return E_FAIL;
-
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Door_Default"),
 		CVIBuffer_Door::Create(m_pGraphic_Device))))

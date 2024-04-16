@@ -57,6 +57,7 @@ public:
 
 public:
 	virtual void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) {} // Ray Picking했을 때 호출되는 함수
+	virtual void Hit(void* pArg);
 
 public:
 	virtual void OnCollisionEnter(CGameObject* pOther) {}
@@ -69,10 +70,18 @@ public:
 
 protected:
 	_bool m_bDestroyed = { false };
+	_bool m_bActive = { true };
+
+	string m_strTag = "";
 
 public:
 	void Set_Destroy(_bool b) { m_bDestroyed = b; }
 	_bool Is_Destroyed() { return m_bDestroyed; }
+
+	void Set_Active(_bool b) { m_bActive = b; }
+	_bool Is_Active() { return m_bActive; }
+
+	const string& Get_Tag() const { return m_strTag; }
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

@@ -30,7 +30,7 @@ HRESULT CDrone_Monster::Initialize(void* pArg)
     if (nullptr == pArg)
         return E_FAIL;
 
-    memcpy(&m_Drone_Monster_Desc, pArg, sizeof m_Drone_Monster_Desc);
+    //memcpy(&m_Drone_Monster_Desc, pArg, sizeof m_Drone_Monster_Desc);
 
     if (FAILED(Add_Components()))
         return E_FAIL;

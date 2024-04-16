@@ -23,10 +23,15 @@ void CCollision_Manager::Tick()
 
 	Collision_Box(3, L"Player", L"Door", Trigger);
 	Collision_Box(3, L"Player", L"SodaMachine", Collision);
+	Collision_Box(3, L"Player", L"Monster", Collision);
 
-	Collision_Box(3, L"Soda", L"Wall", Collision);
+	Collision_Box(3, L"Monster", L"Wall", Collision);
+	Collision_Box(3, L"Monster", L"Floor", Collision);
+
+	//Collision_Box(3, L"Soda", L"Wall", Collision);
 	Collision_Box(3, L"Soda", L"Floor", Collision);
 	Collision_Box(3, L"Soda", L"Soda", Collision);
+
 	Intersect_Ray();
 }
 
@@ -51,7 +56,7 @@ void CCollision_Manager::Intersect_Ray()
 			_float3 fHitWorldPos;
 			_float fDist;
 			if (pVIBuffer->Intersect_Ray((*it)->Get_Transform(), RayDesc.vRayWorldPos, RayDesc.vRayDir, &fHitWorldPos, &fDist))
-				(*it)->On_Ray_Intersect(fHitWorldPos, fDist);
+				(*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg);
 
 		}
 
@@ -83,6 +88,7 @@ _bool CCollision_Manager::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pO
 			pOutHit = *it;
 			fHitWorldPos = _fHitWorldPos;
 			fDist = _fDist;
+			assert(fDist >= 0.f);
 			return true;
 		}
 	}
@@ -103,7 +109,7 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 
 	for (auto DstIt = DstObjects.begin(); DstIt != DstObjects.end(); ++DstIt)
 	{
-		if ((*DstIt)->Is_Destroyed())
+		if ((*DstIt)->Is_Destroyed() || false == (*DstIt)->Is_Active())
 			continue;
 		CTransform* pDstTransform = (*DstIt)->Get_Transform();
 		CBoxCollider* pDstCollider = dynamic_cast<CBoxCollider*>((*DstIt)->Find_Component(L"Collider"));
@@ -112,7 +118,7 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 
 		for (auto SrcIt = SrcObjects.begin(); SrcIt != SrcObjects.end(); ++SrcIt)
 		{
-			if (*SrcIt == *DstIt || (*SrcIt)->Is_Destroyed())
+			if (*SrcIt == *DstIt || (*SrcIt)->Is_Destroyed() || false == (*SrcIt)->Is_Active())
 				continue;
 
 			CTransform* pSrcTransform = (*SrcIt)->Get_Transform();

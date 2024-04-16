@@ -16,7 +16,19 @@ BEGIN(Client)
 
 class CWhite_Suit_Monster final : public CPawn
 {
-	enum STATE { STATE_IDLE, STATE_AIM, STATE_WALK, STATE_SHOOT, STATE_BLOCK, STATE_HEADSHOT, STATE_BODYSHOT, STATE_GROINSHOT, STATE_END };
+private:
+
+	enum STATE
+	{
+		STATE_IDLE,
+		STATE_MOVE,
+		STATE_ALERT,
+		STATE_PUSHED,
+		STATE_SHOT,
+		STATE_JUMP,
+		STATE_DEATH,
+		STATE_END
+	};
 
 private:
 	CWhite_Suit_Monster(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -32,46 +44,53 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CAnimation* m_pAnimationCom = { nullptr };
-
-	CFPS_Camera* m_pFPS_Camera = { nullptr };
-
+	CVIBuffer*		m_pVIBufferCom = { nullptr };
+	CAnimation*		m_pAnimationCom = { nullptr };
+	CBoxCollider*	m_pBoxCollider = { nullptr };
+	CRigidbody*		m_pRigidbody = { nullptr };
 
 private:
-	PAWN_DESC		m_White_Suit_Monster_Desc{};
+	void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
 
-	_float			m_fBullet_TimeGap;
-	_float			m_fWalking_TimeGap;
-	_float			m_fShooting_TimeGap;
-	_float			m_fBlocking_TimeGap;
+	_bool Check_HeadShot(_float3 vHitLocalPos);
+	_bool Check_BodyShot(_float3 vHitLocalPos);
+	_bool Check_EggShot(_float3  vHitLocalPos);
 
-	bool			IsPlaying;
+	void Hit(void* pArg) override;
+private:
+	STATE			m_eState = STATE_IDLE;
+	_float			m_fHp = 5.f;
+	_float			m_fSpeed = 1.f;
+	_float			m_fPerceptionDist = 3.f;
+	_bool			m_bPushRecovery = { false };
 
-	bool			m_bIdle;
-	bool			m_bAimed;
-	bool			m_bDead;
-	bool			m_bWalking;
-	bool			m_bShooting;
-	bool			m_bBlock;
+	_float			m_fTimeAcc = 0.f;
+	_float			m_fDeathTime = 3.f;
+private:
+	void Process_State(_float fTimeDelta);
 
-	STATE			m_eState;
+	void State_Idle();
+	void State_Move();
+	void State_Alert();
+	void State_Pushed();
+	void State_Shot();
+	void State_Jump();
+	void State_Death(_float fTimeDelta);
 
+public:
+	void SetState_Idle();
+	void SetState_Move();
+	void SetState_Alert();
+	void SetState_Pushed(_float3 vLook);
+	void SetState_Shot();
+	void SetState_Jump();
+	void SetState_Death(ENEMYHIT_DESC* pDesc);
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();
-	HRESULT			Begin_RenderState();
-	HRESULT			End_RenderState();
+	HRESULT			Begin_RenderState()		override;
+	HRESULT			End_RenderState()		override;
 
-	virtual void	Set_Motions(_float fTimeDelta) override;
-	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-
-	void	Decide_Pawn_Motions(_float fTimeDelta);
-	void	Pawn_Aiming_Motion(_float fTimeDelta);
-	void	Pawn_Shooting_Motion(_float fTimeDelta);
-	void	Pawn_Walking_Motion(_float fTimeDelta);
-	void	Pawn_Blocking_Motion(_float fTimeDelta);
-	void	Pawn_Dying_Motion(_float fTimeDelta);
 
 public:
 	static CWhite_Suit_Monster* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

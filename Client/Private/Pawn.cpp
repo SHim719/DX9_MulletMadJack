@@ -39,9 +39,6 @@ HRESULT CPawn::Render()
 	return S_OK;
 }
 
-void CPawn::Set_Motions(_float fTimeDelta)
-{
-}
 
 void CPawn::Free()
 {

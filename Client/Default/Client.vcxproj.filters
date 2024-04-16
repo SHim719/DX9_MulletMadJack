@@ -483,12 +483,6 @@
     <ClInclude Include="..\Public\Pawn.h">
       <Filter>02.GameObjects\04. EnemyObject\Pawns</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Drone_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Chainsaw_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Floor_Border.h">
       <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
     </ClInclude>
@@ -543,11 +537,20 @@
     <ClInclude Include="..\Public\CUi_PEACE.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Orange_Pants_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Monster_Headers.h">
       <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Client_Struct.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Chainsaw_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Drone_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Orange_Pants_Monster.h">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -713,12 +716,6 @@
     <ClCompile Include="..\Private\Pawn.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Pawns</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Drone_Monster.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp">
       <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
     </ClCompile>
@@ -772,6 +769,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_PEACE.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Drone_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
+      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
