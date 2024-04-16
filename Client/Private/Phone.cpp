@@ -304,48 +304,47 @@ void CPhone::Set_PhoneNumber()
 
 void CPhone::Set_PhonePos()
 {
-    _float3 FirstNumpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-    FirstNumpos.x += 140;
-    FirstNumpos.y += 125;
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        //Temp Rotate
-        FirstNumpos.x += 35;
-        FirstNumpos.y += -56;
-    }
+	_float3 FirstNumpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	FirstNumpos.x += 140;
+	FirstNumpos.y += 125;
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		//Temp Rotate
+		FirstNumpos.x += 35;
+		FirstNumpos.y += -56;
+	}
 
-    m_pFirstNumTransformCom->Set_Position(FirstNumpos);
+	m_pFirstNumTransformCom->Set_Position(FirstNumpos);
 
-    _float3 SecondNumpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-    SecondNumpos.x += 185;
-    SecondNumpos.y += 137;
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        //Temp Rotate
-        SecondNumpos.x += 36;
-        SecondNumpos.y += -71;
-    }
-    m_pSecondNumTransformCom->Set_Position(SecondNumpos);
+	_float3 SecondNumpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	SecondNumpos.x += 185;
+	SecondNumpos.y += 137;
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		//Temp Rotate
+		SecondNumpos.x += 36;
+		SecondNumpos.y += -71;
+	}
+	m_pSecondNumTransformCom->Set_Position(SecondNumpos);
 }
 
 void CPhone::Set_PhoneRotation()
 {
-    _float3 Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 35 };
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        //Temp Rotate
-        Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
-    }
-    m_pFirstNumTransformCom->Rotation_XYZ(Rotation);
-    m_pSecondNumTransformCom->Rotation_XYZ(Rotation);
+	_float3 Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 35 };
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		//Temp Rotate
+		Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
+	}
+	m_pFirstNumTransformCom->Rotation_XYZ(Rotation);
+	m_pSecondNumTransformCom->Rotation_XYZ(Rotation);
 }
 
 void CPhone::Synchronize_PlayerLife_Number()
 {
 
-    m_fLifeTime = (_uint)m_fTestDelta;
-    //m_fLifeTime = Get_Player_Life and change > -> <
-    if (m_fLifeTime > 15)
-    {
-        m_fLifeTime = 15;
-    }
+	m_fLifeTime = (_uint)CPlayer_Manager::Get_Instance()->Get_PlayerHP();
+	if (m_fLifeTime > 15)
+	{
+		m_fLifeTime = 15;
+	}
 
     m_iFirstNumTextureNum = m_fLifeTime / 10;
     m_iSecondNumTextureNum = m_fLifeTime - (m_iFirstNumTextureNum * 10);
@@ -403,29 +402,29 @@ void CPhone::Set_Face(_float fTimeDelta)
 
 void CPhone::Set_FacePos()
 {
-    _float3 Facepos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-    Facepos.x += 130;
-    Facepos.y += 235;
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        //Temp Rotate
-        Facepos.x += 80;
-        Facepos.y += -60;
-    }
+	_float3 Facepos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	Facepos.x += 130;
+	Facepos.y += 235;
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		//Temp Rotate
+		Facepos.x += 80;
+		Facepos.y += -60;
+	}
 
-    m_pFaceTransformCom->Set_Position(Facepos);
+	m_pFaceTransformCom->Set_Position(Facepos);
 }
 
 void CPhone::Set_FaceRotation()
 {
     _float3 FaceRotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 35 };
 
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        FaceRotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
-    }
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		FaceRotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
+	}
 
 
 
-    m_pFaceTransformCom->Rotation_XYZ(FaceRotation);
+	m_pFaceTransformCom->Rotation_XYZ(FaceRotation);
 }
 
 void CPhone::Set_FaceTexture()
@@ -477,31 +476,31 @@ void CPhone::Set_BackGround()
 
 void CPhone::Set_BackGroundPos()
 {
+	
+
+	_float3 BackGroundpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	BackGroundpos.x += 164;
+	BackGroundpos.y += 132;
+
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		//Temp Rotate
+		BackGroundpos.x += 35;
+		BackGroundpos.y += -65;
+	}
 
 
-    _float3 BackGroundpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-    BackGroundpos.x += 164;
-    BackGroundpos.y += 132;
-
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        //Temp Rotate
-        BackGroundpos.x += 35;
-        BackGroundpos.y += -65;
-    }
-
-
-    m_pBackGroundTransformCom->Set_Position(BackGroundpos);
+	m_pBackGroundTransformCom->Set_Position(BackGroundpos);
 }
 
 void CPhone::Set_BackGroundRotation()
 {
     _float3 Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 35 };
 
-    if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
-        Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
-    }
+	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
+		Rotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
+	}
 
-    m_pBackGroundTransformCom->Rotation_XYZ(Rotation);
+	m_pBackGroundTransformCom->Rotation_XYZ(Rotation);
 }
 
 void CPhone::Set_BackGroundTexture()
