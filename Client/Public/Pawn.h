@@ -45,7 +45,7 @@ public:
 
 protected:
 	class CFPS_Camera* m_pCamera = { nullptr };
-	class CPlayer* m_pTarget = { nullptr };
+	class CPlayer*	m_pTarget = { nullptr };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

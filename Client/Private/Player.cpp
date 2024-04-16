@@ -512,14 +512,11 @@ void CPlayer::ColliderFront(_float fTimeDelta)
 
 void CPlayer::OnCollisionEnter(CGameObject* pOther)
 {
-	auto str = pOther->Get_Tag(); 
-	if (str == "Monster")
+	if ("Monster" == pOther->Get_Tag() && m_pGameInstance->GetKey(eKeyCode::LShift)) // 이거수정
 	{
 		static_cast<CWhite_Suit_Monster*>(pOther)->SetState_Pushed(m_pTransformCom->Get_Look());
 		Kick();
-
 	}
-
 }
 
 void CPlayer::Jump_Tick(_float fTimeDelta)

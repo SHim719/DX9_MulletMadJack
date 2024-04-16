@@ -96,7 +96,7 @@ HRESULT CWhite_Suit_Monster::Add_Components()
     m_pRigidbody = dynamic_cast<CRigidbody*>(Add_Component(LEVEL_STATIC, TEXT("Rigidbody_Default"), TEXT("Rigidbody"), m_pTransformCom));
 
     CBoxCollider::BOXCOLLISION_DESC pDesc;
-    pDesc.vScale = { 0.3f, 1.f, 0.3f };
+    pDesc.vScale = { 0.5f, 1.f, 0.5f };
 
     m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
 

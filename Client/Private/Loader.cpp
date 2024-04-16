@@ -359,7 +359,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 HRESULT CLoader::Loading_For_WhiteSuitMonster()
 {
-
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Idle"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/idle/idle%d.png"), 9))))
 		return E_FAIL;

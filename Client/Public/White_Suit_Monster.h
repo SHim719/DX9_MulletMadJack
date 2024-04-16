@@ -6,6 +6,13 @@
 #include "Core_Camera.h"
 #include "Pawn.h"
 
+enum EventType
+{
+	SSDA,
+	ADSD,
+	ADDSD,
+};
+
 BEGIN(Engine)
 class CTexture;
 class CTransform;
