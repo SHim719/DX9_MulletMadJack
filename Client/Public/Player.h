@@ -95,6 +95,10 @@ public:
 		m_fShakeTime = fShakeTime; 
 	}
 
+	_float Get_PlayerHP() { return m_fPlayerHp; }
+	void Set_PlayerHP(_float fPlayerHp) { m_fPlayerHp = fPlayerHp; }
+	void Set_PlayerHP_Add(_float fPlayerHp) { m_fPlayerHp += fPlayerHp; }
+
 	void Kick();
 
 public:
@@ -120,6 +124,8 @@ private:
 	_float m_fShakeTime = 0.f;
 
 	_float m_fJumpPower = 0.f;
+
+	_float m_fPlayerHp = 15.f;
 };
 
 END

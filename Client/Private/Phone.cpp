@@ -340,8 +340,7 @@ void CPhone::Set_PhoneRotation()
 void CPhone::Synchronize_PlayerLife_Number()
 {
 
-	m_fLifeTime = (_uint)m_fTestDelta;
-	//m_fLifeTime = Get_Player_Life and change > -> <
+	m_fLifeTime = (_uint)CPlayer_Manager::Get_Instance()->Get_PlayerHP();
 	if (m_fLifeTime > 15)
 	{
 		m_fLifeTime = 15;

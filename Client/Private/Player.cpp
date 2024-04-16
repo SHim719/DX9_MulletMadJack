@@ -56,6 +56,11 @@ void CPlayer::PriorityTick(_float fTimeDelta)
 
 void CPlayer::Tick(_float fTimeDelta)
 {
+	//LifeCut
+	m_fPlayerHp -= fTimeDelta;
+
+
+
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pTransformCom->Head_Roll(fTimeDelta, fHeadTilt);
 	//cout << fHeadTilt << endl;
