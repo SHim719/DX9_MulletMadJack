@@ -307,6 +307,18 @@
     <Filter Include="02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger">
       <UniqueIdentifier>{0a2dd1f7-eab8-41f4-87f0-e347d11ac960}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing">
+      <UniqueIdentifier>{0f657f05-790a-4db9-9605-9ba66d8afdb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish">
+      <UniqueIdentifier>{91969862-66d9-4f60-9911-149ad6a34125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\LoadingBackGround">
+      <UniqueIdentifier>{1de6c9fb-276e-422a-8f7c-a1b76098be99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\Part\TextBackGround">
+      <UniqueIdentifier>{3cd04371-b89e-45c6-9a52-f3fc8a47a6b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -579,6 +591,15 @@
     <ClInclude Include="..\Public\Trigger_Headers.h">
       <Filter>99.Defines</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi_Finish.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_LoadingBackGround.h">
+      <Filter>04. UI\Ui\CUi_Life\Part\LoadingBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CText_BackGround.h">
+      <Filter>04. UI\Ui\CUi_Life\Part\TextBackGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -817,6 +838,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\SpawnTrigger.cpp">
       <Filter>02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Finish.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_LoadingBackGround.cpp">
+      <Filter>04. UI\Ui\CUi_Life\Part\LoadingBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CText_BackGround.cpp">
+      <Filter>04. UI\Ui\CUi_Life\Part\TextBackGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

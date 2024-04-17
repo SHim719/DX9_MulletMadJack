@@ -30,4 +30,6 @@
 #include "CUi_ClearTime_BackGround.h"
 #include "CUi_Time_Division.h"
 #include "CUi_Clear_Victory.h"
-#include "CText.h"
+#include "CTextManager.h"
+#include "CUi_Finish.h"
+#include "CText_BackGround.h"

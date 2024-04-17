@@ -56,7 +56,8 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	if(nullptr == m_pCamera_Manager)
 		return E_FAIL;
 
-	m_pText = CText::Create(*ppOut, m_pGraphic_Device->Get_Font());
+	m_pText = CText::Create(*ppOut, m_pGraphic_Device->Get_Font(), 
+		m_pGraphic_Device->Get_BigFont());
 	if (nullptr == m_pText)
 		return E_FAIL;
 
@@ -375,6 +376,11 @@ CCoreCamera* CGameInstance::Get_CurCamera()
 void CGameInstance::Print_Text(CText::Text_Info Text)
 {
 	m_pText->Print_Text(Text);
+}
+
+void CGameInstance::Print_Big_Text(CText::Text_Info BigText)
+{
+	m_pText->Print_Big_Text(BigText);
 }
 
 #pragma endregion

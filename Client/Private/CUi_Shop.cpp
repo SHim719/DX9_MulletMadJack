@@ -350,6 +350,7 @@ bool CUi_Shop::Player_Select(_uint iNumber)
 	{
 		m_UpgradeVec[iNumber]->Set_Picked();
 		m_eProgress = ShopProgress::Select;
+		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::ShopEnd);
 		m_fChangeProgressTime = 1;
 		return true;
 	}

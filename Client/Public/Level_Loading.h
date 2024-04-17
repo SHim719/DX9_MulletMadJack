@@ -25,6 +25,7 @@ public:
 private:
 	LEVEL						m_eNextLevelID = { LEVEL_END };
 	class CLoader*				m_pLoader = { nullptr };
+	class CUi_LoadingBackGround* m_pLoadingBackGround = { nullptr };
 
 private:
 	/* 로딩화면의 배경을 구성하는데 있어 필요한 객체들을 모아놓은 레이어를 생성한다. */

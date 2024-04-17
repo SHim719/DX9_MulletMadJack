@@ -59,6 +59,10 @@ public:
 
 	_float Get_LeftArmRotate() {return m_fLeftArmRotate; }
 
+	_float Get_PlayerHP() { return m_pPlayer->Get_PlayerHP(); }
+	void Set_PlayerHP(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP(_fPlayerHp); }
+	void Set_PlayerHP_Add(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP_Add(_fPlayerHp); }
+
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };

@@ -1,13 +1,18 @@
 #pragma once
 #include "Client_Defines.h"
 #include "Base.h"
+#include "CTextManager.h"
+
 
 BEGIN(Client)
 enum class StageProgress
 {
 	OnGoing,
-	Clear,
+	StageClear,
+	TutorialMidSpot,
+	TutorialClear,
 	Shopping,
+	ShopEnd,
 	Changing,
 	Start,
 	End
@@ -51,24 +56,20 @@ public:
 public:
 	HRESULT Ready_Prototype_GameObjects();
 	HRESULT Ready_Prototype_Components();
-	//Custom Prototype
-	HRESULT Ready_Static_Texture_Prototype();
-	HRESULT Ready_Clear_Texture();
-	HRESULT Ready_Shop_Texture();
-	HRESULT Ready_Start_Texture();
+	void Ready_Loading_BackGroundTextureAndUi(); // need Ready_Prototype_Components fuction
 
-	HRESULT Ready_Camera_Effect_Texture();
-	HRESULT Ready_PlayerGun_Texture();
 
-	HRESULT Ready_Prototype_Ui_Life();
-	HRESULT Ready_Prototype_Effect();
-	HRESULT Ready_Active_Ui();
-	HRESULT Ready_Active_Clear();
-	HRESULT Ready_Active_Shop();
+public:
+	void Print_Text(TextType type, _uint Number);
+	void Set_Pos_Text(TextType type, _uint Number, RECT Rect);
+	void Initialize_TextManager();
 
-	HRESULT Ready_Active_Gun();
-	HRESULT Ready_Active_Camera_Effect();
+	void Add_TextNumber(TextType type) { ++m_iTextPrintOrder[_uint(type)]; }
 
+	_uint Get_TextNumber(TextType type) const
+	{ return m_iTextPrintOrder[_uint(type)]; }
+
+	size_t Get_MaxSize(TextType type) { return m_pTextManager->Get_Max_Size(type); }
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -85,8 +86,8 @@ private:
 
 
 private:
-	class CTextManager* m_pTextManager = { nullptr };
-
+	CTextManager* m_pTextManager = { nullptr };
+	_uint m_iTextPrintOrder[_uint(TextType::End)] = {};
 
 public:
 	virtual void Free() override;

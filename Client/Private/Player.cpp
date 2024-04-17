@@ -60,6 +60,14 @@ void CPlayer::PriorityTick(_float fTimeDelta)
 
 void CPlayer::Tick(_float fTimeDelta)
 {
+	//LifeCut
+	if(m_fPlayerHp > 0.f) m_fPlayerHp -= fTimeDelta;
+	else {
+		m_fPlayerHp = 0.f;
+		//DeathAnimation Trigger
+	}
+
+
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pTransformCom->Head_Roll(fTimeDelta, fHeadTilt);
 	//cout << fHeadTilt << endl;

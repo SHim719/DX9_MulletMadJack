@@ -12,3 +12,5 @@
 #include "Pistol_Reload_Left_Hand.h"
 #include "Pistol_Reload_Left_Arm.h"
 #include "Phone.h"
+#include "FPS_Camera.h"
+#include "Dash_Effect.h"

@@ -54,7 +54,6 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 HRESULT CLevel_GamePlay::Render()
 {
 	SetWindowText(g_hWnd, TEXT("GAMEPLAY.."));
-
 	return S_OK;
 }
 
@@ -132,7 +131,7 @@ void CLevel_GamePlay::Test_Ui()
 {
 	if (m_pGameInstance->GetKeyDown(eKeyCode::U))
 	{
-		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::Clear);
+		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::StageClear);
 	}
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::J))
 	{
@@ -155,5 +154,9 @@ void CLevel_GamePlay::Test_Ui()
 	{
 		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_Special3Sec"),
 			eUiRenderType::Render_Blend, nullptr);
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::L))
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Finish"));
 	}
 }

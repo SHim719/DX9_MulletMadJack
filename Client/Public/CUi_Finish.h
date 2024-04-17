@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CUi_Announcer final : public CUi
+class CUi_Finish final : public CUi
 {
 protected:
-	CUi_Announcer(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Announcer(const CUi_Announcer& rhs);
-	virtual ~CUi_Announcer() = default;
+	CUi_Finish(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Finish(const CUi_Finish& rhs);
+	virtual ~CUi_Finish() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -34,26 +34,24 @@ protected:
 	virtual HRESULT Add_Texture(void* pArg) override;
 
 
-public:
-	virtual void Enter(bool _Enter) override;
+private:
+	void Scaling(_float fTimeDelta);
 
 
 private:
-	void Move(_float fTimeDelta);
-	void Texture_Switching(_float fTimeDelta);
-	void TextRender();
-	void Set_Pos_TextBackGround();
+	_float m_fScalingTime = { 0 };
+	_float3 m_OriginScale = { 720, 90, 1 };
+
 
 private:
-	_float m_fUniqueTextureTime = { 0.f };
-	CTexture* m_pUniqueTexture = { nullptr };
-	_uint m_iUniqueTextureIndex = { 0 };
-	class CGame_Manager* m_pGameManager = { nullptr };
-	class CText_BackGround* m_pTextBackGround = { nullptr };
+	CTexture* m_pBackGroundTextureCom = { nullptr };
+	CTransform* m_pBackGroundTransformCom = { nullptr };
+	CVIBuffer_Rect* m_pBackGroundVIBufferCom = { nullptr };
+	Ui_Pos_Size_Rotation m_BackGround = {};
 
 
 public:
-	static CUi_Announcer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_Finish* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

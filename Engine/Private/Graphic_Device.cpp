@@ -82,6 +82,21 @@ HRESULT CGraphic_Device::Initialize(const GRAPHIC_DESC& GraphicDesc, _Out_ LPDIR
 		return E_FAIL;
 	}
 
+	D3DXFONT_DESCW		BigFontInfo;
+	ZeroMemory(&BigFontInfo, sizeof(D3DXFONT_DESCW));
+	BigFontInfo.Height = 50;
+	BigFontInfo.Width = 25;
+	BigFontInfo.Weight = FW_HEAVY;
+	BigFontInfo.CharSet = HANGEUL_CHARSET;
+	lstrcpy(tFontInfo.FaceName, L"±Ã¼­");
+
+
+	if (FAILED(D3DXCreateFontIndirect(m_pDevice, &BigFontInfo, &m_pBigFont)))
+	{
+		MSG_BOX(L"D3DXCreateBigFontIndirect Failed");
+		return E_FAIL;
+	}
+
 	*ppOut = m_pDevice;
 
 	Safe_AddRef(m_pDevice);
@@ -166,6 +181,9 @@ CGraphic_Device * CGraphic_Device::Create(const GRAPHIC_DESC & GraphicDesc, _Out
 void CGraphic_Device::Free()
 {
 	unsigned long rcnt = 0;
+
+	if (nullptr != m_pBigFont)
+		rcnt = m_pBigFont->Release();
 
 	if (nullptr != m_pFont)
 		rcnt = m_pFont->Release();
