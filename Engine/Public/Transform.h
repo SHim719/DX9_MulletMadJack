@@ -90,15 +90,9 @@ public:
 	void Set_PosZ(const _float& fZ) { m_WorldMatrix.m[STATE_POSITION][2] = fZ; }
 
 	void Add_Pos(const _float3& vAdd);
-
-	void Set_Billboard_Matrix(_float4x4 _BillboardMatrix)	// y축 빌보드 행렬을 만들기 위한 함수
-	{
-		m_WorldMatrix.m[0][0] = _BillboardMatrix.m[0][0];
-		m_WorldMatrix.m[0][2] = _BillboardMatrix.m[0][2];
-		m_WorldMatrix.m[2][0] = _BillboardMatrix.m[2][0];
-		m_WorldMatrix.m[2][2] = _BillboardMatrix.m[2][2];
-	}
-
+	
+	void Set_Billboard_Matrix(_float4x4 _BillboardMatrix);	// y축 빌보드 행렬을 만들기 위한 함수
+	
 	void Set_Target(const _float3& vCurPoint, const _float3& vWorldPoint);	// 특정 위치를 목표점으로 잡는 함수
 
 public:

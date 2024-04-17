@@ -30,7 +30,7 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pTarget = CPlayer_Manager::Get_Instance()->Get_Player();
     Safe_AddRef(m_pTarget);
 
-    _float3 Scale = {1.1f, 1.1f, 1.f };
+    _float3 Scale = {1.3f, 1.3f, 1.f };
     m_pTransformCom->Set_Scale(Scale);
 
     m_pRigidbody->Set_Friction(0.f);
@@ -423,9 +423,10 @@ void CWhite_Suit_Monster::SetState_Shot()
     m_pAnimationCom->Play_Animation(L"Shot", 0.15f, false);
 
     _float3 vBulletPos = m_pTransformCom->Get_Pos();
-    vBulletPos.y += 0.1f;
+    vBulletPos.y += 0.25f;
     
     _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+    vPlayerPos.y -= 0.2f;
     CGameObject* pBullet =  m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_Bullet");
     pBullet->Get_Transform()->Set_Position(vBulletPos);
     pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);

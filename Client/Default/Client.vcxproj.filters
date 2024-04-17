@@ -55,12 +55,6 @@
     <Filter Include="03. Client_Components\Animation">
       <UniqueIdentifier>{4ac07784-c5ca-46d8-a244-4bfa158541b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject">
-      <UniqueIdentifier>{9fc429b0-8228-49fe-ad25-49aa487f48d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Enemy_Bullet">
-      <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\01. MapObject\MapObject">
       <UniqueIdentifier>{6ad062de-0955-446e-9bb6-08b98f57cb4a}</UniqueIdentifier>
     </Filter>
@@ -81,18 +75,6 @@
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\CVIBuffer_Border">
       <UniqueIdentifier>{9bd1b528-320c-4af8-9936-bc7e9c54741c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Pawns">
-      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster">
-      <UniqueIdentifier>{967ebb23-2cbc-4697-aef7-c9792331ae04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Drone_Monster">
-      <UniqueIdentifier>{039f30b6-647a-4871-b011-9f392df52a43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster">
-      <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\01. MapObject\Soda">
       <UniqueIdentifier>{b5f96136-11e5-47c6-86c7-e698715ba7b4}</UniqueIdentifier>
@@ -289,9 +271,6 @@
     <Filter Include="97. Manager\CTextManager">
       <UniqueIdentifier>{cbac94b8-535b-45df-b197-90e8cb5c7c01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster">
-      <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Sphere">
       <UniqueIdentifier>{7b68a34a-14af-401e-b13f-a8e8ee75b042}</UniqueIdentifier>
     </Filter>
@@ -333,6 +312,27 @@
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Execution\Neck">
       <UniqueIdentifier>{9d56822c-dad3-4051-835e-eb75f2cde1a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy">
+      <UniqueIdentifier>{9fc429b0-8228-49fe-ad25-49aa487f48d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Enemy_Bullet">
+      <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns">
+      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\White_Suit_Monster">
+      <UniqueIdentifier>{967ebb23-2cbc-4697-aef7-c9792331ae04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Drone_Monster">
+      <UniqueIdentifier>{039f30b6-647a-4871-b011-9f392df52a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Chainsaw_Monster">
+      <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster">
+      <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -391,7 +391,7 @@
       <Filter>03. Client_Components\Animation</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Enemy_Bullet.h">
-      <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+      <Filter>02.GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Background.h">
       <Filter>04. UI\Ui\CUi_Life\Part\Background</Filter>
@@ -517,10 +517,10 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\White_Suit_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pawn.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Floor_Border.h">
       <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
@@ -583,13 +583,13 @@
       <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Chainsaw_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Drone_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Drone_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Orange_Pants_Monster.h">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Sphere.h">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Sphere</Filter>
@@ -675,7 +675,7 @@
       <Filter>03. Client_Components\Animation</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Bullet.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Enemy_Bullet</Filter>
+      <Filter>02.GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
       <Filter>04. UI\Ui\CUi_Life\Part\Background</Filter>
@@ -786,10 +786,10 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\White_Suit_Monster.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\White_Suit_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pawn.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp">
       <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
@@ -846,13 +846,13 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Drone_Monster.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Drone_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Drone_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Chainsaw_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Chainsaw_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
-      <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Sphere.cpp">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Sphere</Filter>

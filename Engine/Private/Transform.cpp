@@ -343,6 +343,18 @@ void CTransform::Turn(const _float3& vAxis, _float fTimeDelta)
 	Set_State(STATE_LOOK, &vLook);
 }
 
+void CTransform::Set_Billboard_Matrix(_float4x4 _BillboardMatrix)
+{
+	_float3 vScale = Get_Scale();
+	
+	m_WorldMatrix.m[0][0] = _BillboardMatrix.m[0][0];
+	m_WorldMatrix.m[0][2] = _BillboardMatrix.m[0][2];
+	m_WorldMatrix.m[2][0] = _BillboardMatrix.m[2][0];
+	m_WorldMatrix.m[2][2] = _BillboardMatrix.m[2][2];
+
+	Set_Scale(vScale);
+}
+
 void CTransform::UnOffset_Turn(const _float3& vAxis, _float fTimeDelta)
 {
 	/* 세가지 방향벡터를 모두 회전시킨다. */

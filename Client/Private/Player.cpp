@@ -567,10 +567,10 @@ void CPlayer::Jump_Tick(_float fTimeDelta)
 
 		if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist))
 		{
-			if (fDist <= 0.75f)
+			if (fDist <= 1.f)
 			{
 				_float3 vPos = fHitWorldPos;
-				vPos.y += 0.75f;
+				vPos.y += 1.f;
 				m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
 				Set_PlayerState(CPlayer::PLAYER_STATE::IDLE_STATE);
 			}
