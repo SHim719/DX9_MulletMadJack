@@ -81,6 +81,7 @@ private:
 
 	void Jump(_float _fJumpPower);
 	void Shot();
+	void SpeedControl(_float fTimeDelta);
 
 	void ColliderCheck(_float fTimeDelta);
 	void ColliderTop(_float fTimeDelta);
@@ -103,6 +104,8 @@ public:
 
 	void Kick();
 
+	bool Get_PlayerDash() { return bDash; }
+
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
@@ -121,6 +124,8 @@ private:
 	ANIMATION_TYPE eAnimationType = IDLE;
 	PLAYER_STATE ePlayerState = IDLE_STATE;
 	MOVE_STATE eMoveState = STOP;
+
+	bool bDash = false;
 
 	_float m_fShakePower = 0.f;
 	_float m_fShakeTime = 0.f;

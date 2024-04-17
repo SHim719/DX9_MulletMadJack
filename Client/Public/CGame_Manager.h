@@ -57,6 +57,12 @@ public:
 	HRESULT Ready_Prototype_GameObjects();
 	HRESULT Ready_Prototype_Components();
 	void Ready_Loading_BackGroundTextureAndUi(); // need Ready_Prototype_Components fuction
+	//Custom Prototype
+	HRESULT Ready_Static_Texture_Prototype();
+	HRESULT Ready_Clear_Texture();
+	HRESULT Ready_Shop_Texture();
+	HRESULT Ready_Start_Texture();
+	HRESULT Ready_Execution_Texture();
 
 
 public:
@@ -65,6 +71,9 @@ public:
 	void Initialize_TextManager();
 
 	void Add_TextNumber(TextType type) { ++m_iTextPrintOrder[_uint(type)]; }
+	HRESULT Ready_Active_Gun();
+	HRESULT Ready_Active_Camera_Effect();
+	HRESULT Ready_Active_Execution();
 
 	_uint Get_TextNumber(TextType type) const
 	{ return m_iTextPrintOrder[_uint(type)]; }

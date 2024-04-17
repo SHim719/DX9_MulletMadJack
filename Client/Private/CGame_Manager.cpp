@@ -31,6 +31,20 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Prototype_GameObjects();
 	Ready_Prototype_Components();
 	Ready_Loading_BackGroundTextureAndUi(); 
+
+	Ready_Static_Texture_Prototype();
+	Ready_Clear_Texture();
+	Ready_Shop_Texture();
+	Ready_Start_Texture();
+	Ready_Camera_Effect_Texture();
+	Ready_Execution_Texture();
+	Ready_PlayerGun_Texture();
+
+	Ready_Active_Execution();
+	Ready_Prototype_Ui_Life();
+	Ready_Active_Ui();
+	Ready_Prototype_Effect();
+	Ready_Active_Camera_Effect();
 }
 
 void CGame_Manager::Tick(_float fTimeDelta)

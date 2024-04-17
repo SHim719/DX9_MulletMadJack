@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize_Prototype()
 HRESULT CPlayer::Initialize(void * pArg)
 {
 	CBoxCollider::BOXCOLLISION_DESC desc;
-	desc.vScale = { 0.3f, 1.5f, 0.3f };
+	desc.vScale = { 0.3f, 2.5f, 0.3f };
 	desc.vOffset = { 0.f, 0.f, 0.f };
 
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
@@ -67,7 +67,6 @@ void CPlayer::Tick(_float fTimeDelta)
 		//DeathAnimation Trigger
 	}
 
-
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pTransformCom->Head_Roll(fTimeDelta, fHeadTilt);
 	//cout << fHeadTilt << endl;
@@ -85,7 +84,7 @@ void CPlayer::Tick(_float fTimeDelta)
 void CPlayer::LateTick(_float fTimeDelta)
 {
 	ColliderCheck(fTimeDelta);
-
+	SpeedControl(fTimeDelta);
 	Shot();
 }
 
@@ -182,7 +181,12 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
 		Camera_Shake_Order(600000.f, 0.4f);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);
+		/*m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);*/
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Neck"), true);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Head"), true);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Body"), true);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Hand"), true);
+
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift))
@@ -216,11 +220,13 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 		m_pTransformCom->Set_Speed(10.f);
  		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::DASH_STATE);
+		bDash = true;
 	}
 
 	if (m_pGameInstance->GetKeyUp(eKeyCode::LShift))
 	{
 		m_pTransformCom->Set_Speed(6.f);
+		bDash = false;
 		CPlayer_Manager::Get_Instance()->Set_Player_State(CPlayer::PLAYER_STATE::JUMP_STATE);
 	}
 
@@ -389,6 +395,19 @@ void CPlayer::Shot()
 
 		m_pGameInstance->Add_RayDesc(rayDesc);
 	}
+}
+
+void CPlayer::SpeedControl(_float fTimeDelta)
+{
+	if (bDash)
+	{
+		_float RealTimeSpeed  = m_pTransformCom->Get_Speed();
+		RealTimeSpeed -= fTimeDelta * 10.f;
+		if(RealTimeSpeed <= 0.f) RealTimeSpeed = 0.f;
+		m_pTransformCom->Set_Speed(RealTimeSpeed);
+	}
+
+
 }
 
 void CPlayer::ColliderCheck(_float fTimeDelta)

@@ -259,9 +259,6 @@
     <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
       <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\Player">
-      <UniqueIdentifier>{73c6387f-0a23-41e2-9959-817034cba94a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\Effect">
       <UniqueIdentifier>{6201846d-6c5a-4edb-b439-25185ca88092}</UniqueIdentifier>
     </Filter>
@@ -318,6 +315,24 @@
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Life\Part\TextBackGround">
       <UniqueIdentifier>{3cd04371-b89e-45c6-9a52-f3fc8a47a6b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Execution">
+      <UniqueIdentifier>{e2f6a640-e01f-45d9-85c5-c79abdf35f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Execution\Head">
+      <UniqueIdentifier>{71cd38ca-102d-4042-b3c9-0e32f3fce427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Execution\Weapon">
+      <UniqueIdentifier>{25c40130-6d4e-457a-9405-460f548e6df7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Execution\Punch">
+      <UniqueIdentifier>{58d8d8f9-3e90-4866-b388-47c0aa2d5008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Execution\Body">
+      <UniqueIdentifier>{d7ab056c-6bf4-4b8a-8c7c-acda63e96c43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Execution\Neck">
+      <UniqueIdentifier>{9d56822c-dad3-4051-835e-eb75f2cde1a1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -600,6 +615,18 @@
     <ClInclude Include="..\Public\CText_BackGround.h">
       <Filter>04. UI\Ui\CUi_Life\Part\TextBackGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Execution_Head.h">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Head</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Execution_Body.h">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Body</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Execution_Hand.h">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Punch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Private\Execution_Neck.h">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Neck</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -847,6 +874,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\CText_BackGround.cpp">
       <Filter>04. UI\Ui\CUi_Life\Part\TextBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Execution_Head.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Head</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Execution_Body.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Body</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Execution_Neck.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Neck</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Execution_Hand.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Punch</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
