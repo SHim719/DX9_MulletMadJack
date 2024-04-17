@@ -172,6 +172,7 @@ public:
 public:
 	void AddSpeedPerSec(_float Speed) { m_fSpeedPerSec += Speed; }
 	void Set_Speed(_float Speed) { m_fSpeedPerSec = Speed; }
+	_float Get_Speed() { return m_fSpeedPerSec; }
 	void MonsterDieUi_Go_Up(_float fTimeDelta, _float Speed);
 
 private:

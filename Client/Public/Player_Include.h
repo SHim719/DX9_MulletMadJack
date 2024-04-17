@@ -12,3 +12,9 @@
 #include "Pistol_Reload_Left_Hand.h"
 #include "Pistol_Reload_Left_Arm.h"
 #include "Phone.h"
+
+//Execution
+#include "Execution_Head.h"
+#include "Execution_Body.h"
+#include "Execution_Neck.h"
+#include "Execution_Hand.h"

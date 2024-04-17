@@ -56,6 +56,7 @@ public:
 	HRESULT Ready_Clear_Texture();
 	HRESULT Ready_Shop_Texture();
 	HRESULT Ready_Start_Texture();
+	HRESULT Ready_Execution_Texture();
 
 	HRESULT Ready_Camera_Effect_Texture();
 	HRESULT Ready_PlayerGun_Texture();
@@ -68,6 +69,7 @@ public:
 
 	HRESULT Ready_Active_Gun();
 	HRESULT Ready_Active_Camera_Effect();
+	HRESULT Ready_Active_Execution();
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };

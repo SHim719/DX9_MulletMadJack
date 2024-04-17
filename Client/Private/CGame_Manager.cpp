@@ -41,8 +41,10 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Shop_Texture();
 	Ready_Start_Texture();
 	Ready_Camera_Effect_Texture();
-
+	Ready_Execution_Texture();
 	Ready_PlayerGun_Texture();
+
+	Ready_Active_Execution();
 	Ready_Prototype_Ui_Life();
 	Ready_Active_Ui();
 	Ready_Prototype_Effect();
@@ -571,6 +573,31 @@ HRESULT CGame_Manager::Ready_Start_Texture()
 	return S_OK;
 }
 
+HRESULT CGame_Manager::Ready_Execution_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Neck_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Execution/Neck/NECK%d.png", 10))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Head_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Execution/Head/HEAD%d.png", 13))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Body_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Execution/Body/WhiteSuite/BODY%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Hand_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Execution/Punch/PUNCH%d.png", 2))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
 HRESULT CGame_Manager::Ready_PlayerGun_Texture()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Idle_Textures",
@@ -771,6 +798,25 @@ HRESULT CGame_Manager::Ready_Camera_Effect_Texture()
 HRESULT CGame_Manager::Ready_Active_Camera_Effect()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Camera_Dash", eUiRenderType::Render_Blend, CDash_Effect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CGame_Manager::Ready_Active_Execution()
+{
+
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Execution_Neck", eUiRenderType::Render_NonBlend, CExecution_Neck::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Execution_Body", eUiRenderType::Render_NonBlend, CExecution_Body::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Execution_Head", eUiRenderType::Render_NonBlend, CExecution_Head::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Execution_Hand", eUiRenderType::Render_NonBlend, CExecution_Hand::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
