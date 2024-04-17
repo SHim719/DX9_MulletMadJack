@@ -1,10 +1,13 @@
 #include "CUi_Announcer.h"
 #include "Ui_Pos.h"
 #include "CGame_Manager.h"
+#include "GameInstance.h"
+#include "CText_BackGround.h"
 
 
 CUi_Announcer::CUi_Announcer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	:CUi(pGraphic_Device)
+	,m_pGameManager(CGame_Manager::Get_Instance())
 {
 }
 
@@ -52,6 +55,8 @@ void CUi_Announcer::Tick(_float fTimeDelta)
 		Texture_Switching(fTimeDelta);
 		m_fUniqueTextureTime = 0;
 	}
+
+	Set_Pos_TextBackGround();
 }
 
 void CUi_Announcer::LateTick(_float fTimeDelta)
@@ -70,8 +75,8 @@ HRESULT CUi_Announcer::Render()
 
 	m_pUniqueTexture->Bind_Texture(m_iUniqueTextureIndex);
 	m_pVIBufferCom->Render();
-
-	//m_pTextManager->Print_Text(TextType::Tutorial, 0);
+	
+	TextRender();
 
 	return S_OK;
 }
@@ -82,7 +87,15 @@ HRESULT CUi_Announcer::Initialize_Active()
 	Initialize_Set_Size();
 	Initialize_Set_Speed();
 	Initialize_Set_Scale_Pos_Rotation(nullptr);
-	
+	Ui_Pos_Size_Rotation TextBack = m_UiDesc;
+	TextBack.m_fX = m_UiDesc.m_fX - 800;
+	TextBack.m_fSizeX = 650;
+	TextBack.m_fSizeY = 100;
+	if (m_pTextBackGround == nullptr)
+	{
+		m_pTextBackGround = (CText_BackGround*)m_pGameInstance->
+			Add_Ui_PartClone(L"CText_BackGround", &TextBack);
+	}
 
 	return S_OK;
 }
@@ -202,6 +215,51 @@ void CUi_Announcer::Texture_Switching(_float fTimeDelta)
 		m_iUniqueTextureIndex = 0;
 }
 
+void CUi_Announcer::TextRender()
+{
+	if (m_pGameManager->Get_StageProgress() == StageProgress::ShopEnd
+		|| m_pGameManager->Get_StageProgress() == StageProgress::Changing)
+	{
+		if (m_pGameManager->Get_MaxSize(TextType::ShopEnd) >
+			m_pGameManager->Get_TextNumber(TextType::ShopEnd))
+		{
+			m_pTextBackGround->Render();
+			m_pGameManager->Print_Text(TextType::ShopEnd,
+				0);
+		}
+	}
+	else if(m_pGameManager->Get_StageProgress() == 
+		StageProgress::TutorialMidSpot)
+	{
+		if (m_pGameManager->Get_MaxSize(TextType::TutorialMidSpot) >
+			m_pGameManager->Get_TextNumber(TextType::TutorialMidSpot))
+		{
+			m_pTextBackGround->Render();
+			m_pGameManager->Print_Text(TextType::TutorialMidSpot,
+				m_pGameManager->Get_TextNumber(TextType::TutorialMidSpot));
+		}
+	}
+	else if (m_pGameManager->Get_StageProgress() ==
+		StageProgress::TutorialClear)
+	{
+		if (m_pGameManager->Get_MaxSize(TextType::TutorialClear) >
+			m_pGameManager->Get_TextNumber(TextType::TutorialClear))
+		{
+			m_pTextBackGround->Render();
+			m_pGameManager->Print_Text(TextType::TutorialClear,
+				m_pGameManager->Get_TextNumber(TextType::TutorialClear));
+		}
+	}
+}
+
+void CUi_Announcer::Set_Pos_TextBackGround()
+{
+	_float3 BackPos = m_pTransformCom->Get_Pos();
+	BackPos.x -= 500;
+	BackPos.y += 100;
+	m_pTextBackGround->Set_Pos(BackPos);
+}
+
 CUi_Announcer* CUi_Announcer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CUi_Announcer* pInstance = new CUi_Announcer(pGraphic_Device);
@@ -216,6 +274,7 @@ CUi_Announcer* CUi_Announcer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 void CUi_Announcer::Free()
 {
+	Safe_Release(m_pTextBackGround);
 	Safe_Release(m_pUniqueTexture);
 	__super::Free();
 }

@@ -108,7 +108,7 @@ public:
 
 #pragma region CText
 	void Print_Text(CText::Text_Info Text);
-
+	void Print_Big_Text(CText::Text_Info BigText);
 
 #pragma endregion
 private:

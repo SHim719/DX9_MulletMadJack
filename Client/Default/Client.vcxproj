@@ -176,6 +176,9 @@
     <ClInclude Include="..\Public\Client_Components.h" />
     <ClInclude Include="..\Public\Client_Struct.h" />
     <ClInclude Include="..\Public\CTextManager.h" />
+    <ClInclude Include="..\Public\CText_BackGround.h" />
+    <ClInclude Include="..\Public\CUi_Finish.h" />
+    <ClInclude Include="..\Public\CUi_LoadingBackGround.h" />
     <ClInclude Include="..\Public\Drone_Monster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -269,6 +272,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\CTextManager.cpp" />
+    <ClCompile Include="..\Private\CText_BackGround.cpp" />
+    <ClCompile Include="..\Private\CUi_Finish.cpp" />
+    <ClCompile Include="..\Private\CUi_LoadingBackGround.cpp" />
     <ClCompile Include="..\Private\Door.cpp" />
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp" />

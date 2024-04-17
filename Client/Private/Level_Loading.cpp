@@ -4,6 +4,8 @@
 #include "Loader.h"
 #include "Level_Logo.h"
 #include "Level_GamePlay.h"
+#include "CUi_LoadingBackGround.h"
+
 
 CLevel_Loading::CLevel_Loading(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device } 
@@ -16,6 +18,8 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 
 	m_eNextLevelID = eNextLevelID;
 
+	m_pLoadingBackGround = (CUi_LoadingBackGround*)m_pGameInstance->Add_Ui_PartClone
+	(L"CUi_LoadingBackGround", nullptr);
 	/* 로딩 레벨에 보여주기위한 객체(배경, 로딩바, 로딩상태폰트)들을 생성한다. */
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
@@ -31,13 +35,13 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 	//if (FAILED(Test_LifeUi_Clone()))
 		//return E_FAIL;
 
-
 	return S_OK;
 }
 
 void CLevel_Loading::Tick(_float fTimeDelta)
 {
-
+	m_pLoadingBackGround->Tick(fTimeDelta);
+	m_pLoadingBackGround->Set_BarRatio(m_pLoader->Get_ProgressPercent());
 	if (true == m_pLoader->isFinished())
 	{
 		int a = 10;
@@ -61,13 +65,15 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 			if (FAILED(m_pGameInstance->Change_Level(pLevel)))
 				return;
 		}		
-	}	
+	}
 }
 
 HRESULT CLevel_Loading::Render()
 {	
 	m_pLoader->Show_LoadingText();
-	
+
+	m_pLoadingBackGround->Render();
+
 	return S_OK;
 }
 
@@ -93,6 +99,6 @@ CLevel_Loading * CLevel_Loading::Create(LPDIRECT3DDEVICE9 pGraphic_Device, LEVEL
 void CLevel_Loading::Free()
 {
 	__super::Free();
-
+	Safe_Release(m_pLoadingBackGround);
 	Safe_Release(m_pLoader);
 }

@@ -29,6 +29,7 @@ public:
 		SetWindowText(g_hWnd, m_szLoadingText);
 	}
 
+	_float Get_ProgressPercent() const { return m_fProgress; }
 private:
 	LPDIRECT3DDEVICE9	m_pGraphic_Device = { nullptr };
 
@@ -42,12 +43,32 @@ private:
 
 private:
 	CGameInstance*		m_pGameInstance = { nullptr };
-
+	_float				m_fProgress = { 0 };
 private:
 	HRESULT Loading_For_Logo_Level();
 	HRESULT Loading_For_GamePlay_Level();
-
 	HRESULT Loading_For_WhiteSuitMonster();
+
+
+	HRESULT Loading_For_Ui();
+	HRESULT Ready_ClearUi_Texture();
+	HRESULT Ready_ShopUi_Texture();
+	HRESULT Ready_StartUi_Texture();
+	HRESULT Ready_OnGoingUi_Texture();
+	HRESULT Ready_TextUi_Texture();
+	HRESULT Ready_PlayerUi_Texture();
+	HRESULT Ready_PlayerGunUi_Texture();
+	HRESULT Ready_Camera_Effect_Texture();
+
+	HRESULT Ready_Prototype_Ui_Life();
+	HRESULT Ready_Active_UiClear();
+	HRESULT Ready_Active_UiShop();
+	HRESULT Ready_Active_UiOnGoing();
+	HRESULT Ready_Active_Gun();
+	HRESULT Ready_Prototype_Effect();
+	HRESULT Ready_Active_Camera_Effect();
+
+	void Initialize_TextManager();
 
 public:
 	static CLoader* Create(LPDIRECT3DDEVICE9 pGraphic_Device, LEVEL eNextLevelID);

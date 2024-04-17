@@ -352,7 +352,6 @@ void CPhone::Synchronize_PlayerLife_Number()
 
 HRESULT CPhone::Render_Number()
 {
-
     if (FAILED(m_pFirstNumTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
