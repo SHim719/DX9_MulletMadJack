@@ -63,6 +63,8 @@ public:
 	void Set_PlayerHP(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP(_fPlayerHp); }
 	void Set_PlayerHP_Add(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP_Add(_fPlayerHp); }
 
+	void Camera_Shake_Order(_float _fShakeTime, _float _fShakePower) { m_pPlayer->Camera_Shake_Order(_fShakePower,_fShakeTime); }
+
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };

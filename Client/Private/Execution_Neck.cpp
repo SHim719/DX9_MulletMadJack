@@ -56,7 +56,7 @@ void CExecution_Neck::Tick(_float fTimeDelta)
 	}
 
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
-		//m_iTexture_Index = 0;
+		m_iTexture_Index = m_pTextureCom->Get_MaxTextureNum();
 		AnimationDelayReset();
 	}
 
@@ -70,7 +70,7 @@ void CExecution_Neck::Tick(_float fTimeDelta)
 void CExecution_Neck::LateTick(_float fTimeDelta)
 {
 	//_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1.5f, 2, 3, 1, 2, 6);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + CGame_Manager::Get_Instance()->Object_Shake(5).x, m_UiDesc.m_fY + CGame_Manager::Get_Instance()->Object_Shake(5).y, 0.8f));
 }
 
 HRESULT CExecution_Neck::Render()

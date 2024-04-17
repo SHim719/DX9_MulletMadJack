@@ -627,6 +627,9 @@
     <ClInclude Include="..\Private\Execution_Neck.h">
       <Filter>04. UI\Ui\CUi_Active\Execution\Neck</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Execution_Knife.h">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -886,6 +889,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Hand.cpp">
       <Filter>04. UI\Ui\CUi_Active\Execution\Punch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Execution_Knife.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Execution\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

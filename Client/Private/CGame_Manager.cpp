@@ -322,7 +322,7 @@ HRESULT CGame_Manager::Ready_Execution_Texture()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Head_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Execution/Head/HEAD%d.png", 13))))
+			L"../Bin/Resources/Textures/Execution/Head/HEAD%d.png", 17))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Body_Texture",
@@ -333,6 +333,11 @@ HRESULT CGame_Manager::Ready_Execution_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Hand_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Execution/Punch/PUNCH%d.png", 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Knife_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Execution/Weapon/Knife/HAND%d.png", 3))))
 		return E_FAIL;
 
 	return S_OK;
@@ -352,7 +357,31 @@ HRESULT CGame_Manager::Ready_Active_Execution()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Execution_Hand", eUiRenderType::Render_NonBlend, CExecution_Hand::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Execution_Knife", eUiRenderType::Render_NonBlend, CExecution_Knife::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
+}
+
+_float2 CGame_Manager::Object_Shake(_float fPower)
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dis(0, 1000);
+	_float2 ShakeReturn = { 0,0 };
+	int i = 0;
+	if (0 >= (dis(gen) - 500)) i = -1;
+	else i = 1;
+
+	if (dis(gen) % 2 == 0) {
+		ShakeReturn.x = fPower * i;
+	}
+	else {
+		ShakeReturn.y = fPower * i;
+	}
+
+
+	return ShakeReturn;
 }
 
 void CGame_Manager::Free()

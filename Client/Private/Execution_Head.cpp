@@ -24,7 +24,7 @@ HRESULT CExecution_Head::Initialize(void* pArg)
 		return E_FAIL;
 
 	Default_Set_Size();
-	Default_Set_Delay(0.035f);
+	Default_Set_Delay(0.025f);
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 	Set_Texture_Index(0);
 
@@ -34,6 +34,8 @@ HRESULT CExecution_Head::Initialize(void* pArg)
 HRESULT CExecution_Head::Initialize_Active()
 {
 	m_iTexture_Index = 0;
+	m_fDelayedAnimation = 0.15f;
+	m_fDelayedAnimation2 = 0.1f;
 	Default_Set_Size();
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 
@@ -51,7 +53,29 @@ void CExecution_Head::Tick(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.1f));
 
 	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
-		m_iTexture_Index++;
+		if(m_iTexture_Index == 5){
+			m_fDelayedAnimation -= fTimeDelta;
+			if(m_fDelayedAnimation < 0.f){
+				CPlayer_Manager::Get_Instance()->Camera_Shake_Order(0.1f, 2000000.f);
+				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), true);
+				m_iTexture_Index++;
+			}
+		}else if(m_iTexture_Index == m_pTextureCom->Get_MaxTextureNum()){
+			m_fDelayedAnimation2 -= fTimeDelta;
+			if(m_fDelayedAnimation2 < 0.f){
+				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Head"), false);
+				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Body"), false);
+				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Neck"), false);
+				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), false);
+				AnimationDelayReset();
+			}
+		}
+		else {
+			m_iTexture_Index++;
+		}
+
+		if (m_iTexture_Index == (m_pTextureCom->Get_MaxTextureNum() - 3))
+			CPlayer_Manager::Get_Instance()->Camera_Shake_Order(0.2f, 2000000.f);
 		AnimationDelayReset();
 	}
 
@@ -59,6 +83,7 @@ void CExecution_Head::Tick(_float fTimeDelta)
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Head"), false);
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Body"), false);
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Neck"), false);
+		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), false);
 		AnimationDelayReset();
 	}
 
@@ -71,8 +96,10 @@ void CExecution_Head::Tick(_float fTimeDelta)
 
 void CExecution_Head::LateTick(_float fTimeDelta)
 {
-	//_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1.5f, 2, 3, 1, 2, 6);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+	if (m_iTexture_Index == (m_pTextureCom->Get_MaxTextureNum() - 3) || m_iTexture_Index == (m_pTextureCom->Get_MaxTextureNum() - 2)) {
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + CGame_Manager::Get_Instance()->Object_Shake(20).x, m_UiDesc.m_fY + CGame_Manager::Get_Instance()->Object_Shake(20).y, 0.1f));
+	}//_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1.5f, 2, 3, 1, 2, 6);
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + CGame_Manager::Get_Instance()->Object_Shake(5).x , m_UiDesc.m_fY + CGame_Manager::Get_Instance()->Object_Shake(5).y, 0.1f));
 }
 
 HRESULT CExecution_Head::Render()

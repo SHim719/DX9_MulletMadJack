@@ -1,6 +1,6 @@
 #include "Execution_Body.h"
 #include "GameInstance.h"
-
+#include "CGame_Manager.h"
 CExecution_Body::CExecution_Body(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CUi(pGraphic_Device)
 {
@@ -70,7 +70,7 @@ void CExecution_Body::Tick(_float fTimeDelta)
 void CExecution_Body::LateTick(_float fTimeDelta)
 {
 	//_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1.5f, 2, 3, 1, 2, 6);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + CGame_Manager::Get_Instance()->Object_Shake(5).x, m_UiDesc.m_fY + CGame_Manager::Get_Instance()->Object_Shake(5).y, 0.9f));
 }
 
 HRESULT CExecution_Body::Render()

@@ -184,6 +184,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Public\Execution_Knife.h" />
     <ClInclude Include="..\public\Light_Manager.h" />
     <ClInclude Include="..\Public\Execution_Body.h" />
     <ClInclude Include="..\Public\Execution_Hand.h" />
@@ -294,6 +295,7 @@
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Body.cpp" />
     <ClCompile Include="..\Private\Execution_Hand.cpp" />
+    <ClCompile Include="..\Private\Execution_Knife.cpp" />
     <ClCompile Include="..\Private\Execution_Neck.cpp" />
     <ClCompile Include="..\Private\FPS_Camera.cpp" />
     <ClCompile Include="..\Private\Light_Manager.cpp" />

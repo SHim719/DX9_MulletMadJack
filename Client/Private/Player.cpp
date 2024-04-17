@@ -186,7 +186,6 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Head"), true);
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Body"), true);
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Hand"), true);
-
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift))
@@ -402,7 +401,7 @@ void CPlayer::SpeedControl(_float fTimeDelta)
 	if (bDash)
 	{
 		_float RealTimeSpeed  = m_pTransformCom->Get_Speed();
-		RealTimeSpeed -= fTimeDelta * 10.f;
+		RealTimeSpeed -= fTimeDelta * 6.f;
 		if(RealTimeSpeed <= 0.f) RealTimeSpeed = 0.f;
 		m_pTransformCom->Set_Speed(RealTimeSpeed);
 	}
