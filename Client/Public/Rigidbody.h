@@ -3,6 +3,10 @@
 #include "Client_Defines.h"
 #include "Component.h"
 
+BEGIN(Engine)
+class CTransform;
+END
+
 BEGIN(Client)
 
 class CRigidbody : public CComponent

@@ -13,6 +13,7 @@
 #include "Soda.h"
 #include "Door.h"
 #include "Player.h"
+#include "Trigger_Headers.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -20,7 +21,6 @@ CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pGraphic_Device);
-	Safe_AddRef(m_pGameInstance);
 }
 
 // typedef unsigned(__stdcall* _beginthreadex_proc_type)(void*);
@@ -99,6 +99,7 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	if (FAILED(Loading_For_WhiteSuitMonster()))
 		return E_FAIL;
+
 
 #pragma region TEXTURE_DRONE_MONSTER
 //	///* For Prototype_Component_Texture_Drone_Monster */
@@ -323,12 +324,18 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
     if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Door"),
         CDoor::Create(m_pGraphic_Device))))
         return E_FAIL;
-
 #pragma endregion
 
-	/* For Prototype_GameObject_White_Suit_Monster */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_White_Suit"),
 		CWhite_Suit_Monster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Bullet"),
+		CEnemy_Bullet::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SpawnTrigger"),
+		CSpawnTrigger::Create(m_pGraphic_Device))))
 		return E_FAIL;
 	//
 	///* For Prototype_GameObject_Drone_Monster */
@@ -346,8 +353,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 
-
-	
 	lstrcpy(m_szLoadingText, TEXT("UI을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("로딩이 완료되었습니다."));
@@ -417,6 +422,10 @@ HRESULT CLoader::Loading_For_WhiteSuitMonster()
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Wall"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/ws_flyback_wall/ws_flyback_wall%d.png"), 28))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Enemy_Bullet_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Bullet0.png")))))
 		return E_FAIL;
 
 	return S_OK;

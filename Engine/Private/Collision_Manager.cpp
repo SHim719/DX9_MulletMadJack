@@ -22,15 +22,18 @@ void CCollision_Manager::Tick()
 	//Collision_Box(4, L"Player", L"Floor");
 
 	Collision_Box(3, L"Player", L"Door", Trigger);
+	Collision_Box(3, L"Player", L"SpawnTrigger", Trigger);
 	Collision_Box(3, L"Player", L"SodaMachine", Collision);
 	Collision_Box(3, L"Player", L"Monster", Collision);
-
+	
 	Collision_Box(3, L"Monster", L"Wall", Collision);
 	Collision_Box(3, L"Monster", L"Floor", Collision);
 
-	//Collision_Box(3, L"Soda", L"Wall", Collision);
 	Collision_Box(3, L"Soda", L"Floor", Collision);
 	Collision_Box(3, L"Soda", L"Soda", Collision);
+
+	Collision_Box(3, L"Bullet", L"Player", Trigger);
+	Collision_Box(3, L"Bullet", L"Wall", Trigger);
 
 	Intersect_Ray();
 }
@@ -45,8 +48,6 @@ void CCollision_Manager::Intersect_Ray()
 
 		auto& gameObjects = pLayer->Get_GameObjects();
 
-		Safe_AddRef(pLayer);
-
 		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
 			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
@@ -56,11 +57,11 @@ void CCollision_Manager::Intersect_Ray()
 			_float3 fHitWorldPos;
 			_float fDist;
 			if (pVIBuffer->Intersect_Ray((*it)->Get_Transform(), RayDesc.vRayWorldPos, RayDesc.vRayDir, &fHitWorldPos, &fDist))
+			{
 				(*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg);
-
+				break;
+			}
 		}
-
-		Safe_Release(pLayer);
 	}
 
 	m_RayDescs.clear();

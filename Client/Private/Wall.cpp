@@ -36,7 +36,7 @@ void CWall::PriorityTick(_float fTimeDelta)
 
 void CWall::Tick(_float fTimeDelta)
 {
-	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	//m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CWall::LateTick(_float fTimeDelta)

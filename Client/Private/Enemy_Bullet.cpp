@@ -1,6 +1,15 @@
 #include "Enemy_Bullet.h"
 
 #include "GameInstance.h"
+#include "PlayerManager.h"
+#include "Light_Manager.h"
+
+/*
+ LightDesc.Diffuse * Texture.Pixel * MaterialDesc.Diffuse 
+	 1, 1, 1, 1		   0.5, 0.2, 0.6, 1		1, 0, 0, 1
+		 0, 0, 1, 1 
+*/
+
 
 CEnemy_Bullet::CEnemy_Bullet(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
@@ -9,7 +18,6 @@ CEnemy_Bullet::CEnemy_Bullet(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 CEnemy_Bullet::CEnemy_Bullet(const CEnemy_Bullet& rhs)
 	: CGameObject{ rhs }
-	, m_fTimeAcc(0.f)
 	, m_fBulletDuration(3.f)
 {
 }
@@ -21,36 +29,22 @@ HRESULT CEnemy_Bullet::Initialize_Prototype()
 
 HRESULT CEnemy_Bullet::Initialize(void* pArg)
 {
-	if (nullptr == pArg)
-		return E_FAIL;
-
-	memcpy(&m_Enemy_BulletDesc, pArg, sizeof m_Enemy_BulletDesc);
-
 	if (FAILED(Add_Components()))
 		return E_FAIL;
 
-	//m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Find_GameObject(LEVEL_GAMEPLAY, TEXT("Main_Camera")));
-
-	m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera());
-
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_Enemy_BulletDesc.vPosition);
-
-	_float3 Scale = { (_float)1 / 16, (_float)1 / 16, (_float)1 / 16 };
-	m_pTransformCom->Set_Scale(Scale);
-
-	// 카메라 위치로 목표점을 잡음
-	m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
 
 	return S_OK;
 }
 
 void CEnemy_Bullet::PriorityTick(_float fTimeDelta)
 {
-	m_pTransformCom->Go_Straight(fTimeDelta);	// 카메라 위치로 총알이 전진하게 함
 }
 
 void CEnemy_Bullet::Tick(_float fTimeDelta)
 {
+	m_pTransformCom->Go_Straight(fTimeDelta);
+	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+
 	m_fBulletDuration -= fTimeDelta;
 
 	if (m_fBulletDuration <= 0)
@@ -67,7 +61,7 @@ HRESULT CEnemy_Bullet::Render()
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_Texture(m_pAnimationCom->Get_TextureNum())))
+	if (FAILED(m_pTextureCom->Bind_Texture(0)))
 		return E_FAIL;
 
 	if (FAILED(Begin_RenderState()))
@@ -76,36 +70,52 @@ HRESULT CEnemy_Bullet::Render()
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+	if (m_pBoxCollider)
+		m_pBoxCollider->Render();
+
 	if (FAILED(End_RenderState()))
 		return E_FAIL;
 
 	return S_OK;
 }
 
+void CEnemy_Bullet::OnTriggerEnter(CGameObject* pOther)
+{
+	if ("Player" == pOther->Get_Tag())
+	{
+		float fDamage = 3.f;
+		static_cast<CPlayer*>(pOther)->Hit(&fDamage);
+	}
+
+	m_bDestroyed = true;
+}
+
 HRESULT CEnemy_Bullet::Add_Components()
 {
-	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
+	m_pVIBufferCom = dynamic_cast<CVIBuffer_Bullet*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Bullet_Default"), TEXT("VIBuffer")));
 
-	/*CTransform::TRANSFORM_DESC	TransformDesc{};
+	CTransform::TRANSFORM_DESC	TransformDesc{};
+	TransformDesc.fSpeedPerSec = 12.f;
+	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), &TransformDesc));
 
-	TransformDesc.fSpeedPerSec = 5.f;
-	TransformDesc.fRotationPerSec = D3DXToRadian(90.f);*/
+	m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Enemy_Bullet_Texture"), TEXT("Enemy_Bullet_Texture")));
 
-	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), &m_Enemy_BulletDesc));
+	CBoxCollider::BOXCOLLISION_DESC pDesc;
+	pDesc.vScale = { 0.25f, 0.25f, 0.5f };
+	pDesc.vOffset = { 0.f, 0.f, 0.f };
 
-	m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Enemy_Bullet"), TEXT("Texture")));
-
-	m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Animation"), TEXT("Animation")));
+	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
 
 	return S_OK;
 }
 
 HRESULT CEnemy_Bullet::Begin_RenderState()
 {
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	m_pGraphic_Device->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
+
 
 	return S_OK;
 }
@@ -149,8 +159,7 @@ void CEnemy_Bullet::Free()
 {
 	__super::Free();
 
-	Safe_Release(m_pAnimationCom);
 	Safe_Release(m_pTextureCom);
 	Safe_Release(m_pVIBufferCom);
-	Safe_Release(m_pTransformCom);
+	Safe_Release(m_pBoxCollider);
 }

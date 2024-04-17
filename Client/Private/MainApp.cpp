@@ -4,6 +4,7 @@
 #include "Level_Loading.h"
 #include "CGame_Manager.h"
 #include "PlayerManager.h"
+#include "Light_Manager.h"
 #include "MapLoader.h"
 
 CMainApp::CMainApp()
@@ -26,6 +27,8 @@ HRESULT CMainApp::Initialize()
 
 	CGame_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 	CPlayer_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
+	CLight_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
+
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;
@@ -74,6 +77,7 @@ void CMainApp::Free()
 	CMapLoader::Get_Instance()->Free();
 	CGame_Manager::Get_Instance()->Free();
 	CPlayer_Manager::Get_Instance()->Free();
+	CLight_Manager::Get_Instance()->Free();
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pGameInstance);	
 

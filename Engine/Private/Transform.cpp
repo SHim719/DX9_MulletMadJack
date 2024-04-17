@@ -72,7 +72,9 @@ void CTransform::Set_Scale(const _float3& vScale)
 void CTransform::Set_Target(const _float3& vCurPoint, const _float3& vWorldPoint)
 {
 	_float3 vDir = vWorldPoint - vCurPoint;
+	D3DXVec3Normalize(&vDir, &vDir);
 
+	vDir *= Get_Scale().z;
 	Set_State(STATE_LOOK, &vDir);
 }
 

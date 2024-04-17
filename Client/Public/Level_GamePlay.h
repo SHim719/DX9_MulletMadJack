@@ -18,7 +18,7 @@ public:
 	virtual void Tick(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
 
-public:
+protected:
 	void Initialize_SodaMachine();
 
 public:

@@ -39,7 +39,7 @@ void CSodaMachine::Tick(_float fTimeDelta)
 		Pouring_Soda(fTimeDelta);
 	}
 
-	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	//m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CSodaMachine::LateTick(_float fTimeDelta)

@@ -59,7 +59,7 @@ void CDoor::Tick(_float fTimeDelta)
 		m_pTransformCom->Set_WorldMatrix(PivotMatrix * m_OriginMatrix);
 	}
 
-	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	//m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 
 }
 

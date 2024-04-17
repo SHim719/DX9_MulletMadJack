@@ -36,6 +36,7 @@ namespace Client
 		SODAMACHINE,
 		SODAMACHINE_BANNER,
 		BORDER,
+		SPAWN_TRIGGER,
 		OBJTYPE_END,
 	};
 
@@ -43,6 +44,11 @@ namespace Client
 	{
 		WHITE_SUIT,
 		DRONE,
+	};
+
+	enum TRIGGERTYPE
+	{
+		TRIGGER_END
 	};
 }
 

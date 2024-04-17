@@ -8,6 +8,7 @@
 #include "Player_Include.h"
 #include "Dash_Effect.h"
 #include "CTextManager.h"
+#include "Light_Manager.h"
 
 IMPLEMENT_SINGLETON(CGame_Manager)
 
@@ -51,6 +52,8 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 void CGame_Manager::Tick(_float fTimeDelta)
 {
+	CLight_Manager::Get_Instance()->Reset_Light();
+
 	m_pGameInstance->Tick_Engine(fTimeDelta);
 
 	Change_Check();
@@ -267,6 +270,10 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Door_Default"),
 		CVIBuffer_Door::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Bullet_Default"),
+		CVIBuffer_Bullet::Create(m_pGraphic_Device))))
 		return E_FAIL;
 #pragma endregion
 	return S_OK;

@@ -295,6 +295,18 @@
     <Filter Include="02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster">
       <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Sphere">
+      <UniqueIdentifier>{7b68a34a-14af-401e-b13f-a8e8ee75b042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Bullet">
+      <UniqueIdentifier>{a62372a7-04fb-4e6f-aba1-8e0301f31f74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\LightManager">
+      <UniqueIdentifier>{be435700-5d46-413d-84e0-80bfd545edae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger">
+      <UniqueIdentifier>{0a2dd1f7-eab8-41f4-87f0-e347d11ac960}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -552,6 +564,21 @@
     <ClInclude Include="..\Public\Orange_Pants_Monster.h">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Sphere.h">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Sphere</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Bullet.h">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\Light_Manager.h">
+      <Filter>97. Manager\LightManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\SpawnTrigger.h">
+      <Filter>02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Trigger_Headers.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -778,6 +805,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
       <Filter>02.GameObjects\04. EnemyObject\Pawns\Orange_Pants_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Sphere.cpp">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Sphere</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Bullet.cpp">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Light_Manager.cpp">
+      <Filter>97. Manager\LightManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\SpawnTrigger.cpp">
+      <Filter>02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

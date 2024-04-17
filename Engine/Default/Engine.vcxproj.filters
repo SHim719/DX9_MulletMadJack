@@ -278,9 +278,6 @@
     <ClCompile Include="..\Private\Camera_Manager.cpp">
       <Filter>01.Utility\98. Camera\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Collision_Manager.cpp">
-      <Filter>01.Utility\04.Components\Collider\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\Collider.cpp">
       <Filter>01.Utility\04.Components\Collider</Filter>
     </ClCompile>
@@ -304,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CText.cpp">
       <Filter>01.Utility\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Collision_Manager.cpp">
+      <Filter>01.Utility\04.Components\Collider\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

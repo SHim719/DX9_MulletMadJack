@@ -29,7 +29,6 @@ public:
 		_float3 fHitWorldPos;
 		_float fDist;
 	}ENEMYHIT_DESC;
-
 protected:
 	CPawn(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CPawn(const CPawn& rhs);
@@ -44,8 +43,8 @@ public:
 	virtual HRESULT Render() override;
 
 protected:
-	class CFPS_Camera* m_pCamera = { nullptr };
-	class CPlayer*	m_pTarget = { nullptr };
+	class CFPS_Camera*	m_pCamera = { nullptr };
+	class CPlayer*		m_pTarget = { nullptr };
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

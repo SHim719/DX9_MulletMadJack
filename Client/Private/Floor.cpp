@@ -35,7 +35,7 @@ void CFloor::PriorityTick(_float fTimeDelta)
 
 void CFloor::Tick(_float fTimeDelta)
 {
-	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	//m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CFloor::LateTick(_float fTimeDelta)

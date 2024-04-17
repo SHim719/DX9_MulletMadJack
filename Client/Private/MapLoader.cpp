@@ -6,6 +6,9 @@
 #include "SodaMachine.h"
 
 #include "Monster_Headers.h"
+#include "Trigger_Headers.h"
+
+
 
 IMPLEMENT_SINGLETON(CMapLoader)
 
@@ -58,6 +61,8 @@ HRESULT CMapLoader::Load_Monster(HANDLE hFile, LEVEL eLevel)
 	if (FALSE == iReadFlag)
 		return E_FAIL;
 
+	CSpawnTrigger::Clear();
+	CSpawnTrigger::reserve(iVecSize);
 	for (_uint j = 0; j < iVecSize; ++j)
 	{
 		_float4x4 worldMatrix = {};
@@ -89,7 +94,9 @@ HRESULT CMapLoader::Load_Monster(HANDLE hFile, LEVEL eLevel)
 			break;
 		}
 		pMonster->Get_Transform()->Set_WorldMatrix(worldMatrix);
+		pMonster->Set_Active(false);
 
+		CSpawnTrigger::Add_EnemyObj(pMonster);
 		iReadFlag = 1;
 	}
 	
@@ -107,38 +114,35 @@ HRESULT CMapLoader::Load_Trigger(HANDLE hFile, LEVEL eLevel)
 
 	for (_uint j = 0; j < iVecSize; ++j)
 	{
-		//_float4x4 worldMatrix = {};
-		//_uint iTextureIndex = 0;
-		//_uint iLayerStrLength = 0;
-		//_tchar szLayer[MAX_PATH] = {};
-		//_uint iPrototypeTagLength = 0;
-		//_tchar szPrototypeTag[MAX_PATH] = {};
-		//_float3 vColliderOffset;
-		//_float3 vColliderScale;
-		//
-		//iReadFlag += (int)ReadFile(hFile, &worldMatrix, sizeof(_float4x4), &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, &iTextureIndex, sizeof(_uint), &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, &iLayerStrLength, sizeof(_uint), &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, szLayer, sizeof(_tchar) * iLayerStrLength, &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, &iPrototypeTagLength, sizeof(_uint), &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
-		//iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
-		//
-		//CGameObject* pMonster = nullptr;
-		//switch (MONSTERTYPE(iTextureIndex))
+		_float4x4 worldMatrix = {};
+		_uint iTextureIndex = 0;
+		_uint iLayerStrLength = 0;
+		_tchar szLayer[MAX_PATH] = {};
+		_uint iPrototypeTagLength = 0;
+		_tchar szPrototypeTag[MAX_PATH] = {};
+		_float3 vColliderOffset;
+		_float3 vColliderScale;
+		
+		iReadFlag += (int)ReadFile(hFile, &worldMatrix, sizeof(_float4x4), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &iTextureIndex, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &iLayerStrLength, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, szLayer, sizeof(_tchar) * iLayerStrLength, &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &iPrototypeTagLength, sizeof(_uint), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
+		iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
+		
+		//CGameObject* pTrigger = nullptr;
+		//switch (TRIGGERTYPE(iTextureIndex))
 		//{
-		//
-		//case WHITE_SUIT:
-		//	pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_White_Suit");
-		//	break;
-		//case DRONE:
-		//	pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_Drone");
 		//	break;
 		//}
-		//pMonster->Get_Transform()->Set_WorldMatrix(worldMatrix);
-		//
-		//iReadFlag = 1;
+		//pTrigger->Get_Transform()->Set_WorldMatrix(worldMatrix);
+		//CBoxCollider* pCollider = dynamic_cast<CBoxCollider*>(pTrigger->Find_Component(L"Collider"));
+		//pCollider->Set_Scale(vColliderScale);
+		//pCollider->Set_Offset(vColliderOffset);
+		//pCollider->Update_BoxCollider(worldMatrix);
+		iReadFlag = 1;
 	}
 
 	return S_OK;
@@ -184,10 +188,12 @@ HRESULT CMapLoader::Load_MapObject(HANDLE hFile, LEVEL eLevel)
 			{
 				pBoxCollider->Set_Scale(vColliderScale);
 				pBoxCollider->Set_Offset(vColliderOffset);
+				pBoxCollider->Update_BoxCollider(worldMatrix);
 			}
 
 			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>(pObj->Find_Component(L"VIBuffer"));
-			pVIBuffer->Scaling_Texcoord(pObj->Get_Transform()->Get_Scale());
+			if (pVIBuffer)
+				pVIBuffer->Scaling_Texcoord(pObj->Get_Transform()->Get_Scale());
 
 			iReadFlag = 1;
 		}
@@ -218,7 +224,18 @@ HRESULT CMapLoader::Load_MapObject(HANDLE hFile, LEVEL eLevel)
 		static_cast<CSodaMachine*>(pObj)->Set_PourPos(vPourPos);
 	}
 
+	CLayer* pSpawnTriggerLayer = m_pGameInstance->Find_Layer(eLevel, L"SpawnTrigger");
+	auto spawnTriggers = pSpawnTriggerLayer->Get_GameObjects();
 
+	for (auto& pObj : spawnTriggers)
+	{
+		CSpawnTrigger* pSpawnTrigger = static_cast<CSpawnTrigger*>(pObj);
+		_uint iMin, iMax;
+		ReadFile(hFile, &iMin, sizeof(_uint), &dwByte, nullptr);
+		ReadFile(hFile, &iMax, sizeof(_uint), &dwByte, nullptr);
+		pSpawnTrigger->Set_MinIdx(iMin);
+		pSpawnTrigger->Set_MaxIdx(iMax);
+	}
 
 	CloseHandle(hFile);
 	return S_OK;

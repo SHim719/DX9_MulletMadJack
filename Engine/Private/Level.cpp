@@ -17,7 +17,6 @@ HRESULT CLevel::Initialize()
 	return S_OK;
 }
 
-
 void CLevel::PriorityTick(_float fTimeDelta)
 {
 }

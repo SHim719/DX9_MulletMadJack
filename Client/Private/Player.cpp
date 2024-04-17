@@ -218,7 +218,6 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 
 
-
 	if (m_pGameInstance->GetKeyUp(eKeyCode::Space) && ePlayerState == IDLE_STATE)
 	{
 		Jump(10);

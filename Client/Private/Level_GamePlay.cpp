@@ -53,7 +53,6 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 
 HRESULT CLevel_GamePlay::Render()
 {
-
 	SetWindowText(g_hWnd, TEXT("GAMEPLAY.."));
 
 	return S_OK;

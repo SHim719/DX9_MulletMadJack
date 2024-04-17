@@ -200,18 +200,18 @@ void CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _f
 
 _bool CWhite_Suit_Monster::Check_HeadShot(_float3 vHitLocalPos)
 {
-    return -0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.375f <= vHitLocalPos.y && vHitLocalPos.y < 0.5f;
+    return -0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.375f <= vHitLocalPos.y && vHitLocalPos.y <= 0.5f;
 }
 
 _bool CWhite_Suit_Monster::Check_BodyShot(_float3 vHitLocalPos)
 {
     return (-0.15f < vHitLocalPos.x && vHitLocalPos.x < 0.15f) &&
-        ((0.12f <= vHitLocalPos.y && vHitLocalPos.y < 0.375f) || (-0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.2f));
+        ((0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.375f) || (-0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.2f));
 }
 
 _bool CWhite_Suit_Monster::Check_EggShot(_float3 vHitLocalPos)
 {
-    return  (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f) && (-0.2f <= vHitLocalPos.y && vHitLocalPos.y < 0.12f);
+    return  (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f) && (-0.2f <= vHitLocalPos.y && vHitLocalPos.y < 0.f);
 }
 
 void CWhite_Suit_Monster::Hit(void* pArg)
@@ -421,7 +421,15 @@ void CWhite_Suit_Monster::SetState_Shot()
         return;
     m_eState = STATE_SHOT;
     m_pAnimationCom->Play_Animation(L"Shot", 0.15f, false);
-    // ÃÑ¾Ë »ý¼º
+
+    _float3 vBulletPos = m_pTransformCom->Get_Pos();
+    vBulletPos.y += 0.1f;
+    
+    _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+    CGameObject* pBullet =  m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_Bullet");
+    pBullet->Get_Transform()->Set_Position(vBulletPos);
+    pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+    static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
 
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
