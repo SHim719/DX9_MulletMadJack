@@ -43,10 +43,8 @@ private:
 	void Cal_Change_Time(_float fTimeDelta);
 	void Cal_StageClear_Time(_float fTimeDelta);
 
-
 public:
 	void Set_StageProgress(StageProgress Progress) { m_eProgress = Progress; }
-
 
 public:
 	void Player_UpGrade(void* pArg);
@@ -58,10 +56,6 @@ public:
 	HRESULT Ready_Prototype_Components();
 	void Ready_Loading_BackGroundTextureAndUi(); // need Ready_Prototype_Components fuction
 	//Custom Prototype
-	HRESULT Ready_Static_Texture_Prototype();
-	HRESULT Ready_Clear_Texture();
-	HRESULT Ready_Shop_Texture();
-	HRESULT Ready_Start_Texture();
 	HRESULT Ready_Execution_Texture();
 
 
@@ -71,8 +65,6 @@ public:
 	void Initialize_TextManager();
 
 	void Add_TextNumber(TextType type) { ++m_iTextPrintOrder[_uint(type)]; }
-	HRESULT Ready_Active_Gun();
-	HRESULT Ready_Active_Camera_Effect();
 	HRESULT Ready_Active_Execution();
 
 	_uint Get_TextNumber(TextType type) const
