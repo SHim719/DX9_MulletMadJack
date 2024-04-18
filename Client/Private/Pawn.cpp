@@ -1,5 +1,5 @@
 #include "Pawn.h"
-
+#include "CUi_Combo.h"
 #include "GameInstance.h"
 #include "FPS_Camera.h"
 
@@ -68,6 +68,39 @@ void CPawn::Call_MonsterDieUi(eMonsterGrade Grade)
 	Arg.MonsterDiePosX = MonsterPos.x;
 	Arg.MonsterDiePosY = MonsterPos.y;
 	Arg.MonsterGrade = Grade;
+
+	switch (Grade)
+	{
+		case eMonsterGrade::High:
+			CPlayer_Manager::Get_Instance()->Set_PlayerHP_Add(3.f);
+			break;
+		case eMonsterGrade::Middle:
+			CPlayer_Manager::Get_Instance()->Set_PlayerHP_Add(2.f);
+			break;
+		case eMonsterGrade::Low:
+			CPlayer_Manager::Get_Instance()->Set_PlayerHP_Add(1.f);
+			break;
+		default:
+			CPlayer_Manager::Get_Instance()->Set_PlayerHP_Add(1.f);
+			break;
+	}
+
+	int iCombo = CPlayer_Manager::Get_Instance()->Get_Combo();
+	if (iCombo > 1) {
+		if (iCombo == 2) {
+			CUi_Combo::ComboDesc Combo;
+			Combo.bFirstCall = true;
+			Combo.iKillCount = iCombo-1;
+			m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &Combo);
+		}
+		else {
+			CUi_Combo::ComboDesc Combo;
+			Combo.bFirstCall = false;
+			Combo.iKillCount = iCombo-1;
+			m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &Combo);
+		}
+	}
+
 	m_pGameInstance->Add_Ui_LifeClone
 	(L"CUi_MonsterDie", eUiRenderType::Render_NonBlend, &Arg);
 }

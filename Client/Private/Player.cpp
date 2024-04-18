@@ -51,6 +51,7 @@ HRESULT CPlayer::Initialize(void * pArg)
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Phone"), true);
 	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
 
+	m_strTag = "Player";
 	return S_OK;
 
 }
@@ -66,10 +67,21 @@ void CPlayer::Tick(_float fTimeDelta)
 	Process_State(fTimeDelta);
 
 	//LifeCut
-	if(m_fPlayerHp > 0.f) m_fPlayerHp -= fTimeDelta;
-	else {
-		m_fPlayerHp = 0.f;
-		//DeathAnimation Trigger
+	if (CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_NONE) {
+		if (m_fPlayerHp > 0.f) m_fPlayerHp -= fTimeDelta;
+		else {
+			m_fPlayerHp = 0.f;
+			//DeathAnimation Trigger
+		}
+	}
+
+	if (Get_InvincibleTime() > 0.f) { 
+		Set_InvincibleTime(Get_InvincibleTime() - fTimeDelta);
+		Set_Invincible(true);
+	}
+	else { 
+		Set_InvincibleTime(0.f); 
+		Set_Invincible(false);
 	}
 
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
@@ -99,15 +111,19 @@ void CPlayer::Key_Input(_float fTimeDelta)
 {
 	if (m_pGameInstance->GetKey(eKeyCode::One)) {
 		Set_TimeDivide(1.f);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_BulletTime"), false);
 	}
 	if (m_pGameInstance->GetKey(eKeyCode::Two)) {
 		Set_TimeDivide(2.f);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_BulletTime"), true);
 	}
 	if (m_pGameInstance->GetKey(eKeyCode::Three)) {
 		Set_TimeDivide(3.f);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_BulletTime"), true);
 	}
 	if (m_pGameInstance->GetKey(eKeyCode::Four)) {
 		Set_TimeDivide(4.f);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_BulletTime"), true);
 	}
 
 	if (GetKeyState('Z') & 0x8000)
@@ -134,14 +150,23 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 	{
-		Camera_Shake_Order(100000.f, 0.2f);
-		for (int i = 0; i < 6; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CPistol_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
-		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SHOT);
+		if (CPlayer_Manager::Get_Instance()->Get_Magazine() > 0) {
+			Camera_Shake_Order(100000.f, 0.2f);
+			for (int i = 0; i < 6; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CPistol_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
+			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SHOT);
+			CPlayer_Manager::Get_Instance()->Fire_Magazine();
+			if(CPlayer_Manager::Get_Instance()->Get_Magazine() <= 2) m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"),true);
+		}
+		else {
+			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
+		}
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::R))
 	{
 		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
@@ -374,6 +399,17 @@ void CPlayer::OnCollisionEnter(CGameObject* pOther)
 	{
 		static_cast<CWhite_Suit_Monster*>(pOther)->SetState_Pushed(m_pTransformCom->Get_Look());
 		Kick();
+	}
+}
+
+void CPlayer::OnTriggerEnter(CGameObject* pOther)
+{
+	if ("Bullet" == pOther->Get_Tag()) {
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
+		if (false == m_bInvincible && m_fPlayerHp > 0.f) {
+			Set_PlayerHP_Add(-1.f);
+			Set_InvincibleTime(Get_InvincibleTimeLimit());
+		}
 	}
 }
 

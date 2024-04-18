@@ -30,6 +30,7 @@ void CUi_Damaged::PriorityTick(_float fTimeDelta)
 void CUi_Damaged::Tick(_float fTimeDelta)
 {
 	m_fActiveTime -= fTimeDelta;
+	m_fTextureSwitching += fTimeDelta;
 	if (m_fActiveTime > 0)
 	{
 		Adjust_Alpha(fTimeDelta);
@@ -37,6 +38,15 @@ void CUi_Damaged::Tick(_float fTimeDelta)
 	else
 	{
 		m_bActive = false;
+	}
+
+	if (m_fTextureSwitching > 0.1)
+	{
+		++m_iTexture_IndexId;
+		if (m_iTexture_IndexId > 5)
+		{
+			m_iTexture_IndexId = 0;
+		}
 	}
 }
 
@@ -63,6 +73,9 @@ HRESULT CUi_Damaged::Render()
 
 	m_pVIBufferCom->Render();
 
+	m_pUniqueTextureCom->Bind_Texture(m_iTexture_IndexId);
+
+	m_pVIBufferCom->Render();
 	End_RenderState();
 
 	return S_OK;
@@ -141,6 +154,11 @@ HRESULT CUi_Damaged::Add_Texture(void* pArg)
 		(CComponent**)&m_pTextureCom)))
 		return E_FAIL;
 
+	if (FAILED(Add_Component(LEVEL_STATIC,
+		TEXT("CUi_Blood_Texture"),
+		(CComponent**)&m_pUniqueTextureCom)))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -177,4 +195,5 @@ CUi_Damaged* CUi_Damaged::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 void CUi_Damaged::Free()
 {
 	__super::Free();
+	Safe_Release(m_pUniqueTextureCom);
 }

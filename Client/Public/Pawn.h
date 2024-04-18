@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "CUi_MonsterDie.h"
-
+#include "PlayerManager.h"
 
 BEGIN(Engine)
 class CTexture;

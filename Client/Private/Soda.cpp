@@ -1,5 +1,5 @@
 #include "Soda.h"
-
+#include "PlayerManager.h"
 #include "GameInstance.h"
 
 CSoda::CSoda(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -22,6 +22,7 @@ HRESULT CSoda::Initialize(void* pArg)
 	if (E_FAIL == Add_Components())
 		return E_FAIL;
 
+	m_pBoxCollider->Set_Scale({ 0.25f, 0.25f, 0.25f });
 	return S_OK;
 }
 
@@ -80,7 +81,7 @@ HRESULT CSoda::Render()
 		return E_FAIL;
 
 	m_pVIBufferCom->Render();
-
+	m_pBoxCollider->Render();
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 	return S_OK;
@@ -115,6 +116,15 @@ HRESULT CSoda::Add_Components()
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CSoda::OnTriggerStay(CGameObject* pOther)
+{
+	if ("Player" == pOther->Get_Tag())
+	{
+		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
+		m_bDestroyed = true;
+	}
 }
 
 CSoda* CSoda::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

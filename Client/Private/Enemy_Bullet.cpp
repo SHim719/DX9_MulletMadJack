@@ -32,7 +32,7 @@ HRESULT CEnemy_Bullet::Initialize(void* pArg)
 	if (FAILED(Add_Components()))
 		return E_FAIL;
 
-
+	m_strTag = "Bullet";
 	return S_OK;
 }
 

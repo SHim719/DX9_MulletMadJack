@@ -220,9 +220,6 @@
     <Filter Include="03. Client_Components\Terrain_Collider">
       <UniqueIdentifier>{de1fdb4e-8880-4849-b438-81c0c43b0146}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Arm">
-      <UniqueIdentifier>{203f3e05-1ed1-411d-bdad-e50530c53db1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand">
       <UniqueIdentifier>{35147e19-557d-4a0f-8508-1e52e588f155}</UniqueIdentifier>
     </Filter>
@@ -351,6 +348,9 @@
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\CUi_Reload">
       <UniqueIdentifier>{b0d1331d-23ca-49db-8028-2836ec29757b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload\Pistol_Reload_Left_Arm">
+      <UniqueIdentifier>{203f3e05-1ed1-411d-bdad-e50530c53db1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -574,7 +574,7 @@
       <Filter>03. Client_Components\Terrain_Collider</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Reload_Left_Arm.h">
-      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Arm</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload\Pistol_Reload_Left_Arm</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand</Filter>
@@ -867,7 +867,7 @@
       <Filter>03. Client_Components\Terrain_Collider</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Reload_Left_Arm.cpp">
-      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Arm</Filter>
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload\Pistol_Reload_Left_Arm</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pistol_Reload_Left_Hand.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload_Left_Hand</Filter>

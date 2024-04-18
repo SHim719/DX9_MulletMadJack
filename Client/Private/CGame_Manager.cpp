@@ -63,6 +63,10 @@ void CGame_Manager::Clear()
 void CGame_Manager::Start()
 {
 	m_pGameInstance->Set_Enter(false);
+	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), true);
+	ShowCursor(FALSE);
+	CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor"));
 }
 

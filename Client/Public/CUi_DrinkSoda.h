@@ -42,6 +42,7 @@ private:
 private:
 	_float m_fAdjustAlphaTime = { 0 };
 	_uint m_iAlpha = { 150 };
+	_bool m_bAlphaUp = { true };
 
 public:
 	static CUi_DrinkSoda* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

@@ -147,9 +147,10 @@ void CUi_DrinkSoda::Adjust_Alpha(_float fTimeDelta)
     m_fAdjustAlphaTime += fTimeDelta;
     if (m_fAdjustAlphaTime > 0.01)
     {
+
         if (m_iAlpha <= 2)
         {
-            m_iAlpha = 0;
+            m_bActive = false;
         }
         else
         {

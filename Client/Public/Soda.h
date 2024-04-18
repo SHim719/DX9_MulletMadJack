@@ -36,7 +36,7 @@ private:
 	CBoxCollider*	m_pBoxCollider = { nullptr };
 
 private:
-	void OnCollisionEnter(CGameObject* pOther) override {}
+	void OnTriggerStay(CGameObject* pOther) override;
 
 private:
 	_float m_fLifeTime = 5.f;
