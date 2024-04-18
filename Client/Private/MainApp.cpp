@@ -39,6 +39,7 @@ HRESULT CMainApp::Initialize()
 void CMainApp::Tick(_float fTimeDelta)
 {
 	CGame_Manager::Get_Instance()->Tick(fTimeDelta);	
+	CPlayer_Manager::Get_Instance()->Tick(fTimeDelta);
 }
 
 HRESULT CMainApp::Render()

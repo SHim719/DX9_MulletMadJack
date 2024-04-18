@@ -10,7 +10,7 @@ class CPlayer_Manager : public CBase
 {
 DECLARE_SINGLETON(CPlayer_Manager)
 public:
-
+	enum ACTION_TYPE { ACTION_NONE, ACTION_EXECUTION, ACTION_WEAPONCHANGE, ACTION_DRINKCAN, ACTION_END };
 private:
 	CPlayer_Manager();
 	virtual ~CPlayer_Manager() = default;
@@ -19,6 +19,8 @@ public:
 	void Initialize(LPDIRECT3DDEVICE9 pGraphic_Device);
 
 public:
+	void Tick (_float fTimeDelta);
+
 	void Set_Player(CPlayer* pPlayer) { m_pPlayer = pPlayer; }
 	CPlayer* Get_Player() { return m_pPlayer; }
 
@@ -65,6 +67,38 @@ public:
 
 	void Camera_Shake_Order(_float _fShakeTime, _float _fShakePower) { m_pPlayer->Camera_Shake_Order(_fShakePower,_fShakeTime); }
 
+	void Execution_Ready() { Set_Action_Type(ACTION_EXECUTION); }
+	//void Set_Execution_Action(_bool _bExecution) { m_bExecution = _bExecution; }
+	//_bool Get_Execution_Action() { return m_bExecution; }
+
+	void WeaponChange_Ready() { Set_Action_Type(ACTION_WEAPONCHANGE); }
+	void Set_WeaponChange_Action(_bool _bWeaponChange) { m_bWeaponChange = _bWeaponChange; }
+	_bool Get_WeaponChange_Action() { return m_bWeaponChange; }
+
+	void DrinkCan_Ready() { Set_Action_Type(ACTION_DRINKCAN); }
+	void Set_DrinkCan_Action(_bool _bDrinkCan) { m_bDrinkCan = _bDrinkCan; }
+	_bool Get_DrinkCan_Action() { return m_bDrinkCan; }
+
+	void Set_TempDisable(_bool _bTempDisable) { m_bTempDisable = _bTempDisable; }
+	_bool Get_TempDisable() { return m_bTempDisable; }
+
+	void Set_TempDisablePosition(_float _fTempDisablePosition) { m_fTempDisablePosition = _fTempDisablePosition; }
+	_float Get_TempDisablePosition() { return m_fTempDisablePosition; }
+	_float2 Get_TempDisablePosition_BothHand();
+
+
+	const _float Get_TempDisablePositionLimit() { return m_fTempDisablePositionLimit; }
+
+	void Set_Action_Type(ACTION_TYPE _eActionType) { 
+		Set_DisableEnd(false);
+		m_eActionType = _eActionType; 
+	}
+	ACTION_TYPE Get_Action_Type() { return m_eActionType; }
+
+	void Set_DisableEnd(_bool _bTempDisableEnd) { m_bTempDisableEnd = _bTempDisableEnd; }
+	_bool Get_DisableEnd() { return m_bTempDisableEnd; }
+
+	void Execution_Monster() { Execution_Ready(); }
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -73,6 +107,26 @@ private:
 	_float						m_fAdjustTime = { 0 };
 
 	_float						m_fLeftArmRotate = 30.f;
+
+
+
+	ACTION_TYPE					m_eActionType = ACTION_NONE;
+
+	_bool						m_bActionIDLE = true;
+
+
+	_float						m_fTempDisablePosition = 0.f;
+	_float						m_fTempDisablePositionLimit = 500.f;
+
+	_bool						m_bTempDisable = false;
+	_bool						m_bTempDisableEnd = false;
+
+	_bool						m_bWeaponChange = false;
+	_bool						m_bWeaponChangeReady = false;
+
+	_bool						m_bDrinkCan = false;
+	_bool						m_bDrinkCanReady = false;
+
 private:
 
 	CPlayer* m_pPlayer = nullptr;

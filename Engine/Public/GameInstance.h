@@ -44,6 +44,7 @@ public:
 	_float	Get_TimeDelta(const wstring& strTimerTag);
 	HRESULT Add_Timer(const wstring& strTimerTag);
 	void Compute_TimeDelta(const wstring& strTimerTag);
+	void Set_TimeDivide(_float fTimeDivide);
 #pragma endregion
 
 #pragma region OBJECT_MANAGER

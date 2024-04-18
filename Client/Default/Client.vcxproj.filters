@@ -334,6 +334,9 @@
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster">
       <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink">
+      <UniqueIdentifier>{b397f897-2594-4be7-b452-aa187410c4f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -630,6 +633,9 @@
     <ClInclude Include="..\Public\Execution_Knife.h">
       <Filter>04. UI\Ui\CUi_Active\Execution\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Drink.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -892,6 +898,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Knife.cpp">
       <Filter>04. UI\Ui\CUi_Active\Execution\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Drink.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

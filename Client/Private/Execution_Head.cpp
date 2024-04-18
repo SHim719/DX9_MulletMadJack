@@ -67,6 +67,8 @@ void CExecution_Head::Tick(_float fTimeDelta)
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Body"), false);
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Neck"), false);
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), false);
+				CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
+
 				AnimationDelayReset();
 			}
 		}

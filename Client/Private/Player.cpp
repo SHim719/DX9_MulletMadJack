@@ -95,6 +95,19 @@ HRESULT CPlayer::Render()
 
 void CPlayer::Key_Input(_float fTimeDelta)
 {
+	if (m_pGameInstance->GetKey(eKeyCode::One)) {
+		Set_TimeDivide(1.f);
+	}
+	if (m_pGameInstance->GetKey(eKeyCode::Two)) {
+		Set_TimeDivide(2.f);
+	}
+	if (m_pGameInstance->GetKey(eKeyCode::Three)) {
+		Set_TimeDivide(3.f);
+	}
+	if (m_pGameInstance->GetKey(eKeyCode::Four)) {
+		Set_TimeDivide(4.f);
+	}
+
 	if (m_pGameInstance->GetKey(eKeyCode::W))
 	{
 		Set_MoveState(MOVE);
@@ -180,12 +193,12 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
-		Camera_Shake_Order(600000.f, 0.4f);
-		/*m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);*/
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Neck"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Head"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Body"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Hand"), true);
+		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
+	}
+
+	if (m_pGameInstance->GetKeyDown(eKeyCode::P))
+	{
+		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift))

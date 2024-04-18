@@ -180,6 +180,7 @@
     <ClInclude Include="..\Public\CText_BackGround.h" />
     <ClInclude Include="..\Public\CUi_Finish.h" />
     <ClInclude Include="..\Public\CUi_LoadingBackGround.h" />
+    <ClInclude Include="..\Public\Drink.h" />
     <ClInclude Include="..\Public\Drone_Monster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -289,6 +290,7 @@
     <ClCompile Include="..\Private\CUi_Announcer.cpp" />
     <ClCompile Include="..\Private\CUi_Clear_Victory.cpp" />
     <ClCompile Include="..\Private\CUi_PEACE.cpp" />
+    <ClCompile Include="..\Private\Drink.cpp" />
     <ClCompile Include="..\Private\Drone_Monster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

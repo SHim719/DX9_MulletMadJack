@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Client_Defines.h"
+#include "GameInstance.h"
 #include "GameObject.h"
 
 BEGIN(Engine)
@@ -106,6 +107,7 @@ public:
 
 	bool Get_PlayerDash() { return bDash; }
 
+	void Set_TimeDivide(_float fTimeDivide) { CGameInstance::Get_Instance()->Set_TimeDivide(fTimeDivide); }
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
