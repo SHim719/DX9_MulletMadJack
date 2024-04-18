@@ -18,7 +18,7 @@ HRESULT CCollision_Manager::Initialize()
 
 void CCollision_Manager::Tick()
 {
-	//Collision_Box(4, L"Player", L"Wall");
+	Collision_Box(4, L"Player", L"Wall");
 	//Collision_Box(4, L"Player", L"Floor");
 
 	Collision_Box(3, L"Player", L"Door", Collision);

@@ -35,7 +35,6 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Execution_Texture();
 
 	Ready_Active_Execution();
-
 }
 
 void CGame_Manager::Tick(_float fTimeDelta)

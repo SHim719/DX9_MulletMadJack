@@ -29,6 +29,7 @@ HRESULT CMainApp::Initialize()
 	CPlayer_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 	CLight_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 
+	ShowCursor(FALSE);
 
 	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 		return E_FAIL;

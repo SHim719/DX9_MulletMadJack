@@ -58,7 +58,7 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 	HWND		focus_hWnd = GetFocus();
 	if (focus_hWnd != NULL && CPlayer_Manager::Get_Instance()->Get_MouseLock() == true) {
 
-		ShowCursor(FALSE);
+		//ShowCursor(FALSE);
 		GetCursorPos(&ptMouse);
 
 		ScreenToClient(g_hWnd, &ptMouse);
