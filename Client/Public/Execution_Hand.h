@@ -66,7 +66,6 @@ private:
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
-
 public:
 	virtual void Free() override;
 };

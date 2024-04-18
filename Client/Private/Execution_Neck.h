@@ -1,7 +1,7 @@
 #pragma once
 #include "Client_Defines.h"
 #include "CUi.h"
-
+#include "CGame_Manager.h"
 BEGIN(Client)
 
 class CExecution_Neck final : public CUi

@@ -1,17 +1,16 @@
 #pragma once
 #include "Client_Defines.h"
-#include "CUi.h"
-#include "CGame_Manager.h"
 #include "PlayerManager.h"
+#include "CUi.h"
 
 BEGIN(Client)
 
-class CExecution_Head final : public CUi
+class CDrink final : public CUi
 {
 protected:
-	CExecution_Head(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CExecution_Head(const CExecution_Head& rhs);
-	virtual ~CExecution_Head() = default;
+	CDrink(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CDrink(const CDrink& rhs);
+	virtual ~CDrink() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -68,9 +67,6 @@ private:
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
-
-	_float m_fDelayedAnimation = 0.2f;
-	_float m_fDelayedAnimation2 = 0.2f;
 public:
 	virtual void Free() override;
 };

@@ -170,6 +170,13 @@ void CGameInstance::Compute_TimeDelta(const wstring & strTimerTag)
 
 	return m_pTimer_Manager->Compute_TimeDelta(strTimerTag);
 }
+void CGameInstance::Set_TimeDivide(_float fTimeDivide)
+{
+	if (nullptr == m_pTimer_Manager)
+		return;
+
+	m_pTimer_Manager->Set_TimeDivide(fTimeDivide);
+}
 #pragma endregion
 
 #pragma region OBJECT_MANAGER

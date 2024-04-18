@@ -11,8 +11,11 @@ private:
 	virtual ~CTimer() = default;
 
 public:
-	float			Get_TimeDelta() {	
-		return m_fTimeDelta;	}
+	void Set_TimeDivide(float fTimeDivide) 
+	{ m_fTimeDivide = fTimeDivide; }
+
+	float Get_TimeDelta() {	
+		return m_fTimeDelta / m_fTimeDivide;	}
 
 public:
 	HRESULT			Initialize();
@@ -25,7 +28,7 @@ private:
 	LARGE_INTEGER			m_CpuTick;
 
 	float					m_fTimeDelta;
-
+	float					m_fTimeDivide = 1;
 public:
 	static CTimer* Create();
 	virtual void Free() override;

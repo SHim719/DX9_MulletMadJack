@@ -97,6 +97,18 @@ HRESULT CPlayer::Render()
 
 void CPlayer::Key_Input(_float fTimeDelta)
 {
+	if (m_pGameInstance->GetKey(eKeyCode::One)) {
+		Set_TimeDivide(1.f);
+	}
+	if (m_pGameInstance->GetKey(eKeyCode::Two)) {
+		Set_TimeDivide(2.f);
+	}
+	if (m_pGameInstance->GetKey(eKeyCode::Three)) {
+		Set_TimeDivide(3.f);
+	}
+	if (m_pGameInstance->GetKey(eKeyCode::Four)) {
+		Set_TimeDivide(4.f);
+	}
 
 	if (GetKeyState('Z') & 0x8000)
 	{
@@ -134,13 +146,12 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
-		Camera_Shake_Order(600000.f, 0.4f);
-		/*m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);*/
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Neck"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Head"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Body"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Hand"), true);
+		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
+	}
 
+	if (m_pGameInstance->GetKeyDown(eKeyCode::P))
+	{
+		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
 	}
 }
 
@@ -359,7 +370,7 @@ void CPlayer::ColliderUpDown()
 
 void CPlayer::OnCollisionEnter(CGameObject* pOther)
 {
-	if ("Monster" == pOther->Get_Tag() && m_pGameInstance->GetKey(eKeyCode::LShift)) // ÀÌ°Å¼öÁ¤
+	if ("Monster" == pOther->Get_Tag() && m_pGameInstance->GetKey(eKeyCode::LShift)) // ï¿½Ì°Å¼ï¿½ï¿½ï¿½
 	{
 		static_cast<CWhite_Suit_Monster*>(pOther)->SetState_Pushed(m_pTransformCom->Get_Look());
 		Kick();

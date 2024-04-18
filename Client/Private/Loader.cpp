@@ -776,6 +776,12 @@ HRESULT CLoader::Ready_PlayerUi_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/LeftArm/Phone_BackGround%d.png", 3))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Drink_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Drink/DRINK%d.png", 7))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1025,6 +1031,9 @@ HRESULT CLoader::Ready_Active_Gun()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Phone", eUiRenderType::Render_NonBlend, CPhone::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Drink", eUiRenderType::Render_NonBlend, CDrink::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Client_Defines.h"
+#include "GameInstance.h"
 #include "GameObject.h"
 
 BEGIN(Engine)
@@ -100,7 +101,8 @@ public:
 	void Set_PlayerHP_Add(_float fPlayerHp) { m_fPlayerHp += fPlayerHp; }
 
 	void Kick();
-
+	
+	void Set_TimeDivide(_float fTimeDivide) { CGameInstance::Get_Instance()->Set_TimeDivide(fTimeDivide); }
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
