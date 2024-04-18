@@ -86,14 +86,15 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		return E_FAIL;
 
 
-	/*if (FAILED(Loading_For_Chainsaw_Monster()))
-		return E_FAIL;
+	//if (FAILED(Loading_For_Chainsaw_Monster()))
+	//	return E_FAIL;
 
-	if (FAILED(Loading_For_Orange_Pants_Monster()))
-		return E_FAIL;
+	//if (FAILED(Loading_For_Orange_Pants_Monster()))
+	//	return E_FAIL;
 
-	if (FAILED(Loading_For_Drone_Monster()))
-		return E_FAIL;*/
+	//if (FAILED(Loading_For_Drone_Monster()))
+	//	return E_FAIL;
+
 
 	m_fProgress = 0.6f;
 
@@ -187,13 +188,17 @@ HRESULT CLoader::Loading_For_WhiteSuitMonster()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Hit"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/hit/hit%d.png"), 8))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Fly"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/fly/ws_flyback_wall%d.png"), 13))))
+		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Floor"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/ws_flyback/ws_flyback%d.png"), 31))))
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/ws_flyback/ws_flyback%d.png"), 17))))
 		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Wall"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/ws_flyback_wall/ws_flyback_wall%d.png"), 28))))
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/White_Suit_Monster/ws_flyback_wall/ws_flyback_wall%d.png"), 14))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Enemy_Bullet_Texture"),

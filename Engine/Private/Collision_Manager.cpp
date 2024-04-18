@@ -31,6 +31,7 @@ void CCollision_Manager::Tick()
 
 	Collision_Box(3, L"Soda", L"Floor", Collision);
 	Collision_Box(3, L"Soda", L"Soda", Collision);
+	
 
 	Collision_Box(3, L"Bullet", L"Player", Trigger);
 	Collision_Box(3, L"Bullet", L"Wall", Trigger);

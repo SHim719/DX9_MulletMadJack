@@ -90,7 +90,7 @@ HRESULT CChainsaw_Monster::Render()
 _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
 	if (STATE_DEATH == m_eState)
-		return;
+		return false;
 
 	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
 	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
@@ -103,16 +103,37 @@ _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _fl
 	{
 		pDesc->eHitType = HEAD_SHOT;
 		Hit(pDesc);
+		return true;
 	}
 	else if (Check_EggShot(vHitLocalPos))
 	{
 		pDesc->eHitType = EGG_SHOT;
 		Hit(pDesc);
+		return true;
 	}
 	else if (Check_BodyShot(vHitLocalPos))
 	{
 		pDesc->eHitType = BODY_SHOT;
 		Hit(pDesc);
+		return true;
+	}
+
+	return false;
+}
+
+void CChainsaw_Monster::OnCollisionEnter(CGameObject* pOther)
+{
+	if ("Player" == pOther->Get_Tag() && m_eState == STATE_JUMP)
+	{
+		_float fDamage = 5.f;
+		pOther->Hit(&fDamage);
+	}
+
+	if ("Floor" == pOther->Get_Tag()
+		&& m_eState == STATE_JUMP
+		&& m_pTransformCom->Get_Pos().y > pOther->Get_Transform()->Get_Pos().y)
+	{
+		m_pRigidbody->Set_Ground(false);
 	}
 }
 
@@ -139,19 +160,15 @@ void CChainsaw_Monster::Hit(void* pArg)
 	switch (pDesc->eHitType)
 	{
 	case CPawn::HEAD_SHOT:
-		m_fHp -= 3.f;
+		m_fHp -= 8.f;
 		break;
 
 	case CPawn::BODY_SHOT:
 		m_fHp -= 3.f;
-
-		/*if (m_fHp > 0.f)
-			m_pAnimationCom->Play_Animation(TEXT("Hit"), 0.1f, false);*/
-
 		break;
 
 	case CPawn::EGG_SHOT:
-		m_fHp -= 3.f;
+		m_fHp -= 8.f;
 		break;
 	}
 
@@ -210,20 +227,19 @@ void CChainsaw_Monster::State_Move()
 {
 	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 
-	if (m_bPerceivedPlayer && fTargetDist < m_fRange)
+	if (fTargetDist < m_fRange)
 	{
 		SetState_Slash();
 
 		return;
 	}
-	else if (m_bPerceivedPlayer && m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
+	else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 4.f)
 	{
 		SetState_Jump();
 	}
 	else if (fTargetDist > 9.f)
 	{
 		SetState_Idle();
-
 		return;
 	}
 
@@ -259,22 +275,6 @@ void CChainsaw_Monster::State_Slash()
 	{
 		_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 
-		if (fTargetDist < m_fRange)
-		{
-			SetState_Slash();
-		}
-		else if (m_fRange <= fTargetDist && fTargetDist < 9.f)
-		{
-			SetState_Move();
-		}
-		else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
-		{
-			SetState_Jump();
-		}
-		else if (fTargetDist >= 9.f)
-		{
-			SetState_Idle();
-		}
 	}
 }
 
@@ -320,9 +320,6 @@ void CChainsaw_Monster::SetState_Idle()
 		return;
 
 	m_eState = STATE_IDLE;
-	m_bPerceivedPlayer = false;
-
-	m_pAnimationCom->Play_Animation(L"Idle_Up", 0.15f, true);
 
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
@@ -333,7 +330,6 @@ void CChainsaw_Monster::SetState_Move()
 		return;
 
 	m_eState = STATE_MOVE;
-	m_bPerceivedPlayer = true;
 
 	m_pAnimationCom->Play_Animation(L"Walk", 0.1f, true);
 
@@ -350,8 +346,8 @@ void CChainsaw_Monster::SetState_Pushed(_float3 vLook)
 	vLook.y = 0.f;
 	D3DXVec3Normalize(&vLook, &vLook);
 
-	m_pRigidbody->Set_Velocity(vLook * 4.f);
-	m_pRigidbody->Set_Friction(4.f);
+	m_pRigidbody->Set_Velocity(vLook * 15.f);
+	m_pRigidbody->Set_Friction(5.f);
 
 	m_pAnimationCom->Play_Animation(L"Pushed", 100.f, false);
 }
@@ -376,11 +372,12 @@ void CChainsaw_Monster::SetState_Jump()
 	m_eState = STATE_JUMP;
 	m_pAnimationCom->Play_Animation(L"Jump", 0.05f, false);
 
-	_float3 vLook = m_pTarget->Get_Transform()->Get_Look();
-	//vLook = { vLook.x, 0.f, vLook.z };
+	_float3 vLook = m_pTarget->Get_Transform()->Get_GroundLook();
+	vLook *= 4.f; 
+	vLook.y = 3.f;
 
-	m_pRigidbody->Set_Velocity(-vLook * 4);
-	m_pRigidbody->Set_Gravity({ 0.f, -1.f, 0.f });
+	m_pRigidbody->Set_Velocity(-vLook);
+	m_pRigidbody->Set_UseGravity(true);
 }
 
 void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
@@ -460,8 +457,6 @@ HRESULT CChainsaw_Monster::Add_Textures()
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Groinshot"), TEXT("Death_Groinshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Hit"), TEXT("Hit"))))
-		return E_FAIL;
 
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Idle_Up"), TEXT("Idle_Up"))))
 		return E_FAIL;

@@ -21,7 +21,7 @@ public:
 	enum WEAPON_TYPE { PISTOL, WEAPON_END };
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, ANIMATION_END };
-	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, PLAYER_STATE_END };
+	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, EXECUTION_STATE, PLAYER_STATE_END };
 	enum MOVE_STATE { STOP, MOVE, MOVE_END };
 
 public:
@@ -85,11 +85,13 @@ private:
 	void Dash_State(_float fTimeDelta);
 	void AirDash_State(_float fTimeDelta);
 	void Slope_State(_float fTimeDelta);
+	void Execution_State();
 
 	void SetState_Idle();
 	void SetState_Dash();
 	void SetState_AirDash();
 	void SetState_Slope();
+	void SetState_Execution();
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
 		m_fShakePower = fShakePower; 
@@ -123,6 +125,9 @@ private:
 	ANIMATION_TYPE eAnimationType = IDLE;
 	PLAYER_STATE ePlayerState = IDLE_STATE;
 	MOVE_STATE eMoveState = STOP;
+
+	_bool m_bHaveWeapon = true;
+	class CPawn* m_pExecutionEnemy = nullptr;
 
 	_float m_fDashTime = 0.2f;
 	_float m_fDashTimeAcc = 0.f;

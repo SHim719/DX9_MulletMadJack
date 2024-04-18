@@ -2,7 +2,7 @@
 #include "GameInstance.h"
 #include "PlayerManager.h"
 
-#include "White_Suit_Monster.h"
+#include "Pawn.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -370,11 +370,26 @@ void CPlayer::ColliderUpDown()
 
 void CPlayer::OnCollisionEnter(CGameObject* pOther)
 {
-	if ("Monster" == pOther->Get_Tag() && m_pGameInstance->GetKey(eKeyCode::LShift)) // �̰ż���
+	if ("Monster" == pOther->Get_Tag() && (DASH_STATE == ePlayerState || AIRDASH_STATE == ePlayerState))
 	{
-		static_cast<CWhite_Suit_Monster*>(pOther)->SetState_Pushed(m_pTransformCom->Get_Look());
-		Kick();
+		if (static_cast<CPawn*>(pOther)->Is_DeathState())
+			return;
+
+		if (m_bHaveWeapon)
+		{
+			static_cast<CPawn*>(pOther)->SetState_Execution();
+			SetState_Execution();
+			CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
+			m_pExecutionEnemy = static_cast<CPawn*>(pOther);
+		}
+		else
+		{
+			static_cast<CPawn*>(pOther)->SetState_Pushed(m_pTransformCom->Get_Look());
+			Kick();
+		}
+		
 	}
+
 }
 
 void CPlayer::Process_State(_float fTimeDelta)
@@ -392,6 +407,10 @@ void CPlayer::Process_State(_float fTimeDelta)
 		break;
 	case SLOPE_STATE:
 		Slope_State(fTimeDelta);
+		break;
+
+	case EXECUTION_STATE:
+		Execution_State();
 		break;
 	}
 }
@@ -520,6 +539,21 @@ void CPlayer::Slope_State(_float fTimeDelta)
 	}
 }
 
+void CPlayer::Execution_State()
+{
+	if (CPlayer_Manager::ACTION_NONE == CPlayer_Manager::Get_Instance()->Get_Action_Type())
+	{
+		SetState_Idle();
+		Kick();
+		if (m_pExecutionEnemy)
+		{
+			m_pExecutionEnemy->SetState_Fly(m_pTransformCom->Get_GroundLook());
+			m_pExecutionEnemy = nullptr;
+		}
+	}
+		
+}
+
 void CPlayer::SetState_Idle()
 {
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), false);
@@ -580,6 +614,17 @@ void CPlayer::SetState_Slope()
 	m_pRigidbody->Set_Friction(0.f);
 
 	Set_MoveState(STOP);
+}
+
+void CPlayer::SetState_Execution()
+{
+	ePlayerState = EXECUTION_STATE;
+
+	CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
+
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+	m_pRigidbody->Set_UseGravity(false);
+	m_pRigidbody->Set_Friction(0.f);
 }
 
 void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime)

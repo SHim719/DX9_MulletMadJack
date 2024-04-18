@@ -23,8 +23,12 @@ class CChainsaw_Monster final : public CPawn
 		STATE_PUSHED,
 		STATE_SLASH,
 		STATE_JUMP,
+		STATE_HIT,
+		STATE_EXECUTION,
+		STATE_FLY,
+		STATE_FLYDEATH,
 		STATE_DEATH,
-		STATE_END
+		STATE_END,
 	};
 
 private:
@@ -48,6 +52,7 @@ private:
 
 private:
 	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
+	void OnCollisionEnter(CGameObject* pOther) override;
 
 	_bool Check_HeadShot(_float3 vHitLocalPos);
 	_bool Check_BodyShot(_float3 vHitLocalPos);
@@ -57,14 +62,14 @@ private:
 
 private:
 	STATE			m_eState = STATE_IDLE;
-	_float			m_fHp = 3.f;
-	_float			m_fSpeed = 5.f;
+	_float			m_fHp = 8.f;
+	_float			m_fSpeed = 2.f;
 	_float			m_fPerceptionDist = 3.f;
 	_float			m_fRange = 1.f;
 	_bool			m_bPushRecovery = { false };
 	_bool			m_bPerceivedPlayer = { false };
 
-	_float			m_fTimeAcc = 0.f;
+	_float			m_fDeathTimeAcc = 0.f;
 	_float			m_fDeathTime = 3.f;
 
 private:

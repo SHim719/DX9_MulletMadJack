@@ -36,7 +36,7 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
 
     m_pRigidbody->Set_Friction(0.f);
     m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
-    m_pRigidbody->Set_Gravity({ 0.f, 0.f, 0.f });
+    m_pRigidbody->Set_UseGravity(false);
 
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
 
@@ -67,6 +67,9 @@ void CWhite_Suit_Monster::LateTick(_float fTimeDelta)
 
 HRESULT CWhite_Suit_Monster::Render()
 {
+    if (STATE_EXECUTION == m_eState)
+        return S_OK;
+
     if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
@@ -144,11 +147,14 @@ HRESULT CWhite_Suit_Monster::Add_Textures()
 
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("HeadExplode"))))
         return E_FAIL;
+    
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Fly"), TEXT("Death_Fly"))))
+          return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Floor"), TEXT("Death_Push_Floor"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Floor"), TEXT("Death_Fly_Floor"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Wall"), TEXT("Death_Push_Wall"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Wall"), TEXT("Death_Fly_Wall"))))
         return E_FAIL;
 
     return S_OK;
@@ -202,6 +208,14 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
     }
 
     return false;
+}
+
+void CWhite_Suit_Monster::OnCollisionEnter(CGameObject* pOther)
+{
+    if (STATE_FLY == m_eState && "Wall" == pOther->Get_Tag())
+    {
+        m_bWallColl = true;
+    }
 }
 
 _bool CWhite_Suit_Monster::Check_HeadShot(_float3 vHitLocalPos)
@@ -275,9 +289,22 @@ void CWhite_Suit_Monster::Process_State(_float fTimeDelta)
     case CWhite_Suit_Monster::STATE_JUMP:
         State_Jump();
         break;
+    case CWhite_Suit_Monster::STATE_HIT:
+        State_Hit();
+        break;
+    case CWhite_Suit_Monster::STATE_EXECUTION:
+        State_Execution();
+        break;
+    case CWhite_Suit_Monster::STATE_FLY:
+        State_Fly(fTimeDelta);
+        break;
+    case CWhite_Suit_Monster::STATE_FLYDEATH:
+        State_FlyDeath(fTimeDelta);
+        break;
     case CWhite_Suit_Monster::STATE_DEATH:
         State_Death(fTimeDelta);
         break;
+
     }
 }
 
@@ -318,7 +345,7 @@ void CWhite_Suit_Monster::State_Alert()
 
 void CWhite_Suit_Monster::State_Pushed()
 {
-    if (0.025f >= D3DXVec3Length(&m_pRigidbody->Get_Velocity()) && !m_bPushRecovery)
+    if (0.05f >= D3DXVec3Length(&m_pRigidbody->Get_Velocity()) && !m_bPushRecovery)
     {
         m_pRigidbody->Set_Friction(0.f);
 
@@ -374,17 +401,62 @@ void CWhite_Suit_Monster::State_Jump()
     }
 }
 
+void CWhite_Suit_Monster::State_Execution()
+{
+  
+}
+
+void CWhite_Suit_Monster::State_Fly(_float fTimeDelta)
+{
+    m_fFlyTimeAcc += fTimeDelta;
+
+    if (m_fFlyTimeAcc >= m_fFlyTime)
+    {
+        m_fFlyTimeAcc = 0.f;
+        SetState_FlyDeath();
+    }
+}
+
+void CWhite_Suit_Monster::State_FlyDeath(_float fTimeDelta)
+{
+    if (m_pAnimationCom->IsEndAnim())
+    {
+        m_fDeathTime -= fTimeDelta;
+        if (m_fDeathTime <= 0.f)
+        {
+            m_bDestroyed = true;
+        }
+    }
+}
+
 void CWhite_Suit_Monster::State_Hit()
 {
+    if (m_pAnimationCom->IsEndAnim())
+    {
+        _float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
+        if (fTargetDist < 6.f)
+        {
+            int iRandNum = rand() % 5;
+            if (iRandNum < 4)
+                SetState_Shot();
+            else
+                SetState_Jump();
+        }
+        else if (fTargetDist > 9.f)
+        {
+            SetState_Idle();
+        }
+
+        else
+        {
+            SetState_Move();
+        }
+
+    }
 }
 
 void CWhite_Suit_Monster::State_Death(_float fTimeDelta)
 {
-    if (!m_bUiDeathCall)
-    {
-        m_bUiDeathCall = true;
-        Call_MonsterDieUi(eMonsterGrade::Middle);
-    }
     if (m_pAnimationCom->IsEndAnim())
     {
         m_fDeathTime -= fTimeDelta;
@@ -431,8 +503,10 @@ void CWhite_Suit_Monster::SetState_Pushed(_float3 vLook)
     vLook.y = 0.f;
     D3DXVec3Normalize(&vLook, &vLook);
 
-    m_pRigidbody->Set_Velocity(vLook * 4.f);
-    m_pRigidbody->Set_Friction(4.f);
+    m_bPushRecovery = false;
+
+    m_pRigidbody->Set_Velocity(vLook * 15.f);
+    m_pRigidbody->Set_Friction(5.f);
 
     m_pAnimationCom->Play_Animation(L"Pushed", 150200.f, false);
 }
@@ -471,6 +545,46 @@ void CWhite_Suit_Monster::SetState_Jump()
     m_pRigidbody->Set_Velocity(m_pTarget->Get_Transform()->Get_Right() * m_fSpeed * fRand);
 }
 
+void CWhite_Suit_Monster::SetState_Execution()
+{
+    m_bCanIntersect = false;
+    m_pBoxCollider->Set_Active(false);
+
+    m_eState = STATE_EXECUTION;
+    m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+}
+
+void CWhite_Suit_Monster::SetState_Fly(_float3 vLook)
+{
+    m_pBoxCollider->Set_Active(true);
+
+    m_eState = STATE_FLY;
+    
+    m_pAnimationCom->Play_Animation(L"Death_Fly", 0.1f, false);
+
+    vLook.y = 0.f;
+    m_pRigidbody->Set_Velocity(vLook * 10.f);
+
+    m_fFlyTimeAcc = 0.f;
+}
+
+void CWhite_Suit_Monster::SetState_FlyDeath()
+{
+    m_eState = STATE_FLYDEATH;
+
+    if (m_bWallColl)
+        m_pAnimationCom->Play_Animation(L"Death_Fly_Wall", 0.1f, false);
+    else
+        m_pAnimationCom->Play_Animation(L"Death_Fly_Floor", 0.1f, false);
+
+    m_pBoxCollider->Set_Active(false);
+
+    Call_MonsterDieUi(eMonsterGrade::Middle);
+
+    m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+    m_pRigidbody->Set_UseGravity(true);
+}
+
 void CWhite_Suit_Monster::SetState_Hit()
 {
     m_eState = STATE_HIT;
@@ -486,6 +600,8 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
     m_bCanIntersect = false;
     m_pBoxCollider->Set_Active(false);
+
+    Call_MonsterDieUi(eMonsterGrade::Middle);
 
     // TODO: 무기 타입에 따라서 모션 변경 
     switch (pDesc->eHitType)

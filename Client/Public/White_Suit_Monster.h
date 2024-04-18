@@ -34,6 +34,9 @@ private:
 		STATE_SHOT,
 		STATE_JUMP,
 		STATE_HIT,
+		STATE_EXECUTION,
+		STATE_FLY,
+		STATE_FLYDEATH,
 		STATE_DEATH,
 		STATE_END
 	};
@@ -59,6 +62,7 @@ private:
 
 private:
 	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
+	void OnCollisionEnter(CGameObject* pOther) override;
 
 	_bool Check_HeadShot(_float3 vHitLocalPos);
 	_bool Check_BodyShot(_float3 vHitLocalPos);
@@ -75,9 +79,9 @@ private:
 	_float			m_fTimeAcc = 0.f;
 	_float			m_fDeathTime = 3.f;
 
-	//delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	_bool			m_bUiDeathCall = false;
-
+	_float			m_fFlyTimeAcc = 0.f;
+	_float			m_fFlyTime = 1.f;
+	_bool			m_bWallColl = false;
 private:
 	void Process_State(_float fTimeDelta);
 
@@ -87,6 +91,9 @@ private:
 	void State_Pushed();
 	void State_Shot();
 	void State_Jump();
+	void State_Execution();
+	void State_Fly(_float fTimeDelta);
+	void State_FlyDeath(_float fTimeDelta);
 	void State_Hit();
 	void State_Death(_float fTimeDelta);
 
@@ -94,11 +101,18 @@ public:
 	void SetState_Idle();
 	void SetState_Move();
 	void SetState_Alert();
-	void SetState_Pushed(_float3 vLook);
+	void SetState_Pushed(_float3 vLook) override;
 	void SetState_Shot();
 	void SetState_Jump();
+	void SetState_Execution()			override;
+	void SetState_Fly(_float3 vLook)	override;
+	void SetState_FlyDeath();
 	void SetState_Hit();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
+
+public:
+	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
+
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();

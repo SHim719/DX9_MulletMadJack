@@ -13,7 +13,7 @@ END
 
 BEGIN(Client)
 
-class CPawn abstract: public CGameObject
+class CPawn abstract : public CGameObject
 {
 public:
 	enum HITTYPE
@@ -45,9 +45,15 @@ public:
 	virtual HRESULT Render() override;
 
 
+public:
+	virtual void SetState_Pushed(_float3 vLook) {}
+	virtual void SetState_Execution() {}
+	virtual void SetState_Fly(_float3 vLook) {}
+
+	virtual _bool Is_DeathState() { return false; }
+
 protected:
 	void Call_MonsterDieUi(eMonsterGrade Grade);
-
 
 protected:
 	class CFPS_Camera*	m_pCamera = { nullptr };
