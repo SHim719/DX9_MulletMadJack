@@ -188,6 +188,7 @@
     <ClInclude Include="..\Public\Execution_Body.h" />
     <ClInclude Include="..\Public\Execution_Hand.h" />
     <ClInclude Include="..\Public\Execution_Head.h" />
+    <ClInclude Include="..\Public\MapObject_Header.h" />
     <ClInclude Include="..\Public\Monster_Headers.h" />
     <ClInclude Include="..\Public\Door.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h" />
     <ClInclude Include="..\Public\Player_Include.h" />
     <ClInclude Include="..\Public\Rigidbody.h" />
+    <ClInclude Include="..\Public\Slope.h" />
     <ClInclude Include="..\Public\Soda.h" />
     <ClInclude Include="..\Public\SpawnTrigger.h" />
     <ClInclude Include="..\Public\Terrain_Collider.h" />
@@ -280,6 +282,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\Slope.cpp" />
     <ClCompile Include="..\Private\CTextManager.cpp" />
     <ClCompile Include="..\Private\CText_BackGround.cpp" />
     <ClCompile Include="..\Private\CUi_Finish.cpp" />

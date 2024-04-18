@@ -37,6 +37,7 @@ namespace Client
 		SODAMACHINE_BANNER,
 		BORDER,
 		SPAWN_TRIGGER,
+		SLOPE,
 		OBJTYPE_END,
 	};
 

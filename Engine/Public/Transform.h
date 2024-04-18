@@ -36,15 +36,37 @@ public:
 
 	_float3 Get_Look()
 	{
-		return *(_float3*)&m_WorldMatrix.m[STATE_LOOK][0];
+		_float3 vLook = *(_float3*)&m_WorldMatrix.m[STATE_LOOK][0];
+		D3DXVec3Normalize(&vLook, &vLook);
+		return vLook;
 	}
 	_float3 Get_Right()
 	{
-		return *(_float3*)&m_WorldMatrix.m[STATE_RIGHT][0];
+		_float3 vRight = *(_float3*)&m_WorldMatrix.m[STATE_RIGHT][0];
+		D3DXVec3Normalize(&vRight, &vRight);
+		return vRight;
 	}
 	_float3 Get_Up()
 	{
-		return *(_float3*)&m_WorldMatrix.m[STATE_UP][0];
+		_float3 vUp = *(_float3*)&m_WorldMatrix.m[STATE_UP][0];
+		D3DXVec3Normalize(&vUp, &vUp);
+		return vUp;
+	}
+
+	_float3 Get_GroundLook()
+	{
+		_float3 vLook = *(_float3*)&m_WorldMatrix.m[STATE_LOOK][0];
+		vLook.y = 0.f;
+		D3DXVec3Normalize(&vLook, &vLook);
+		return vLook;
+	}
+
+	_float3 Get_GroundRight()
+	{
+		_float3 vRight = *(_float3*)&m_WorldMatrix.m[STATE_RIGHT][0];
+		vRight.y = 0.f;
+		D3DXVec3Normalize(&vRight, &vRight);
+		return vRight;
 	}
 
 	_float3 Get_Scale()

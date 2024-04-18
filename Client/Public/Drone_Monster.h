@@ -58,7 +58,7 @@ private:
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
 
-	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
+	virtual _bool	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
 
 	void	Decide_Pawn_Motions(_float fTimeDelta);
 	void	Pawn_Reveal_Motion(_float fTimeDelta);

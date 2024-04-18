@@ -27,6 +27,8 @@ HRESULT CWall::Initialize(void* pArg)
 	if (nullptr != pArg)
 		m_iTexture_Index = *(_uint*)pArg;
 
+	m_strTag = "Wall";
+
 	return S_OK;
 }
 
@@ -87,11 +89,12 @@ HRESULT CWall::Add_Components()
 	return S_OK;
 }
 
-void CWall::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CWall::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
 	std::cout << "Ray_Intersect : Wall " << '\n';
 	std::cout << "Hit World Pos: " << "X : " << fHitWorldPos.x << " Y : " << fHitWorldPos.y << " Z : " << fHitWorldPos.z << '\n';
 	int x = 10;
+	return true;
 }
 
 CWall* CWall::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

@@ -33,6 +33,7 @@ private:
 		STATE_PUSHED,
 		STATE_SHOT,
 		STATE_JUMP,
+		STATE_HIT,
 		STATE_DEATH,
 		STATE_END
 	};
@@ -57,7 +58,7 @@ private:
 	CRigidbody*		m_pRigidbody = { nullptr };
 
 private:
-	void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
+	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
 
 	_bool Check_HeadShot(_float3 vHitLocalPos);
 	_bool Check_BodyShot(_float3 vHitLocalPos);
@@ -82,6 +83,7 @@ private:
 	void State_Pushed();
 	void State_Shot();
 	void State_Jump();
+	void State_Hit();
 	void State_Death(_float fTimeDelta);
 
 public:
@@ -91,6 +93,7 @@ public:
 	void SetState_Pushed(_float3 vLook);
 	void SetState_Shot();
 	void SetState_Jump();
+	void SetState_Hit();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
 private:
 	HRESULT			Add_Components();

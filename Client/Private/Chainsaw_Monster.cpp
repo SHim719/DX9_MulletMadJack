@@ -280,7 +280,7 @@ void CChainsaw_Monster::Set_Motions(_float fTimeDelta)
 		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Wall"), 0.1f, false);*/
 }
 
-void CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
 	srand(unsigned(time(nullptr)));
 

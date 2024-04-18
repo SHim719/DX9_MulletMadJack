@@ -82,28 +82,11 @@ HRESULT CMapLoader::Load_Monster(HANDLE hFile, LEVEL eLevel)
 		iReadFlag += (int)ReadFile(hFile, szPrototypeTag, sizeof(_tchar) * iPrototypeTagLength, &dwByte, nullptr);
 		iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
 		iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
-
-		CGameObject* pMonster = nullptr;
-		switch (MONSTERTYPE(iTextureIndex))
-		{
-		case WHITE_SUIT:
-			pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_White_Suit");
-			static_cast<CBoxCollider*>(pMonster->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
-			break;
-		case DRONE:
-			pMonster = m_pGameInstance->Add_Clone(eLevel, szLayer, L"Prototype_Drone");
-			break;
-		}
-
-		_float3 vPos;
-		memcpy(&vPos, &worldMatrix.m[3], sizeof(_float3));
-		pMonster->Get_Transform()->Set_Position(vPos);
-		pMonster->Set_Active(false);
-
-		CSpawnTrigger::Add_EnemyObj(pMonster);
-		iReadFlag = 1;
+		SPAWN_DESC desc;
+		desc.vPosition = (_float3)worldMatrix.m[3];
+		desc.eType = MONSTERTYPE(iTextureIndex);
+		CSpawnTrigger::Add_SpawnInfo(desc);
 	}
-	
 	return S_OK;
 }
 

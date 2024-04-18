@@ -30,28 +30,30 @@ HRESULT CRigidbody::Initialize(void* pArg)
 
 void CRigidbody::Update(_float fTimeDelta)
 {
-	if (false == m_bGround)
+	if (false == m_bGround && true == m_bUseGravity)
 		m_vVelocity += m_vGravity * fTimeDelta;
 
+	if (m_fFriction != 0.f)
+	{
+		_float3 vInvVelocity = m_vVelocity;
+		vInvVelocity.y = 0.f;
+		//D3DXVec3Normalize(&vInvVelocity, &vInvVelocity);
+		vInvVelocity *= m_fFriction * fTimeDelta;
+
+		_float3 vXZVelocity = m_vVelocity;
+		vXZVelocity.y = 0.f;
+
+		if (D3DXVec3Length(&vXZVelocity) < D3DXVec3Length(&vInvVelocity))
+		{
+			m_vVelocity.x = 0.f;
+			m_vVelocity.z = 0.f;
+		}
+		else
+		{
+			m_vVelocity -= vInvVelocity;
+		}
+	}
 	
-	_float3 vInvVelocity = m_vVelocity;
-	vInvVelocity.y = 0.f;
-	D3DXVec3Normalize(&vInvVelocity, &vInvVelocity);
-	vInvVelocity *= m_fFriction * fTimeDelta;
-
-	_float3 vXZVelocity = m_vVelocity;
-	vXZVelocity.y = 0.f;
-
-	if (D3DXVec3Length(&vXZVelocity) < D3DXVec3Length(&vInvVelocity))
-	{
-		m_vVelocity.x = 0.f;
-		m_vVelocity.z = 0.f;
-	}
-	else
-	{
-		m_vVelocity -= vInvVelocity;
-	}
-
 	_float3 vOwnerPos = m_pOwnerTransform->Get_State(CTransform::STATE_POSITION);
 	vOwnerPos += m_vVelocity * fTimeDelta;
 	m_pOwnerTransform->Set_State(CTransform::STATE_POSITION, &vOwnerPos);

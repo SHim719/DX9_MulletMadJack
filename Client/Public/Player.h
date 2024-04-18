@@ -20,7 +20,7 @@ public:
 	enum WEAPON_TYPE { PISTOL, WEAPON_END };
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, ANIMATION_END };
-	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, JUMP_STATE, PLAYER_STATE_END };
+	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, PLAYER_STATE_END };
 	enum MOVE_STATE { STOP, MOVE, MOVE_END };
 
 public:
@@ -48,15 +48,9 @@ public:
 		this->ePlayerState = ePlayerState; }
 
 	void Set_MoveState(MOVE_STATE eMoveState) { 
-		Move_Reset();
+		//Move_Reset();
 		this->eMoveState = eMoveState; 
 	}
-
-	//void Get_WeaponType(WEAPON_TYPE& eWeaponType) { eWeaponType = this->eWeaponType; }
-	//void Get_HandType(HAND_TYPE& eHandType) { eHandType = this->eHandType; }
-	//void Get_AnimationType(ANIMATION_TYPE& eAnimationType) { eAnimationType = this->eAnimationType; }
-	//void Get_PlayerState(PLAYER_STATE& ePlayerState) { ePlayerState = this->ePlayerState; }
-	//void Get_MoveState(MOVE_STATE& eMoveState) { eMoveState = this->eMoveState; }
 
 	WEAPON_TYPE		Get_WeaponType() { return eWeaponType; }
 	HAND_TYPE		Get_HandType() { return eHandType; }
@@ -73,25 +67,28 @@ private:
 	
 	void Active_Reset();
 	void Camera_Reset();
-	void Move_Reset();
 
-	void Jump_Tick(_float fTimeDelta);
 	void Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime);
 	void Camera_Event(_float fTimeDelta);
 
-	void Jump(_float _fJumpPower);
 	void Shot();
-	void SpeedControl(_float fTimeDelta);
 
-	void ColliderCheck(_float fTimeDelta);
-	void ColliderTop(_float fTimeDelta);
-	void ColliderLeft(_float fTimeDelta);
-	void ColliderRight(_float fTimeDelta);
-	void ColliderBack(_float fTimeDelta);
-	void ColliderFront(_float fTimeDelta);
+	void ColliderCheck();
+	void ColliderUpDown();
 
 	void OnCollisionEnter(CGameObject* pOther) override;
 
+	void Process_State(_float fTimeDelta);
+
+	void Idle_State(_float fTimeDelta);
+	void Dash_State(_float fTimeDelta);
+	void AirDash_State(_float fTimeDelta);
+	void Slope_State(_float fTimeDelta);
+
+	void SetState_Idle();
+	void SetState_Dash();
+	void SetState_AirDash();
+	void SetState_Slope();
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
 		m_fShakePower = fShakePower; 
@@ -104,8 +101,6 @@ public:
 
 	void Kick();
 
-	bool Get_PlayerDash() { return bDash; }
-
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
@@ -113,6 +108,8 @@ public:
 
 private:
 	CBoxCollider* m_pBoxCollider = nullptr;
+	CRigidbody* m_pRigidbody = nullptr;
+	CTransform* m_pSlopeTransform = nullptr;
 
 	_float fMaxHeadTilt = 2.0f;
 	_float fHeadTilt = 0.0f;
@@ -125,7 +122,11 @@ private:
 	PLAYER_STATE ePlayerState = IDLE_STATE;
 	MOVE_STATE eMoveState = STOP;
 
-	bool bDash = false;
+	_float m_fDashTime = 0.2f;
+	_float m_fDashTimeAcc = 0.f;
+	_bool m_bCanAirDash = true;
+
+	_float m_fMoveSpeed = 5.f;
 
 	_float m_fShakePower = 0.f;
 	_float m_fShakeTime = 0.f;

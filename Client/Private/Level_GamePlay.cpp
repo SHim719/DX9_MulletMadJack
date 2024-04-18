@@ -108,7 +108,9 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Player()
 {
-	CPlayer_Manager::Get_Instance()->Set_Player(dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player"))));
+
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player")));
+	CPlayer_Manager::Get_Instance()->Set_Player(pPlayer);
 
 	if (nullptr == CPlayer_Manager::Get_Instance()->Get_Player()) {
 		MSG_BOX(TEXT("Failed to Create Player"));

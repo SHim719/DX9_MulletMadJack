@@ -19,7 +19,9 @@ public:
 	void Initialize(LPDIRECT3DDEVICE9 pGraphic_Device);
 
 public:
-	void Set_Player(CPlayer* pPlayer) { m_pPlayer = pPlayer; }
+	void Set_Player(CPlayer* pPlayer) { 
+		m_pPlayer = pPlayer; 
+	}
 	CPlayer* Get_Player() { return m_pPlayer; }
 
 	void Set_Player_WeaponType(CPlayer::WEAPON_TYPE eWeaponType) { m_pPlayer->Set_WeaponType(eWeaponType); }

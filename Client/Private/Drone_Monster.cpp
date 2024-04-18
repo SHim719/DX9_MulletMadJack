@@ -167,7 +167,7 @@ void CDrone_Monster::Set_Motions(_float fTimeDelta)
     }
 }
 
-void CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
     _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);

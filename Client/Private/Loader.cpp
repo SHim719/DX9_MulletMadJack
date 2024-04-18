@@ -4,19 +4,12 @@
 #include "Drone_Monster.h"
 #include "Chainsaw_Monster.h"
 #include "Enemy_Bullet.h"
-#include "Wall.h"
-#include "Floor.h"
-#include "MapObject.h"
-#include "SodaMachine.h"
-#include "SodaMachine_Banner.h"
-#include "Border.h"
-#include "Soda.h"
-#include "Door.h"
 #include "Player.h"
 #include "Trigger_Headers.h"
 #include "Ui_Include.h"
 #include "Player_Include.h"
 #include "CGame_Manager.h"
+#include "MapObject_Header.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -103,6 +96,8 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Loading_For_WhiteSuitMonster()))
 		return E_FAIL;
 
+	if (FAILED(Loading_For_Map_Texture()))
+		return E_FAIL;
 
 #pragma region TEXTURE_DRONE_MONSTER
 //	///* For Prototype_Component_Texture_Drone_Monster */
@@ -250,42 +245,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	return E_FAIL;
 
 #pragma endregion
-#pragma region ObjectTextures
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
-		return E_FAIL;
-	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Floor_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Border_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Border/Border%d.png", 1))))
-		return E_FAIL;
-	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Objects/Object%d.png", 16))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Soda_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/SodaMachine/SodaMachine%d.png", 2))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"SodaCan_Texture",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Soda/Soda0.png"))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Door_Textures",
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Door/Door%d.png", 5))))
-		return E_FAIL;
-#pragma endregion
 	lstrcpy(m_szLoadingText, TEXT("모델을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("사운드을(를) 로딩 중 입니다."));
@@ -293,69 +252,15 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	lstrcpy(m_szLoadingText, TEXT("셰이더을(를) 로딩 중 입니다."));
 
 	lstrcpy(m_szLoadingText, TEXT("객체원형을(를) 로딩 중 입니다."));
-
-#pragma region MapObjectsPrototype
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
-		CWall::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Floor"),
-		CFloor::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_MapObject"),
-		CMapObject::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SodaMachine"),
-		CSodaMachine::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SodaMachine_Banner"),
-		CSodaMachine_Banner::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Border"),
-		CBorder::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Soda"),
-		CSoda::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
-    if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Door"),
-        CDoor::Create(m_pGraphic_Device))))
-        return E_FAIL;
-#pragma endregion
-
+	
 	m_fProgress = 0.6f;
-	/* For Prototype_GameObject_White_Suit_Monster */
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_White_Suit"),
-		CWhite_Suit_Monster::Create(m_pGraphic_Device))))
+
+	if (FAILED(Ready_MapObject_Prototype()))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Bullet"),
-		CEnemy_Bullet::Create(m_pGraphic_Device))))
+	if (FAILED(Ready_Monster_Prototype()))
 		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SpawnTrigger"),
-		CSpawnTrigger::Create(m_pGraphic_Device))))
-		return E_FAIL;
-	//
-	///* For Prototype_GameObject_Drone_Monster */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Drone_Monster"),
-	//	CDrone_Monster::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-	//
-	///* For Prototype_GameObject_Chainsaw_Monster */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Chainsaw_Monster"),
-	//	CChainsaw_Monster::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-	//
-	///* For Prototype_GameObject_Enemy_Bullet */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
-	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+	
 
 	lstrcpy(m_szLoadingText, TEXT("UI을(를) 로딩 중 입니다."));
 	if (FAILED(Loading_For_Ui()))
@@ -436,6 +341,124 @@ HRESULT CLoader::Loading_For_WhiteSuitMonster()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Enemy_Bullet_Texture"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Bullet0.png")))))
 		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Map_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Wall_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Wall/Albedo/Wall%d.png", 17))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Floor_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Floor/Albedo/Floor%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Border_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Border/Border%d.png", 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Object_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Objects/Object%d.png", 16))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Soda_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/SodaMachine/SodaMachine%d.png", 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"SodaCan_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Soda/Soda0.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Door_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Door/Door%d.png", 5))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Slope_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Slope/Slope0.png"))))
+		return E_FAIL;
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_MapObject_Prototype()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
+		CWall::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Floor"),
+		CFloor::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_MapObject"),
+		CMapObject::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SodaMachine"),
+		CSodaMachine::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SodaMachine_Banner"),
+		CSodaMachine_Banner::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Border"),
+		CBorder::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Soda"),
+		CSoda::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Door"),
+		CDoor::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Slope"),
+		CSlope::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Monster_Prototype()
+{
+	/* For Prototype_GameObject_White_Suit_Monster */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_White_Suit"),
+		CWhite_Suit_Monster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Bullet"),
+		CEnemy_Bullet::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SpawnTrigger"),
+		CSpawnTrigger::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	//
+	///* For Prototype_GameObject_Drone_Monster */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Drone_Monster"),
+	//	CDrone_Monster::Create(m_pGraphic_Device))))
+	//	return E_FAIL;
+	//
+	///* For Prototype_GameObject_Chainsaw_Monster */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Chainsaw_Monster"),
+	//	CChainsaw_Monster::Create(m_pGraphic_Device))))
+	//	return E_FAIL;
+	//
+	///* For Prototype_GameObject_Enemy_Bullet */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
+	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
+	//	return E_FAIL;
 
 	return S_OK;
 }

@@ -91,7 +91,9 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 		SetCursorPos(ptWindow.x, ptWindow.y);
 
 		_float fTempFovy = m_CameraDesc.fFovy;
-		if (CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::DASH_STATE) {
+		if (CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::DASH_STATE
+			|| CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::AIRDASH_STATE
+			|| CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::SLOPE_STATE) {
 			fTempFovy = D3DXToRadian(80.0f);
 		}
 

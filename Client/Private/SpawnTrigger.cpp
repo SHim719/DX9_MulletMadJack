@@ -1,8 +1,9 @@
 #include "SpawnTrigger.h"
 
 #include "GameInstance.h"
+#include "Monster_Headers.h"
 
-vector<CGameObject*> CSpawnTrigger::m_vecEnemies;
+vector<SPAWN_DESC> CSpawnTrigger::m_vecSpawnInfos;
 
 CSpawnTrigger::CSpawnTrigger(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CTriggerObject { pGraphic_Device }
@@ -30,16 +31,31 @@ HRESULT CSpawnTrigger::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, L"Transform_Default", L"Transform"));
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, L"Box_Collider_Default", L"Collider"));
-
+	
 	return S_OK;
 }
 
 
 void CSpawnTrigger::OnTriggerEnter(CGameObject* pOther)
 {
+	_uint iLevelID = m_pGameInstance->Get_CurrentLevelID();
 	for (_int i = m_iMinIdx; i <= m_iMaxIdx; ++i)
 	{
-		m_vecEnemies[i]->Set_Active(true);
+		CGameObject* pMonster = nullptr;
+		switch (m_vecSpawnInfos[i].eType)
+		{
+		case WHITE_SUIT:
+			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_White_Suit");
+			break;
+		case DRONE:
+			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_Drone");
+			break;
+		}
+
+		if (pMonster)
+		{
+			pMonster->Get_Transform()->Set_Position(m_vecSpawnInfos[i].vPosition);
+		}
 	}
 	m_bDestroyed = true;
 }

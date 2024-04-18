@@ -21,7 +21,7 @@ void CCollision_Manager::Tick()
 	//Collision_Box(4, L"Player", L"Wall");
 	//Collision_Box(4, L"Player", L"Floor");
 
-	Collision_Box(3, L"Player", L"Door", Trigger);
+	Collision_Box(3, L"Player", L"Door", Collision);
 	Collision_Box(3, L"Player", L"SpawnTrigger", Trigger);
 	Collision_Box(3, L"Player", L"SodaMachine", Collision);
 	Collision_Box(3, L"Player", L"Monster", Collision);
@@ -58,8 +58,8 @@ void CCollision_Manager::Intersect_Ray()
 			_float fDist;
 			if (pVIBuffer->Intersect_Ray((*it)->Get_Transform(), RayDesc.vRayWorldPos, RayDesc.vRayDir, &fHitWorldPos, &fDist))
 			{
-				(*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg);
-				break;
+				if (false == (*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg))
+					continue;
 			}
 		}
 	}
@@ -80,6 +80,8 @@ _bool CCollision_Manager::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pO
 	{
 		CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
 		if (nullptr == pVIBuffer)
+			continue;
+		if (!(*it)->Can_Intersect())
 			continue;
 
 		_float3 _fHitWorldPos;

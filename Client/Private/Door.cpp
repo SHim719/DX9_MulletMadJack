@@ -112,7 +112,7 @@ HRESULT CDoor::Add_Components()
 	return S_OK;
 }
 
-void CDoor::OnTriggerEnter(CGameObject* pOther)
+void CDoor::OnCollisionEnter(CGameObject* pOther)
 {
 	static_cast<CPlayer*>(pOther)->Kick();
 	m_bOpening = true;

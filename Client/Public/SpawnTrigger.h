@@ -10,6 +10,12 @@ END
 
 BEGIN(Client)
 
+typedef struct tagSpawnDesc
+{
+	_float3 vPosition;
+	MONSTERTYPE eType;
+}SPAWN_DESC;
+
 class CSpawnTrigger final : public CTriggerObject
 {
 private:
@@ -28,15 +34,15 @@ private:
 	void OnTriggerEnter(CGameObject* pOther) override;
 
 private:
-	static vector<CGameObject*> m_vecEnemies;
-
+	static vector<SPAWN_DESC> m_vecSpawnInfos;
+	
 	_int	m_iMinIdx = { 0 };
 	_int	m_iMaxIdx = { 0 };
 
 public:
-	static void Add_EnemyObj(CGameObject* pObj) { m_vecEnemies.push_back(pObj); }
-	static void reserve(_uint iSize) { m_vecEnemies.reserve(iSize); }
-	static void Clear() { m_vecEnemies.clear(); }
+	static void Add_SpawnInfo(SPAWN_DESC desc) { m_vecSpawnInfos.push_back(desc); }
+	static void reserve(_uint iSize) { m_vecSpawnInfos.reserve(iSize); }
+	static void Clear() { m_vecSpawnInfos.clear(); }
 
 	void Set_MinIdx(_int iMin) { m_iMinIdx = iMin; }
 	void Set_MaxIdx(_int iMax) { m_iMaxIdx = iMax; }

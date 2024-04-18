@@ -3,8 +3,6 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 
-
-
 BEGIN(Engine)
 class CTransform;
 class CVIBuffer_Rect;
@@ -14,15 +12,15 @@ END
 
 BEGIN(Client)
 
-class CWall final : public CGameObject
+class CSlope final : public CGameObject
 {
 private:
-	CWall(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CWall(const CWall& rhs);
-	virtual ~CWall() = default;
+	CSlope(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CSlope(const CSlope& rhs);
+	virtual ~CSlope() = default;
 
 public:
-	HRESULT Initialize_Prototype();
+	HRESULT Initialize_Prototype()			override;
 	HRESULT Initialize(void* pArg)			override;
 	void PriorityTick(_float fTimeDelta)	override;
 	void Tick(_float fTimeDelta)			override;
@@ -31,21 +29,16 @@ public:
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
-	CTexture*		m_pTextureCom = { nullptr };
-	CBoxCollider*	m_pBoxCollider = { nullptr };
+	CTexture* m_pTextureCom = { nullptr };
+	CBoxCollider* m_pBoxCollider = { nullptr };
 
 private:
 	HRESULT Add_Components();
 
 public:
-	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-
-public:
-	static CWall* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CSlope* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CGameObject* Clone(void* pArg) override;
 	void Free() override;
 };
 
 END
-
-

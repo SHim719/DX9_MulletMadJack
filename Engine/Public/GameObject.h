@@ -25,7 +25,7 @@ public:
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
-	class CGameInstance*		m_pGameInstance = { nullptr };
+	class CGameInstance* m_pGameInstance = { nullptr };
 
 
 protected:
@@ -56,7 +56,7 @@ public:
 #pragma endregion  
 
 public:
-	virtual void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) {} // Ray Picking했을 때 호출되는 함수
+	virtual _bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) { return false; }
 	virtual void Hit(void* pArg);
 
 public:
@@ -71,6 +71,7 @@ public:
 protected:
 	_bool m_bDestroyed = { false };
 	_bool m_bActive = { true };
+	_bool m_bCanIntersect = { true };
 
 	string m_strTag = "";
 
@@ -81,8 +82,10 @@ public:
 	void Set_Active(_bool b) { m_bActive = b; }
 	_bool Is_Active() { return m_bActive; }
 
-	const string& Get_Tag() const { return m_strTag; }
+	void Set_Intersect(_bool b) { m_bCanIntersect = b; }
+	_bool Can_Intersect() { return m_bCanIntersect; }
 
+	const string& Get_Tag() const { return m_strTag; }
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

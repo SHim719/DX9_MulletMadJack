@@ -32,6 +32,7 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
 
     _float3 Scale = {1.3f, 1.3f, 1.f };
     m_pTransformCom->Set_Scale(Scale);
+    m_pBoxCollider->Set_Scale({ 0.5f, 1.3f, 0.5f });
 
     m_pRigidbody->Set_Friction(0.f);
     m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
@@ -170,10 +171,10 @@ HRESULT CWhite_Suit_Monster::End_RenderState()
 }
 
 
-void CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
     if (STATE_DEATH == m_eState)
-        return;
+        return false;
 
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
     _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
@@ -185,17 +186,22 @@ void CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _f
     {
         pDesc->eHitType = HEAD_SHOT;
         Hit(pDesc);
+        return true;
     }
     else if (Check_EggShot(vHitLocalPos))
     {
         pDesc->eHitType = EGG_SHOT;
         Hit(pDesc);
+        return true;
     }
     else if (Check_BodyShot(vHitLocalPos))
     {
         pDesc->eHitType = BODY_SHOT;
         Hit(pDesc);
+        return true;
     }
+
+    return false;
 }
 
 _bool CWhite_Suit_Monster::Check_HeadShot(_float3 vHitLocalPos)
@@ -237,7 +243,14 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     }
     }
 
-    SetState_Death(pDesc);
+    if (m_fHp <= 0.f)
+    {
+        SetState_Death(pDesc);
+    }
+    else
+    {
+        SetState_Hit();
+    }
 }
 
 void CWhite_Suit_Monster::Process_State(_float fTimeDelta)
@@ -361,6 +374,10 @@ void CWhite_Suit_Monster::State_Jump()
     }
 }
 
+void CWhite_Suit_Monster::State_Hit()
+{
+}
+
 void CWhite_Suit_Monster::State_Death(_float fTimeDelta)
 {
     if (m_pAnimationCom->IsEndAnim())
@@ -426,7 +443,7 @@ void CWhite_Suit_Monster::SetState_Shot()
     vBulletPos.y += 0.25f;
     
     _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
-    vPlayerPos.y -= 0.2f;
+    vPlayerPos.y -= 0.4f;
     CGameObject* pBullet =  m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_Bullet");
     pBullet->Get_Transform()->Set_Position(vBulletPos);
     pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
@@ -449,12 +466,22 @@ void CWhite_Suit_Monster::SetState_Jump()
     m_pRigidbody->Set_Velocity(m_pTarget->Get_Transform()->Get_Right() * m_fSpeed * fRand);
 }
 
+void CWhite_Suit_Monster::SetState_Hit()
+{
+    m_eState = STATE_HIT;
+
+    m_pAnimationCom->Play_Animation(L"Hit", 0.1f, false);
+}
+
 void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 {
     if (STATE_DEATH == m_eState)
         return;
     m_eState = STATE_DEATH;
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+    m_bCanIntersect = false;
+    m_pBoxCollider->Set_Active(false);
+
     // TODO: 무기 타입에 따라서 모션 변경 
     switch (pDesc->eHitType)
     {

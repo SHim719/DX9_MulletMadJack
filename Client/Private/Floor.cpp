@@ -26,6 +26,8 @@ HRESULT CFloor::Initialize(void* pArg)
 	if (nullptr != pArg)
 		m_iTexture_Index = *(_uint*)pArg;
 
+	m_strTag = "Floor";
+
 	return S_OK;
 }
 

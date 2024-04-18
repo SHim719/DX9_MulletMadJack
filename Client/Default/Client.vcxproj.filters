@@ -334,6 +334,9 @@
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster">
       <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Slope">
+      <UniqueIdentifier>{716240c5-bd9f-4473-82de-4b9b879a4271}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -627,6 +630,12 @@
     <ClInclude Include="..\Private\Execution_Neck.h">
       <Filter>04. UI\Ui\CUi_Active\Execution\Neck</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Slope.h">
+      <Filter>02.GameObjects\01. MapObject\Slope</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MapObject_Header.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -886,6 +895,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Hand.cpp">
       <Filter>04. UI\Ui\CUi_Active\Execution\Punch</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Slope.cpp">
+      <Filter>02.GameObjects\01. MapObject\Slope</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

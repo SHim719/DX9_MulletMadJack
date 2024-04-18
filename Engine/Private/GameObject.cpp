@@ -13,6 +13,7 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pGraphic_Device)
 CGameObject::CGameObject(const CGameObject & rhs)
 	: m_pGraphic_Device{ rhs.m_pGraphic_Device }
 	, m_pGameInstance{ rhs.m_pGameInstance }
+	, m_bDestroyed { false }
 {
 	Safe_AddRef(m_pGameInstance);
 	Safe_AddRef(m_pGraphic_Device);
