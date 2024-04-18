@@ -44,7 +44,9 @@ namespace Client
 	enum MONSTERTYPE
 	{
 		WHITE_SUIT,
+		CHAINSAW,
 		DRONE,
+		MONSTER_END,
 	};
 
 	enum TRIGGERTYPE

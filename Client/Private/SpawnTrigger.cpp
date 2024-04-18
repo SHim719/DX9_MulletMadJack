@@ -47,8 +47,8 @@ void CSpawnTrigger::OnTriggerEnter(CGameObject* pOther)
 		case WHITE_SUIT:
 			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_White_Suit");
 			break;
-		case DRONE:
-			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_Drone");
+		case CHAINSAW:
+			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_Chainsaw");
 			break;
 		}
 

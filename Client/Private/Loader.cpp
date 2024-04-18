@@ -1,12 +1,9 @@
 #include "..\Public\Loader.h"
 #include "GameInstance.h"
-#include "White_Suit_Monster.h"
-#include "Drone_Monster.h"
-#include "Chainsaw_Monster.h"
-#include "Orange_Pants_Monster.h"
 #include "Enemy_Bullet.h"
 #include "Player.h"
 #include "Trigger_Headers.h"
+#include "Monster_Headers.h"
 #include "Ui_Include.h"
 #include "Player_Include.h"
 #include "CGame_Manager.h"
@@ -82,12 +79,12 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Loading_For_WhiteSuitMonster()))
 		return E_FAIL;
 
+	if (FAILED(Loading_For_Chainsaw_Monster()))
+		return E_FAIL;
+
 	if (FAILED(Loading_For_Map_Texture()))
 		return E_FAIL;
 
-
-	//if (FAILED(Loading_For_Chainsaw_Monster()))
-	//	return E_FAIL;
 
 	//if (FAILED(Loading_For_Orange_Pants_Monster()))
 	//	return E_FAIL;
@@ -107,11 +104,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	/* For Prototype_GameObject_Drone_Monster */
 	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Drone"),
 	//	CDrone_Monster::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-	//
-	///* For Prototype_GameObject_Chainsaw_Monster */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Chainsaw"),
-	//	CChainsaw_Monster::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 	//
 	///* For Prototype_GameObject_Orange_Pants_Monster */
@@ -364,9 +356,12 @@ HRESULT CLoader::Loading_For_Chainsaw_Monster()
 
 HRESULT CLoader::Ready_Monster_Prototype()
 {
-	/* For Prototype_GameObject_White_Suit_Monster */
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_White_Suit"),
 		CWhite_Suit_Monster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Chainsaw"),
+		CChainsaw_Monster::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Bullet"),
@@ -382,15 +377,7 @@ HRESULT CLoader::Ready_Monster_Prototype()
 	//	CDrone_Monster::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 	//
-	///* For Prototype_GameObject_Chainsaw_Monster */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Chainsaw_Monster"),
-	//	CChainsaw_Monster::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-	//
-	///* For Prototype_GameObject_Enemy_Bullet */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
-	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
+
 	return S_OK;
 }
 

@@ -179,7 +179,8 @@ HRESULT CWhite_Suit_Monster::End_RenderState()
 
 _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
-    if (STATE_DEATH == m_eState)
+    if (STATE_DEATH == m_eState || STATE_FLY == m_eState || STATE_EXECUTION == m_eState 
+        || STATE_FLYDEATH == m_eState)
         return false;
 
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
