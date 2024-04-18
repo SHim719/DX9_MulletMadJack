@@ -38,6 +38,8 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 				Set_DisableEnd(false);
 				//Camera_Shake_Order(600000.f, 0.4f);
 				/*m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);*/
+				Set_MouseLock(false);
+				Set_Invincible(true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Neck"), true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Head"), true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Body"), true);
@@ -52,12 +54,30 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 			m_bTempDisable = true;
 			if (m_bTempDisableEnd == true && m_bActionIDLE == true) {
 				Set_DisableEnd(false);
-				m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Drink"), true);
+				Set_PlayerHP_Add(10.f);
+				m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_DrinkSoda"), true);
+				m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Drink"),	   true);
 				m_bActionIDLE = false;
 			}
 
 			break;
 		}
+
+		case ACTION_TYPE::ACTION_CUTIN_SHOP: {
+			m_bTempDisable = true;
+			if (m_bTempDisableEnd == true && m_bActionIDLE == true) {
+				Set_DisableEnd(false);
+				Shop_System(nullptr);
+				m_bActionIDLE = false;
+			}
+
+			break;
+		}
+
+
+
+		default :
+			break;
 	}
 
 #pragma region TempDisable Position Decide
@@ -151,6 +171,22 @@ _float2 CPlayer_Manager::Get_TempDisablePosition_BothHand()
 	return { m_fTempDisablePosition,m_fTempDisablePosition };
 }
 
+void CPlayer_Manager::Combo_System(_float fTimeDelta)
+{
+	if (m_fComboTime > 0.f) 	m_fComboTime -= fTimeDelta;
+
+	if (m_fComboTime <= 0.f) {
+		m_iCombo = 0;
+		m_fComboTime = 0.f;
+	}
+}
+void CPlayer_Manager::Shop_System(void* Arg)
+{
+	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::StageClear);
+	CPlayer_Manager::Get_Instance()->Set_MouseLock(false);
+	ShowCursor(TRUE);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), false);
+}
 void CPlayer_Manager::Free()
 {
 	Safe_Release(m_pGameInstance);

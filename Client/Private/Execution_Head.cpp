@@ -68,7 +68,12 @@ void CExecution_Head::Tick(_float fTimeDelta)
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Neck"), false);
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), false);
 				CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
+				POINT		ptWindow = { g_iWinSizeX >> 1, g_iWinSizeY >> 1 };
+				ClientToScreen(g_hWnd, &ptWindow);
+				SetCursorPos(ptWindow.x, ptWindow.y);
 
+				CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
+				CPlayer_Manager::Get_Instance()->Set_Invincible(false);
 				AnimationDelayReset();
 			}
 		}

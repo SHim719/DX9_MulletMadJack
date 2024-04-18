@@ -25,16 +25,19 @@ void CCollision_Manager::Tick()
 	Collision_Box(3, L"Player", L"SpawnTrigger", Trigger);
 	Collision_Box(3, L"Player", L"SodaMachine", Collision);
 	Collision_Box(3, L"Player", L"Monster", Collision);
-	
+
 	Collision_Box(3, L"Monster", L"Wall", Collision);
 	Collision_Box(3, L"Monster", L"Floor", Collision);
 
+	Collision_Box(3, L"Soda", L"Player", Trigger);
 	Collision_Box(3, L"Soda", L"Floor", Collision);
 	Collision_Box(3, L"Soda", L"Soda", Collision);
 	
 
 	Collision_Box(3, L"Bullet", L"Player", Trigger);
 	Collision_Box(3, L"Bullet", L"Wall", Trigger);
+
+
 
 	Intersect_Ray();
 }

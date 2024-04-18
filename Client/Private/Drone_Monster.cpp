@@ -88,7 +88,7 @@ HRESULT CDrone_Monster::Render()
     return S_OK;
 }
 
-void CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
     if (STATE_DEATH == m_eState)
         return;
@@ -377,14 +377,14 @@ void CDrone_Monster::Set_Motions(_float fTimeDelta)
     }
 }
 
-_bool CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
-{
-    _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
-    _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
-
-    if (-0.2f < vHitLocalPos.x && vHitLocalPos.x < 0.2f && -0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.2f)
-        m_eState = STATE_FLYBACK;
-}
+//_bool CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+//{
+//    _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
+//    _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
+//
+//    if (-0.2f < vHitLocalPos.x && vHitLocalPos.x < 0.2f && -0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.2f)
+//        m_eState = STATE_FLYBACK;
+//}
 
 void CDrone_Monster::Decide_Pawn_Motions(_float fTimeDelta)
 {

@@ -43,7 +43,7 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
-
+	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 
 	Initialize_SodaMachine();
 
@@ -165,7 +165,7 @@ void CLevel_GamePlay::Test_Ui()
 	{
 		CUi_Combo::ComboDesc test;
 		test.bFirstCall = true;
-		test.iKillCount = 5;
+		test.iKillCount = CPlayer_Manager::Get_Instance()->Get_Combo();
 		m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &test);
 		//CUi_Combo::ComboDesc test;
 		//test.bFirstCall = false;
@@ -174,7 +174,11 @@ void CLevel_GamePlay::Test_Ui()
 	}
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::U))
 	{
-		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::StageClear);
+	/*	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::StageClear);
+		CPlayer_Manager::Get_Instance()->Set_MouseLock(false);
+		ShowCursor(TRUE);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), false);*/
+		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_CUTIN_SHOP);
 	}
 
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::I))
@@ -193,14 +197,6 @@ void CLevel_GamePlay::Test_Ui()
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::L))
 	{
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Finish"));
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::O))
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_DrinkSoda"));
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::P))
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
 	}
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::G))
 	{

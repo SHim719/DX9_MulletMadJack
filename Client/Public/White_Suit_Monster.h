@@ -5,6 +5,7 @@
 #include "FPS_Camera.h"
 #include "Core_Camera.h"
 #include "Pawn.h"
+#include "CUi_SpecialHit.h"
 
 enum EventType
 {

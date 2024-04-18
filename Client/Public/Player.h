@@ -78,6 +78,7 @@ private:
 	void ColliderUpDown();
 
 	void OnCollisionEnter(CGameObject* pOther) override;
+	void OnTriggerEnter(CGameObject* pOther) override;
 
 	void Process_State(_float fTimeDelta);
 
@@ -100,11 +101,24 @@ public:
 
 	_float Get_PlayerHP() { return m_fPlayerHp; }
 	void Set_PlayerHP(_float fPlayerHp) { m_fPlayerHp = fPlayerHp; }
-	void Set_PlayerHP_Add(_float fPlayerHp) { m_fPlayerHp += fPlayerHp; }
+	void Set_PlayerHP_Add(_float fPlayerHp) { 
+		m_fPlayerHp += fPlayerHp;
+		if(m_fPlayerHp >= m_fPlayerMaxHp) m_fPlayerHp = m_fPlayerMaxHp;
+	}
 
 	void Kick();
 	
+	void Set_HpLimit(_float fPlayerMaxHp) { m_fPlayerMaxHp = fPlayerMaxHp; }
+
 	void Set_TimeDivide(_float fTimeDivide) { CGameInstance::Get_Instance()->Set_TimeDivide(fTimeDivide); }
+
+	void Set_Invincible(_bool bInvincible) { m_bInvincible = bInvincible; }
+	_bool Get_Invincible() { return m_bInvincible; }
+
+	void Set_InvincibleTime(_float fInvincibleTime) { m_fInvincibleTime = fInvincibleTime; }
+	_float Get_InvincibleTime() { return m_fInvincibleTime; }
+
+	_float Get_InvincibleTimeLimit() { return m_fInvincibleTimeLimit; }
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
@@ -141,7 +155,15 @@ private:
 	_float m_fJumpPower = 0.f;
 
 	_float m_fPlayerHp = 15.f;
+	_float m_fPlayerMaxHp = 15.f;
 
+	_float m_fBossPlayerHp = 100.f;
+	_float m_fBossPlayerMaxHp = 100.f;
+
+	_bool  m_bInvincible = false;
+
+	_float m_fInvincibleTime = 0.f;
+	_float m_fInvincibleTimeLimit = 0.5f;
 };
 
 END

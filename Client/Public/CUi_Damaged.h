@@ -38,7 +38,11 @@ protected:
 private:
 	void Adjust_Alpha(_float fTimeDelta);
 
+
 private:
+	CTexture* m_pUniqueTextureCom = { nullptr };
+	_uint m_iTexture_IndexId = { 0 };
+	_float m_fTextureSwitching = { 0 };
 	_float m_fAdjustAlphaTime = { 0 };
 	_uint m_iAlpha = { 100 };
 

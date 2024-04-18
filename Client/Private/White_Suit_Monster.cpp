@@ -606,12 +606,22 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
     // TODO: 무기 타입에 따라서 모션 변경 
     switch (pDesc->eHitType)
     {
-    case CPawn::HEAD_SHOT:
+    case CPawn::HEAD_SHOT: {
         m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
+        CUi_SpecialHit::SpecialHit_Desc Arg;
+        Arg.Hit = eSpecialHit::HEADSHOT;
+        Arg.iCount = 4;
+        m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
         break;
-    case CPawn::BODY_SHOT:
+    }
+    case CPawn::BODY_SHOT: {
         m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
+        CUi_SpecialHit::SpecialHit_Desc Arg;
+        Arg.Hit = eSpecialHit::FINISHED;
+        Arg.iCount = 4;
+        m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
         break;
+    }
     case CPawn::EGG_SHOT:
         m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
         break;

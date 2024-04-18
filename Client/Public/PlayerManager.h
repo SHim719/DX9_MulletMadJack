@@ -1,6 +1,7 @@
 #pragma once
 #include "Client_Defines.h"
 #include "GameInstance.h"
+#include "CGame_Manager.h"
 #include "Base.h"
 #include "Player.h"
 
@@ -10,7 +11,7 @@ class CPlayer_Manager : public CBase
 {
 DECLARE_SINGLETON(CPlayer_Manager)
 public:
-	enum ACTION_TYPE { ACTION_NONE, ACTION_EXECUTION, ACTION_WEAPONCHANGE, ACTION_DRINKCAN, ACTION_END };
+	enum ACTION_TYPE { ACTION_NONE, ACTION_EXECUTION, ACTION_WEAPONCHANGE, ACTION_DRINKCAN, ACTION_CUTIN_SHOP, ACTION_END };
 private:
 	CPlayer_Manager();
 	virtual ~CPlayer_Manager() = default;
@@ -99,6 +100,35 @@ public:
 	_bool Get_DisableEnd() { return m_bTempDisableEnd; }
 
 	void Execution_Monster() { Execution_Ready(); }
+
+	void Set_MouseLock(_bool _bMouseLock) { m_bMouseLock = _bMouseLock; }
+	_bool Get_MouseLock() { return m_bMouseLock; }
+
+	void Set_ComboTime() { m_fComboTime = m_fComboTimeLimit; }
+	void Add_Combo() { 
+		m_iCombo++; 
+		Set_ComboTime();
+	}
+	_int Get_Combo() { return m_iCombo; }
+
+	void Combo_System(_float fTimeDelta);
+
+	_float Get_InvincibleTime() { return m_pPlayer->Get_InvincibleTime(); }
+	void Set_InvincibleTime(_float _fInvincibleTime) { m_pPlayer->Set_InvincibleTime(_fInvincibleTime); }
+
+	_bool Get_Invincible() { return m_pPlayer->Get_Invincible(); }
+	void Set_Invincible(_bool _bInvincible) { m_pPlayer->Set_Invincible(_bInvincible); }
+
+	_int Get_Magazine() { return m_iWeaponMagezine; }
+	void Set_Magazine(_int _iMagazine) { m_iWeaponMagezine = _iMagazine; }
+	void Fire_Magazine() { m_iWeaponMagezine--; }
+	void Reload_Magazine() { m_iWeaponMagezine = m_iWeaponMaxMagezine; }
+
+	_int Get_MaxMagazine() { return m_iWeaponMaxMagezine; }
+	void Set_MaxMagazine(_int _iMagazine) { m_iWeaponMaxMagezine = _iMagazine; }
+
+	void Shop_System(void* Arg);
+
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -127,6 +157,17 @@ private:
 	_bool						m_bDrinkCan = false;
 	_bool						m_bDrinkCanReady = false;
 
+	_bool				        m_bMouseLock = false;
+
+
+	_int						m_iCombo = 0;
+
+	_float						m_fComboTime = 0.f;
+	_float						m_fComboTimeLimit = 5.f;
+
+	//Weapon
+	_int						m_iWeaponMagezine = 8;
+	_int						m_iWeaponMaxMagezine = 8;
 private:
 
 	CPlayer* m_pPlayer = nullptr;

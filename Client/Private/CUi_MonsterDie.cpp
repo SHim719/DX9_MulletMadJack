@@ -1,7 +1,7 @@
 #include "CUi_MonsterDie.h"
 #include "GameInstance.h"
 #include "CUi_Background.h"
-
+#include "PlayerManager.h"
 
 CUi_MonsterDie::CUi_MonsterDie(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CUi(pGraphic_Device)
@@ -29,6 +29,8 @@ HRESULT CUi_MonsterDie::Initialize(void* pArg)
 	Initialize_Set_Scale_Pos_Rotation(pArg);
 	Initialize_Set_Speed();
 	Initialize_Set_Background();
+
+	CPlayer_Manager::Get_Instance()->Add_Combo();
 
 	m_fLifeTime = 2.f;
 	return S_OK;
