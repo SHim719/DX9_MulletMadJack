@@ -65,7 +65,6 @@ public:
 	void Initialize_TextManager();
 
 	void Add_TextNumber(TextType type) { ++m_iTextPrintOrder[_uint(type)]; }
-	HRESULT Ready_Active_Execution();
 	_float2 Object_Shake(_float fPower);
 
 	CText::Text_Info* Get_Text(TextType type, _uint Number);

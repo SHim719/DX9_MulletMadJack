@@ -44,14 +44,6 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 
-	if (FAILED(Ready_Layer_Chainsaw_Monster(TEXT("Monster"))))		// 임시
-		return E_FAIL;
-
-	if (FAILED(Ready_Layer_Orange_Pants_Monster(TEXT("Monster"))))		// 임시
-		return E_FAIL;
-
-	if (FAILED(Ready_Layer_Drone_Monster(TEXT("Monster"))))		// 임시
-		return E_FAIL;
 
 	Initialize_SodaMachine();
 

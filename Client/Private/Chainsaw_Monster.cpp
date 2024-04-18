@@ -87,7 +87,7 @@ HRESULT CChainsaw_Monster::Render()
 	return S_OK;
 }
 
-void CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
 	if (STATE_DEATH == m_eState)
 		return;

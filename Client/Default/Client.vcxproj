@@ -171,8 +171,8 @@
     <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Public\Client_Components.h" />
     <ClInclude Include="..\Public\Client_Struct.h" />
@@ -186,8 +186,8 @@
     <ClInclude Include="..\Public\Drink.h" />
     <ClInclude Include="..\Public\CUi_Reload.h" />
     <ClInclude Include="..\Public\Drone_Monster.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Public\Execution_Knife.h" />
     <ClInclude Include="..\public\Light_Manager.h" />
@@ -205,8 +205,8 @@
     <ClInclude Include="..\Public\Dash_Effect.h" />
     <ClInclude Include="..\Public\Kick.h" />
     <ClInclude Include="..\Public\Orange_Pants_Monster.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Public\Pawn.h" />
     <ClInclude Include="..\Public\CUi_Border.h" />
@@ -285,8 +285,8 @@
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Slope.cpp" />
     <ClCompile Include="..\Private\CTextManager.cpp" />
@@ -303,8 +303,8 @@
     <ClCompile Include="..\Private\CUi_PEACE.cpp" />
     <ClCompile Include="..\Private\Drink.cpp" />
     <ClCompile Include="..\Private\Drone_Monster.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Body.cpp" />
     <ClCompile Include="..\Private\Execution_Hand.cpp" />
@@ -317,8 +317,8 @@
     <ClCompile Include="..\Private\Dash_Effect.cpp" />
     <ClCompile Include="..\Private\Kick.cpp" />
     <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Pawn.cpp" />
     <ClCompile Include="..\Private\CUi_Border.cpp" />

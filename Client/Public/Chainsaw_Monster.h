@@ -47,7 +47,7 @@ private:
 	CRigidbody* m_pRigidbody = { nullptr };
 
 private:
-	void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
+	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
 
 	_bool Check_HeadShot(_float3 vHitLocalPos);
 	_bool Check_BodyShot(_float3 vHitLocalPos);

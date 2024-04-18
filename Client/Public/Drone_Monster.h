@@ -46,7 +46,7 @@ private:
 	CRigidbody* m_pRigidbody = { nullptr };
 
 private:
-	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
+	virtual _bool	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
 	virtual void	OnCollisionEnter(CGameObject* pOther) override;
 
 	_bool Check_Hit(_float3 vHitLocalPos);
