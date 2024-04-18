@@ -3,6 +3,7 @@
 #include "White_Suit_Monster.h"
 #include "Drone_Monster.h"
 #include "Chainsaw_Monster.h"
+#include "Orange_Pants_Monster.h"
 #include "Enemy_Bullet.h"
 #include "Player.h"
 #include "Trigger_Headers.h"
@@ -67,22 +68,22 @@ unsigned int CLoader::Loading()
 
 HRESULT CLoader::Loading_For_Logo_Level()
 {	
-	lstrcpy(m_szLoadingText, TEXT("ÅØ½ºÃÄ¸¦ ·Îµù Áß ÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½Ø½ï¿½ï¿½Ä¸ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ô´Ï´ï¿½."));
 	
 
-	lstrcpy(m_szLoadingText, TEXT("¸ðµ¨À»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½) ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ô´Ï´ï¿½."));
 
 
-	lstrcpy(m_szLoadingText, TEXT("»ç¿îµåÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½) ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ô´Ï´ï¿½."));
 	
 
-	lstrcpy(m_szLoadingText, TEXT("¼ÎÀÌ´õÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½ï¿½ï¿½Ì´ï¿½ï¿½ï¿½(ï¿½ï¿½) ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ô´Ï´ï¿½."));
 	
 
-	lstrcpy(m_szLoadingText, TEXT("°´Ã¼¿øÇüÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½) ï¿½Îµï¿½ ï¿½ï¿½ ï¿½Ô´Ï´ï¿½."));
 
 
-	lstrcpy(m_szLoadingText, TEXT("·ÎµùÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿?."));
 
 	m_isFinished = true;
 	
@@ -92,11 +93,18 @@ HRESULT CLoader::Loading_For_Logo_Level()
 HRESULT CLoader::Loading_For_GamePlay_Level()
 {
 	m_fProgress = 0.1f;
-	lstrcpy(m_szLoadingText, TEXT("ÅØ½ºÃÄ¸¦ ·Îµù Áß ÀÔ´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("·ÎµùÁß"));
 	if (FAILED(Loading_For_WhiteSuitMonster()))
 		return E_FAIL;
 
 	if (FAILED(Loading_For_Map_Texture()))
+	if (FAILED(Loading_For_Chainsaw_Monster()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Orange_Pants_Monster()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Drone_Monster()))
 		return E_FAIL;
 
 #pragma region TEXTURE_DRONE_MONSTER
@@ -245,14 +253,6 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	//	return E_FAIL;
 
 #pragma endregion
-	lstrcpy(m_szLoadingText, TEXT("¸ðµ¨À»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
-
-	lstrcpy(m_szLoadingText, TEXT("»ç¿îµåÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
-
-	lstrcpy(m_szLoadingText, TEXT("¼ÎÀÌ´õÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
-
-	lstrcpy(m_szLoadingText, TEXT("°´Ã¼¿øÇüÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
-	
 	m_fProgress = 0.6f;
 
 	if (FAILED(Ready_MapObject_Prototype()))
@@ -262,13 +262,37 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		return E_FAIL;
 	
 
-	lstrcpy(m_szLoadingText, TEXT("UIÀ»(¸¦) ·Îµù Áß ÀÔ´Ï´Ù."));
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SpawnTrigger"),
+		CSpawnTrigger::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
+	/* For Prototype_GameObject_Drone_Monster */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Drone"),
+		CDrone_Monster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
+	/* For Prototype_GameObject_Chainsaw_Monster */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Chainsaw"),
+		CChainsaw_Monster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	/* For Prototype_GameObject_Orange_Pants_Monster */
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Orange_Pants"),
+		COrange_Pants_Monster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	//
+	///* For Prototype_GameObject_Enemy_Bullet */
+	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
+	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
+	//	return E_FAIL;
+
+	lstrcpy(m_szLoadingText, TEXT("UI."));
 	if (FAILED(Loading_For_Ui()))
 		return E_FAIL;
 
 	Initialize_TextManager();
 
-	lstrcpy(m_szLoadingText, TEXT("·ÎµùÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù."));
+	lstrcpy(m_szLoadingText, TEXT("ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿?."));
 	m_fProgress = 1.f;
 
 	m_isFinished = true;
@@ -425,6 +449,70 @@ HRESULT CLoader::Ready_MapObject_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Slope"),
 		CSlope::Create(m_pGraphic_Device))))
+HRESULT CLoader::Loading_For_Chainsaw_Monster()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Headshot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/02bullethole/02bullethole%d.png"), 23))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Slash"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/attack/attack%d.png"), 9))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Bodyshot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/bullethole/bullethole%d.png"), 22))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Pushed"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/defense/defense%d.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Pushed_Recovery"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/defense/defense%d.png"), 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_HeadExplode_Backward"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/flyback/flyback%d.png"), 21))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Floor"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Flyback_end/Flyback_end%d.png"), 17))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Start_Push_Floor"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Flyback_start/Flyback_start%d.png"), 14))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Wall"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Flyback_wall/Flyback_wall%d.png"), 14))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_GetUp"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/GetUp/GetUp%d.png"), 12))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Groinshot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Groinshot/Groinshot%d.png"), 26))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Hit"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/hit/hit%d.png"), 4))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Idle_Up"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/Idle_up/Idle_up%d.png"), 7))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Jump"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/ZVG_jump/ZVG_jump%d.png"), 22))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Shotgun"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/ZVG_Shotgun/ZVG_Shotgun%d.png"), 23))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Walk"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Chainsaw_Monster/ZVG_walk/ZVG_walk%d.png"), 12))))
 		return E_FAIL;
 
 	return S_OK;
@@ -459,6 +547,100 @@ HRESULT CLoader::Ready_Monster_Prototype()
 	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Enemy_Bullet"),
 	//	CEnemy_Bullet::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
+HRESULT CLoader::Loading_For_Orange_Pants_Monster()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Headshot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_2fly/vg_2fly%d.png"), 21))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_2nd_Hit"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_2hit/vg_2hit%d.png"), 7))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Aim"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_aim/vg_aim%d.png"), 9))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Pushed"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_blocking/vg_blocking%d.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Pushed_Recovery"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_blocking/vg_blocking%d.png"), 5))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Breathe"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_breathe/vg_breathe%d.png"), 8))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Bodyshot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_death/vg_death%d.png"), 21))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Death_Shotgun"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_death_sg/vg_death_sg%d.png"), 23))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Death_Push_Floor"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_flyback_floor_noshot/vg_flyback%d.png"), 31))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Death_Push_Wall"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_flyback_wall_noshot/vg_flyback%d.png"), 27))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Groinshot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_groinshot/vg_groinshot%d.png"), 23))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_HeadExplode"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_headexplode/VG_headexplode%d.png"), 22))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Hit"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_hit/vg_hit%d.png"), 8))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Idle"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_idle/vg_idle%d.png"), 12))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Jump"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_jumping/vg_jumping%d.png"), 23))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Shot"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_shot/vg_shot%d.png"), 7))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Orange_Pants_Monster_Walk"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Orange_Pants_Monster/vg_walk/vg_walk%d.png"), 14))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Drone_Monster()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Monster_Aim"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_aim/air_aim%d.png"), 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Monster_Attack"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_attack/air_attack%d.png"), 10))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Monster_Idle"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_brain/Air_brain%d.png"), 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Monster_Reveal"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/air_reveal/air_reveal%d.png"), 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Monster_Flyback"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Drone_Monster/drone_flyback/drone_flyback%d.png"), 4))))
+		return E_FAIL;
 
 	return S_OK;
 }

@@ -52,6 +52,9 @@ private:
 
 	HRESULT Ready_MapObject_Prototype();
 	HRESULT Ready_Monster_Prototype();
+	HRESULT Loading_For_Chainsaw_Monster();
+	HRESULT Loading_For_Orange_Pants_Monster();
+	HRESULT Loading_For_Drone_Monster();
 
 	HRESULT Loading_For_Ui();
 	HRESULT Ready_ClearUi_Texture();

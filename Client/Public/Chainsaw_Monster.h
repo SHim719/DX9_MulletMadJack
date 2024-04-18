@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "FPS_Camera.h"
+#include "Core_Camera.h"
 #include "Pawn.h"
 
 BEGIN(Engine)
@@ -15,7 +16,16 @@ BEGIN(Client)
 
 class CChainsaw_Monster final : public CPawn
 {
-	enum STATE { STATE_IDLE, STATE_AIM, STATE_WALK, STATE_SLASH, STATE_BLOCK, STATE_HEADSHOT, STATE_BODYSHOT, STATE_GROINSHOT, STATE_END };
+	enum STATE
+	{
+		STATE_IDLE,
+		STATE_MOVE,
+		STATE_PUSHED,
+		STATE_SLASH,
+		STATE_JUMP,
+		STATE_DEATH,
+		STATE_END
+	};
 
 private:
 	CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -31,40 +41,55 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CVIBuffer* m_pVIBufferCom = { nullptr };
 	CAnimation* m_pAnimationCom = { nullptr };
-
-	CFPS_Camera* m_pFPS_Camera = { nullptr };
+	CBoxCollider* m_pBoxCollider = { nullptr };
+	CRigidbody* m_pRigidbody = { nullptr };
 
 private:
-	_float			m_fWalking_TimeGap;
-	_float			m_fSlashing_TimeGap;
-	_float			m_fBlocking_TimeGap;
+	void On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
 
-	bool			IsPlaying;
+	_bool Check_HeadShot(_float3 vHitLocalPos);
+	_bool Check_BodyShot(_float3 vHitLocalPos);
+	_bool Check_EggShot(_float3  vHitLocalPos);
 
-	bool			m_bIdle;
-	bool			m_bDead;
-	bool			m_bWalking;
-	bool			m_bSlashing;
-	bool			m_bBlock;
+	void Hit(void* pArg) override;
 
-	STATE			m_eState;
+private:
+	STATE			m_eState = STATE_IDLE;
+	_float			m_fHp = 3.f;
+	_float			m_fSpeed = 5.f;
+	_float			m_fPerceptionDist = 3.f;
+	_float			m_fRange = 1.f;
+	_bool			m_bPushRecovery = { false };
+	_bool			m_bPerceivedPlayer = { false };
+
+	_float			m_fTimeAcc = 0.f;
+	_float			m_fDeathTime = 3.f;
+
+private:
+	void Process_State(_float fTimeDelta);
+
+	void State_Idle();
+	void State_Move();
+	void State_Pushed();
+	void State_Slash();
+	void State_Jump();
+	void State_Death(_float fTimeDelta);
+
+public:
+	void SetState_Idle();
+	void SetState_Move();
+	void SetState_Pushed(_float3 vLook);
+	void SetState_Slash();
+	void SetState_Jump();
+	void SetState_Death(ENEMYHIT_DESC* pDesc);
 
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
-
-	//virtual void	Set_Motions(_float fTimeDelta) override;
-	virtual _bool	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-
-	void	Decide_Pawn_Motions(_float fTimeDelta);
-	void	Pawn_Slashing_Motion(_float fTimeDelta);
-	void	Pawn_Walking_Motion(_float fTimeDelta);
-	void	Pawn_Blocking_Motion(_float fTimeDelta);
-	void	Pawn_Dying_Motion(_float fTimeDelta);
 
 public:
 	static CChainsaw_Monster* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
