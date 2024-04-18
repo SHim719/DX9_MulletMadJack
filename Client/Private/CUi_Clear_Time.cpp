@@ -43,7 +43,10 @@ void CUi_Clear_Time::Tick(_float fTimeDelta)
 	Scaling(fTimeDelta);
 
 	if (m_fActiveTime < 0)
+	{
+		m_bCallClearTime = false;
 		m_bActive = false;
+	}
 }
 
 void CUi_Clear_Time::LateTick(_float fTimeDelta)

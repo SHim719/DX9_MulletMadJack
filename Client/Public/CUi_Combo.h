@@ -3,30 +3,19 @@
 #include "CUi.h"
 
 BEGIN(Client)
-enum class PlusSecond
-{
-	One,
-	Two,
-	Three,
-	Four,
-	Five,
-	Six,
-	Seven,
-	Eight,
-	End
-};
-class CUi_SpecialHit_Part : public CUi
+
+class CUi_Combo final : public CUi
 {
 public:
-	using PartDesc = struct SpecialHitPartInfo
+	using ComboDesc = struct ComboDescInfo
 	{
-		Ui_Pos_Size_Rotation Desc{};
-		PlusSecond Second{ PlusSecond::End };
+		_uint iKillCount = { 0 };
+		bool bFirstCall = { false };
 	};
-protected:
-	CUi_SpecialHit_Part(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_SpecialHit_Part(const CUi_SpecialHit_Part& rhs);
-	virtual ~CUi_SpecialHit_Part() = default;
+private:
+	CUi_Combo(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Combo(const CUi_Combo& rhs);
+	virtual ~CUi_Combo() = default;
 
 
 public:
@@ -46,27 +35,26 @@ protected:
 protected:
 	virtual void Default_Set_LifeTime() override;
 	virtual void Default_Set_Size() override;
+	void Default_Set_Pos();
 
-
-protected:
-	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
 	virtual void Initialize_Set_Speed() override;
+	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
+	void Initialize_SetComboDesc(void* pArg);
 
-
-public:
-	void Set_Pos(_float3 Position);
-	void Set_Rotation(_float3 Rotation);
+private:
+	void Scaling(_float fTimeDelta);
 
 
 private:
+	bool m_bFirstCall = { true };
+	_float3 m_OriginComboScale = { 150, 50, 1 };
+	_float m_fScalingTime = { 0 };
 	class CUi_Background* m_pBackGround = { nullptr };
-
-
+	class CUi_SpecialHit_Part* m_pSpecialHit_Part = { nullptr };
 public:
-	static CUi_SpecialHit_Part* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
-	virtual CUi* Clone(void* pArg) override; // pArg -> Ui_Pos_Size_Rotation
+	static CUi_Combo* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual CUi* Clone(void* pArg) override; // pArg -> ComboDesc
 	virtual void Free() override;
 };
 
 END
-

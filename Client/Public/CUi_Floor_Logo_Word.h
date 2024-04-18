@@ -43,7 +43,7 @@ private:
 
 private:
 	vector<class CUi_Floor_Logo_Num*> m_pLogoNum;
-	_float3 m_OriginPos = { 450, 5, 0 };
+	_float3 m_OriginPos = { 450, -5, 0 };
 
 public:
 	static CUi_Floor_Logo_Word* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

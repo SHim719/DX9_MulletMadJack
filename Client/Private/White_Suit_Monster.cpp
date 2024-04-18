@@ -380,6 +380,11 @@ void CWhite_Suit_Monster::State_Hit()
 
 void CWhite_Suit_Monster::State_Death(_float fTimeDelta)
 {
+    if (!m_bUiDeathCall)
+    {
+        m_bUiDeathCall = true;
+        Call_MonsterDieUi(eMonsterGrade::Middle);
+    }
     if (m_pAnimationCom->IsEndAnim())
     {
         m_fDeathTime -= fTimeDelta;

@@ -243,8 +243,6 @@ void CUi_Manager::Ui_Render_Begin()
 	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphic_Device->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphic_Device->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
-
-
 }
 
 void CUi_Manager::Ui_Shop_Render_Begin()
@@ -323,8 +321,8 @@ void CUi_Manager::Set_WinSize(_uint iWinSizeX, _uint iWinSizeY)
 
 void CUi_Manager::Set_Ui_ActiveState(const wstring& Ui_ActiveTag, bool _isActive)
 {
-
 	auto iter = m_Ui_Active.find(Ui_ActiveTag);
+
 	if (m_Ui_Active.end() != iter)
 	{
 		iter->second->Set_Active(_isActive);

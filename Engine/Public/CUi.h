@@ -70,12 +70,15 @@ public:
 	void Set_Dead() { m_bDead = true; }
 
  	bool Get_Active() { return m_bActive; }
-	void Set_Active(bool _isActive) {
-		if (_isActive == true && m_bActive == true) {
+	void Set_Active(bool _isActive) 
+	{
+		if (_isActive == true && m_bActive == true)
+		{	
 			return;
 		}
 		
-		if (_isActive == true){
+		if (_isActive == true)
+		{
 			Initialize_Active();
 		}
 

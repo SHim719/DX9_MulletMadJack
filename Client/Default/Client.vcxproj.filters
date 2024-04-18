@@ -211,36 +211,6 @@
     <Filter Include="04. UI\Ui\CUi_Life\SpeicialHit">
       <UniqueIdentifier>{6bc5968f-f1e1-4c19-86b3-a03f409142b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part">
-      <UniqueIdentifier>{8e91680d-6cfe-4d4c-b8bb-00536ec8cce6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\Background">
-      <UniqueIdentifier>{413e9543-3dc0-4d7c-9efb-d2a205d3c4b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\SpecialHit">
-      <UniqueIdentifier>{a0103705-b4e5-4c9d-8e24-aa2324a1f85e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Floor_Part">
-      <UniqueIdentifier>{29cd8a57-2a25-45f8-90f0-1a2800f521bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade">
-      <UniqueIdentifier>{494593a2-4b88-479e-a07d-030d4159da6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part">
-      <UniqueIdentifier>{bd4cf482-873c-4728-a58d-c5a2916b2116}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Floor_Logo_Num">
-      <UniqueIdentifier>{33902df2-9720-4d1f-8037-9ae6acecb8b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_Real_ClearTime">
-      <UniqueIdentifier>{2baf4bf4-d3ed-44ee-8e93-60f31b3c8266}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround">
-      <UniqueIdentifier>{b71a33eb-8d69-45de-a8ce-a91d88295eb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
-      <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\Effect">
       <UniqueIdentifier>{6201846d-6c5a-4edb-b439-25185ca88092}</UniqueIdentifier>
     </Filter>
@@ -289,12 +259,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish">
       <UniqueIdentifier>{91969862-66d9-4f60-9911-149ad6a34125}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\LoadingBackGround">
-      <UniqueIdentifier>{1de6c9fb-276e-422a-8f7c-a1b76098be99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Life\Part\TextBackGround">
-      <UniqueIdentifier>{3cd04371-b89e-45c6-9a52-f3fc8a47a6b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Execution">
       <UniqueIdentifier>{e2f6a640-e01f-45d9-85c5-c79abdf35f19}</UniqueIdentifier>
     </Filter>
@@ -339,6 +303,54 @@
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink">
       <UniqueIdentifier>{b397f897-2594-4be7-b452-aa187410c4f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda">
+      <UniqueIdentifier>{3587be7f-81c2-4a73-aed6-11d66e0e62b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Damaged">
+      <UniqueIdentifier>{85568587-d458-419b-981e-e8e0aaac9cb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part">
+      <UniqueIdentifier>{8e91680d-6cfe-4d4c-b8bb-00536ec8cce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\Background">
+      <UniqueIdentifier>{413e9543-3dc0-4d7c-9efb-d2a205d3c4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\SpecialHit">
+      <UniqueIdentifier>{a0103705-b4e5-4c9d-8e24-aa2324a1f85e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_Floor_Part">
+      <UniqueIdentifier>{29cd8a57-2a25-45f8-90f0-1a2800f521bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_Shop_UpGrade">
+      <UniqueIdentifier>{494593a2-4b88-479e-a07d-030d4159da6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part">
+      <UniqueIdentifier>{bd4cf482-873c-4728-a58d-c5a2916b2116}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_Floor_Logo_Num">
+      <UniqueIdentifier>{33902df2-9720-4d1f-8037-9ae6acecb8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_Real_ClearTime">
+      <UniqueIdentifier>{2baf4bf4-d3ed-44ee-8e93-60f31b3c8266}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_ClearTime_BackGround">
+      <UniqueIdentifier>{b71a33eb-8d69-45de-a8ce-a91d88295eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\CUi_ClearTime_BackGround\CUi_Time_Division">
+      <UniqueIdentifier>{66716090-2119-4631-b44b-fa2fc26c4d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\LoadingBackGround">
+      <UniqueIdentifier>{1de6c9fb-276e-422a-8f7c-a1b76098be99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Part\TextBackGround">
+      <UniqueIdentifier>{3cd04371-b89e-45c6-9a52-f3fc8a47a6b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\CUi_Combo">
+      <UniqueIdentifier>{fbc3088b-cecb-4d50-8e35-1118c55e8e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Reload">
+      <UniqueIdentifier>{b0d1331d-23ca-49db-8028-2836ec29757b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -400,10 +412,10 @@
       <Filter>02.GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Background.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\Background</Filter>
+      <Filter>04. UI\Ui\Part\Background</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_SpecialHit_Part.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\SpecialHit</Filter>
+      <Filter>04. UI\Ui\Part\SpecialHit</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CrossHair.h">
       <Filter>04. UI\Ui\CUi_Active\Weapon\CrossHair</Filter>
@@ -466,22 +478,22 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Part.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Floor_Part</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Shop.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Shop_UpGrade.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Shop_UpGrade</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Ui_Include.h">
       <Filter>04. UI\Ui</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_UpGrade_Focus.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Logo.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
@@ -490,19 +502,19 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor_Logo_Num.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Floor_Logo_Num</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Clear_Time.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Real_ClearTime.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Real_ClearTime</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_ClearTime_BackGround.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
+      <Filter>04. UI\Ui\Part\CUi_ClearTime_BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Time_Division.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
+      <Filter>04. UI\Ui\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Shot.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Shot</Filter>
@@ -616,10 +628,10 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_LoadingBackGround.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\LoadingBackGround</Filter>
+      <Filter>04. UI\Ui\Part\LoadingBackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CText_BackGround.h">
-      <Filter>04. UI\Ui\CUi_Life\Part\TextBackGround</Filter>
+      <Filter>04. UI\Ui\Part\TextBackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Execution_Head.h">
       <Filter>04. UI\Ui\CUi_Active\Execution\Head</Filter>
@@ -644,6 +656,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\Drink.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_DrinkSoda.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Damaged.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Damaged</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Combo.h">
+      <Filter>04. UI\Ui\CUi_Life\CUi_Combo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Reload.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Reload</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -696,10 +720,10 @@
       <Filter>02.GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\Background</Filter>
+      <Filter>04. UI\Ui\Part\Background</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_SpecialHit_Part.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\SpecialHit</Filter>
+      <Filter>04. UI\Ui\Part\SpecialHit</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CrossHair.cpp">
       <Filter>04. UI\Ui\CUi_Active\Weapon\CrossHair</Filter>
@@ -753,19 +777,19 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Part.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Part</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Floor_Part</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Shop.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Shop</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Shop_UpGrade.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Shop_UpGrade</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_UpGrade_Select.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_UpGrade_Focus.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Shop_UpGrade\CUi_UpGrade_Part</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Logo.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo</Filter>
@@ -774,19 +798,19 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Floor_Logo\CUi_Floor_Logo_Word</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor_Logo_Num.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Floor_Logo_Num</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Floor_Logo_Num</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Clear_Time.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Time</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Real_ClearTime.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_Real_ClearTime</Filter>
+      <Filter>04. UI\Ui\Part\CUi_Real_ClearTime</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_ClearTime_BackGround.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround</Filter>
+      <Filter>04. UI\Ui\Part\CUi_ClearTime_BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Time_Division.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
+      <Filter>04. UI\Ui\Part\CUi_ClearTime_BackGround\CUi_Time_Division</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\PlayerManager.cpp">
       <Filter>97. Manager\PlayerManager</Filter>
@@ -888,10 +912,10 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_LoadingBackGround.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\LoadingBackGround</Filter>
+      <Filter>04. UI\Ui\Part\LoadingBackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CText_BackGround.cpp">
-      <Filter>04. UI\Ui\CUi_Life\Part\TextBackGround</Filter>
+      <Filter>04. UI\Ui\Part\TextBackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Head.cpp">
       <Filter>04. UI\Ui\CUi_Active\Execution\Head</Filter>
@@ -913,6 +937,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\Drink.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_DrinkSoda.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Damaged.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Damaged</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Combo.cpp">
+      <Filter>04. UI\Ui\CUi_Life\CUi_Combo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Reload.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Reload</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

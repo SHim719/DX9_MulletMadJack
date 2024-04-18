@@ -22,6 +22,8 @@
 #include "SodaMachine.h"
 #include "MapLoader.h"
 
+#include "CUi_Combo.h"
+
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device }
@@ -42,6 +44,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 
 	Initialize_SodaMachine();
+
+	
 	return S_OK;
 }
 
@@ -131,19 +135,22 @@ void CLevel_GamePlay::Free()
 
 void CLevel_GamePlay::Test_Ui()
 {
-	if (m_pGameInstance->GetKeyDown(eKeyCode::U))
+	if (m_pGameInstance->GetKeyDown(eKeyCode::H))
+	{
+		CUi_Combo::ComboDesc test;
+		test.bFirstCall = true;
+		test.iKillCount = 5;
+		m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &test);
+		//CUi_Combo::ComboDesc test;
+		//test.bFirstCall = false;
+		//test.iKillCount = 3;
+		//m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &test);
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::U))
 	{
 		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::StageClear);
 	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::J))
-	{
-		CUi_MonsterDie::MonsterDie_Arg Arg;
-		Arg.MonsterDiePosX = -200;
-		Arg.MonsterDiePosY = -200;
-		Arg.MonsterGrade = eMonsterGrade::High;
-		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_MonsterDie"),
-			eUiRenderType::Render_Blend, &Arg);
-	}
+
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::I))
 	{
 		CUi_SpecialHit::SpecialHit_Desc Arg;
@@ -161,4 +168,24 @@ void CLevel_GamePlay::Test_Ui()
 	{
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Finish"));
 	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::O))
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_DrinkSoda"));
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::P))
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::G))
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"));
+	}
 }
+
+//else if (m_pGameInstance->GetKeyDown(eKeyCode::Y))
+//{
+//	_uint qewr = CGame_Manager::Get_Instance()->Get_TextNumber(TextType::TutorialClear);
+//	CGame_Manager::Get_Instance()->Print_Text(TextType::TutorialClear,
+//		qewr);
+//	CGame_Manager::Get_Instance()->Add_TextNumber(TextType::TutorialClear);
+//}

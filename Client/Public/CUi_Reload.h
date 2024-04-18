@@ -2,14 +2,15 @@
 #include "Client_Defines.h"
 #include "CUi.h"
 
+
 BEGIN(Client)
 
-class CUi_Floor_Logo final : public CUi
+class CUi_Reload final : public CUi
 {
 protected:
-	CUi_Floor_Logo(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Floor_Logo(const CUi_Floor_Logo& rhs);
-	virtual ~CUi_Floor_Logo() = default;
+	CUi_Reload(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_Reload(const CUi_Reload& rhs);
+	virtual ~CUi_Reload() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -22,8 +23,6 @@ public:
 
 protected:
 	virtual HRESULT Initialize_Active() override;
-	virtual void Initialize_Set_ActiveTime() override;
-	virtual void Initialize_Set_Size() override;
 	virtual void Initialize_Set_Speed() override;
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
 
@@ -34,19 +33,7 @@ protected:
 
 
 public:
-	virtual void Enter(bool _Enter) override;
-
-
-private:
-	void Move(_float fTimeDelta);
-
-
-private:
-	_float3 m_OriginPos = { 470, -20, 0 };
-
-
-public:
-	static CUi_Floor_Logo* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_Reload* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

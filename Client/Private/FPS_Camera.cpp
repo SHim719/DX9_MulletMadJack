@@ -100,7 +100,6 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 
 
 		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, fTempFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
-
 		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
 	
 		// 카메라 월드 행렬의 역행렬이 카메라의 view 행렬임

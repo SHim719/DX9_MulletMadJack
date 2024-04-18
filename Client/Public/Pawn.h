@@ -2,6 +2,8 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "CUi_MonsterDie.h"
+
 
 BEGIN(Engine)
 class CTexture;
@@ -41,6 +43,11 @@ public:
 	virtual void Tick(_float fTimeDelta) override;
 	virtual void LateTick(_float fTimeDelta) override;
 	virtual HRESULT Render() override;
+
+
+protected:
+	void Call_MonsterDieUi(eMonsterGrade Grade);
+
 
 protected:
 	class CFPS_Camera*	m_pCamera = { nullptr };

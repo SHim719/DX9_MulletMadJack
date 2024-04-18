@@ -47,9 +47,9 @@ void CUi_Announcer::Tick(_float fTimeDelta)
 	}
 	else if (m_fActiveTime < 0 && !m_bEnter)
 	{
+		m_bTextPrint = false;
 		m_bActive = false;
 	}
-
 	if (m_fUniqueTextureTime > 0.2)
 	{
 		Texture_Switching(fTimeDelta);
@@ -57,6 +57,11 @@ void CUi_Announcer::Tick(_float fTimeDelta)
 	}
 
 	Set_Pos_TextBackGround();
+
+	if (m_bTextPrint)
+	{
+		Cal_PrintTextNumber(fTimeDelta);
+	}
 }
 
 void CUi_Announcer::LateTick(_float fTimeDelta)
@@ -97,6 +102,8 @@ HRESULT CUi_Announcer::Initialize_Active()
 			Add_Ui_PartClone(L"CText_BackGround", &TextBack);
 	}
 
+	m_iPrintTextNumber = 0;
+	m_bTextPrint = false;
 	return S_OK;
 }
 
@@ -107,8 +114,8 @@ void CUi_Announcer::Initialize_Set_ActiveTime()
 
 void CUi_Announcer::Initialize_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 270;
-	m_UiDesc.m_fSizeY = 310;
+	m_UiDesc.m_fSizeX = 227;
+	m_UiDesc.m_fSizeY = 370;
 }
 
 void CUi_Announcer::Initialize_Set_Speed()
@@ -121,7 +128,7 @@ void CUi_Announcer::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
 	m_UiDesc.m_fX = 910.f;
-	m_UiDesc.m_fY = 200.f;
+	m_UiDesc.m_fY = 190.f;
 
 	m_pTransformCom->Set_Scale(Scale);
 
@@ -220,20 +227,24 @@ void CUi_Announcer::TextRender()
 	if (m_pGameManager->Get_StageProgress() == StageProgress::ShopEnd
 		|| m_pGameManager->Get_StageProgress() == StageProgress::Changing)
 	{
+		m_bTextPrint = true;
 		if (m_pGameManager->Get_MaxSize(TextType::ShopEnd) >
 			m_pGameManager->Get_TextNumber(TextType::ShopEnd))
 		{
+			Set_PrintTextNumber(TextType::ShopEnd, m_iPrintTextNumber);
 			m_pTextBackGround->Render();
 			m_pGameManager->Print_Text(TextType::ShopEnd,
-				0);
+				m_pGameManager->Get_TextNumber(TextType::ShopEnd));
 		}
 	}
 	else if(m_pGameManager->Get_StageProgress() == 
 		StageProgress::TutorialMidSpot)
 	{
+		m_bTextPrint = true;
 		if (m_pGameManager->Get_MaxSize(TextType::TutorialMidSpot) >
 			m_pGameManager->Get_TextNumber(TextType::TutorialMidSpot))
 		{
+
 			m_pTextBackGround->Render();
 			m_pGameManager->Print_Text(TextType::TutorialMidSpot,
 				m_pGameManager->Get_TextNumber(TextType::TutorialMidSpot));
@@ -242,6 +253,7 @@ void CUi_Announcer::TextRender()
 	else if (m_pGameManager->Get_StageProgress() ==
 		StageProgress::TutorialClear)
 	{
+		m_bTextPrint = true;
 		if (m_pGameManager->Get_MaxSize(TextType::TutorialClear) >
 			m_pGameManager->Get_TextNumber(TextType::TutorialClear))
 		{
@@ -252,12 +264,37 @@ void CUi_Announcer::TextRender()
 	}
 }
 
+void CUi_Announcer::Set_PrintTextNumber(TextType type, _uint Length)
+{
+	CText::Text_Info* temp = m_pGameManager->Get_Text(type, 
+		m_pGameManager->Get_TextNumber(type));
+	size_t MaxLength = wcslen(temp->Text);
+	if (MaxLength <= Length)
+	{
+		temp->Length = (_uint)MaxLength;
+	}
+	else
+	{
+		temp->Length = Length;
+	}
+}
+
 void CUi_Announcer::Set_Pos_TextBackGround()
 {
 	_float3 BackPos = m_pTransformCom->Get_Pos();
 	BackPos.x -= 500;
 	BackPos.y += 100;
 	m_pTextBackGround->Set_Pos(BackPos);
+}
+
+void CUi_Announcer::Cal_PrintTextNumber(_float fTimeDelta)
+{
+	m_fPrintTextGap += fTimeDelta;
+	if (m_fPrintTextGap > 0.1)
+	{
+		m_fPrintTextGap = 0;
+		++m_iPrintTextNumber;
+	}
 }
 
 CUi_Announcer* CUi_Announcer::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -278,3 +315,4 @@ void CUi_Announcer::Free()
 	Safe_Release(m_pUniqueTexture);
 	__super::Free();
 }
+

@@ -39,9 +39,11 @@ private:
 
 public:
 	_float4x4		Get_Billboard_Matrix() { return m_BillboardMatrix; }
-	CTransform*		Get_Camera_TransformCom() { return m_pTransformCom; }
-	
+	CTransform* Get_Camera_TransformCom() { return m_pTransformCom; }
 
+	//delete this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	_float4x4		Get_Proj_Matrix() const { return m_ProjMatrix; }
+	_float4x4		Get_View_Matrix() const { return m_ViewMatrix; }
 private:
 	void Mouse_Ray();
 	

@@ -1,7 +1,7 @@
 #pragma once
 #include "Client_Defines.h"
 #include "CUi.h"
-
+#include "CTextManager.h"
 
 BEGIN(Client)
 
@@ -42,12 +42,17 @@ private:
 	void Move(_float fTimeDelta);
 	void Texture_Switching(_float fTimeDelta);
 	void TextRender();
+	void Set_PrintTextNumber(TextType type, _uint Length);
 	void Set_Pos_TextBackGround();
+	void Cal_PrintTextNumber(_float fTimeDelta);
 
 private:
 	_float m_fUniqueTextureTime = { 0.f };
 	CTexture* m_pUniqueTexture = { nullptr };
 	_uint m_iUniqueTextureIndex = { 0 };
+	_float m_fPrintTextGap = { 0 };
+	_uint m_iPrintTextNumber = { 0 };
+	bool m_bTextPrint = { false };
 	class CGame_Manager* m_pGameManager = { nullptr };
 	class CText_BackGround* m_pTextBackGround = { nullptr };
 

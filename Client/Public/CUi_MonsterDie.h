@@ -9,7 +9,6 @@ enum class eMonsterGrade
 	Low = 0,
 	Middle,
 	High,
-	Special,
 	End
 };
 
@@ -31,7 +30,6 @@ public:
 	{
 		_float MonsterDiePosX = 0;
 		_float MonsterDiePosY = 0;
-		_float3 MonsterRotation = { 0, 0, 0 };
 		eMonsterGrade MonsterGrade;
 	}MonsterDie_Arg;
 

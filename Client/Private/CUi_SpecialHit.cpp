@@ -141,10 +141,8 @@ void CUi_SpecialHit::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	SpecialHit_Desc* temp = (SpecialHit_Desc*)pArg;
 	_uint i = (temp->iCount) % 5;
 
-
 	m_UiDesc.m_fX = -550;
-	m_UiDesc.m_fY += -100 + (_float)(i * 25);
-
+	m_UiDesc.m_fY += + (_float)(i * 25);
 
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 0 };
 	m_UiDesc.m_Rotation = { 0.f, 0.f, 10.f };
@@ -182,13 +180,13 @@ void CUi_SpecialHit::Initialize_Set_Scale_Limit()
 
 void CUi_SpecialHit::Initialize_Set_SpecialHit_Part()
 {
-	Ui_Pos_Size_Rotation Set;
-	Set.m_fX = m_UiDesc.m_fX + 200;
-	Set.m_fY = m_UiDesc.m_fY + 100;
-	Set.m_fSizeX = m_UiDesc.m_fSizeX * 0.6f;
-	Set.m_fSizeY = m_UiDesc.m_fSizeY * 0.6f;
-	Set.m_Rotation = m_UiDesc.m_Rotation;
-
+	CUi_SpecialHit_Part::PartDesc Set;
+	Set.Desc.m_fX = m_UiDesc.m_fX + 200;
+	Set.Desc.m_fY = m_UiDesc.m_fY + 100;
+	Set.Desc.m_fSizeX = m_UiDesc.m_fSizeX * 0.6f;
+	Set.Desc.m_fSizeY = m_UiDesc.m_fSizeY * 0.6f;
+	Set.Desc.m_Rotation = m_UiDesc.m_Rotation;
+	Set.Second = PlusSecond::Two;
 
 	m_pSpecialHit_Part = (CUi_SpecialHit_Part*)
 		m_pGameInstance->Add_Ui_PartClone(TEXT("CUi_SpecialHit_Part"), &Set);
@@ -215,7 +213,9 @@ void CUi_SpecialHit::Scaling(_float fTimeDelta)
 		_float3 ScaleUp = { 1.07f, 1.07f, 1.f };
 		m_pTransformCom->Multiply_Scale(ScaleUp);
 		if (m_pTransformCom->Get_Scale() > m_fScaleUpperLimit)
+		{
 			m_pTransformCom->Set_Scale(m_fScaleUpperLimit);
+		}
 	}
 	else if (m_fScaleTime > 0.3f)
 	{

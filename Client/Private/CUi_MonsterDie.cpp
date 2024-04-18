@@ -129,24 +129,14 @@ void CUi_MonsterDie::Default_Set_LifeTime()
 
 void CUi_MonsterDie::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	if (pArg == nullptr)
-	{
-		m_UiDesc.m_fX = g_iWinSizeX * 0.5f;
-		m_UiDesc.m_fY = 500.f;
-	}
-	else
-	{
-		auto Position = (MonsterDie_Arg*)pArg;
-		m_UiDesc.m_fX = Position->MonsterDiePosX;
-		m_UiDesc.m_fY = Position->MonsterDiePosY;
-		m_UiDesc.m_Rotation = Position->MonsterRotation;
-		
-		if (rand() % 3 || m_eMoveLogic== eMoveLogic::Up)
-			m_UiDesc.m_fY = Position->MonsterDiePosY;
-		else
-			m_UiDesc.m_fY = 200.f;
-	}
+	auto Position = (MonsterDie_Arg*)pArg;
+	m_UiDesc.m_fX = Position->MonsterDiePosX - 640;
 
+	if (rand() % 3 || m_eMoveLogic == eMoveLogic::Up)
+		m_UiDesc.m_fY = Position->MonsterDiePosY - 360;
+	else
+		m_UiDesc.m_fY = 200.f;
+	
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
 	m_pTransformCom->Set_Scale(Scale*2.f);
@@ -188,7 +178,7 @@ void CUi_MonsterDie::Initialize_Set_Speed()
 
 void CUi_MonsterDie::Initialize_MoveLogic_Select()
 {
- 	_uint temp = (rand() % (_uint)eMoveLogic::End);
+	_uint temp = (rand() % (_uint)eMoveLogic::End);
 	switch (temp)
 	{
 	case (_uint)eMoveLogic::Slow:
