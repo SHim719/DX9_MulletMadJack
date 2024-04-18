@@ -71,7 +71,6 @@ HRESULT CUi_Fine::Initialize_Active()
     Initialize_Set_Speed();
     Initialize_Set_Scale_Pos_Rotation(nullptr);
 
-
     return S_OK;
 }
 

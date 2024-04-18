@@ -60,7 +60,6 @@ HRESULT CUi_Border::Render()
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
-
 	m_pTextureCom->Bind_Texture(m_iTexture_Index);
 	m_pVIBufferCom->Render();
 
@@ -68,9 +67,8 @@ HRESULT CUi_Border::Render()
 	if (FAILED(m_pUniqueTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
-
+	m_pUniqueTextureCom->Bind_Texture(0);
 	m_pUniqueVIBufferCom->Render();
-
 
 	return S_OK;
 }
@@ -93,8 +91,8 @@ void CUi_Border::Initialize_Set_ActiveTime()
 
 void CUi_Border::Initialize_Set_Size()
 {
-	m_UiDesc.m_fSizeX = 280;
-	m_UiDesc.m_fSizeY = 320;
+	m_UiDesc.m_fSizeX = 240;
+	m_UiDesc.m_fSizeY = 350;
 	m_UniqueUiDesc.m_fSizeX = g_iWinSizeX-20;
 	m_UniqueUiDesc.m_fSizeY = g_iWinSizeY-20;
 }
@@ -110,7 +108,7 @@ void CUi_Border::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 	_float3 UniqueScale = { m_UniqueUiDesc.m_fSizeX, m_UniqueUiDesc.m_fSizeY, 1.f };
 	m_UiDesc.m_fX = 910.f;
-	m_UiDesc.m_fY = 200.f;
+	m_UiDesc.m_fY = 190.f;
 	m_UniqueUiDesc.m_fX = 0;
 	m_UniqueUiDesc.m_fY = 0;
 
@@ -161,10 +159,14 @@ HRESULT CUi_Border::Add_Components(void* pArg)
 HRESULT CUi_Border::Add_Texture(void* pArg)
 {
 	if (FAILED(Add_Component(LEVEL_STATIC,
-		TEXT("CUi_Border_Texture"),
+		TEXT("CUi_BorderRight_Texture"),
 		(CComponent**)&m_pTextureCom)))
 		return E_FAIL;
 
+	if (FAILED(Add_Component(LEVEL_STATIC,
+		TEXT("CUi_Border_Texture"),
+		(CComponent**)&m_pUniqueTextureCom)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -260,6 +262,7 @@ CUi_Border* CUi_Border::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 void CUi_Border::Free()
 {
+	Safe_Release(m_pUniqueTextureCom);
 	Safe_Release(m_pUniqueTransformCom);
 	Safe_Release(m_pUniqueVIBufferCom);
 	__super::Free();

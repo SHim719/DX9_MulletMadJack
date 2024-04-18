@@ -76,9 +76,6 @@ void CPlayer::Tick(_float fTimeDelta)
 
 	Camera_Event(fTimeDelta);
 	Jump_Tick(fTimeDelta);
-
-
-
 }
 
 void CPlayer::LateTick(_float fTimeDelta)

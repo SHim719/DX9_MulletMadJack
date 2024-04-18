@@ -61,12 +61,12 @@ HRESULT CUi_SpecialHit_Part::Render()
 
 void CUi_SpecialHit_Part::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	Ui_Pos_Size_Rotation* Desc = (Ui_Pos_Size_Rotation*)pArg;
-	m_UiDesc.m_fSizeX = Desc->m_fSizeX;
-	m_UiDesc.m_fSizeY = Desc->m_fSizeY;
-	m_UiDesc.m_fX = Desc->m_fX;
-	m_UiDesc.m_fY = Desc->m_fY;
-	m_UiDesc.m_Rotation = Desc->m_Rotation;
+	PartDesc* Part = (PartDesc*)pArg;
+	m_UiDesc.m_fSizeX = Part->Desc.m_fSizeX;
+	m_UiDesc.m_fSizeY = Part->Desc.m_fSizeY;
+	m_UiDesc.m_fX = Part->Desc.m_fX;
+	m_UiDesc.m_fY = Part->Desc.m_fY;
+	m_UiDesc.m_Rotation = Part->Desc.m_Rotation;
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 0 };
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
@@ -122,9 +122,12 @@ HRESULT CUi_SpecialHit_Part::Add_Components(void* pArg)
 HRESULT CUi_SpecialHit_Part::Add_Texture(void* pArg)
 {
 	if (FAILED(Add_Component(LEVEL_STATIC,
-		TEXT("CUi_MonsterMiddleGrade_Texture"),
+		TEXT("CUi_SpecialHit_Part_Texture"),
 		(CComponent**)&m_pTextureCom)))
 		return E_FAIL;
+
+	PartDesc* Part = (PartDesc*)pArg;
+	m_iTexture_Index = (_uint)Part->Second;
 
 	return S_OK;
 }

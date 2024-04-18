@@ -133,6 +133,7 @@ private:
 	_float m_fJumpPower = 0.f;
 
 	_float m_fPlayerHp = 15.f;
+
 };
 
 END

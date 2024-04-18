@@ -540,6 +540,11 @@ HRESULT CLoader::Ready_ClearUi_Texture()
 			L"../Bin/Resources/Textures/Ui/Clear/Logo/Border.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_BorderRight_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Clear/Logo/BorderRight.png"))))
+		return E_FAIL;
+	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Chat_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Clear/Chat/Chat%d.png", 7))))
@@ -697,6 +702,31 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Finish_BackGround_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/OnGoing/Finish_BackGround.png"))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_DrinkSoda_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Drink_Soda.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Damaged_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Damaged.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Combo_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Combo%d.png", 8))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_SpecialHit_Part_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Part/PartSec%d.png", 8))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Reload_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Reload.png"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -872,6 +902,10 @@ HRESULT CLoader::Ready_Prototype_Ui_Life()
 		CText_BackGround::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Combo"),
+		CUi_Combo::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -964,6 +998,21 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Finish"),
 		eUiRenderType::Render_NonBlend,
 		CUi_Finish::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_DrinkSoda"),
+		eUiRenderType::Render_Blend,
+		CUi_DrinkSoda::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Damaged"),
+		eUiRenderType::Render_Blend,
+		CUi_Damaged::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Reload"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Reload::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

@@ -42,7 +42,7 @@ private:
 
 
 private:
-	_float3 m_OriginPos = { 470, -10, 0 };
+	_float3 m_OriginPos = { 470, -20, 0 };
 
 
 public:

@@ -54,8 +54,10 @@ void CGame_Manager::Tick(_float fTimeDelta)
 void CGame_Manager::Clear()
 {
 	m_pGameInstance->Set_Enter(true);
-	if(m_eProgress != StageProgress::StageClear)
-	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Clear_Time", false);
+	if (m_eProgress != StageProgress::StageClear)
+	{
+		m_pGameInstance->Set_Ui_ActiveState(L"CUi_Clear_Time", false);
+	}
 }
 
 void CGame_Manager::Start()
@@ -240,6 +242,11 @@ void CGame_Manager::Initialize_TextManager()
 	{
 		assert("textmanager create failed");
 	}
+}
+
+CText::Text_Info* CGame_Manager::Get_Text(TextType type, _uint Number)
+{
+	return m_pTextManager->Get_Text(type, Number);
 }
 
 HRESULT CGame_Manager::Ready_Prototype_GameObjects()

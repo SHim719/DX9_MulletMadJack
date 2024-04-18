@@ -33,3 +33,7 @@
 #include "CTextManager.h"
 #include "CUi_Finish.h"
 #include "CText_BackGround.h"
+#include "CUi_DrinkSoda.h"
+#include "CUi_Damaged.h"
+#include "CUi_Combo.h"
+#include "CUi_Reload.h"

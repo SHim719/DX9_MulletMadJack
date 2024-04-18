@@ -73,6 +73,10 @@ private:
 
 	_float			m_fTimeAcc = 0.f;
 	_float			m_fDeathTime = 3.f;
+
+	//delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	_bool			m_bUiDeathCall = false;
+
 private:
 	void Process_State(_float fTimeDelta);
 

@@ -6,15 +6,6 @@ BEGIN(Client)
 
 class CUi_Border final : public CUi
 {
-public:
-	using UniqueDesc = struct UiUniqueDesc
-	{
-		_float m_fX = { 0 };
-		_float m_fY = { 0 };
-		_float m_fSizeX = { 0 };
-		_float m_fSizeY = { 0 };
-		_float3 m_Rotation = { 0, 0, 0 };
-	};
 protected:
 	CUi_Border(LPDIRECT3DDEVICE9 pGraphic_Device);
 	CUi_Border(const CUi_Border& rhs);
@@ -55,9 +46,11 @@ private:
 private:
 	CVIBuffer_Rect* m_pUniqueVIBufferCom = { nullptr };
 	CTransform* m_pUniqueTransformCom = { nullptr };
-	UniqueDesc m_UniqueUiDesc = {};
-	_float3 m_OriginScale = { 280, 320, 1 };
+	CTexture* m_pUniqueTextureCom = { nullptr };
+	Ui_Pos_Size_Rotation m_UniqueUiDesc = {};
+	_float3 m_OriginScale = { 240, 350, 1 };
 	_float3 m_OriginUniqueScale = { 960, 580, 1 };
+
 public:
 	static CUi_Border* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

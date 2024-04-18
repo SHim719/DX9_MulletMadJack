@@ -1,6 +1,8 @@
 #include "Pawn.h"
 
 #include "GameInstance.h"
+#include "FPS_Camera.h"
+
 
 CPawn::CPawn(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
@@ -37,6 +39,37 @@ void CPawn::LateTick(_float fTimeDelta)
 HRESULT CPawn::Render()
 {
 	return S_OK;
+}
+
+void CPawn::Call_MonsterDieUi(eMonsterGrade Grade)
+{
+	_float4x4 ProjMatrix = m_pCamera->Get_Proj_Matrix();
+	_float4x4 ViewMatrix = m_pCamera->Get_View_Matrix();
+	_float3 MonsterPos = m_pTransformCom->Get_Pos();
+	D3DXVec3TransformCoord(&MonsterPos, &MonsterPos, &ViewMatrix);
+	D3DXVec3TransformCoord(&MonsterPos, &MonsterPos, &ProjMatrix);
+	_float4x4 ViewPortMatrix = {};
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			ViewPortMatrix.m[i][j] = 0;
+		}
+	}
+	ViewPortMatrix.m[0][0] = 640;
+	ViewPortMatrix.m[1][1] = -360;
+	ViewPortMatrix.m[2][2] = 1;
+	ViewPortMatrix.m[3][0] = 640;
+	ViewPortMatrix.m[3][1] = 360;
+	ViewPortMatrix.m[3][2] = 0;
+	ViewPortMatrix.m[3][3] = 1;
+	D3DXVec3TransformCoord(&MonsterPos, &MonsterPos, &ViewPortMatrix);
+	CUi_MonsterDie::MonsterDieArg Arg;
+	Arg.MonsterDiePosX = MonsterPos.x;
+	Arg.MonsterDiePosY = MonsterPos.y;
+	Arg.MonsterGrade = Grade;
+	m_pGameInstance->Add_Ui_LifeClone
+	(L"CUi_MonsterDie", eUiRenderType::Render_NonBlend, &Arg);
 }
 
 

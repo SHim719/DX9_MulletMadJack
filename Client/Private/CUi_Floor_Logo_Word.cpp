@@ -104,7 +104,7 @@ void CUi_Floor_Logo_Word::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 	_float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
 
 	m_UiDesc.m_fX = 760.f;
-	m_UiDesc.m_fY = -280.f;
+	m_UiDesc.m_fY = -290.f;
 
 	m_pTransformCom->Set_Scale(Scale);
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION,

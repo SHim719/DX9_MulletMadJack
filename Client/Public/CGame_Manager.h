@@ -57,7 +57,7 @@ public:
 	void Ready_Loading_BackGroundTextureAndUi(); // need Ready_Prototype_Components fuction
 	//Custom Prototype
 	HRESULT Ready_Execution_Texture();
-
+	HRESULT Ready_Active_Execution();
 
 public:
 	void Print_Text(TextType type, _uint Number);
@@ -65,12 +65,14 @@ public:
 	void Initialize_TextManager();
 
 	void Add_TextNumber(TextType type) { ++m_iTextPrintOrder[_uint(type)]; }
-	HRESULT Ready_Active_Execution();
+
+	CText::Text_Info* Get_Text(TextType type, _uint Number);
 
 	_uint Get_TextNumber(TextType type) const
 	{ return m_iTextPrintOrder[_uint(type)]; }
 
 	size_t Get_MaxSize(TextType type) { return m_pTextManager->Get_Max_Size(type); }
+
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -82,7 +84,7 @@ private:
 	D3DVIEWPORT9 m_MainViewPort;
 	D3DVIEWPORT9 m_UiViewPort;
 	_float m_fShopTime = {0.5f};
-	_float m_fStageClearTime = { 32.14f };
+	_float m_fStageClearTime = { 0 };
 	_float m_fChangeTime = { 3.5f };
 
 
