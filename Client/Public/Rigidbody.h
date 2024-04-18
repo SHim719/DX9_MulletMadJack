@@ -39,7 +39,7 @@ private:
 	_float		m_fFriction;
 
 public:
-	void Set_Velocity(const _float3& fVelocity) 
+	void Set_Velocity(const _float3& fVelocity)
 	{
 		m_vVelocity = fVelocity;
 	}

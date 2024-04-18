@@ -1,6 +1,6 @@
 #include "Chainsaw_Monster.h"
-
 #include "GameInstance.h"
+#include "PlayerManager.h"
 
 CChainsaw_Monster::CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CPawn{ pGraphic_Device }
@@ -9,15 +9,6 @@ CChainsaw_Monster::CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 CChainsaw_Monster::CChainsaw_Monster(const CChainsaw_Monster& rhs)
 	: CPawn{ rhs }
-	, IsPlaying(false)
-	, m_bIdle(true)
-	, m_bDead(false)
-	, m_bWalking(false)
-	, m_bSlashing(false)
-	, m_bBlock(false)
-	, m_fWalking_TimeGap(0.f)
-	, m_fSlashing_TimeGap(0.f)
-	, m_fBlocking_TimeGap(0.f)
 {
 }
 
@@ -28,27 +19,29 @@ HRESULT CChainsaw_Monster::Initialize_Prototype()
 
 HRESULT CChainsaw_Monster::Initialize(void* pArg)
 {
-	if (nullptr == pArg)
-		return E_FAIL;
-
-	memcpy(&m_Chainsaw_Monster_Desc, pArg, sizeof m_Chainsaw_Monster_Desc);
-
 	if (FAILED(Add_Components()))
 		return E_FAIL;
 
 	if (FAILED(Add_Textures()))
 		return E_FAIL;
 
-	m_pFPS_Camera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Get_CurCamera());
+	m_pCamera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_Instance()->Get_CurCamera());
+	m_pTarget = CPlayer_Manager::Get_Instance()->Get_Player();
+	Safe_AddRef(m_pTarget);
 
-	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &m_Chainsaw_Monster_Desc.vPosition);
-
-	_float3 Scale = { (_float)1.2f, (_float)1.2f, (_float)1.2f };
+	_float3 Scale = { 1.3f, 1.3f, 1.f };
 	m_pTransformCom->Set_Scale(Scale);
 
-	m_pTransformCom->Set_Target(m_pTransformCom->Get_State(CTransform::STATE_POSITION), m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION));
+	_float3 vPos = { 0.f, 0.65f, 2.7f };
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &vPos);
 
-	m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Idle_Up"), 0.1f, true);
+	m_pRigidbody->Set_Friction(0.f);
+	m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
+	m_pRigidbody->Set_Gravity({ 0.f, 0.f, 0.f });
+
+	m_pAnimationCom->Play_Animation(TEXT("Idle_Up"), 0.1f, true);
+
+	m_strTag = "Monster";
 
 	return S_OK;
 }
@@ -59,24 +52,16 @@ void CChainsaw_Monster::PriorityTick(_float fTimeDelta)
 
 void CChainsaw_Monster::Tick(_float fTimeDelta)
 {
-	Decide_Pawn_Motions(fTimeDelta);
+	Process_State(fTimeDelta);
 
-	Set_Motions(fTimeDelta);
-
-	m_pAnimationCom->Update(fTimeDelta, IsPlaying);
-
-	if (m_bDead && !IsPlaying)
-	{
-		m_fCorpseDuration -= fTimeDelta;
-
-		if (m_fCorpseDuration <= 0)
-			m_bDestroyed = true;
-	}
+	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	m_pRigidbody->Update(fTimeDelta);
+	m_pAnimationCom->Update(fTimeDelta);
 }
 
 void CChainsaw_Monster::LateTick(_float fTimeDelta)
 {
-	m_pTransformCom->Set_Billboard_Matrix(m_pFPS_Camera->Get_Billboard_Matrix());
+	m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
 
 	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
@@ -94,80 +79,400 @@ HRESULT CChainsaw_Monster::Render()
 	if (FAILED(m_pVIBufferCom->Render()))
 		return E_FAIL;
 
+	m_pBoxCollider->Render();
+
 	if (FAILED(End_RenderState()))
 		return E_FAIL;
 
 	return S_OK;
 }
 
+void CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
+	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
+
+	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
+	pDesc->fHitWorldPos = fHitWorldPos;
+	pDesc->fDist = fDist;
+
+	if (Check_HeadShot(vHitLocalPos))
+	{
+		pDesc->eHitType = HEAD_SHOT;
+		Hit(pDesc);
+	}
+	else if (Check_EggShot(vHitLocalPos))
+	{
+		pDesc->eHitType = EGG_SHOT;
+		Hit(pDesc);
+	}
+	else if (Check_BodyShot(vHitLocalPos))
+	{
+		pDesc->eHitType = BODY_SHOT;
+		Hit(pDesc);
+	}
+}
+
+_bool CChainsaw_Monster::Check_HeadShot(_float3 vHitLocalPos)
+{
+	return -0.05f < vHitLocalPos.x && vHitLocalPos.x < 0.05f && 0.18f <= vHitLocalPos.y && vHitLocalPos.y < 0.3f;
+}
+
+_bool CChainsaw_Monster::Check_BodyShot(_float3 vHitLocalPos)
+{
+	return (-0.15f < vHitLocalPos.x && vHitLocalPos.x < 0.15f) &&
+		((0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.18f) || (-0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.1f));
+}
+
+_bool CChainsaw_Monster::Check_EggShot(_float3 vHitLocalPos)
+{
+	return -0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.1f <= vHitLocalPos.y && vHitLocalPos.y < 0.f;
+}
+
+void CChainsaw_Monster::Hit(void* pArg)
+{
+	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
+
+	switch (pDesc->eHitType)
+	{
+	case CPawn::HEAD_SHOT:
+		m_fHp -= 3.f;
+		break;
+
+	case CPawn::BODY_SHOT:
+		m_fHp -= 3.f;
+
+		/*if (m_fHp > 0.f)
+			m_pAnimationCom->Play_Animation(TEXT("Hit"), 0.1f, false);*/
+
+		break;
+
+	case CPawn::EGG_SHOT:
+		m_fHp -= 3.f;
+		break;
+	}
+
+	if (m_fHp <= 0.f)
+		SetState_Death(pDesc);
+}
+
+void CChainsaw_Monster::Process_State(_float fTimeDelta)
+{
+	switch (m_eState)
+	{
+	case CChainsaw_Monster::STATE_IDLE:
+		State_Idle();
+		break;
+
+	case CChainsaw_Monster::STATE_MOVE:
+		State_Move();
+		break;
+
+	case CChainsaw_Monster::STATE_PUSHED:
+		State_Pushed();
+		break;
+
+	case CChainsaw_Monster::STATE_SLASH:
+		State_Slash();
+		break;
+
+	case CChainsaw_Monster::STATE_JUMP:
+		State_Jump();
+		break;
+
+	case CChainsaw_Monster::STATE_DEATH:
+		State_Death(fTimeDelta);
+		break;
+	}
+}
+
+void CChainsaw_Monster::State_Idle()
+{
+	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
+
+	if (fTargetDist < m_fPerceptionDist)
+	{
+		SetState_Move();
+	}
+	else
+	{
+		if (m_pAnimationCom->IsEndAnim())
+		{
+			SetState_Idle();
+		}
+	}
+}
+
+void CChainsaw_Monster::State_Move()
+{
+	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
+
+	if (m_bPerceivedPlayer && fTargetDist < m_fRange)
+	{
+		SetState_Slash();
+
+		return;
+	}
+	else if (m_bPerceivedPlayer && m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
+	{
+		SetState_Jump();
+	}
+	else if (fTargetDist > 9.f)
+	{
+		SetState_Idle();
+
+		return;
+	}
+
+	_float3 vToTargetDir = (m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos());
+	vToTargetDir.y = 0.f;
+	D3DXVec3Normalize(&vToTargetDir, &vToTargetDir);
+
+	m_pRigidbody->Set_Velocity(vToTargetDir * m_fSpeed);
+}
+
+void CChainsaw_Monster::State_Pushed()
+{
+	if (0.025f >= D3DXVec3Length(&m_pRigidbody->Get_Velocity()) && !m_bPushRecovery)
+	{
+		m_pRigidbody->Set_Friction(0.f);
+
+		m_pAnimationCom->Play_Animation(TEXT("Pushed_Recovery"), 0.1f, false);
+
+		m_bPushRecovery = true;
+	}
+
+	if (m_pAnimationCom->IsEndAnim())
+	{
+		SetState_Slash();
+
+		m_bPushRecovery = false;
+	}
+}
+
+void CChainsaw_Monster::State_Slash()
+{
+	if (m_pAnimationCom->IsEndAnim())
+	{
+		_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
+
+		if (fTargetDist < m_fRange)
+		{
+			SetState_Slash();
+		}
+		else if (m_fRange <= fTargetDist && fTargetDist < 9.f)
+		{
+			SetState_Move();
+		}
+		else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
+		{
+			SetState_Jump();
+		}
+		else if (fTargetDist >= 9.f)
+		{
+			SetState_Idle();
+		}
+	}
+}
+
+void CChainsaw_Monster::State_Jump()
+{
+	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
+
+	if (m_pAnimationCom->IsEndAnim())
+	{
+		if (fTargetDist < m_fRange)
+		{
+			SetState_Slash();
+		}
+		else if (m_fRange <= fTargetDist && fTargetDist < m_fPerceptionDist)
+		{
+			SetState_Move();
+		}
+		else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
+		{
+			SetState_Jump();
+		}
+		else if (fTargetDist >= 9.f)
+		{
+			SetState_Idle();
+		}
+	}
+}
+
+void CChainsaw_Monster::State_Death(_float fTimeDelta)
+{
+	if (m_pAnimationCom->IsEndAnim())
+	{
+		m_fDeathTime -= fTimeDelta;
+
+		if (m_fDeathTime <= 0.f)
+			m_bDestroyed = true;
+	}
+}
+
+void CChainsaw_Monster::SetState_Idle()
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	m_eState = STATE_IDLE;
+	m_bPerceivedPlayer = false;
+
+	m_pAnimationCom->Play_Animation(L"Idle_Up", 0.15f, true);
+
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+}
+
+void CChainsaw_Monster::SetState_Move()
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	m_eState = STATE_MOVE;
+	m_bPerceivedPlayer = true;
+
+	m_pAnimationCom->Play_Animation(L"Walk", 0.1f, true);
+
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+}
+
+void CChainsaw_Monster::SetState_Pushed(_float3 vLook)
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	m_eState = STATE_PUSHED;
+
+	vLook.y = 0.f;
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	m_pRigidbody->Set_Velocity(vLook * 4.f);
+	m_pRigidbody->Set_Friction(4.f);
+
+	m_pAnimationCom->Play_Animation(L"Pushed", 100.f, false);
+}
+
+void CChainsaw_Monster::SetState_Slash()
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	m_eState = STATE_SLASH;
+
+	m_pAnimationCom->Play_Animation(L"Slash", 0.1f, false);
+
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+}
+
+void CChainsaw_Monster::SetState_Jump()
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	m_eState = STATE_JUMP;
+	m_pAnimationCom->Play_Animation(L"Jump", 0.05f, false);
+
+	_float3 vLook = m_pTarget->Get_Transform()->Get_Look();
+	//vLook = { vLook.x, 0.f, vLook.z };
+
+	m_pRigidbody->Set_Velocity(-vLook * 4);
+	m_pRigidbody->Set_Gravity({ 0.f, -1.f, 0.f });
+}
+
+void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
+{
+	if (STATE_DEATH == m_eState)
+		return;
+
+	m_eState = STATE_DEATH;
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+
+	switch (pDesc->eHitType)
+	{
+	case CPawn::HEAD_SHOT:
+		m_pAnimationCom->Play_Animation(TEXT("Death_Headshot"), 0.1f, false);
+		break;
+
+	case CPawn::BODY_SHOT:
+		m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+		break;
+
+	case CPawn::EGG_SHOT:
+		m_pAnimationCom->Play_Animation(TEXT("Death_Groinshot"), 0.1f, false);
+		break;
+	}
+}
+
 HRESULT CChainsaw_Monster::Add_Components()
 {
 	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
 
-	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), &m_Chainsaw_Monster_Desc));
+	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
 
-	m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component(LEVEL_STATIC, TEXT("Prototype_Component_Animation"), TEXT("Animation"), this));
+	m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component(LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
+
+	m_pRigidbody = dynamic_cast<CRigidbody*>(Add_Component(LEVEL_STATIC, TEXT("Rigidbody_Default"), TEXT("Rigidbody"), m_pTransformCom));
+
+	CBoxCollider::BOXCOLLISION_DESC pDesc;
+	pDesc.vScale = { 0.5f, 1.f, 0.5f };
+
+	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
 
 	return S_OK;
 }
 
 HRESULT CChainsaw_Monster::Add_Textures()
 {
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Headshot"), TEXT("Chainsaw_Monster_Headshot"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Headshot"), TEXT("Death_Headshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Slash"), TEXT("Chainsaw_Monster_Slash"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Slash"), TEXT("Slash"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_BodyShot"), TEXT("Chainsaw_Monster_BodyShot"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Bodyshot"), TEXT("Death_Bodyshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Blocking"), TEXT("Chainsaw_Monster_Blocking"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Pushed"), TEXT("Pushed"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_HeadExplode_Backward"), TEXT("Chainsaw_Monster_HeadExplode_Backward"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Pushed_Recovery"), TEXT("Pushed_Recovery"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Push_Floor"), TEXT("Chainsaw_Monster_Death_Push_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_HeadExplode_Backward"), TEXT("HeadExplode_Backward"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Chainsaw_Monster_Start_Push_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Floor"), TEXT("Death_Push_Floor"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Chainsaw_Monster_Death_Push_Wall"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Start_Push_Floor"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_GetUp"), TEXT("Chainsaw_Monster_GetUp"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Death_Push_Wall"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_GroinShot"), TEXT("Chainsaw_Monster_GroinShot"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_GetUp"), TEXT("GetUp"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_HeadExplode_Forward"), TEXT("Chainsaw_Monster_HeadExplode_Forward"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Groinshot"), TEXT("Death_Groinshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Hit"), TEXT("Chainsaw_Monster_Hit"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Hit"), TEXT("Hit"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Idle_Down"), TEXT("Chainsaw_Monster_Idle_Down"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Idle_Up"), TEXT("Idle_Up"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Idle_Up"), TEXT("Chainsaw_Monster_Idle_Up"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Jump"), TEXT("Jump"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Shot_Floor"), TEXT("Chainsaw_Monster_Death_Shot_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Shotgun"), TEXT("Death_Shotgun"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Jump"), TEXT("Chainsaw_Monster_Jump"))))
-		return E_FAIL;
-
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Death_Shotgun"), TEXT("Chainsaw_Monster_Death_Shotgun"))))
-		return E_FAIL;
-
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Walk"), TEXT("Chainsaw_Monster_Walk"))))
-		return E_FAIL;
-
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Prototype_Component_Texture_Chainsaw_Monster_Wall"), TEXT("Chainsaw_Monster_Wall"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Walk"), TEXT("Walk"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -189,244 +494,13 @@ HRESULT CChainsaw_Monster::End_RenderState()
 	return S_OK;
 }
 
-void CChainsaw_Monster::Set_Motions(_float fTimeDelta)
-{
-	switch (m_eState)
-	{
-	case STATE_IDLE:
-		break;
-
-	case STATE_AIM:
-		break;
-
-	case STATE_WALK:
-		m_pTransformCom->Go_Floor_Backward(fTimeDelta);
-		break;
-
-	case STATE_SLASH:
-		break;
-
-	case STATE_BLOCK:
-		break;
-
-	case STATE_HEADSHOT:
-		break;
-
-	case STATE_BODYSHOT:
-		break;
-
-	case STATE_GROINSHOT:
-		break;
-
-	default:
-		break;
-	}
-
-	/*if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Headshot"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Slash"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_BodyShot"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Blocking"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_HeadExplode_Backward"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Push_Floor"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Start_Push_Floor"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Push_Wall"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_GetUp"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_GroinShot"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_HeadExplode_Forward"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Hit"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Idle_Down"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Idle_Up"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Shot_Floor"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Jump"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Death_Shotgun"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Walk"), 0.1f, false);
-
-	if (GetAsyncKeyState('1') & 0x8000)
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Wall"), 0.1f, false);*/
-}
-
-void CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
-{
-	srand(unsigned(time(nullptr)));
-
-	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
-	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
-
-	if (-0.05f < vHitLocalPos.x && vHitLocalPos.x < 0.05f && 0.18f <= vHitLocalPos.y && vHitLocalPos.y < 0.3f)
-		m_eState = STATE_HEADSHOT;
-
-	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.18f && rand() % 2 == 0)
-		m_eState = STATE_BLOCK;
-
-	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.18f && rand() % 2 == 1)
-		m_eState = STATE_BODYSHOT;
-
-	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.1f <= vHitLocalPos.y && vHitLocalPos.y < 0.f)
-		m_eState = STATE_GROINSHOT;
-
-	else if (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && -0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.1f)
-		m_eState = STATE_BODYSHOT;
-}
-
-void CChainsaw_Monster::Decide_Pawn_Motions(_float fTimeDelta)
-{
-	Pawn_Slashing_Motion(fTimeDelta);
-	Pawn_Walking_Motion(fTimeDelta);
-	Pawn_Blocking_Motion(fTimeDelta);
-	Pawn_Dying_Motion(fTimeDelta);
-}
-
-void CChainsaw_Monster::Pawn_Slashing_Motion(_float fTimeDelta)
-{
-	m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION);
-
-	m_fSlashing_TimeGap += fTimeDelta;
-
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
-		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 5.f)
-	{
-		m_bIdle = false;
-	}
-
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
-		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 1.f && !m_bDead && !IsPlaying)
-	{
-		m_eState = STATE_SLASH;
-
-		m_bSlashing = true;
-		IsPlaying = m_bSlashing;
-
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Slash"), 0.1f, false);
-
-		if (m_fSlashing_TimeGap > 1.f)
-		{
-			m_bSlashing = false;
-
-			m_fSlashing_TimeGap = 0.f;
-		}
-	}
-
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
-		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) >= 1.f)
-	{
-		m_bSlashing = false;
-	}
-}
-
-void CChainsaw_Monster::Pawn_Walking_Motion(_float fTimeDelta)
-{
-	m_fWalking_TimeGap += fTimeDelta;
-
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
-		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) >= 1.f && !m_bIdle)
-	{
-		m_bWalking = true;
-	}
-
-	if (m_bWalking && !m_bIdle && !m_bDead && !m_bSlashing && !IsPlaying)
-	{
-		m_eState = STATE_WALK;
-
-		IsPlaying = m_bWalking;
-
-		m_fWalking_TimeGap += fTimeDelta;
-
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Walk"), 0.1f, false);
-
-		if (m_fWalking_TimeGap > 1.f)
-		{
-			m_bWalking = false;
-
-			m_eState = STATE_END;
-
-			m_fWalking_TimeGap = 0.f;
-		}
-	}
-
-	if (D3DXVec3Length(&(m_pFPS_Camera->Get_Camera_TransformCom()->Get_State(CTransform::STATE_POSITION) -
-		m_pTransformCom->Get_State(CTransform::STATE_POSITION))) < 1.f)
-	{
-		m_bWalking = false;
-	}
-}
-
-void CChainsaw_Monster::Pawn_Blocking_Motion(_float fTimeDelta)
-{
-	if (m_eState == STATE_BLOCK && !m_bDead)
-	{
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Blocking"), 0.1f, false);
-
-		m_eState = STATE_END;
-	}
-}
-
-void CChainsaw_Monster::Pawn_Dying_Motion(_float fTimeDelta)
-{
-	// 총알이 어디에 맞았는지에 따라 세부 모션을 구분할 것
-	if (m_eState == STATE_HEADSHOT && !m_bDead)
-	{
-		m_bDead = true;
-
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_Headshot"), 0.1f, false);
-	}
-
-	if (m_eState == STATE_BODYSHOT && !m_bDead)
-	{
-		m_bDead = true;
-
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_BodyShot"), 0.1f, false);
-	}
-
-	if (m_eState == STATE_GROINSHOT && !m_bDead)
-	{
-		m_bDead = true;
-
-		m_pAnimationCom->Play_Animation(TEXT("Chainsaw_Monster_GroinShot"), 0.1f, false);
-	}
-}
-
 CChainsaw_Monster* CChainsaw_Monster::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CChainsaw_Monster* pInstance = new CChainsaw_Monster(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to create: CDrone_Monster"));
+		MSG_BOX(TEXT("Failed to create: CChainsaw_Monster"));
 
 		Safe_Release(pInstance);
 	}
@@ -440,7 +514,7 @@ CGameObject* CChainsaw_Monster::Clone(void* pArg)
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to create: CDrone_Monster"));
+		MSG_BOX(TEXT("Failed to create: CChainsaw_Monster"));
 
 		Safe_Release(pInstance);
 	}
@@ -452,7 +526,10 @@ void CChainsaw_Monster::Free()
 {
 	__super::Free();
 
+	Safe_Release(m_pTarget);
 	Safe_Release(m_pAnimationCom);
 	Safe_Release(m_pTransformCom);
 	Safe_Release(m_pVIBufferCom);
+	Safe_Release(m_pBoxCollider);
+	Safe_Release(m_pRigidbody);
 }

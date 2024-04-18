@@ -9,6 +9,7 @@
 #include "White_Suit_Monster.h"
 #include "Drone_Monster.h"
 #include "Chainsaw_Monster.h"
+#include "Orange_Pants_Monster.h"
 #include "Enemy_Bullet.h"
 
 #include "Wall.h"
@@ -40,6 +41,15 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
+
+	if (FAILED(Ready_Layer_Chainsaw_Monster(TEXT("Monster"))))		// 임시
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Orange_Pants_Monster(TEXT("Monster"))))		// 임시
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_Drone_Monster(TEXT("Monster"))))		// 임시
+		return E_FAIL;
 
 	Initialize_SodaMachine();
 	return S_OK;
@@ -114,6 +124,30 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 		MSG_BOX(TEXT("Failed to Create Player"));
 		return E_FAIL;
 	}
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Chainsaw_Monster(const wstring& strLayerTag)
+{
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Chainsaw")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Orange_Pants_Monster(const wstring& strLayerTag)
+{
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Orange_Pants")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Drone_Monster(const wstring& strLayerTag)
+{
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Drone")))
+		return E_FAIL;
 
 	return S_OK;
 }

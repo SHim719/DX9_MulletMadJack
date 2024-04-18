@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "FPS_Camera.h"
+#include "Core_Camera.h"
 #include "Pawn.h"
 
 BEGIN(Engine)
@@ -15,7 +16,15 @@ BEGIN(Client)
 
 class CDrone_Monster final : public CPawn
 {
-	enum STATE { STATE_IDLE, STATE_REVEAL, STATE_FLYING, STATE_ATTACK, STATE_FLYBACK, STATE_END };
+	enum STATE
+	{
+		STATE_IDLE,
+		STATE_AIM,
+		STATE_ALERT,
+		STATE_ATTACK,
+		STATE_DEATH,
+		STATE_END
+	};
 
 private:
 	CDrone_Monster(LPDIRECT3DDEVICE9 pGraphic_Device);
@@ -31,40 +40,52 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CVIBuffer* m_pVIBufferCom = { nullptr };
 	CAnimation* m_pAnimationCom = { nullptr };
-
-	CFPS_Camera* m_pFPS_Camera = { nullptr };
+	CBoxCollider* m_pBoxCollider = { nullptr };
+	CRigidbody* m_pRigidbody = { nullptr };
 
 private:
-	//PAWN_DESC		m_Drone_Monster_Desc{};
+	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
+	virtual void	OnCollisionEnter(CGameObject* pOther) override;
 
-	_float			m_fAttack_TimeGap;
-	_float			m_fFlying_TimeGap;
+	_bool Check_Hit(_float3 vHitLocalPos);
 
-	STATE			m_eState;
+	void Hit(void* pArg) override;
 
-	bool			IsPlaying;
+private:
+	STATE			m_eState = STATE_IDLE;
+	_float			m_fHp = 1.f;
+	_float			m_fSpeed = 0.1f;
+	_float			m_fPerceptionDist = 3.f;
+	_float			m_fRange = 6.f;
+	_bool			m_bPushRecovery = { false };
+	_bool			m_bPerceivedPlayer = { false };
 
-	bool			m_bIdle;
-	bool			m_bAttack;
-	bool			m_bReveal;
-	bool			m_bDead;
-	bool			m_bFlying;
+	_float			m_fTimeAcc = 0.f;
+	_float			m_fDeathTime = 3.f;
+
+private:
+	void Process_State(_float fTimeDelta);
+
+	void State_Idle();
+	void State_Aim();
+	void State_Alert();
+	void State_Attack(_float fTimeDelta);
+	void State_Death(_float fTimeDelta);
+
+public:
+	void SetState_Idle();
+	void SetState_Aim();
+	void SetState_Alert();
+	void SetState_Attack();
+	void SetState_Death(ENEMYHIT_DESC* pDesc);
 
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
-
-	virtual void	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-
-	void	Decide_Pawn_Motions(_float fTimeDelta);
-	void	Pawn_Reveal_Motion(_float fTimeDelta);
-	void	Pawn_Moving_Motion(_float fTimeDelta);
-	void	Pawn_Attack_Motion(_float fTimeDelta);
-	void	Pawn_Flyback_Motion(_float fTimeDelta);
 
 public:
 	static CDrone_Monster* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

@@ -33,6 +33,10 @@ public:
 private:
 	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
 	HRESULT Ready_Layer_Player();
+
+	HRESULT Ready_Layer_Chainsaw_Monster(const wstring& strLayerTag);
+	HRESULT	Ready_Layer_Orange_Pants_Monster(const wstring& strLayerTag);
+	HRESULT Ready_Layer_Drone_Monster(const wstring& strLayerTag);
 	
 	class CPlayer* m_pPlayer = { nullptr };
 	class CFPS_Camera* m_pFPS_Camera = { nullptr };
