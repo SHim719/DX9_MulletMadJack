@@ -352,6 +352,33 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload\Pistol_Reload_Left_Arm">
       <UniqueIdentifier>{203f3e05-1ed1-411d-bdad-e50530c53db1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Slide">
+      <UniqueIdentifier>{70db88fd-00a8-463b-b2a2-b3e5ef1bbd2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun">
+      <UniqueIdentifier>{a29e502f-6b20-4c4f-b483-399ffd6b1a20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Idle">
+      <UniqueIdentifier>{96da3da1-3d99-4855-a595-565bb350940b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Shot">
+      <UniqueIdentifier>{29e56c49-7b43-40ac-a06a-86c9201072d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinA">
+      <UniqueIdentifier>{31c73459-f227-4cf4-ba6a-dc1d79505f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Effect\GunFire\Pistol">
+      <UniqueIdentifier>{15a74fd6-991b-47ea-8f48-78d8b230d244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Effect\GunFire\Shotgun">
+      <UniqueIdentifier>{f501b29a-7c42-42d9-9173-9d516be74cf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Reload">
+      <UniqueIdentifier>{2a1b675f-3637-4f73-8d09-52bf3809d626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB">
+      <UniqueIdentifier>{edb8cbe6-c0b2-4f0a-9c99-09e2551e596d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -528,9 +555,6 @@
     <ClInclude Include="..\Public\Pistol_Reload.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Pistol_GunFire.h">
-      <Filter>04. UI\Ui\Effect\GunFire</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Pistol_Barrel.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClInclude>
@@ -668,6 +692,30 @@
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Reload.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Reload</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_Shot.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_SpinA.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_GunFire.h">
+      <Filter>04. UI\Ui\Effect\GunFire\Pistol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_GunFire.h">
+      <Filter>04. UI\Ui\Effect\GunFire\Shotgun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_Reload.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Reload</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Slide.h">
+      <Filter>04. UI\Ui\CUi_Active\Slide</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_SpinB.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -821,12 +869,6 @@
     <ClCompile Include="..\Private\Pistol_Reload.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Pistol_GunFire.cpp">
-      <Filter>04. UI\Ui\Effect\GunFire</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Pistol_Barrel.cpp">
-      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\White_Suit_Monster.cpp">
       <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClCompile>
@@ -853,9 +895,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\MapLoader.cpp">
       <Filter>97. Manager\MapLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Kick.cpp">
-      <Filter>04. UI\Ui\CUi_Active\Kick</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Dash_Effect.cpp">
       <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Dash</Filter>
@@ -949,6 +988,36 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Reload.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Reload</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_Shot.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_SpinA.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Barrel.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_GunFire.cpp">
+      <Filter>04. UI\Ui\Effect\GunFire\Pistol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_GunFire.cpp">
+      <Filter>04. UI\Ui\Effect\GunFire\Shotgun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_Reload.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Reload</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Slide.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Slide</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Kick.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Kick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_SpinB.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

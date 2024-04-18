@@ -70,8 +70,9 @@ void CPistol_Spin::Tick(_float fTimeDelta)
 
 void CPistol_Spin::LateTick(_float fTimeDelta)
 {
+	_float2 fDisablePos = CPlayer_Manager::Get_Instance()->Get_TempDisablePosition_BothHand() * -2.f;
 	//_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1, 3, 3, 1, 2, 6);
-	//m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY + fDisablePos.y, 0.f));
 }
 
 HRESULT CPistol_Spin::Render()

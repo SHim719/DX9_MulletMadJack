@@ -1,5 +1,6 @@
 #pragma once
 #include "Client_Defines.h"
+#include "GameInstance.h"
 #include "Base.h"
 #include "CText.h"
 

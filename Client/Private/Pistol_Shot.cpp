@@ -69,11 +69,12 @@ void CPistol_Shot::Tick(_float fTimeDelta)
 
 void CPistol_Shot::LateTick(_float fTimeDelta)
 {
+	_float2 fDisablePos = CPlayer_Manager::Get_Instance()->Get_TempDisablePosition_BothHand() * -1.f;
 	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
 		//Temp Rotate
 		m_pTransformCom->Rotation_XYZ({ 0.f, 0.f, 30.f });
 		_float2 fOffSet = { 150, 50 };
-		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fOffSet.x, m_UiDesc.m_fY + fOffSet.y, 0.f));
+		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fOffSet.x, m_UiDesc.m_fY + fOffSet.y + fDisablePos.y, 0.f));
 	}
 	else {
 
@@ -81,9 +82,9 @@ void CPistol_Shot::LateTick(_float fTimeDelta)
 		_float2 fLissajousRun = CPlayer_Manager::Get_Instance()->Get_Lissajous_Run(m_UiDesc.m_fX, m_UiDesc.m_fY);
 
 		if (CPlayer_Manager::Get_Instance()->Get_Player_MoveState() == CPlayer::MOVE_STATE::MOVE)
-			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x + fLissajousRun.x, m_UiDesc.m_fY + fLissajousPos.y + fLissajousRun.y, 0.f));
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x + fLissajousRun.x, m_UiDesc.m_fY + fLissajousPos.y + fLissajousRun.y + fDisablePos.y, 0.f));
 		else
-			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y, 0.f));
+			m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fLissajousPos.x, m_UiDesc.m_fY + fLissajousPos.y + fDisablePos.y, 0.f));
 	}
 }
 

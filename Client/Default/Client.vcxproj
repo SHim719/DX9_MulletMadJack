@@ -234,6 +234,13 @@
     <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h" />
     <ClInclude Include="..\Public\Player_Include.h" />
     <ClInclude Include="..\Public\Rigidbody.h" />
+    <ClInclude Include="..\Public\Shotgun.h" />
+    <ClInclude Include="..\Public\Shotgun_GunFire.h" />
+    <ClInclude Include="..\Public\Shotgun_Reload.h" />
+    <ClInclude Include="..\Public\Shotgun_Shot.h" />
+    <ClInclude Include="..\Public\Shotgun_SpinA.h" />
+    <ClInclude Include="..\Public\Shotgun_SpinB.h" />
+    <ClInclude Include="..\Public\Slide.h" />
     <ClInclude Include="..\Public\Slope.h" />
     <ClInclude Include="..\Public\Soda.h" />
     <ClInclude Include="..\Public\SpawnTrigger.h" />
@@ -288,6 +295,13 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\Shotgun.cpp" />
+    <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
+    <ClCompile Include="..\Private\Shotgun_Reload.cpp" />
+    <ClCompile Include="..\Private\Shotgun_Shot.cpp" />
+    <ClCompile Include="..\Private\Shotgun_SpinA.cpp" />
+    <ClCompile Include="..\Private\Shotgun_SpinB.cpp" />
+    <ClCompile Include="..\Private\Slide.cpp" />
     <ClCompile Include="..\Private\Slope.cpp" />
     <ClCompile Include="..\Private\CTextManager.cpp" />
     <ClCompile Include="..\Private\CText_BackGround.cpp" />

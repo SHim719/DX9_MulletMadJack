@@ -127,7 +127,14 @@ public:
 	_int Get_MaxMagazine() { return m_iWeaponMaxMagezine; }
 	void Set_MaxMagazine(_int _iMagazine) { m_iWeaponMaxMagezine = _iMagazine; }
 
+
+
 	void Shop_System(void* Arg);
+
+	void Set_WeaponType(CPlayer::WEAPON_TYPE eWeaponType) { m_pPlayer->Set_WeaponType(eWeaponType); }
+	CPlayer::WEAPON_TYPE Get_WeaponType() { return m_pPlayer->Get_WeaponType(); }
+
+	void WeaponChange(CPlayer::WEAPON_TYPE eWeaponType);
 
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
@@ -158,7 +165,6 @@ private:
 	_bool						m_bDrinkCanReady = false;
 
 	_bool				        m_bMouseLock = false;
-
 
 	_int						m_iCombo = 0;
 

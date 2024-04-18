@@ -1,20 +1,38 @@
 #pragma once
+#pragma region PistolInclude
+
 #include "Pistol_Right_Hand.h"
 #include "Pistol.h"
-#include "CrossHair.h"
 #include "Pistol_Shot.h"
 #include "Pistol_Spin.h"
 #include "Pistol_Reload.h"
 #include "Pistol_Gunfire.h"
 #include "Pistol_Barrel.h"
-#include "Player.h"
-#include "Kick.h"
 #include "Pistol_Reload_Left_Hand.h"
 #include "Pistol_Reload_Left_Arm.h"
+
+#pragma endregion
+
+#pragma region ShotgunInclude
+
+#include "Shotgun.h"
+#include "Shotgun_Shot.h"
+#include "Shotgun_SpinA.h"
+#include "Shotgun_SpinB.h"
+#include "Shotgun_GunFire.h"
+#include "Shotgun_Reload.h"
+
+#pragma endregion
+
+
+#include "CrossHair.h"
 #include "Phone.h"
 #include "FPS_Camera.h"
 #include "Dash_Effect.h"
 #include "Drink.h"
+#include "Player.h"
+#include "Kick.h"
+#include "Slide.h"
 
 //Execution
 #include "Execution_Head.h"
