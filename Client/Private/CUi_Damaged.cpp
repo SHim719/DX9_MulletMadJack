@@ -173,7 +173,7 @@ void CUi_Damaged::Adjust_Alpha(_float fTimeDelta)
 		}
 		else
 		{
-			m_iAlpha = m_iAlpha - 5;
+			m_iAlpha = m_iAlpha - 3;
 
 		}
 		m_fAdjustAlphaTime = 0;

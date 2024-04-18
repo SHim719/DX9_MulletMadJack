@@ -18,7 +18,7 @@ private:
 	virtual ~CPlayer() = default;
 
 public:
-	enum WEAPON_TYPE { PISTOL, WEAPON_END };
+	enum WEAPON_TYPE { PISTOL, SHOTGUN, WEAPON_END };
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, ANIMATION_END };
 	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, EXECUTION_STATE, PLAYER_STATE_END };
@@ -64,8 +64,15 @@ private:
 	void HeadTilt(_float fTimeDelta, _float fDirection);
 	void HeadTiltReset(_float fTimeDelta);
 	void Render_Weapon();
-	void Render_Hand();
-	
+	void Reload_Warning();
+
+	void Render_Pistol();
+	void Render_Shotgun();
+
+	void Attack();
+	void Fire_Pistol();
+	void Fire_Shotgun();
+
 	void Active_Reset();
 	void Camera_Reset();
 

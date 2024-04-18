@@ -809,6 +809,12 @@ HRESULT CLoader::Ready_PlayerUi_Texture()
 			L"../Bin/Resources/Textures/Player/Kick/Kick%d.png", 2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Slide_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Slide/Slide.png"))))
+		return E_FAIL;
+
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/LeftArm/LeftArm%d.png", 10))))
@@ -839,6 +845,7 @@ HRESULT CLoader::Ready_PlayerUi_Texture()
 
 HRESULT CLoader::Ready_PlayerGunUi_Texture()
 {
+#pragma region PistolTexture
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Idle_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Idle/PISTOL_IDLE%d.png", 3))))
@@ -858,11 +865,6 @@ HRESULT CLoader::Ready_PlayerGunUi_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload/PISTOL_RELOAD%d.png", 16))))
 		return E_FAIL;
-
-	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures",
-	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-	//		L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
-	//	return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Pistol_Fire_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
@@ -884,6 +886,36 @@ HRESULT CLoader::Ready_PlayerGunUi_Texture()
 			L"../Bin/Resources/Textures/Player/Gun/Pistol/Reload_Hand/HAND_PISTOL_RELOAD%d.png", 5))))
 		return E_FAIL;
 
+#pragma endregion
+
+#pragma region ShotgunTexture
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Shotgun_Idle_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Shotgun/Idle/SHOTGUN_IDLE%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Shotgun_Shot_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Shotgun/Shot/SHOTGUN_SHOT%d.png", 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Shotgun_SpinA_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Shotgun/SpinA/SHOTGUN_A%d.png", 13))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Shotgun_SpinB_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Shotgun/SpinB/SHOTGUNB%d.png", 9))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Shotgun_Reload_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Gun/Shotgun/Reload/SHOTGUN_SPECIAL%d.png", 13))))
+		return E_FAIL;
+
+#pragma endregion
 	return S_OK;
 }
 
@@ -1071,9 +1103,7 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 
 HRESULT CLoader::Ready_Active_Gun()
 {
-	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
+#pragma region PistolRegion
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Right_Hand", eUiRenderType::Render_NonBlend, CPistol_Right_Hand::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
@@ -1092,13 +1122,40 @@ HRESULT CLoader::Ready_Active_Gun()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Barrel", eUiRenderType::Render_NonBlend, CPistol_Barrel::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Kick", eUiRenderType::Render_NonBlend, CKick::Create(m_pGraphic_Device))))
-		return E_FAIL;
-
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Arm", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Arm::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Hand", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Hand::Create(m_pGraphic_Device))))
+		return E_FAIL;
+#pragma endregion
+
+#pragma region ShotgunRegion
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun", eUiRenderType::Render_NonBlend, CShotgun::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_Shot", eUiRenderType::Render_NonBlend, CShotgun_Shot::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_SpinA", eUiRenderType::Render_NonBlend, CShotgun_SpinA::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_SpinB", eUiRenderType::Render_NonBlend, CShotgun_SpinB::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_Reload", eUiRenderType::Render_NonBlend, CShotgun_Reload::Create(m_pGraphic_Device))))
+		return E_FAIL;
+#pragma endregion
+
+
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Kick", eUiRenderType::Render_NonBlend, CKick::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Slide", eUiRenderType::Render_NonBlend, CSlide::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Phone", eUiRenderType::Render_NonBlend, CPhone::Create(m_pGraphic_Device))))
@@ -1107,6 +1164,8 @@ HRESULT CLoader::Ready_Active_Gun()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Drink", eUiRenderType::Render_NonBlend, CDrink::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+
+
 	return S_OK;
 }
 
@@ -1114,6 +1173,10 @@ HRESULT CLoader::Ready_Prototype_Effect()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CPistol_Gunfire"),
 		CPistol_Gunfire::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CShotgun_Gunfire"),
+		CShotgun_Gunfire::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

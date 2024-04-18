@@ -20,6 +20,13 @@ void CPlayer_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 void CPlayer_Manager::Tick(_float fTimeDelta)
 {
 
+	if (Get_TempDisablePosition() == Get_TempDisablePositionLimit() && Get_Action_Type() == ACTION_WEAPONCHANGE) {
+		Set_Action_Type(ACTION_NONE);
+		m_bTempDisable = false;
+		m_pPlayer->Set_AnimationType(CPlayer::SPIN);
+	}
+
+
 	switch (m_eActionType)
 	{
 		case ACTION_TYPE::ACTION_NONE: {
@@ -74,7 +81,14 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 			break;
 		}
 
+		case ACTION_TYPE::ACTION_WEAPONCHANGE: {
+			m_bTempDisable = true;
+			if (m_bTempDisableEnd == true && m_bActionIDLE == true) {
+				Set_DisableEnd(false);
+				m_bActionIDLE = false;
+			}
 
+		}
 
 		default :
 			break;
@@ -186,6 +200,26 @@ void CPlayer_Manager::Shop_System(void* Arg)
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(false);
 	ShowCursor(TRUE);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), false);
+}
+
+void CPlayer_Manager::WeaponChange(CPlayer::WEAPON_TYPE eWeaponType)
+{
+	Set_Action_Type(ACTION_WEAPONCHANGE);
+	Set_WeaponType(eWeaponType);
+
+	switch (eWeaponType)
+	{
+		case CPlayer::WEAPON_TYPE::PISTOL:
+			Set_MaxMagazine(8);
+			break;
+		case CPlayer::WEAPON_TYPE::SHOTGUN:
+			Set_MaxMagazine(12);
+			break;
+		default:
+			break;
+	}
+
+	//Set_Action_Type(ACTION_NONE);
 }
 void CPlayer_Manager::Free()
 {

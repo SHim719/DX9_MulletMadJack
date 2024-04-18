@@ -59,13 +59,13 @@ HRESULT CPlayer::Initialize(void * pArg)
 void CPlayer::PriorityTick(_float fTimeDelta)
 {
 	HeadTiltReset(fTimeDelta);
-	Key_Input(fTimeDelta);
+	if (CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_NONE) Key_Input(fTimeDelta);
 }
 
 void CPlayer::Tick(_float fTimeDelta)
 {
 	Process_State(fTimeDelta);
-
+	Reload_Warning();
 	//LifeCut
 	if (CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_NONE) {
 		if (m_fPlayerHp > 0.f) m_fPlayerHp -= fTimeDelta;
@@ -75,6 +75,7 @@ void CPlayer::Tick(_float fTimeDelta)
 		}
 	}
 
+	//Invincible
 	if (Get_InvincibleTime() > 0.f) { 
 		Set_InvincibleTime(Get_InvincibleTime() - fTimeDelta);
 		Set_Invincible(true);
@@ -89,7 +90,6 @@ void CPlayer::Tick(_float fTimeDelta)
 	//cout << fHeadTilt << endl;
 
 	Render_Weapon();
-	Render_Hand();
 
 	Camera_Event(fTimeDelta);
 
@@ -150,23 +150,37 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 	{
-		if (CPlayer_Manager::Get_Instance()->Get_Magazine() > 0) {
-			Camera_Shake_Order(100000.f, 0.2f);
-			for (int i = 0; i < 6; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CPistol_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
-			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SHOT);
-			CPlayer_Manager::Get_Instance()->Fire_Magazine();
-			if(CPlayer_Manager::Get_Instance()->Get_Magazine() <= 2) m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"),true);
-		}
-		else {
-			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
-			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
+		if (eAnimationType == IDLE || eWeaponType == PISTOL) {
+			if (CPlayer_Manager::Get_Instance()->Get_Magazine() > 0) {
+				Attack();
+				CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SHOT);
+				CPlayer_Manager::Get_Instance()->Fire_Magazine();
+			}
+			else {
+				if (eWeaponType == PISTOL) {
+					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
+				}
+				else {
+					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::RELOAD);
+				}
+			}
 		}
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::R))
 	{
-		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
+		if (eWeaponType == PISTOL) {
+			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
+		}
+		else {
+			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::RELOAD);
+		}
+	}
+#pragma region TestCode
+	if (m_pGameInstance->GetKeyDown(eKeyCode::N))
+	{
+		if(eWeaponType == PISTOL) CPlayer_Manager::Get_Instance()->WeaponChange(SHOTGUN);
+		else CPlayer_Manager::Get_Instance()->WeaponChange(PISTOL);
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
@@ -178,6 +192,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	{
 		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
 	}
+#pragma endregion
 }
 
 
@@ -200,41 +215,99 @@ void CPlayer::HeadTiltReset(_float fTimeDelta)
 
 void CPlayer::Render_Weapon()
 {
-	if (eWeaponType == PISTOL && eHandType == IDLE_HAND && eAnimationType == IDLE)
+	switch (eWeaponType)
 	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
-		return;
+		case PISTOL:
+			Render_Pistol();
+			break;
+		case SHOTGUN :
+			Render_Shotgun();
+			break;
+		default:
+			MSG_BOX(TEXT("What????????????"));
+			break;
 	}
-
-	if (eWeaponType == PISTOL && eHandType == IDLE_HAND && eAnimationType == SHOT)
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
-		return;
-	}
-
-	if (eWeaponType == PISTOL && eHandType == IDLE_HAND && eAnimationType == SPIN)
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Spin"), true);
-		return;
-	}
-
-	if (eWeaponType == PISTOL && eHandType == IDLE_HAND && eAnimationType == RELOAD)
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload"), true);
-		return;
-	}
-
-
-	MSG_BOX(TEXT("What????????????"));
 
 }
 
-void CPlayer::Render_Hand()
+void CPlayer::Reload_Warning()
 {
-	if (eWeaponType == PISTOL && eHandType == IDLE_HAND && eAnimationType == IDLE)
+	if (CPlayer_Manager::Get_Instance()->Get_Magazine() <= 2)	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), true);
+	else														m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
+}
+
+void CPlayer::Render_Pistol()
+{
+	switch (eAnimationType)
 	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
+		case IDLE:
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
+			return;	
+		case SHOT:
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
+			return;
+		case SPIN:
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Spin"), true);
+			return;
+		case RELOAD:
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload"), true);
+			return;
+		default:
+			return;
 	}
+}
+
+void CPlayer::Render_Shotgun()
+{
+	switch (eAnimationType)
+	{
+	case IDLE:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun"), true);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
+		return;
+	case SHOT:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Shot"), true);
+		return;
+	case SPIN: {
+		srand((unsigned int)time(NULL));
+		rand() % 2 == 0 ? m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true) : m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true);
+		return;
+	}
+	case RELOAD:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), true);
+		return;
+	default:
+
+		return;
+	}
+}
+
+void CPlayer::Attack()
+{
+	switch (eWeaponType)
+	{
+	case PISTOL:
+		Fire_Pistol();
+		return;
+	case SHOTGUN: 
+		Fire_Shotgun();
+		return;
+	default: 
+	
+		return;
+	}
+}
+
+void CPlayer::Fire_Pistol()
+{
+	Camera_Shake_Order(100000.f, 0.2f);
+	for (int i = 0; i < 6; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CPistol_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
+}
+
+void CPlayer::Fire_Shotgun() {
+	Camera_Shake_Order(800000.f, 0.4f);
+	for (int i = 0; i < 12; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CShotgun_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
 }
 
 void CPlayer::Active_Reset()
@@ -245,6 +318,13 @@ void CPlayer::Active_Reset()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), false);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Spin"), false);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload"), false);
+	
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun"), false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Shot"), false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), false);
+
 }
 
 void CPlayer::Camera_Reset()
@@ -314,13 +394,27 @@ void CPlayer::Shot()
 		RAY_DESC rayDesc{};
 		rayDesc.iLevel = LEVEL_GAMEPLAY;
 		rayDesc.strDstLayer = L"Monster";
-		rayDesc.vRayDir = vRayDir;
 		rayDesc.vRayWorldPos = fMouseWorld_Near;
-		
+
 		CPawn::ENEMYHIT_DESC pDesc;
 		rayDesc.pArg = &pDesc;
 
-		m_pGameInstance->Add_RayDesc(rayDesc);
+		if (eWeaponType == SHOTGUN) {
+			for (int i{ -5 }; i <= 5; ++i) {
+				for (int j{ -5 }; j <= 5; ++j) {
+					
+					_float3 TempRayDir = vRayDir + _float3(i * 0.1f, j * 0.1f, 0.f);
+					
+					rayDesc.vRayDir = TempRayDir;
+
+					m_pGameInstance->Add_RayDesc(rayDesc);
+				}
+			}
+		}
+		else {
+			rayDesc.vRayDir = vRayDir;
+			m_pGameInstance->Add_RayDesc(rayDesc);
+		}
 	}
 }
 
@@ -350,8 +444,10 @@ void CPlayer::ColliderUpDown()
 		m_pRigidbody->Set_OnGround();
 		m_bCanAirDash = true;
 
-		if (SLOPE_STATE == ePlayerState)
+		if (SLOPE_STATE == ePlayerState) {
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 			SetState_Idle();
+		}
 
 		return;
 	} 
@@ -453,6 +549,7 @@ void CPlayer::Process_State(_float fTimeDelta)
 
 void CPlayer::Idle_State(_float fTimeDelta)
 {
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	m_pRigidbody->Set_GroundVelocity(_float3(0.f, 0.f, 0.f));
 
 	if (m_pGameInstance->GetKey(eKeyCode::W))
@@ -523,7 +620,7 @@ void CPlayer::Dash_State(_float fTimeDelta)
 	}
 
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), true);
-
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	if (m_pGameInstance->GetKey(eKeyCode::D))
 		HeadTilt(fTimeDelta, 2.f);
 	else if (m_pGameInstance->GetKey(eKeyCode::A))
@@ -533,7 +630,7 @@ void CPlayer::Dash_State(_float fTimeDelta)
 void CPlayer::AirDash_State(_float fTimeDelta)
 {
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), true);
-
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	m_fDashTimeAcc += fTimeDelta;
 	if (m_fDashTimeAcc >= m_fDashTime)
 	{
@@ -545,7 +642,7 @@ void CPlayer::AirDash_State(_float fTimeDelta)
 void CPlayer::Slope_State(_float fTimeDelta)
 {
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), true);
-
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), true);
 	if (m_pGameInstance->GetKey(eKeyCode::W))
 	{
 		_float3 vLook = m_pSlopeTransform->Get_Look();
@@ -577,6 +674,7 @@ void CPlayer::Slope_State(_float fTimeDelta)
 
 void CPlayer::Execution_State()
 {
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	if (CPlayer_Manager::ACTION_NONE == CPlayer_Manager::Get_Instance()->Get_Action_Type())
 	{
 		SetState_Idle();
@@ -593,6 +691,7 @@ void CPlayer::Execution_State()
 void CPlayer::SetState_Idle()
 {
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Dash"), false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	m_pRigidbody->Set_UseGravity(true);
 	m_pRigidbody->Set_Friction(0.f);
 	m_pRigidbody->Set_GroundVelocity(_float3(0.f, 0.f, 0.f));
