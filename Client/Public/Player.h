@@ -86,6 +86,7 @@ private:
 
 	void OnCollisionEnter(CGameObject* pOther) override;
 	void OnTriggerEnter(CGameObject* pOther) override;
+	void Hit(void* pArg) override;
 
 	void Process_State(_float fTimeDelta);
 

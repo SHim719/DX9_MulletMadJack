@@ -524,6 +524,15 @@ void CPlayer::OnTriggerEnter(CGameObject* pOther)
 	}
 }
 
+void CPlayer::Hit(void* pArg)
+{
+	_float* pDamage = (_float*)pArg;
+	if (false == m_bInvincible && m_fPlayerHp > 0.f) {
+		Set_PlayerHP_Add(-*pDamage);
+		Set_InvincibleTime(Get_InvincibleTimeLimit());
+	}
+}
+
 void CPlayer::Process_State(_float fTimeDelta)
 {
 	switch (ePlayerState)
