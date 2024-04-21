@@ -37,3 +37,6 @@
 #include "CUi_Damaged.h"
 #include "CUi_Combo.h"
 #include "CUi_Reload.h"
+#include "CUi_Execution_Show.h"
+#include "CUi_GreenCrossActive.h"
+#include "CUi_GreenCross.h"

@@ -41,18 +41,30 @@ public:
 private:
 	void Move(_float fTimeDelta);
 	void Texture_Switching(_float fTimeDelta);
+	void Announcer_Texture_Switching();
 	void TextRender();
 	void Set_PrintTextNumber(TextType type, _uint Length);
 	void Set_Pos_TextBackGround();
 	void Cal_PrintTextNumber(_float fTimeDelta);
 
+	void Set_AnnouncerTexture();
+	void Set_TextureIndexTutorialMidSpot(_uint Number);
+	void Set_TextureIndexTutorialClear(_uint Number);
+	void Set_TextureIndexShopEnd(_uint Number);
+
 private:
 	_float m_fUniqueTextureTime = { 0.f };
+	_float m_fAnnouncerTextureTime = { 0 };
 	CTexture* m_pUniqueTexture = { nullptr };
 	_uint m_iUniqueTextureIndex = { 0 };
 	_float m_fPrintTextGap = { 0 };
 	_uint m_iPrintTextNumber = { 0 };
+	_uint m_iTextureIndexMin = { 0 };
+	_uint m_iTextureIndexMax = { 0 };
+	_uint m_OldTextNumber = { 0 };
+	TextType m_OldType = { TextType::Default };
 	bool m_bTextPrint = { false };
+	bool m_bTextureIndexChanged = { false };
 	class CGame_Manager* m_pGameManager = { nullptr };
 	class CText_BackGround* m_pTextBackGround = { nullptr };
 

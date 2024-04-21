@@ -169,19 +169,27 @@
     <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\Public\Border.h" />
+    <ClInclude Include="..\Public\CBone_Spawner.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Public\CLevel_Lobby.h" />
     <ClInclude Include="..\Public\Client_Components.h" />
     <ClInclude Include="..\Public\Client_Struct.h" />
+    <ClInclude Include="..\Public\CSans.h" />
+    <ClInclude Include="..\Public\CSans_Bone.h" />
+    <ClInclude Include="..\Public\CSans_Gaster.h" />
     <ClInclude Include="..\Public\CTextManager.h" />
     <ClInclude Include="..\Public\CText_BackGround.h" />
     <ClInclude Include="..\Public\CUi_Combo.h" />
     <ClInclude Include="..\Public\CUi_Damaged.h" />
     <ClInclude Include="..\Public\CUi_DrinkSoda.h" />
+    <ClInclude Include="..\Public\CUi_Execution_Show.h" />
     <ClInclude Include="..\Public\CUi_Finish.h" />
+    <ClInclude Include="..\Public\CUi_GreenCrossActive.h" />
+    <ClInclude Include="..\Public\CUi_GreenCross.h" />
     <ClInclude Include="..\Public\CUi_LoadingBackGround.h" />
     <ClInclude Include="..\Public\Drink.h" />
     <ClInclude Include="..\Public\CUi_Reload.h" />
@@ -290,11 +298,19 @@
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
+    <ClCompile Include="..\Private\CBone_Spawner.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\CLevel_Lobby.cpp" />
+    <ClCompile Include="..\Private\CSans.cpp" />
+    <ClCompile Include="..\Private\CSans_Bone.cpp" />
+    <ClCompile Include="..\Private\CSans_Gaster.cpp" />
+    <ClCompile Include="..\Private\CUi_Execution_Show.cpp" />
+    <ClCompile Include="..\Private\CUi_GreenCrossActive.cpp" />
+    <ClCompile Include="..\Private\CUi_GreenCross.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
     <ClCompile Include="..\Private\Shotgun_Reload.cpp" />

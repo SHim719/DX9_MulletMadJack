@@ -694,7 +694,7 @@ void CPlayer::Execution_State()
 			m_pExecutionEnemy = nullptr;
 		}
 	}
-		
+	
 }
 
 void CPlayer::SetState_Idle()

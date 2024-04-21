@@ -323,6 +323,11 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 	return S_OK;
 }
 
+void CGame_Manager::Ready_LobbyUi()
+{
+
+}
+
 HRESULT CGame_Manager::Ready_Execution_Texture()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Neck_Texture",

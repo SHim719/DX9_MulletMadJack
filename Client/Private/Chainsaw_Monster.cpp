@@ -373,7 +373,7 @@ void CChainsaw_Monster::SetState_Slash()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 
 	_float fDamage = 3.f;
-	m_pTarget->Hit(&fDamage);
+	//m_pTarget->Hit(&fDamage);
 }
 
 void CChainsaw_Monster::SetState_Jump()
