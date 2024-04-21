@@ -56,6 +56,7 @@ void CShotgun_SpinB::Tick(_float fTimeDelta)
 
 	//Animation End
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), false);
 		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::IDLE);
 		AnimationDelayReset();
 	}

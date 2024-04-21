@@ -24,6 +24,11 @@
 
 #pragma endregion
 
+#pragma region KatanaInclude
+
+#include "Katana.h"
+
+#pragma endregion
 
 #include "CrossHair.h"
 #include "Phone.h"

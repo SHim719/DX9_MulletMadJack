@@ -180,6 +180,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKeyDown(eKeyCode::N))
 	{
 		if(eWeaponType == PISTOL) CPlayer_Manager::Get_Instance()->WeaponChange(SHOTGUN);
+		else if (eWeaponType == SHOTGUN) CPlayer_Manager::Get_Instance()->WeaponChange(KATANA);
 		else CPlayer_Manager::Get_Instance()->WeaponChange(PISTOL);
 	}
 
@@ -222,6 +223,9 @@ void CPlayer::Render_Weapon()
 			break;
 		case SHOTGUN :
 			Render_Shotgun();
+			break;
+		case KATANA:
+			Render_Katana();
 			break;
 		default:
 			MSG_BOX(TEXT("What????????????"));
@@ -271,7 +275,9 @@ void CPlayer::Render_Shotgun()
 		return;
 	case SPIN: {
 		srand((unsigned int)time(NULL));
-		rand() % 2 == 0 ? m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true) : m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true);
+		int i = rand() % 2;
+		if (i == 0) { m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true); }
+		else {m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); }
 		return;
 	}
 	case RELOAD:
@@ -279,6 +285,26 @@ void CPlayer::Render_Shotgun()
 		return;
 	default:
 
+		return;
+	}
+}
+
+void CPlayer::Render_Katana()
+{
+
+	switch (eAnimationType)
+	{
+	case IDLE:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), true);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
+		return;
+	case SHOT:
+		return;
+	case SPIN:
+		return;
+	case RELOAD:
+		return;
+	default:
 		return;
 	}
 }
@@ -325,6 +351,7 @@ void CPlayer::Active_Reset()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), false);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), false);
 
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), false);
 }
 
 void CPlayer::Camera_Reset()
@@ -367,7 +394,7 @@ CGameObject* CPlayer::Clone(void* pArg)
 
 
 
-void  CPlayer::Camera_Event(_float fTimeDelta)
+void CPlayer::Camera_Event(_float fTimeDelta)
 {
 	if (m_fShakeTime >= 0.f) Camera_Shake(fTimeDelta, m_fShakePower, m_fShakeTime);
 }

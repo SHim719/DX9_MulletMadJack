@@ -215,6 +215,9 @@ void CPlayer_Manager::WeaponChange(CPlayer::WEAPON_TYPE eWeaponType)
 		case CPlayer::WEAPON_TYPE::SHOTGUN:
 			Set_MaxMagazine(12);
 			break;
+		case CPlayer::WEAPON_TYPE::KATANA:
+			Set_MaxMagazine(100);
+			break;
 		default:
 			break;
 	}

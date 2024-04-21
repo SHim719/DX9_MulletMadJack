@@ -379,6 +379,21 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB">
       <UniqueIdentifier>{edb8cbe6-c0b2-4f0a-9c99-09e2551e596d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana">
+      <UniqueIdentifier>{86e09d34-2e90-4a1a-a1d2-0a18a0db121f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Idle">
+      <UniqueIdentifier>{2cb4dc57-3b6c-4d90-9e28-f34c4f3d7b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Slash">
+      <UniqueIdentifier>{ca847a7b-c25a-40dc-8546-3f11076de136}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Effect\Slash">
+      <UniqueIdentifier>{1ab1c2b1-379e-4606-8b24-776fd2fc4aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Effect\Slash\Katana">
+      <UniqueIdentifier>{d473191d-fa1d-440f-89ab-078f58741267}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -717,6 +732,12 @@
     <ClInclude Include="..\Public\Shotgun_SpinB.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Katana_Slash.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Slash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Katana.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Idle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1018,6 +1039,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Shotgun_SpinB.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Katana.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Katana_Slash.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Slash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

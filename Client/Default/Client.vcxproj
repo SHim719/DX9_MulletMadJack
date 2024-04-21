@@ -190,6 +190,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Public\Execution_Knife.h" />
+    <ClInclude Include="..\Public\Katana.h" />
+    <ClInclude Include="..\Public\Katana_Slash.h" />
     <ClInclude Include="..\public\Light_Manager.h" />
     <ClInclude Include="..\Public\Execution_Body.h" />
     <ClInclude Include="..\Public\Execution_Hand.h" />
@@ -295,6 +297,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\Katana.cpp" />
+    <ClCompile Include="..\Private\Katana_Slash.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
     <ClCompile Include="..\Private\Shotgun_Reload.cpp" />

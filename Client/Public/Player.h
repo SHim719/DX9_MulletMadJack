@@ -18,7 +18,7 @@ private:
 	virtual ~CPlayer() = default;
 
 public:
-	enum WEAPON_TYPE { PISTOL, SHOTGUN, WEAPON_END };
+	enum WEAPON_TYPE { PISTOL, SHOTGUN, KATANA, WEAPON_END };
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, ANIMATION_END };
 	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, EXECUTION_STATE, PLAYER_STATE_END };
@@ -68,6 +68,7 @@ private:
 
 	void Render_Pistol();
 	void Render_Shotgun();
+	void Render_Katana();
 
 	void Attack();
 	void Fire_Pistol();
@@ -86,7 +87,6 @@ private:
 
 	void OnCollisionEnter(CGameObject* pOther) override;
 	void OnTriggerEnter(CGameObject* pOther) override;
-	void Hit(void* pArg) override;
 
 	void Process_State(_float fTimeDelta);
 
@@ -127,6 +127,8 @@ public:
 	_float Get_InvincibleTime() { return m_fInvincibleTime; }
 
 	_float Get_InvincibleTimeLimit() { return m_fInvincibleTimeLimit; }
+
+	void Hit(void* pArg) override;
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
