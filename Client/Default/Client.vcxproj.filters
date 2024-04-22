@@ -394,9 +394,9 @@
     <Filter Include="04. UI\Ui\Effect\Slash\Katana">
       <UniqueIdentifier>{d473191d-fa1d-440f-89ab-078f58741267}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
+    <Filter Include="02.GameObjects\02. Player\Flying_Katana">
+      <UniqueIdentifier>{fe1bc42d-750e-46f7-bcd7-5a0d38e615e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -738,6 +738,9 @@
     <ClInclude Include="..\Public\Katana.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Idle</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Katana_Effect.h">
+      <Filter>04. UI\Ui\Effect\Slash\Katana</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1046,6 +1049,9 @@
     <ClCompile Include="..\Private\Katana_Slash.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Slash</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Katana_Effect.cpp">
+      <Filter>04. UI\Ui\Effect\Slash\Katana</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
@@ -1059,5 +1065,8 @@
     <ResourceCompile Include="Client.rc">
       <Filter>98.Default</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

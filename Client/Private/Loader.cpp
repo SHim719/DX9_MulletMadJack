@@ -1174,11 +1174,11 @@ HRESULT CLoader::Ready_Active_Gun()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana", eUiRenderType::Render_NonBlend, CKatana::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	/*if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Hit", eUiRenderType::Render_NonBlend, CShotgun_Shot::Create(m_pGraphic_Device))))
-		return E_FAIL;*/
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Slash", eUiRenderType::Render_NonBlend, CKatana_Slash::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
-	/*if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Slash", eUiRenderType::Render_NonBlend, CShotgun_SpinA::Create(m_pGraphic_Device))))
-		return E_FAIL;*/
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Effect", eUiRenderType::Render_NonBlend, CKatana_Effect::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 #pragma endregion
 

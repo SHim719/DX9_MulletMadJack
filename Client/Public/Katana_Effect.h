@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CKatana_Slash final : public CUi
+class CKatana_Effect final : public CUi
 {
 protected:
-	CKatana_Slash(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CKatana_Slash(const CKatana_Slash& rhs);
-	virtual ~CKatana_Slash() = default;
+	CKatana_Effect(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CKatana_Effect(const CKatana_Effect& rhs);
+	virtual ~CKatana_Effect() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -63,16 +63,10 @@ private:
 	_float m_fTimeDelay = 0.f;
 	_float m_fDivide = 1.f;
 
-	_float m_fDelay = 1.f;
-	_float2 fSlashPos = { 0.f, 0.f };
-
-
 	_float3 m_fScale = { 0.f , 0.f, 1.f };
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
-
-	_int   m_iRandomSlash = 0;
 public:
 	virtual void Free() override;
 };

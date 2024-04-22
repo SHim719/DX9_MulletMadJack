@@ -27,6 +27,8 @@
 #pragma region KatanaInclude
 
 #include "Katana.h"
+#include "Katana_Slash.h"
+#include "Katana_Effect.h"	
 
 #pragma endregion
 

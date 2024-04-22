@@ -296,13 +296,20 @@ void CPlayer::Render_Katana()
 	{
 	case IDLE:
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), true);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
+		//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
 		return;
 	case SHOT:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Slash"), true);
 		return;
-	case SPIN:
+	case SPIN:{
+		srand((unsigned int)time(NULL));
+		int i = rand() % 2;
+		if (i == 0) { m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true); }
+		else { m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); }
 		return;
+	}
 	case RELOAD:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), true);
 		return;
 	default:
 		return;
@@ -318,6 +325,9 @@ void CPlayer::Attack()
 		return;
 	case SHOTGUN: 
 		Fire_Shotgun();
+		return;
+	case KATANA:
+		Slash_Katana();
 		return;
 	default: 
 	
@@ -336,6 +346,11 @@ void CPlayer::Fire_Shotgun() {
 	for (int i = 0; i < 12; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CShotgun_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
 }
 
+void CPlayer::Slash_Katana(){
+	Camera_Shake_Order(600000.f, 0.4f);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Effect"), true);
+}
+
 void CPlayer::Active_Reset()
 {
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), false);
@@ -352,6 +367,8 @@ void CPlayer::Active_Reset()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), false);
 
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), false);
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Slash"), false);
+	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Effect"), false);
 }
 
 void CPlayer::Camera_Reset()
@@ -426,7 +443,7 @@ void CPlayer::Shot()
 		CPawn::ENEMYHIT_DESC pDesc;
 		rayDesc.pArg = &pDesc;
 
-		if (eWeaponType == SHOTGUN) {
+		if (eWeaponType == SHOTGUN || eWeaponType == KATANA) {
 			for (int i{ -5 }; i <= 5; ++i) {
 				for (int j{ -5 }; j <= 5; ++j) {
 					

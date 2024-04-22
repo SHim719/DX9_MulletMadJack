@@ -73,6 +73,7 @@ private:
 	void Attack();
 	void Fire_Pistol();
 	void Fire_Shotgun();
+	void Slash_Katana();
 
 	void Active_Reset();
 	void Camera_Reset();

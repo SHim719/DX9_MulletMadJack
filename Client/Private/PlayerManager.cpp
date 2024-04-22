@@ -87,9 +87,9 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 				Set_DisableEnd(false);
 				m_bActionIDLE = false;
 			}
-
+			break;
 		}
-
+		
 		default :
 			break;
 	}

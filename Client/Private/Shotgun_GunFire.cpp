@@ -93,7 +93,7 @@ HRESULT CShotgun_Gunfire::Render()
 void CShotgun_Gunfire::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
 	Set_Ui_Pos(150, 0);
-	Set_Divide(1.5f);
+	Set_Divide(1.f);
 
 	m_fScale = { m_UiDesc.m_fSizeX / Get_Divide() , m_UiDesc.m_fSizeY / Get_Divide(), 1.f };
 

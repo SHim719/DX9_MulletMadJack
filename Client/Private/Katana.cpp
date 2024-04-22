@@ -58,7 +58,7 @@ void CKatana::Tick(_float fTimeDelta)
 		m_iTexture_Index = 0;
 		AnimationDelayReset();
 	}
-
+	m_fRotation = { 0.f, 0.f, -10.f };
 	m_fScale = { Get_Texture_Info().x / m_fDivide , Get_Texture_Info().y / m_fDivide, 1.f };
 
 	m_pTransformCom->Set_Scale(m_fScale);
@@ -68,16 +68,15 @@ void CKatana::Tick(_float fTimeDelta)
 
 void CKatana::LateTick(_float fTimeDelta)
 {
-	_float2 fDisablePos = CPlayer_Manager::Get_Instance()->Get_TempDisablePosition_BothHand() * -1.f;
+	_float2 fDisablePos = CPlayer_Manager::Get_Instance()->Get_TempDisablePosition_BothHand() * -5.f;
 
 	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
 		//Temp Rotate
 		m_pTransformCom->Rotation_XYZ({ 0.f, 0.f, 30.f });
-		_float2 fOffSet = { 150, 50 };
+		_float2 fOffSet = { -150, 50 };
 		m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX + fOffSet.x, m_UiDesc.m_fY + fOffSet.y + fDisablePos.y, 0.f));
 	}
 	else {
-
 
 		_float2 fLissajousPos = Lissajous_Curve(fTimeDelta, m_fLissajousTime, m_UiDesc.m_fX, m_UiDesc.m_fY, 1.5f, 2, 3, 1, 2, 6);
 		_float2 fLissajousRun = CPlayer_Manager::Get_Instance()->Get_Lissajous_Run(m_UiDesc.m_fX, m_UiDesc.m_fY);
@@ -104,7 +103,7 @@ HRESULT CKatana::Render()
 
 void CKatana::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	Set_Ui_Pos(0, 500);
+	Set_Ui_Pos(300, 150);
 	Set_Divide(1.f);
 
 	m_fScale = { m_UiDesc.m_fSizeX / Get_Divide() , m_UiDesc.m_fSizeY / Get_Divide(), 1.f };
