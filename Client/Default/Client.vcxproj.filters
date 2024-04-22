@@ -427,10 +427,6 @@
     <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser">
       <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana">
       <UniqueIdentifier>{86e09d34-2e90-4a1a-a1d2-0a18a0db121f}</UniqueIdentifier>
     </Filter>

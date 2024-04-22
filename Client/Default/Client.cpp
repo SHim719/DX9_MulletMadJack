@@ -101,6 +101,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 		if (fTimeAcc > 1.f / 60.0f)
 		{
+            SetWindowText(g_hWnd, to_wstring((int)(1.f / fTimeAcc)).c_str());
 			pGameInstance->Compute_TimeDelta(TEXT("Timer_60"));
 
 			/* 내 게임의 반복적인 갱신(Tick)을 수행한다.*/
