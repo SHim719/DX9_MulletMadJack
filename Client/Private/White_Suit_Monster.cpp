@@ -161,7 +161,7 @@ HRESULT CWhite_Suit_Monster::Add_Textures()
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("HeadExplode"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("Head_Explode"))))
         return E_FAIL;
     
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Fly"), TEXT("Death_Fly"))))
@@ -642,12 +642,15 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
     Call_MonsterDieUi(eMonsterGrade::Middle);
 
+    CPlayer::WEAPON_TYPE eWeaponType =CPlayer_Manager::Get_Instance()->Get_WeaponType();
+    CUi_SpecialHit::SpecialHit_Desc Arg;
     // TODO: 무기 타입에 따라서 모션 변경 
     switch (pDesc->eHitType)
     {
     case CPawn::HEAD_SHOT: {
         m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
-        CUi_SpecialHit::SpecialHit_Desc Arg;
+        if(eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
+
         Arg.Hit = eSpecialHit::HEADSHOT;
         Arg.iCount = 4;
         m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
@@ -655,7 +658,8 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
     }
     case CPawn::BODY_SHOT: {
         m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
-        CUi_SpecialHit::SpecialHit_Desc Arg;
+        if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
+ 
         Arg.Hit = eSpecialHit::FINISHED;
         Arg.iCount = 4;
         m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);

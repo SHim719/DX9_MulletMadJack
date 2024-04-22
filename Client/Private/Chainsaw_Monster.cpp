@@ -527,9 +527,30 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 	m_pBoxCollider->Set_Active(false);
 
 	Call_MonsterDieUi(eMonsterGrade::Middle);
-
-	m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+	
 	CUi_SpecialHit::SpecialHit_Desc Arg;
+
+	switch (CPlayer_Manager::Get_Instance()->Get_WeaponType())
+	{ 
+		case CPlayer::PISTOL :
+			if (pDesc->eHitType == HEAD_SHOT) { 
+				m_pAnimationCom->Play_Animation(TEXT("HeadExplode_Backward"), 0.1f, false); 
+			
+				Arg.Hit = eSpecialHit::HEADSHOT;
+				Arg.iCount = 4;
+				m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+			}
+			else if (pDesc->eHitType == EGG_SHOT) { m_pAnimationCom->Play_Animation(TEXT("Death_Groinshot"), 0.1f, false); }
+			else m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+			break;
+		case CPlayer::SHOTGUN :
+			m_pAnimationCom->Play_Animation(TEXT("Death_Shotgun"), 0.1f, false);
+			break;
+		default:
+			m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+			break;
+	}
+
 	Arg.Hit = eSpecialHit::FINISHED;
 	Arg.iCount = 4;
 	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
