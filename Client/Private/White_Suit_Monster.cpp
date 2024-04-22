@@ -69,7 +69,6 @@ void CWhite_Suit_Monster::LateTick(_float fTimeDelta)
         return;
 
     m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
-
     m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
@@ -150,10 +149,10 @@ HRESULT CWhite_Suit_Monster::Add_Textures()
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Groinshot"), TEXT("Death_Eggshot"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun")))) // ¸ö¼¦.
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun")))) 
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("HeadExplode")))) // ¸Ó¸®ÅÍÁö´Â°Å
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("Head_Explode"))))
         return E_FAIL;
     
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Fly"), TEXT("Death_Fly"))))
@@ -196,7 +195,7 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
     if (m_bThisFrameHit)
         return true;
 
-    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 3.f)
+    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
 		return false;
 
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
@@ -639,12 +638,15 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
     Call_MonsterDieUi(eMonsterGrade::Middle);
 
-    // TODO: ¹«±â Å¸ÀÔ¿¡ µû¶ó¼­ ¸ð¼Ç º¯°æ 
+    CPlayer::WEAPON_TYPE eWeaponType =CPlayer_Manager::Get_Instance()->Get_WeaponType();
+    CUi_SpecialHit::SpecialHit_Desc Arg;
+    // TODO: ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
     switch (pDesc->eHitType)
     {
     case CPawn::HEAD_SHOT: {
         m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
-        CUi_SpecialHit::SpecialHit_Desc Arg;
+        if(eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
+
         Arg.Hit = eSpecialHit::HEADSHOT;
         Arg.iCount = 4;
         m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
@@ -652,7 +654,8 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
     }
     case CPawn::BODY_SHOT: {
         m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
-        CUi_SpecialHit::SpecialHit_Desc Arg;
+        if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
+ 
         Arg.Hit = eSpecialHit::FINISHED;
         Arg.iCount = 4;
         m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);

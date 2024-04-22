@@ -1251,8 +1251,6 @@ HRESULT CLoader::Ready_Active_Gun()
 
 #pragma endregion
 
-
-
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_CrossHair", eUiRenderType::Render_NonBlend, CCrossHair::Create(m_pGraphic_Device))))
 		return E_FAIL;
 

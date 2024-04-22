@@ -870,6 +870,9 @@
     <ClInclude Include="..\Public\VIBuffer_Elevator_R.h">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Elevator_R</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Flying_Katana.h">
+      <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1240,6 +1243,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Elevator_R.cpp">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Elevator_R</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Flying_Katana.cpp">
+      <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

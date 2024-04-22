@@ -100,6 +100,8 @@ _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _fl
 
 	if (m_bThisFrameHit)
 		return true;
+	if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
+		return false;
 
 	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
 	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
@@ -532,9 +534,30 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 	m_pBoxCollider->Set_Active(false);
 
 	Call_MonsterDieUi(eMonsterGrade::Middle);
-
-	m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+	
 	CUi_SpecialHit::SpecialHit_Desc Arg;
+
+	switch (CPlayer_Manager::Get_Instance()->Get_WeaponType())
+	{ 
+		case CPlayer::PISTOL :
+			if (pDesc->eHitType == HEAD_SHOT) { 
+				m_pAnimationCom->Play_Animation(TEXT("HeadExplode_Backward"), 0.1f, false); 
+			
+				Arg.Hit = eSpecialHit::HEADSHOT;
+				Arg.iCount = 4;
+				m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+			}
+			else if (pDesc->eHitType == EGG_SHOT) { m_pAnimationCom->Play_Animation(TEXT("Death_Groinshot"), 0.1f, false); }
+			else m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+			break;
+		case CPlayer::SHOTGUN :
+			m_pAnimationCom->Play_Animation(TEXT("Death_Shotgun"), 0.1f, false);
+			break;
+		default:
+			m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+			break;
+	}
+
 	Arg.Hit = eSpecialHit::FINISHED;
 	Arg.iCount = 4;
 	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);

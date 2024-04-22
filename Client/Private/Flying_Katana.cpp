@@ -1,23 +1,23 @@
-#include "Soda.h"
+#include "Flying_Katana.h"
 #include "PlayerManager.h"
 #include "GameInstance.h"
 
-CSoda::CSoda(LPDIRECT3DDEVICE9 pGraphic_Device)
+CFlying_Katana::CFlying_Katana(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
 {
 }
 
-CSoda::CSoda(const CSoda& rhs)
+CFlying_Katana::CFlying_Katana(const CFlying_Katana& rhs)
 	: CGameObject{ rhs }
 {
 }
 
-HRESULT CSoda::Initialize_Prototype()
+HRESULT CFlying_Katana::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CSoda::Initialize(void* pArg)
+HRESULT CFlying_Katana::Initialize(void* pArg)
 {
 	if (E_FAIL == Add_Components())
 		return E_FAIL;
@@ -26,11 +26,11 @@ HRESULT CSoda::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CSoda::PriorityTick(_float fTimeDelta)
+void CFlying_Katana::PriorityTick(_float fTimeDelta)
 {
 }
 
-void CSoda::Tick(_float fTimeDelta)
+void CFlying_Katana::Tick(_float fTimeDelta)
 {
 	m_fLifeTime -= fTimeDelta;
 	if (m_fLifeTime <= 0.f)
@@ -38,18 +38,18 @@ void CSoda::Tick(_float fTimeDelta)
 		m_bDestroyed = true;
 		return;
 	}
-		
+
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pRigidbody->Update(fTimeDelta);
 }
 
-void CSoda::LateTick(_float fTimeDelta)
+void CFlying_Katana::LateTick(_float fTimeDelta)
 {
 	if (!m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
 		return;
 
 	_float4x4	ViewMatrix;
-		
+
 	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
 
 	D3DXMatrixInverse(&ViewMatrix, nullptr, &ViewMatrix);
@@ -67,7 +67,7 @@ void CSoda::LateTick(_float fTimeDelta)
 	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
-HRESULT CSoda::Render()
+HRESULT CFlying_Katana::Render()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -90,7 +90,7 @@ HRESULT CSoda::Render()
 	return S_OK;
 }
 
-HRESULT CSoda::Add_Components()
+HRESULT CFlying_Katana::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), nullptr));
 	if (nullptr == m_pTransformCom)
@@ -121,43 +121,42 @@ HRESULT CSoda::Add_Components()
 	return S_OK;
 }
 
-void CSoda::OnTriggerStay(CGameObject* pOther)
+void CFlying_Katana::OnTriggerStay(CGameObject* pOther)
 {
 	if ("Player" == pOther->Get_Tag())
 	{
 		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
-		m_pGameInstance->Set_Ui_ActiveState(L"CUi_GreenCrossActive", true);
 		m_bDestroyed = true;
 	}
 }
 
-CSoda* CSoda::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CFlying_Katana* CFlying_Katana::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CSoda* pInstance = new CSoda(pGraphic_Device);
+	CFlying_Katana* pInstance = new CFlying_Katana(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CSoda"));
+		MSG_BOX(TEXT("Failed to Created : CFlying_Katana"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CSoda::Clone(void* pArg)
+CGameObject* CFlying_Katana::Clone(void* pArg)
 {
-	CSoda* pInstance = new CSoda(*this);
+	CFlying_Katana* pInstance = new CFlying_Katana(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Clone : CSoda"));
+		MSG_BOX(TEXT("Failed to Clone : CFlying_Katana"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CSoda::Free()
+void CFlying_Katana::Free()
 {
 	__super::Free();
 

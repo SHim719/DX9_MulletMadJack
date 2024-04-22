@@ -101,6 +101,10 @@ void CPlayer::Tick(_float fTimeDelta)
 
 void CPlayer::LateTick(_float fTimeDelta)
 {
+	if(m_bHaveWeapon == true) m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), true);
+	else m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), false);
+
+
 	ColliderCheck();
 	Shot();
 }
@@ -151,26 +155,26 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		m_pTransformCom->Head_Roll(fTimeDelta, -320.f);
 	}
 
-	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
+	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton) && eAnimationType == IDLE)
 	{
 		if (eAnimationType == IDLE || eWeaponType == PISTOL) {
 			if (CPlayer_Manager::Get_Instance()->Get_Magazine() > 0) {
 				Attack();
-				CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SHOT);
+				CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SHOT);
 				CPlayer_Manager::Get_Instance()->Fire_Magazine();
 			}
 			else {
 				if (eWeaponType == PISTOL) {
-					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
+					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SPIN);
 				}
 				else {
-					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::RELOAD);
+					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(RELOAD);
 				}
 			}
 		}
 	}
 
-	if (m_pGameInstance->GetKeyDown(eKeyCode::R))
+	if (m_pGameInstance->GetKeyDown(eKeyCode::R) && eAnimationType == IDLE)
 	{
 		if (eWeaponType == PISTOL) {
 			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
