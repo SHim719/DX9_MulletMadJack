@@ -14,12 +14,12 @@ private:
 
 public:
 	void Spawn(SANSSTATE State, SANSPatternSTATE PatternState);
-	void FirstFloorLeft(_float Speed = 500);
-	void FirstFloorRight(_float Speed = 500);
-	void FirstFloorAll(_float Speed = 500);
-	void SecondFloorLeft(_float Speed = 500);
-	void SecondFloorRight(_float Speed = 500);
-	void SecondFloorAll(_float Speed = 500);
+	void FirstFloorLeft(_float Speed = 1);
+	void FirstFloorRight(_float Speed = 1);
+	void FirstFloorAll(_float Speed = 1);
+	void SecondFloorLeft(_float Speed = 1);
+	void SecondFloorRight(_float Speed = 1);
+	void SecondFloorAll(_float Speed = 1);
 
 
 private:
@@ -28,6 +28,9 @@ private:
 	void SansState3(SANSPatternSTATE PatternState);
 	void SansState4(SANSPatternSTATE PatternState);
 
+
+private:
+	class CGameInstance* m_pGameInstance = { nullptr };
 
 public:
 	static CBone_Spawner* Create();

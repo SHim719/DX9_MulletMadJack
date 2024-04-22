@@ -406,6 +406,9 @@
     <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster">
       <UniqueIdentifier>{c70d46f8-6b7b-49f7-a68b-fa436df04718}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser">
+      <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -584,9 +587,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Pistol_Barrel.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\White_Suit_Monster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pawn.h">
       <Filter>02.GameObjects\04. Enemy\Pawns</Filter>
@@ -767,6 +767,12 @@
     </ClInclude>
     <ClInclude Include="..\Public\CSans_Gaster.h">
       <Filter>02.GameObjects\04. Enemy\Sans_Gaster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\White_Suit_Monster.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CGasterLaser.h">
+      <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1093,6 +1099,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CSans_Gaster.cpp">
       <Filter>02.GameObjects\04. Enemy\Sans_Gaster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CGasterLaser.cpp">
+      <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

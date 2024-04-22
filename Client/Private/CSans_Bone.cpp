@@ -21,7 +21,12 @@ HRESULT CSans_Bone::Initialize(void* pArg)
     if (FAILED(Add_Components()))
         return E_FAIL;
 
+    if (FAILED(Add_Texture()))
+        return E_FAIL;
+
     Initialize_Arg(pArg);
+
+    m_pAnimationCom->Play_Animation(TEXT("Bone"), 0.1f, true);
 
     m_strTag = "SansBone";
     return S_OK;
@@ -44,7 +49,18 @@ void CSans_Bone::Tick(_float fTimeDelta)
 
 void CSans_Bone::LateTick(_float fTimeDelta)
 {
-    m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+    m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
+}
+
+void CSans_Bone::BeginRenderState()
+{
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+    m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+    m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+    m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
+    m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR,
+        D3DCOLOR_RGBA(255, 255, 255, 150));
+    m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
 HRESULT CSans_Bone::Render()
@@ -52,8 +68,9 @@ HRESULT CSans_Bone::Render()
     if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
-    if (FAILED(m_pTextureCom->Bind_Texture(0)))
-        return E_FAIL;
+    m_pAnimationCom->Render();
+
+    BeginRenderState();
 
     if (FAILED(m_pVIBufferCom->Render()))
         return E_FAIL;
@@ -61,7 +78,17 @@ HRESULT CSans_Bone::Render()
     if (m_pBoxCollider)
         m_pBoxCollider->Render();
 
+    EndRenderState();
+
+
     return S_OK;
+}
+
+void CSans_Bone::EndRenderState()
+{
+    m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+    m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void CSans_Bone::OnTriggerEnter(CGameObject* pOther)
@@ -76,8 +103,8 @@ HRESULT CSans_Bone::Add_Components()
     m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component
     (LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
 
-    m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component
-    (LEVEL_GAMEPLAY, TEXT("CSans_Bone_Texture"), TEXT("CSans_Bone_Texture")));
+    m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component
+    (LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
 
     CBoxCollider::BOXCOLLISION_DESC pDesc;
     pDesc.vScale = { 0.25f, 0.25f, 0.5f };
@@ -89,6 +116,14 @@ HRESULT CSans_Bone::Add_Components()
     return S_OK;
 }
 
+HRESULT CSans_Bone::Add_Texture()
+{
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Bone"), TEXT("Bone"))))
+        return E_FAIL;
+
+    return S_OK;
+}
+
 void CSans_Bone::Initialize_Arg(void* pArg)
 {
     //jeongrae incomplete
@@ -96,7 +131,22 @@ void CSans_Bone::Initialize_Arg(void* pArg)
     SansBoneSize Size = Arg->Size;
     _uint floor = Arg->floor;
     m_pTransformCom->Set_Speed(Arg->fSpeed);
-    
+    _float3 Pos = {};
+    _float3 Scale = {};
+    if (Size == SansBoneSize::leftHalf)
+    {
+        Pos = { -1.f, 0.7f, 4.f };
+        Scale = { 2.f, 0.5f, 1.f };
+        m_pTransformCom->Set_Position(Pos);
+        m_pTransformCom->Set_Scale(Scale);
+    }
+    else if (Size == SansBoneSize::RightHalf)
+    {
+        Pos = { 1.f, 0.7f, 4.f };
+        Scale = { 2.f, 0.5f, 1.f };
+        m_pTransformCom->Set_Position(Pos);
+        m_pTransformCom->Set_Scale(Scale);
+    }
 }
 
 void CSans_Bone::Move(_float fTimeDelta)
@@ -136,7 +186,7 @@ void CSans_Bone::Free()
 {
     __super::Free();
 
-    Safe_Release(m_pTextureCom);
+    Safe_Release(m_pAnimationCom);
     Safe_Release(m_pVIBufferCom);
     Safe_Release(m_pBoxCollider);
 }

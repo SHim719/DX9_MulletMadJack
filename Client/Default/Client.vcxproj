@@ -171,6 +171,7 @@
     <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\CBone_Spawner.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
+    <ClInclude Include="..\Public\CGasterLaser.h" />
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -300,6 +301,7 @@
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\CBone_Spawner.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
+    <ClCompile Include="..\Private\CGasterLaser.cpp" />
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

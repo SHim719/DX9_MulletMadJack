@@ -1,6 +1,7 @@
 #include "CSans.h"
 #include "FPS_Camera.h"
 #include "CBone_Spawner.h"
+#include "PlayerManager.h"
 
 
 CSans::CSans(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -36,11 +37,17 @@ HRESULT CSans::Initialize(void* pArg)
     m_pTransformCom->Set_Scale(Scale);
     m_pBoxCollider->Set_Scale({ 1.f, 1.f, 1.f });
 
+    _float3 Pos = { 0.f, 1.f, 3.f };
+    m_pTransformCom->Set_Position(Pos);
+
     m_pRigidbody->Set_Friction(0.f);
     m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
     m_pRigidbody->Set_UseGravity(false);
 
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
+
+    m_eState = SANSSTATE::STATE_IDLE;
+    m_ePatternState = SANSPatternSTATE::End;
 
     m_pBoneSpawner = CBone_Spawner::Create();
     
@@ -55,10 +62,28 @@ void CSans::Tick(_float fTimeDelta)
 {
     SubPatternTime(fTimeDelta);
     State_Pattern();
+    m_fTest += fTimeDelta;
+    if (m_fTest > 2)
+    {
+        m_fTest = 0;
+        _float3 Pos = m_pTransformCom->Get_Pos();
+        cout << "X:" << Pos.x << endl;
+        cout << "Y:" << Pos.y << endl;
+        cout << "Z:" << Pos.z << endl;
+        CPlayer* player = CPlayer_Manager::Get_Instance()->Get_Player();
+        CTransform* Trans = player->Get_Transform();
+        Pos = Trans->Get_Pos();
+        cout << "PlayerX:" << Pos.x << endl;
+        cout << "PlayerY:" << Pos.y << endl;
+        cout << "PlayerZ:" << Pos.z << endl;
+    }
 }
 
 void CSans::LateTick(_float fTimeDelta)
 {
+    //m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
+
+    m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
 HRESULT CSans::Render()
@@ -82,6 +107,8 @@ HRESULT CSans::Add_Components()
     m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
 
     m_pAnimationCom = dynamic_cast<CAnimation*>(Add_Component(LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
+
+    m_pRigidbody = dynamic_cast<CRigidbody*>(Add_Component(LEVEL_STATIC, TEXT("Rigidbody_Default"), TEXT("Rigidbody"), m_pTransformCom));
 
     CBoxCollider::BOXCOLLISION_DESC pDesc;
     pDesc.vScale = { 1.f, 1.f, 1.f };
@@ -165,6 +192,7 @@ void CSans::State_Pattern()
             break;
 
         case SANSPatternSTATE::End:
+            Set_PatternState(SANSPatternSTATE::READY);
             Add_SansState();
             break;
         default:
@@ -181,13 +209,13 @@ void CSans::Initialize_PatternTime()
     switch (m_ePatternTimeGap)
     {
     case CSans::PatternTimeGAP::SMALL:
-        m_fPatternTime = 0.3f;
+        m_fPatternTime = 0.5f;
         break;
     case CSans::PatternTimeGAP::DEFAULT:
-        m_fPatternTime = 0.6f;
+        m_fPatternTime = 1.f;
         break;
     case CSans::PatternTimeGAP::BIG:
-        m_fPatternTime = 1.f;
+        m_fPatternTime = 1.5f;
         break;
     default:
         break;
@@ -228,6 +256,7 @@ void CSans::Free()
 
     Safe_Release(m_pBoneSpawner);
     Safe_Release(m_pTarget);
+    Safe_Release(m_pRigidbody);
     Safe_Release(m_pAnimationCom);
     Safe_Release(m_pTransformCom);
     Safe_Release(m_pVIBufferCom);

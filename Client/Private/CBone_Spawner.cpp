@@ -1,12 +1,13 @@
 #include "CBone_Spawner.h"
 #include "GameInstance.h"
+#include "CSans_Bone.h"
 
 
 CBone_Spawner::CBone_Spawner()
+	:m_pGameInstance(CGameInstance::Get_Instance())
 {
+	Safe_AddRef(m_pGameInstance);
 }
-
-
 
 void CBone_Spawner::Spawn(SANSSTATE State, SANSPatternSTATE PatternState)
 {
@@ -40,14 +41,38 @@ void CBone_Spawner::Spawn(SANSSTATE State, SANSPatternSTATE PatternState)
 
 void CBone_Spawner::FirstFloorLeft(_float Speed)
 {
+	SansBoneArg pArg;
+	pArg.floor = 1;
+	pArg.fSpeed = Speed;
+	pArg.Size = SansBoneSize::leftHalf;
+	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), 
+		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 }
 
 void CBone_Spawner::FirstFloorRight(_float Speed)
 {
+	SansBoneArg pArg;
+	pArg.floor = 1;
+	pArg.fSpeed = Speed;
+	pArg.Size = SansBoneSize::RightHalf;
+	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
+		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 }
 
 void CBone_Spawner::FirstFloorAll(_float Speed)
 {
+	SansBoneArg pArg;
+	pArg.floor = 1;
+	pArg.fSpeed = Speed;
+	pArg.Size = SansBoneSize::leftHalf;
+	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
+		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
+
+	pArg.floor = 1;
+	pArg.fSpeed = Speed;
+	pArg.Size = SansBoneSize::RightHalf;
+	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
+		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 }
 
 void CBone_Spawner::SecondFloorLeft(_float Speed)
@@ -81,7 +106,6 @@ void CBone_Spawner::SansState1(SANSPatternSTATE PatternState)
 		break;
 	case SANSPatternSTATE::FOURTH:
 		FirstFloorAll();
-		SecondFloorLeft();
 		break;
 	case SANSPatternSTATE::End:
 		break;
@@ -92,6 +116,27 @@ void CBone_Spawner::SansState1(SANSPatternSTATE PatternState)
 
 void CBone_Spawner::SansState2(SANSPatternSTATE PatternState)
 {
+	switch (PatternState)
+	{
+	case SANSPatternSTATE::READY:
+		break;
+	case SANSPatternSTATE::FIRST:
+		FirstFloorAll();
+		break;
+	case SANSPatternSTATE::SECOND:
+		FirstFloorAll();
+		break;
+	case SANSPatternSTATE::THIRD:
+		FirstFloorLeft();
+		break;
+	case SANSPatternSTATE::FOURTH:
+		FirstFloorAll();
+		break;
+	case SANSPatternSTATE::End:
+		break;
+	default:
+		break;
+	}
 }
 
 void CBone_Spawner::SansState3(SANSPatternSTATE PatternState)
@@ -111,5 +156,5 @@ CBone_Spawner* CBone_Spawner::Create()
 
 void CBone_Spawner::Free()
 {
-
+	Safe_Release(m_pGameInstance);
 }

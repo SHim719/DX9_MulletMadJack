@@ -75,6 +75,7 @@ private:
 	SANSPatternSTATE m_ePatternState = { SANSPatternSTATE::End };
 	PatternTimeGAP m_ePatternTimeGap = { PatternTimeGAP::DEFAULT };
 	_float m_fPatternTime = { 0 };
+	_float m_fTest = { 0 };
 
 
 private:

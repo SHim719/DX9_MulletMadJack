@@ -11,12 +11,6 @@ class CVIBuffer_Rect;
 END
 
 BEGIN(Client)
-//pArg = À§Ä¡(¿ÞÂÊ, ¿À¸¥ÂÊ, Áß¾Ó,), Ãþ¼ö
-using SansGasterArg = struct SansGasterInfo
-{
-	SansGasterPos Pos = { SansGasterPos::End };
-	_uint _floor = { 0 };
-};
 enum class SansGasterPos
 {
 	left,
@@ -24,6 +18,20 @@ enum class SansGasterPos
 	Right,
 	End
 };
+enum class GasterState
+{
+	Go_Down,
+	Laser,
+	Go_Up,
+	End
+};
+//pArg = À§Ä¡(¿ÞÂÊ, ¿À¸¥ÂÊ, Áß¾Ó,), Ãþ¼ö
+using GasterArg = struct SansGasterInfo
+{
+	SansGasterPos Pos = { SansGasterPos::End };
+	_uint _floor = { 0 };
+};
+
 class CSans_Gaster final : public CGameObject
 {
 private:
@@ -31,13 +39,17 @@ private:
 	CSans_Gaster(const CSans_Gaster& rhs);
 	virtual ~CSans_Gaster() = default;
 
+
 public:
 	HRESULT Initialize_Prototype();
 	HRESULT Initialize(void* pArg) override;
+	void Initialize_Arg(void* pArg);
 	void PriorityTick(_float fTimeDelta) override;
 	void Tick(_float fTimeDelta) override;
 	void LateTick(_float fTimeDelta) override;
+	void RenderBegin();
 	HRESULT Render() override;
+	void RenderEnd();
 
 
 private:
@@ -46,10 +58,15 @@ private:
 
 private:
 	HRESULT Add_Components();
-
+	HRESULT Add_Texture();
+	void TextureSwitching(_float fTimeDelta);
+	void SetStateLaser();
 
 private:
 	_float m_fLife = { 4.f };
+	_float m_fTextureSwitching = { 0 };
+	GasterState m_eState = { GasterState::End };
+
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };

@@ -11,6 +11,8 @@
 #include "CSans.h"
 #include "CSans_Bone.h"
 #include "CSans_Gaster.h"
+#include "CGasterLaser.h"
+#include "CSans_Gaster.h"
 
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -253,9 +255,18 @@ HRESULT CLoader::Loading_For_Sans_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Idle"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Idle.png")))))
 		return E_FAIL;
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("CSans_Bone_Texture"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/Bone.png")))))
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Bone"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/HalfBone.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_GasterLaser"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("CSans_Gaster_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, 
+			TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Gaster/GasterBlaster%d.png"), 6))))
 		return E_FAIL;
 
 	return S_OK;
@@ -396,6 +407,15 @@ HRESULT CLoader::Ready_Monster_Prototype()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Sans_Bone"),
 		CSans_Bone::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CGasterLaser"),
+		CGasterLaser::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CSans_Gaster"),
+		CSans_Gaster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	//
 	///* For Prototype_GameObject_Drone_Monster */
 	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_GameObject_Drone_Monster"),

@@ -7,31 +7,22 @@
 BEGIN(Engine)
 class CTexture;
 class CTransform;
-class CVIBuffer_Rect;
+class CVIBuffer_Box;
 END
 
 BEGIN(Client)
-//pArg = pos_and_size, appear_floor, speed
-enum class SansBoneSize
+enum class GasterLaserState
 {
-	leftHalf,
-	RightHalf,
+	Ready,
+	Fire,
 	End
 };
-
-using SansBoneArg = struct SansBoneInfo
-{
-	SansBoneSize Size = { SansBoneSize::End };
-	_uint floor = { 0 };
-	_float fSpeed = { 0 };
-};
-
-class CSans_Bone final : public CGameObject
+class CGasterLaser final : public CGameObject
 {
 private:
-	CSans_Bone(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CSans_Bone(const CSans_Bone& rhs);
-	virtual ~CSans_Bone() = default;
+	CGasterLaser(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CGasterLaser(const CGasterLaser& rhs);
+	virtual ~CGasterLaser() = default;
 
 public:
 	HRESULT Initialize_Prototype();
@@ -55,22 +46,27 @@ private:
 
 
 private:
-	void Move(_float fTimeDelta);
+	void AdjustAlpha(_float fTimeDelta);
+	void AdjustScale(_float fTimeDelta);
 
 
 private:
-	_float m_fLife = { 5.f };
-
+	GasterLaserState m_eState = { GasterLaserState::End };
+	_float m_fLife = { 1.5f };
+	_float m_fAlphaTime = { 0.f };
+	_float m_fScaleTime = { 0.f };
+	_float3 m_fScale = { 1, 1, 0 };
+	_uint m_iAlpha = { 0 };
 
 private:
-	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };
+	CVIBuffer_Box* m_pVIBufferCom = { nullptr };
 	CBoxCollider* m_pBoxCollider = { nullptr };
 	CAnimation* m_pAnimationCom = { nullptr };
 
 
 public:
-	static CSans_Bone* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
-	virtual CGameObject* Clone(void* pArg) override; //pArg -> SansBoneArg
+	static CGasterLaser* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual CGameObject* Clone(void* pArg) override; // pArg->_float3(Pos)
 	virtual void Free() override;
 };
 

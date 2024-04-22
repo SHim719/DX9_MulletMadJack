@@ -15,7 +15,6 @@ CGameInstance::CGameInstance()
 
 HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& GraphicDesc, _Out_ LPDIRECT3DDEVICE9* ppOut)
 {
-
 	m_pGraphic_Device = CGraphic_Device::Create(GraphicDesc, ppOut);
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;

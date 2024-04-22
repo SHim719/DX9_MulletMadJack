@@ -10,7 +10,7 @@ CLevel_Lobby::CLevel_Lobby(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 HRESULT CLevel_Lobby::Initialize()
 {
-	m_iLevelID = LEVEL_LOBBY;
+	//m_iLevelID = LEVEL_LOBBY;
 
 	return S_OK;
 }
