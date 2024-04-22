@@ -37,11 +37,14 @@ HRESULT CChainsaw_Monster::Initialize(void* pArg)
 	m_pAnimationCom->Play_Animation(TEXT("Idle_Up"), 0.1f, true);
 
 	m_strTag = "Monster";
+
+	m_fHp = 15.f;
 	return S_OK;
 }
 
 void CChainsaw_Monster::PriorityTick(_float fTimeDelta)
 {
+	m_bThisFrameHit = false; 
 }
 
 void CChainsaw_Monster::Tick(_float fTimeDelta)
@@ -95,6 +98,9 @@ _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _fl
 		|| STATE_FLYDEATH == m_eState)
 		return false;
 
+	if (m_bThisFrameHit)
+		return true;
+
 	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
 	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
 
@@ -134,7 +140,7 @@ void CChainsaw_Monster::OnCollisionEnter(CGameObject* pOther)
 
 	if ("Player" == pOther->Get_Tag() && m_eState == STATE_JUMP)
 	{
-		_float fDamage = 5.f;
+		_float fDamage = 2.f;
 		pOther->Hit(&fDamage);
 	}
 
@@ -175,6 +181,8 @@ void CChainsaw_Monster::Hit(void* pArg)
 
 	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
+
+	m_bThisFrameHit = true;
 
 	switch (pDesc->eHitType)
 	{
@@ -446,7 +454,7 @@ void CChainsaw_Monster::SetState_Jump()
 	vToTargetDir.y = 0.f;
 	D3DXVec3Normalize(&vToTargetDir, &vToTargetDir);
 
-	vToTargetDir *= 5.f;
+	vToTargetDir *= 8.f;
 	vToTargetDir.y = 4.f;
 
 	m_pRigidbody->Set_Velocity(vToTargetDir);

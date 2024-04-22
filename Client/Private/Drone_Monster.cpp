@@ -39,6 +39,7 @@ HRESULT CDrone_Monster::Initialize(void* pArg)
 
 	m_strTag = "Monster";
 
+	m_fHp = 8.f;
 	m_fFlyTime = 1.5f;
 	m_fSpeed = 2.f;
 	return S_OK;
@@ -46,6 +47,7 @@ HRESULT CDrone_Monster::Initialize(void* pArg)
 
 void CDrone_Monster::PriorityTick(_float fTimeDelta)
 {
+	m_bThisFrameHit = false;
 }
 
 void CDrone_Monster::Tick(_float fTimeDelta)
@@ -93,6 +95,9 @@ _bool CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float
 	if (STATE_DEATH == m_eState || STATE_PUSHED == m_eState)
 		return false;
 
+	if (m_bThisFrameHit)
+		return true;
+
 	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
 	_float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
 
@@ -125,10 +130,12 @@ void CDrone_Monster::Hit(void* pArg)
 {
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
+	m_bThisFrameHit = true;
+
 	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
-	m_fHp -= 8.f;
+	m_fHp -= 4.f;
 
 	if (m_fHp <= 0.f)
 		SetState_Death(pDesc);

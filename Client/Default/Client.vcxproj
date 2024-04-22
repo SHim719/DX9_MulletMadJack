@@ -211,6 +211,8 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     </ClInclude>
     <ClInclude Include="..\Public\Effect.h" />
     <ClInclude Include="..\Public\Effect_Headers.h" />
+    <ClInclude Include="..\Public\Elevator_L.h" />
+    <ClInclude Include="..\Public\Elevator_R.h" />
     <ClInclude Include="..\Public\Execution_Knife.h" />
     <ClInclude Include="..\Public\Explosion.h" />
     <ClInclude Include="..\Public\HitBlood.h" />
@@ -271,12 +273,15 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Slope.h" />
     <ClInclude Include="..\Public\Soda.h" />
     <ClInclude Include="..\Public\SpawnTrigger.h" />
+    <ClInclude Include="..\Public\StageEndTrigger.h" />
     <ClInclude Include="..\Public\Terrain_Collider.h" />
     <ClInclude Include="..\Public\Trigger_Headers.h" />
     <ClInclude Include="..\Public\Ventilador.h" />
     <ClInclude Include="..\Public\VIBuffer_BoxObj.h" />
     <ClInclude Include="..\Public\VIBuffer_Bullet.h" />
     <ClInclude Include="..\Public\VIBuffer_Door.h" />
+    <ClInclude Include="..\Public\VIBuffer_Elevator_L.h" />
+    <ClInclude Include="..\Public\VIBuffer_Elevator_R.h" />
     <ClInclude Include="..\Public\VIBuffer_Floor_Border.h" />
     <ClInclude Include="..\Public\VIBuffer_Sphere.h" />
     <ClInclude Include="..\Public\White_Suit_Monster.h" />
@@ -328,6 +333,8 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\Private\Elevator_L.cpp" />
+    <ClCompile Include="..\Private\Elevator_R.cpp" />
     <ClCompile Include="..\Private\HitBlood.cpp" />
     <ClCompile Include="..\Private\Katana.cpp" />
     <ClCompile Include="..\Private\Katana_Effect.cpp" />
@@ -405,11 +412,14 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Rigidbody.cpp" />
     <ClCompile Include="..\Private\Soda.cpp" />
     <ClCompile Include="..\Private\SpawnTrigger.cpp" />
+    <ClCompile Include="..\Private\StageEndTrigger.cpp" />
     <ClCompile Include="..\Private\Terrain_Collider.cpp" />
     <ClCompile Include="..\Private\Ventilador.cpp" />
     <ClCompile Include="..\Private\VIBuffer_BoxObj.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Bullet.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Door.cpp" />
+    <ClCompile Include="..\Private\VIBuffer_Elevator_L.cpp" />
+    <ClCompile Include="..\Private\VIBuffer_Elevator_R.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Sphere.cpp" />
     <ClCompile Include="..\Private\White_Suit_Monster.cpp" />

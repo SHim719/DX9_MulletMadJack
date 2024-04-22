@@ -40,6 +40,8 @@ namespace Client
 		SLOPE,
 		BOX_OBJECT,
 		VENTILADOR,
+		ELEVATOR_L,
+		ELEVATOR_R,
 		OBJTYPE_END,
 	};
 
@@ -53,16 +55,13 @@ namespace Client
 
 	enum TRIGGERTYPE
 	{
+		STAGE_END,
+
 		TRIGGER_END
 	};
 }
 
-
-
 extern HWND				g_hWnd;
-
-
-
 
 
 using namespace Client;

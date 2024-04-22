@@ -324,6 +324,14 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_BoxObject_Default"),
 		CVIBuffer_BoxObj::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Elevator_L_Default"),
+		CVIBuffer_Elevator_L::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Elevator_R_Default"),
+		CVIBuffer_Elevator_R::Create(m_pGraphic_Device))))
+		return E_FAIL;
 #pragma endregion
 	return S_OK;
 }

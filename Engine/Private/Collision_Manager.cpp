@@ -23,6 +23,8 @@ void CCollision_Manager::Tick()
 
 	Collision_Box(3, L"Player", L"Door", Collision);
 	Collision_Box(3, L"Player", L"SpawnTrigger", Trigger);
+	Collision_Box(3, L"Player", L"Trigger", Trigger);
+	Collision_Box(3, L"Player", L"Elevator", Trigger);
 	Collision_Box(3, L"Player", L"SodaMachine", Collision);
 	Collision_Box(3, L"Player", L"Monster", Collision);
 

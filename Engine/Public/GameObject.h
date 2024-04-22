@@ -75,6 +75,7 @@ protected:
 	_bool m_bDestroyed = { false };
 	_bool m_bActive = { true };
 	_bool m_bCanIntersect = { true };
+	_bool m_bThisFrameHit = { false };
 
 	string m_strTag = "";
 

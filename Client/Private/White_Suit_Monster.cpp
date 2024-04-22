@@ -44,23 +44,14 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
 
     m_strTag = "Monster";
-
-    ZeroMemory(&m_ShotLightDesc, sizeof(D3DLIGHT9));
-    m_ShotLightDesc.Type = D3DLIGHT_POINT;
-    m_ShotLightDesc.Diffuse = D3DXCOLOR(1.0f, 1.f, 0.f, 1.f);
-    m_ShotLightDesc.Ambient = D3DXCOLOR(1.0f, 1.f, 1.f, 1.f);
-    m_ShotLightDesc.Position = _float3(20.f, 5.0f, 10.f);
-    m_ShotLightDesc.Range = 3.f;
-    m_ShotLightDesc.Attenuation1 = 0.25f;
-
-    m_fHp = 5.f;
+    m_fHp = 10.f;
 
     return S_OK;
 }
 
 void CWhite_Suit_Monster::PriorityTick(_float fTimeDelta)
 {
-
+    m_bThisFrameHit = false;
 }
 
 void CWhite_Suit_Monster::Tick(_float fTimeDelta)
@@ -159,10 +150,10 @@ HRESULT CWhite_Suit_Monster::Add_Textures()
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Groinshot"), TEXT("Death_Eggshot"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun")))) // ¸ö¼¦.
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("HeadExplode"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("HeadExplode")))) // ¸Ó¸®ÅÍÁö´Â°Å
         return E_FAIL;
     
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Fly"), TEXT("Death_Fly"))))
@@ -201,6 +192,9 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
     if (STATE_DEATH == m_eState || STATE_FLY == m_eState || STATE_EXECUTION == m_eState 
         || STATE_FLYDEATH == m_eState)
         return false;
+
+    if (m_bThisFrameHit)
+        return true;
 
     if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 3.f)
 		return false;
@@ -268,7 +262,7 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     {
     case CPawn::HEAD_SHOT:
     {
-        m_fHp -= 5.f;
+        m_fHp -= 10.f;
         break;
     }    
     case CPawn::BODY_SHOT:
@@ -278,7 +272,7 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     }
     case CPawn::EGG_SHOT:
     {
-        m_fHp -= 5.f;
+        m_fHp -= 10.f;
         break;
     }
     }
@@ -291,6 +285,8 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     {
         SetState_Hit();
     }
+
+    m_bThisFrameHit = true;
 }
 
 void CWhite_Suit_Monster::Process_State(_float fTimeDelta)

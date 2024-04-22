@@ -241,9 +241,6 @@
     <Filter Include="97. Manager\LightManager">
       <UniqueIdentifier>{be435700-5d46-413d-84e0-80bfd545edae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger">
-      <UniqueIdentifier>{0a2dd1f7-eab8-41f4-87f0-e347d11ac960}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing">
       <UniqueIdentifier>{0f657f05-790a-4db9-9605-9ba66d8afdb0}</UniqueIdentifier>
     </Filter>
@@ -444,6 +441,27 @@
     </Filter>
     <Filter Include="02.GameObjects\02. Player\Flying_Katana">
       <UniqueIdentifier>{fe1bc42d-750e-46f7-bcd7-5a0d38e615e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger">
+      <UniqueIdentifier>{0a2dd1f7-eab8-41f4-87f0-e347d11ac960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger">
+      <UniqueIdentifier>{198f5808-5b6c-4f38-853b-6bc276e09589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Elevator">
+      <UniqueIdentifier>{7e8c3fc8-9305-4469-bba6-9bfe8715f492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Elevator\Elevator_L">
+      <UniqueIdentifier>{7bd17be4-cf62-4adc-a3e4-3f84da2acc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Elevator\Elevator_R">
+      <UniqueIdentifier>{fae98dcc-6757-4a9a-b0cd-dd582afb367e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\ViBuffer_Elevator_L">
+      <UniqueIdentifier>{eeedd68d-8b47-437d-baf8-f8ca9c0800f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Elevator_R">
+      <UniqueIdentifier>{1061b2aa-2076-44cc-b4a7-4072b248ff99}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -703,7 +721,7 @@
       <Filter>97. Manager\LightManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SpawnTrigger.h">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger</Filter>
+      <Filter>02.GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Trigger_Headers.h">
       <Filter>99.Defines</Filter>
@@ -836,6 +854,21 @@
     </ClInclude>
     <ClInclude Include="..\Public\CGasterLaser.h">
       <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\StageEndTrigger.h">
+      <Filter>02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Elevator_L.h">
+      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_L</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Elevator_R.h">
+      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_R</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Elevator_L.h">
+      <Filter>03. Client_Components\VIBuffers\ViBuffer_Elevator_L</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Elevator_R.h">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Elevator_R</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1065,7 +1098,7 @@
       <Filter>97. Manager\LightManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SpawnTrigger.cpp">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject\SpawnTrigger</Filter>
+      <Filter>02.GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Finish.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish</Filter>
@@ -1192,6 +1225,21 @@
     </ClCompile>
     <ClCompile Include="..\Private\CGasterLaser.cpp">
       <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\StageEndTrigger.cpp">
+      <Filter>02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Elevator_L.cpp">
+      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_L</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Elevator_R.cpp">
+      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_R</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Elevator_L.cpp">
+      <Filter>03. Client_Components\VIBuffers\ViBuffer_Elevator_L</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Elevator_R.cpp">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_Elevator_R</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

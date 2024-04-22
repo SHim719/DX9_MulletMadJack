@@ -2,11 +2,9 @@
 
 #include "GameInstance.h"
 
-#include "Door.h"
-#include "SodaMachine.h"
-
 #include "Monster_Headers.h"
 #include "Trigger_Headers.h"
+#include "MapObject_Header.h"
 
 
 
@@ -48,6 +46,8 @@ HRESULT CMapLoader::Load(const wstring& strFilePath, LEVEL eLevel)
 		assert(false);
 		return E_FAIL;
 	}
+
+	CloseHandle(hFile);
 
 	return S_OK;
 }
@@ -119,16 +119,22 @@ HRESULT CMapLoader::Load_Trigger(HANDLE hFile, LEVEL eLevel)
 		iReadFlag += (int)ReadFile(hFile, &vColliderOffset, sizeof(_float3), &dwByte, nullptr);
 		iReadFlag += (int)ReadFile(hFile, &vColliderScale, sizeof(_float3), &dwByte, nullptr);
 		
-		//CGameObject* pTrigger = nullptr;
-		//switch (TRIGGERTYPE(iTextureIndex))
-		//{
-		//	break;
-		//}
-		//pTrigger->Get_Transform()->Set_WorldMatrix(worldMatrix);
-		//CBoxCollider* pCollider = dynamic_cast<CBoxCollider*>(pTrigger->Find_Component(L"Collider"));
-		//pCollider->Set_Scale(vColliderScale);
-		//pCollider->Set_Offset(vColliderOffset);
-		//pCollider->Update_BoxCollider(worldMatrix);
+		CGameObject* pTrigger = nullptr;
+		switch (TRIGGERTYPE(iTextureIndex))
+		{
+		case TRIGGERTYPE::STAGE_END:
+			pTrigger = m_pGameInstance->Add_Clone(eLevel, L"Trigger", L"Prototype_StageEndTrigger");
+			break;
+		}
+		if (pTrigger)
+		{
+			pTrigger->Get_Transform()->Set_WorldMatrix(worldMatrix);
+			CBoxCollider* pCollider = dynamic_cast<CBoxCollider*>(pTrigger->Find_Component(L"Collider"));
+			pCollider->Set_Scale(vColliderScale);
+			pCollider->Set_Offset(vColliderOffset);
+			pCollider->Update_BoxCollider(worldMatrix);
+		}
+		
 		iReadFlag = 1;
 	}
 
@@ -235,8 +241,19 @@ HRESULT CMapLoader::Load_MapObject(HANDLE hFile, LEVEL eLevel)
 		}
 	}
 	
+	CLayer* pFloorLayer = m_pGameInstance->Find_Layer(eLevel, L"Floor");
+	if (pFloorLayer)
+	{
+		auto& floors = pFloorLayer->Get_GameObjects();
 
-	CloseHandle(hFile);
+		if (floors.size() >= 2)
+		{
+			floors.sort([](CGameObject* pLeft, CGameObject* pRight)-> bool
+				{
+					return pLeft->Get_Transform()->Get_Pos().y > pRight->Get_Transform()->Get_Pos().y;
+				});
+		}
+	}
 	return S_OK;
 }
 

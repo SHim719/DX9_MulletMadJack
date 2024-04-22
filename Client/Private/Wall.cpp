@@ -43,7 +43,7 @@ void CWall::Tick(_float fTimeDelta)
 
 void CWall::LateTick(_float fTimeDelta)
 {
-	if (m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 5.f))
+	if (m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 20.f))
 		m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
