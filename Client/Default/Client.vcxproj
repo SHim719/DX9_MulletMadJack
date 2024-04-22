@@ -213,6 +213,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Effect_Headers.h" />
     <ClInclude Include="..\Public\Execution_Knife.h" />
     <ClInclude Include="..\Public\Explosion.h" />
+    <ClInclude Include="..\Public\Flying_Katana.h" />
     <ClInclude Include="..\Public\HitBlood.h" />
     <ClInclude Include="..\Public\Katana.h" />
     <ClInclude Include="..\Public\Katana_Effect.h" />
@@ -328,6 +329,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\Private\Flying_Katana.cpp" />
     <ClCompile Include="..\Private\HitBlood.cpp" />
     <ClCompile Include="..\Private\Katana.cpp" />
     <ClCompile Include="..\Private\Katana_Effect.cpp" />

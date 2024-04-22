@@ -837,6 +837,9 @@
     <ClInclude Include="..\Public\CGasterLaser.h">
       <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Flying_Katana.h">
+      <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1192,6 +1195,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CGasterLaser.cpp">
       <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Flying_Katana.cpp">
+      <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

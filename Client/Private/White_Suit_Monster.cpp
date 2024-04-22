@@ -78,7 +78,6 @@ void CWhite_Suit_Monster::LateTick(_float fTimeDelta)
         return;
 
     m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
-
     m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
@@ -202,7 +201,7 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
         || STATE_FLYDEATH == m_eState)
         return false;
 
-    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 3.f)
+    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
 		return false;
 
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
