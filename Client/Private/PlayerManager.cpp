@@ -87,9 +87,9 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 				Set_DisableEnd(false);
 				m_bActionIDLE = false;
 			}
-
+			break;
 		}
-
+		
 		default :
 			break;
 	}
@@ -214,6 +214,9 @@ void CPlayer_Manager::WeaponChange(CPlayer::WEAPON_TYPE eWeaponType)
 			break;
 		case CPlayer::WEAPON_TYPE::SHOTGUN:
 			Set_MaxMagazine(12);
+			break;
+		case CPlayer::WEAPON_TYPE::KATANA:
+			Set_MaxMagazine(100);
 			break;
 		default:
 			break;

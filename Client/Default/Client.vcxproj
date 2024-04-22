@@ -205,6 +205,9 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Execution_Knife.h" />
     <ClInclude Include="..\Public\Explosion.h" />
     <ClInclude Include="..\Public\HitBlood.h" />
+    <ClInclude Include="..\Public\Katana.h" />
+    <ClInclude Include="..\Public\Katana_Effect.h" />
+    <ClInclude Include="..\Public\Katana_Slash.h" />
     <ClInclude Include="..\public\Light_Manager.h" />
     <ClInclude Include="..\Public\Execution_Body.h" />
     <ClInclude Include="..\Public\Execution_Hand.h" />
@@ -315,6 +318,9 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     </ClCompile>
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\Private\HitBlood.cpp" />
+    <ClCompile Include="..\Private\Katana.cpp" />
+    <ClCompile Include="..\Private\Katana_Effect.cpp" />
+    <ClCompile Include="..\Private\Katana_Slash.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
     <ClCompile Include="..\Private\Shotgun_Reload.cpp" />

@@ -125,7 +125,7 @@ public:
 	void Reload_Magazine() { m_iWeaponMagezine = m_iWeaponMaxMagezine; }
 
 	_int Get_MaxMagazine() { return m_iWeaponMaxMagezine; }
-	void Set_MaxMagazine(_int _iMagazine) { m_iWeaponMaxMagezine = _iMagazine; }
+	void Set_MaxMagazine(_int _iMagazine) { m_iWeaponMaxMagezine = _iMagazine; m_iWeaponMagezine = m_iWeaponMaxMagezine; }
 
 
 
@@ -136,6 +136,8 @@ public:
 
 	void WeaponChange(CPlayer::WEAPON_TYPE eWeaponType);
 
+	_int Get_SlashCount() { m_iSlashCount++; if (m_iSlashCount >= 3) m_iSlashCount = 0; return m_iSlashCount; }
+	_int Get_RealSlashCount() { return m_iSlashCount; }
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -174,6 +176,9 @@ private:
 	//Weapon
 	_int						m_iWeaponMagezine = 8;
 	_int						m_iWeaponMaxMagezine = 8;
+
+	_int						m_iSlashCount = 0;
+
 private:
 
 	CPlayer* m_pPlayer = nullptr;

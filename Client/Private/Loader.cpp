@@ -893,6 +893,28 @@ HRESULT CLoader::Ready_PlayerGunUi_Texture()
 		return E_FAIL;
 
 #pragma endregion
+
+#pragma region Katana
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Katana_Idle_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Katana/Idle/KATANA%d.png", 3))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Katana_Hit_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Katana/Hit/KATANA_HIT%d.png",1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Katana_Slash_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Katana/Slash/Slash%d.png", 5))))
+		return E_FAIL;
+
+#pragma endregion
+
+
+
 	return S_OK;
 }
 
@@ -1122,6 +1144,19 @@ HRESULT CLoader::Ready_Active_Gun()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_Reload", eUiRenderType::Render_NonBlend, CShotgun_Reload::Create(m_pGraphic_Device))))
 		return E_FAIL;
+#pragma endregion
+
+#pragma region KatanaRegion
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana", eUiRenderType::Render_NonBlend, CKatana::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Slash", eUiRenderType::Render_NonBlend, CKatana_Slash::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Effect", eUiRenderType::Render_NonBlend, CKatana_Effect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 #pragma endregion
 
 
