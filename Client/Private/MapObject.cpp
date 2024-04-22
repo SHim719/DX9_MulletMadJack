@@ -38,7 +38,8 @@ void CMapObject::Tick(_float fTimeDelta)
 
 void CMapObject::LateTick(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
+	if (m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
+		m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
 }
 
 HRESULT CMapObject::Render()
@@ -48,7 +49,6 @@ HRESULT CMapObject::Render()
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-
 
 
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))

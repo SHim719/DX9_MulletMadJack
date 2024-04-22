@@ -84,7 +84,7 @@ void CEnemy_Bullet::OnTriggerEnter(CGameObject* pOther)
 	if ("Player" == pOther->Get_Tag())
 	{
 		float fDamage = 3.f;
-		static_cast<CPlayer*>(pOther)->Hit(&fDamage);
+		pOther->Hit(&fDamage);
 	}
 
 	m_bDestroyed = true;

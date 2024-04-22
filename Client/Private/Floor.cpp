@@ -47,7 +47,7 @@ void CFloor::LateTick(_float fTimeDelta)
 
 HRESULT CFloor::Render()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, false);
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
@@ -58,6 +58,8 @@ HRESULT CFloor::Render()
 	m_pVIBufferCom->Render();
 
 	m_pBoxCollider->Render();
+
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return S_OK;
 }

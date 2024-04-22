@@ -61,7 +61,10 @@ public:
 
 public:
 	virtual void OnCollisionEnter(CGameObject* pOther) {}
-	virtual void OnCollisionStay(CGameObject* pOther) {}
+	virtual void OnCollisionStay(CGameObject* pOther) 
+	{
+		int x = 10;
+	}
 	virtual void OnCollisionExit(CGameObject* pOther) {}
 
 	virtual void OnTriggerEnter(CGameObject* pOther) {}

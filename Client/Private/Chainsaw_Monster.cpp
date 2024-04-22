@@ -1,6 +1,8 @@
 #include "Chainsaw_Monster.h"
 #include "GameInstance.h"
 #include "PlayerManager.h"
+#include "CUi_SpecialHit.h"
+#include "FPS_Camera.h"
 
 CChainsaw_Monster::CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CPawn{ pGraphic_Device }
@@ -55,6 +57,9 @@ void CChainsaw_Monster::Tick(_float fTimeDelta)
 
 void CChainsaw_Monster::LateTick(_float fTimeDelta)
 {
+	if (!m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
+		return;
+
 	m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
 
 	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
@@ -62,6 +67,9 @@ void CChainsaw_Monster::LateTick(_float fTimeDelta)
 
 HRESULT CChainsaw_Monster::Render()
 {
+	if (STATE_EXECUTION == m_eState)
+		return S_OK;
+
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
@@ -118,10 +126,21 @@ _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _fl
 
 void CChainsaw_Monster::OnCollisionEnter(CGameObject* pOther)
 {
+	if ("Floor" == pOther->Get_Tag()
+		&& m_pTransformCom->Get_Pos().y > pOther->Get_Transform()->Get_Pos().y)
+	{
+		m_pRigidbody->Set_Ground(true);
+	}
+
 	if ("Player" == pOther->Get_Tag() && m_eState == STATE_JUMP)
 	{
 		_float fDamage = 5.f;
 		pOther->Hit(&fDamage);
+	}
+
+	if (STATE_FLY == m_eState && "Wall" == pOther->Get_Tag())
+	{
+		m_bWallColl = true;
 	}
 }
 
@@ -153,6 +172,9 @@ _bool CChainsaw_Monster::Check_EggShot(_float3 vHitLocalPos)
 void CChainsaw_Monster::Hit(void* pArg)
 {
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
+
+	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
 	switch (pDesc->eHitType)
 	{
@@ -200,7 +222,15 @@ void CChainsaw_Monster::Process_State(_float fTimeDelta)
 	case CChainsaw_Monster::STATE_GETUP:
 		State_GetUp();
 		break;
-
+	case CChainsaw_Monster::STATE_EXECUTION:
+		State_Execution();
+		break;
+	case CChainsaw_Monster::STATE_FLY:
+		State_Fly(fTimeDelta);
+		break;
+	case CChainsaw_Monster::STATE_FLYDEATH:
+		State_FlyDeath(fTimeDelta);
+		break;
 	case CChainsaw_Monster::STATE_DEATH:
 		State_Death(fTimeDelta);
 		break;
@@ -282,8 +312,6 @@ void CChainsaw_Monster::State_Slash()
 
 void CChainsaw_Monster::State_Jump()
 {
-	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
-
 	if (m_pRigidbody->IsGround() && m_pAnimationCom->IsEndAnim())
 	{
 		SetState_GetUp();
@@ -310,6 +338,33 @@ void CChainsaw_Monster::State_GetUp()
 		}
 	}
 	
+}
+
+void CChainsaw_Monster::State_Execution()
+{
+}
+
+void CChainsaw_Monster::State_Fly(_float fTimeDelta)
+{
+	m_fFlyTimeAcc += fTimeDelta;
+
+	if (m_fFlyTimeAcc >= m_fFlyTime)
+	{
+		m_fFlyTimeAcc = 0.f;
+		SetState_FlyDeath();
+	}
+}
+
+void CChainsaw_Monster::State_FlyDeath(_float fTimeDelta)
+{
+	if (m_pAnimationCom->IsEndAnim())
+	{
+		m_fDeathTime -= fTimeDelta;
+		if (m_fDeathTime <= 0.f)
+		{
+			m_bDestroyed = true;
+		}
+	}
 }
 
 void CChainsaw_Monster::State_Death(_float fTimeDelta)
@@ -347,7 +402,8 @@ void CChainsaw_Monster::SetState_Move()
 
 void CChainsaw_Monster::SetState_Pushed(_float3 vLook)
 {
-	if (STATE_DEATH == m_eState)
+	if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState 
+		|| STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
 		return;
 
 	m_eState = STATE_PUSHED;
@@ -359,6 +415,8 @@ void CChainsaw_Monster::SetState_Pushed(_float3 vLook)
 	m_pRigidbody->Set_Friction(5.f);
 
 	m_pAnimationCom->Play_Animation(L"Pushed", 100.f, false);
+
+	m_bPushRecovery = false;
 }
 
 void CChainsaw_Monster::SetState_Slash()
@@ -403,6 +461,58 @@ void CChainsaw_Monster::SetState_GetUp()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
+void CChainsaw_Monster::SetState_Execution()
+{
+	if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState
+		|| STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
+		return;
+
+	m_bCanIntersect = false;
+	m_pBoxCollider->Set_Active(false);
+
+	m_eState = STATE_EXECUTION;
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+	m_pRigidbody->Set_UseGravity(false);
+}
+
+void CChainsaw_Monster::SetState_Fly(_float3 vLook)
+{
+	if (STATE_DEATH == m_eState || STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
+		return;
+
+	m_eState = STATE_FLY;
+
+	m_pAnimationCom->Play_Animation(L"Death_Fly", 0.1f, false);
+
+	vLook.y = 0.f;
+	m_pRigidbody->Set_Velocity(vLook * 10.f);
+
+
+	m_pBoxCollider->Set_Active(true);
+	m_fFlyTimeAcc = 0.f;
+}
+
+void CChainsaw_Monster::SetState_FlyDeath()
+{
+	if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState || STATE_FLYDEATH == m_eState)
+		return;
+
+	m_eState = STATE_FLYDEATH;
+
+	if (m_bWallColl)
+		m_pAnimationCom->Play_Animation(L"Death_Fly_Wall", 0.1f, false);
+	else
+		m_pAnimationCom->Play_Animation(L"Death_Fly_Floor", 0.1f, false);
+
+	m_pBoxCollider->Set_Active(false);
+
+	Call_MonsterDieUi(eMonsterGrade::Middle);
+
+	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+	m_pRigidbody->Set_UseGravity(true);
+
+}
+
 void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 {
 	if (STATE_DEATH == m_eState)
@@ -410,21 +520,16 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
 	m_eState = STATE_DEATH;
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+	m_pRigidbody->Set_UseGravity(false);
+	m_pBoxCollider->Set_Active(false);
 
-	switch (pDesc->eHitType)
-	{
-	case CPawn::HEAD_SHOT:
-		m_pAnimationCom->Play_Animation(TEXT("Death_Headshot"), 0.1f, false);
-		break;
+	Call_MonsterDieUi(eMonsterGrade::Middle);
 
-	case CPawn::BODY_SHOT:
-		m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
-		break;
-
-	case CPawn::EGG_SHOT:
-		m_pAnimationCom->Play_Animation(TEXT("Death_Groinshot"), 0.1f, false);
-		break;
-	}
+	m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);
+	CUi_SpecialHit::SpecialHit_Desc Arg;
+	Arg.Hit = eSpecialHit::FINISHED;
+	Arg.iCount = 4;
+	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
 }
 
 HRESULT CChainsaw_Monster::Add_Components()
@@ -465,13 +570,13 @@ HRESULT CChainsaw_Monster::Add_Textures()
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_HeadExplode_Backward"), TEXT("HeadExplode_Backward"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Floor"), TEXT("Death_Push_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Floor"), TEXT("Death_Fly_Floor"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Start_Push_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Death_Fly"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Death_Push_Wall"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Death_Fly_Wall"))))
 		return E_FAIL;
 
 	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_GetUp"), TEXT("GetUp"))))

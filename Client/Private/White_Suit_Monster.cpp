@@ -2,6 +2,9 @@
 #include "GameInstance.h"
 #include "Enemy_Bullet.h"
 #include "PlayerManager.h"
+#include "CUi_SpecialHit.h"
+#include "Light_Manager.h"
+
 
 CWhite_Suit_Monster::CWhite_Suit_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
     : CPawn { pGraphic_Device }
@@ -41,6 +44,17 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
 
     m_strTag = "Monster";
+
+    ZeroMemory(&m_ShotLightDesc, sizeof(D3DLIGHT9));
+    m_ShotLightDesc.Type = D3DLIGHT_POINT;
+    m_ShotLightDesc.Diffuse = D3DXCOLOR(1.0f, 1.f, 0.f, 1.f);
+    m_ShotLightDesc.Ambient = D3DXCOLOR(1.0f, 1.f, 1.f, 1.f);
+    m_ShotLightDesc.Position = _float3(20.f, 5.0f, 10.f);
+    m_ShotLightDesc.Range = 3.f;
+    m_ShotLightDesc.Attenuation1 = 0.25f;
+
+    m_fHp = 5.f;
+
     return S_OK;
 }
 
@@ -60,6 +74,9 @@ void CWhite_Suit_Monster::Tick(_float fTimeDelta)
 
 void CWhite_Suit_Monster::LateTick(_float fTimeDelta)
 {
+    if (!m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
+        return;
+
     m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
 
     m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
@@ -165,6 +182,7 @@ HRESULT CWhite_Suit_Monster::Begin_RenderState()
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, TRUE);
 
     return S_OK;
 }
@@ -172,6 +190,7 @@ HRESULT CWhite_Suit_Monster::Begin_RenderState()
 HRESULT CWhite_Suit_Monster::End_RenderState()
 {
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+    m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
     return S_OK;
 }
@@ -221,23 +240,26 @@ void CWhite_Suit_Monster::OnCollisionEnter(CGameObject* pOther)
 
 _bool CWhite_Suit_Monster::Check_HeadShot(_float3 vHitLocalPos)
 {
-    return -0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f && 0.375f <= vHitLocalPos.y && vHitLocalPos.y <= 0.5f;
+    return -0.083f < vHitLocalPos.x && vHitLocalPos.x < 0.0253f && 0.243f <= vHitLocalPos.y && vHitLocalPos.y <= 0.5f;
 }
 
 _bool CWhite_Suit_Monster::Check_BodyShot(_float3 vHitLocalPos)
 {
-    return (-0.15f < vHitLocalPos.x && vHitLocalPos.x < 0.15f) &&
-        ((0.f <= vHitLocalPos.y && vHitLocalPos.y < 0.375f) || (-0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.2f));
+    return (-0.164f < vHitLocalPos.x && vHitLocalPos.x < 0.164f) &&
+        ((0.015f <= vHitLocalPos.y && vHitLocalPos.y < 0.243f) || (-0.5f < vHitLocalPos.y && vHitLocalPos.y < -0.086f));
 }
 
 _bool CWhite_Suit_Monster::Check_EggShot(_float3 vHitLocalPos)
 {
-    return  (-0.1f < vHitLocalPos.x && vHitLocalPos.x < 0.1f) && (-0.2f <= vHitLocalPos.y && vHitLocalPos.y < 0.f);
+    return  (-0.125f < vHitLocalPos.x && vHitLocalPos.x < 0.12f) && (-0.086f <= vHitLocalPos.y && vHitLocalPos.y < 0.015);
 }
 
 void CWhite_Suit_Monster::Hit(void* pArg)
 {
     ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
+
+    CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+    pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
     switch (pDesc->eHitType)
     {
@@ -365,6 +387,12 @@ void CWhite_Suit_Monster::State_Shot()
 {
     if (m_pAnimationCom->IsEndAnim())
     {
+        if (-1 != m_iLightIndex)
+        {
+            CLight_Manager::Get_Instance()->Disable_Light(m_iLightIndex);
+            CLight_Manager::Get_Instance()->Remove_Light(m_iLightIndex);
+        }
+        
         _float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
         if (fTargetDist < 6.f)
         {
@@ -497,8 +525,9 @@ void CWhite_Suit_Monster::SetState_Alert()
 
 void CWhite_Suit_Monster::SetState_Pushed(_float3 vLook)
 {
-    if (STATE_DEATH == m_eState)
-        return;
+    if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState
+        || STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
+
     m_eState = STATE_PUSHED;
     
     vLook.y = 0.f;
@@ -529,6 +558,10 @@ void CWhite_Suit_Monster::SetState_Shot()
     pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
     static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
 
+    m_ShotLightDesc.Position = m_pTransformCom->Get_Pos() + m_pTransformCom->Get_GroundLook();
+    m_iLightIndex = CLight_Manager::Get_Instance()->Set_Light(m_ShotLightDesc);
+    if (-1 != m_iLightIndex)
+        CLight_Manager::Get_Instance()->Enable_Light(m_iLightIndex);
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
@@ -548,6 +581,9 @@ void CWhite_Suit_Monster::SetState_Jump()
 
 void CWhite_Suit_Monster::SetState_Execution()
 {
+    if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState
+        || STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
+
     m_bCanIntersect = false;
     m_pBoxCollider->Set_Active(false);
 

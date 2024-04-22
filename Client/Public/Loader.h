@@ -48,13 +48,14 @@ private:
 	HRESULT Loading_For_Logo_Level();
 	HRESULT Loading_For_GamePlay_Level();
 	HRESULT Loading_For_WhiteSuitMonster();
+	HRESULT Loading_For_Chainsaw_Monster();
+	HRESULT Loading_For_Drone_Monster();
 	HRESULT Loading_For_Map_Texture();
+	HRESULT Loading_For_Effect_Texture();
 
 	HRESULT Ready_MapObject_Prototype();
 	HRESULT Ready_Monster_Prototype();
-	HRESULT Loading_For_Chainsaw_Monster();
-	HRESULT Loading_For_Orange_Pants_Monster();
-	HRESULT Loading_For_Drone_Monster();
+	HRESULT	Ready_Effect_Prototype();
 
 	HRESULT Loading_For_Ui();
 	HRESULT Ready_ClearUi_Texture();

@@ -50,6 +50,9 @@ void CSpawnTrigger::OnTriggerEnter(CGameObject* pOther)
 		case CHAINSAW:
 			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_Chainsaw");
 			break;
+		case DRONE:
+			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_Drone");
+			break;
 		}
 
 		if (pMonster)

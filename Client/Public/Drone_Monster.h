@@ -1,9 +1,5 @@
 #pragma once
 #include "Client_Defines.h"
-#include "GameObject.h"
-#include "Animation.h"
-#include "FPS_Camera.h"
-#include "Core_Camera.h"
 #include "Pawn.h"
 
 BEGIN(Engine)
@@ -19,11 +15,12 @@ class CDrone_Monster final : public CPawn
 	enum STATE
 	{
 		STATE_IDLE,
-		STATE_AIM,
-		STATE_ALERT,
-		STATE_ATTACK,
+		STATE_MOVE,
+		STATE_RUSH,
+		STATE_BOUND,
+		STATE_PUSHED,
 		STATE_DEATH,
-		STATE_END
+		STATE_END,
 	};
 
 private:
@@ -40,46 +37,40 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-	CVIBuffer* m_pVIBufferCom = { nullptr };
-	CAnimation* m_pAnimationCom = { nullptr };
-	CBoxCollider* m_pBoxCollider = { nullptr };
-	CRigidbody* m_pRigidbody = { nullptr };
+	CVIBuffer*		m_pVIBufferCom = { nullptr };
+	CAnimation*		m_pAnimationCom = { nullptr };
+	CBoxCollider*	m_pBoxCollider = { nullptr };
+	CRigidbody*		m_pRigidbody = { nullptr };
 
 private:
-	virtual _bool	On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg = nullptr) override;
-	virtual void	OnCollisionEnter(CGameObject* pOther) override;
-
-	_bool Check_Hit(_float3 vHitLocalPos);
+	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
+	void  OnCollisionEnter(CGameObject* pOther) override;
 
 	void Hit(void* pArg) override;
 
-private:
-	STATE			m_eState = STATE_IDLE;
-	_float			m_fHp = 1.f;
-	_float			m_fSpeed = 0.1f;
-	_float			m_fPerceptionDist = 3.f;
-	_float			m_fRange = 6.f;
-	_bool			m_bPushRecovery = { false };
-	_bool			m_bPerceivedPlayer = { false };
-
-	_float			m_fTimeAcc = 0.f;
-	_float			m_fDeathTime = 3.f;
-
-private:
 	void Process_State(_float fTimeDelta);
 
 	void State_Idle();
-	void State_Aim();
-	void State_Alert();
-	void State_Attack(_float fTimeDelta);
-	void State_Death(_float fTimeDelta);
+	void State_Move();
+	void State_Rush();
+	void State_Bound(_float fTimeDelta);
+	void State_Pushed(_float fTimeDelta);
+	void State_Death();
 
 public:
 	void SetState_Idle();
-	void SetState_Aim();
-	void SetState_Alert();
-	void SetState_Attack();
+	void SetState_Move();
+	void SetState_Rush();
+	void SetState_Bound();
+	void SetState_Pushed(_float3 vLook)	override;
+	void SetState_Fly(_float3 vLook) override { SetState_Pushed(vLook); } 
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
+
+private:
+	STATE			m_eState = STATE_IDLE;
+
+	_float			m_fBoundTime = 0.5f;
+	_float			m_fBoundTimeAcc = 0.f;
 
 private:
 	HRESULT			Add_Components();

@@ -24,9 +24,6 @@ HRESULT CAnimation::Initialize_Prototype()
 
 HRESULT CAnimation::Initialize(void* pArg)
 {
-    CGameObject* pInstance = static_cast<CGameObject*>(pArg);
-
-    m_pCurTexture = dynamic_cast<CTexture*>(pInstance);
 
     return S_OK;
 }

@@ -379,6 +379,24 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB">
       <UniqueIdentifier>{edb8cbe6-c0b2-4f0a-9c99-09e2551e596d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\05. Effect">
+      <UniqueIdentifier>{b71b9ae5-32dc-4c47-a877-48240ff54371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\05. Effect\01. Explosion">
+      <UniqueIdentifier>{c96d5057-8cbb-40df-8ecf-13e0a0003e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\05. Effect\02. HitBlood">
+      <UniqueIdentifier>{2bf378e9-be5e-4f5b-b317-4160620bb03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Ventilador">
+      <UniqueIdentifier>{44d8320d-eb21-4d39-b50d-53146d2b4410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\01. MapObject\Box">
+      <UniqueIdentifier>{d879e28d-ebbd-45d7-a06f-4f4bc92052a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\VIBuffer_BoxObj">
+      <UniqueIdentifier>{406a5dc0-7aaa-43ca-8182-575e73624ef1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -717,6 +735,27 @@
     <ClInclude Include="..\Public\Shotgun_SpinB.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect.h">
+      <Filter>02.GameObjects\05. Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Explosion.h">
+      <Filter>02.GameObjects\05. Effect\01. Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\HitBlood.h">
+      <Filter>02.GameObjects\05. Effect\02. HitBlood</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Effect_Headers.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_BoxObj.h">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_BoxObj</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\BoxObject.h">
+      <Filter>02.GameObjects\01. MapObject\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Ventilador.h">
+      <Filter>02.GameObjects\01. MapObject\Ventilador</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1018,6 +1057,24 @@
     </ClCompile>
     <ClCompile Include="..\Private\Shotgun_SpinB.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp">
+      <Filter>02.GameObjects\05. Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Public\Explosion.cpp">
+      <Filter>02.GameObjects\05. Effect\01. Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\HitBlood.cpp">
+      <Filter>02.GameObjects\05. Effect\02. HitBlood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_BoxObj.cpp">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_BoxObj</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BoxObject.cpp">
+      <Filter>02.GameObjects\01. MapObject\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Ventilador.cpp">
+      <Filter>02.GameObjects\01. MapObject\Ventilador</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

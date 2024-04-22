@@ -38,6 +38,8 @@ namespace Client
 		BORDER,
 		SPAWN_TRIGGER,
 		SLOPE,
+		BOX_OBJECT,
+		VENTILADOR,
 		OBJTYPE_END,
 	};
 

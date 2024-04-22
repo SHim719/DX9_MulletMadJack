@@ -1,9 +1,6 @@
 #pragma once
+
 #include "Client_Defines.h"
-#include "GameObject.h"
-#include "Animation.h"
-#include "FPS_Camera.h"
-#include "Core_Camera.h"
 #include "Pawn.h"
 
 BEGIN(Engine)
@@ -62,17 +59,7 @@ private:
 
 	void Hit(void* pArg) override;
 
-private:
 	STATE			m_eState = STATE_IDLE;
-	_float			m_fHp = 8.f;
-	_float			m_fSpeed = 1.f;
-	_float			m_fPerceptionDist = 3.f;
-	_float			m_fRange = 1.f;
-	_bool			m_bPushRecovery = { false };
-
-	_float			m_fDeathTimeAcc = 0.f;
-	_float			m_fDeathTime = 3.f;
-
 private:
 	void Process_State(_float fTimeDelta);
 
@@ -82,15 +69,21 @@ private:
 	void State_Slash();
 	void State_Jump();
 	void State_GetUp();
+	void State_Execution();
+	void State_Fly(_float fTimeDelta);
+	void State_FlyDeath(_float fTimeDelta);
 	void State_Death(_float fTimeDelta);
 
 public:
 	void SetState_Idle();
 	void SetState_Move();
-	void SetState_Pushed(_float3 vLook);
+	void SetState_Pushed(_float3 vLook)	override;
 	void SetState_Slash();
 	void SetState_Jump();
 	void SetState_GetUp();
+	void SetState_Execution()			override;
+	void SetState_Fly(_float3 vLook)	override;
+	void SetState_FlyDeath();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
 
 private:

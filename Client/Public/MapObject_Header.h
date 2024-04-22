@@ -9,3 +9,5 @@
 #include "SodaMachine.h"
 #include "SodaMachine_Banner.h"
 #include "Slope.h"
+#include "BoxObject.h"
+#include "Ventilador.h"

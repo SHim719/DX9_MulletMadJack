@@ -111,7 +111,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\opencv\build\include;../Public/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/Inc/FMOD/;../Public/</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -119,9 +119,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;fmodL_vc.lib;fmodstudioL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/lib/FMOD/Debug/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DelayLoadDLLs>
       </DelayLoadDLLs>
     </Link>
@@ -129,7 +128,11 @@
       <Command>del  ..\..\EngineSDK\Inc /q/s 
 xcopy ..\Public\\*.h          ..\..\EngineSDK\Inc /y
 xcopy ..\Bin\Engine.lib    ..\..\EngineSDK\Lib /y
-xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
+xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y
+copy "$(SolutionDir)\External\lib\FMOD\Debug\fmodL.dll" ..\..\Client\Bin
+
+
+copy "$(SolutionDir)\External\lib\FMOD\Debug\fmodstudioL.dll" ..\..\Client\Bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -160,7 +163,7 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\opencv\build\include;../Public/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../External/Inc/FMOD/;../Public/</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -170,8 +173,8 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\opencv\build\x64\vc16\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;fmod_vc.lib;fmodstudio_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../External/Iib/FMOD/Release/</AdditionalLibraryDirectories>
       <DelayLoadDLLs>
       </DelayLoadDLLs>
     </Link>
@@ -179,7 +182,11 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
       <Command>del  ..\..\EngineSDK\Inc /q/s 
 xcopy ..\Public\\*.h          ..\..\EngineSDK\Inc /y
 xcopy ..\Bin\Engine.lib    ..\..\EngineSDK\Lib /y
-xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
+xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y
+copy "$(SolutionDir)\External\lib\FMOD\Release\fmod.dll" ../../Client/Bin
+
+
+copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" ../../Client/Bin</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -199,6 +206,8 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClInclude Include="..\Public\Engine_Macro.h" />
     <ClInclude Include="..\Public\Engine_Struct.h" />
     <ClInclude Include="..\Public\Engine_Typedef.h" />
+    <ClInclude Include="..\Public\FMOD_Core.h" />
+    <ClInclude Include="..\Public\Frustum.h" />
     <ClInclude Include="..\public\GameInstance.h" />
     <ClInclude Include="..\public\GameObject.h" />
     <ClInclude Include="..\Public\Graphic_Device.h" />
@@ -208,6 +217,8 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClInclude Include="..\public\Level_Manager.h" />
     <ClInclude Include="..\public\Object_Manager.h" />
     <ClInclude Include="..\public\Renderer.h" />
+    <ClInclude Include="..\Public\Sound.h" />
+    <ClInclude Include="..\Public\Sound_Manager.h" />
     <ClInclude Include="..\Public\Texture.h" />
     <ClInclude Include="..\Public\Timer.h" />
     <ClInclude Include="..\public\Timer_Manager.h" />
@@ -231,6 +242,8 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClCompile Include="..\Private\Core_Camera.cpp" />
     <ClCompile Include="..\Private\CUi.cpp" />
     <ClCompile Include="..\Private\CUi_Manager.cpp" />
+    <ClCompile Include="..\Private\FMOD_Core.cpp" />
+    <ClCompile Include="..\Private\Frustum.cpp" />
     <ClCompile Include="..\private\GameInstance.cpp" />
     <ClCompile Include="..\private\GameObject.cpp" />
     <ClCompile Include="..\Private\Graphic_Device.cpp" />
@@ -240,6 +253,8 @@ xcopy ..\Bin\Engine.dll    ..\..\Client\Bin       /y</Command>
     <ClCompile Include="..\private\Level_Manager.cpp" />
     <ClCompile Include="..\private\Object_Manager.cpp" />
     <ClCompile Include="..\private\Renderer.cpp" />
+    <ClCompile Include="..\Private\Sound.cpp" />
+    <ClCompile Include="..\Private\Sound_Manager.cpp" />
     <ClCompile Include="..\Private\Texture.cpp" />
     <ClCompile Include="..\Private\Timer.cpp" />
     <ClCompile Include="..\private\Timer_Manager.cpp" />

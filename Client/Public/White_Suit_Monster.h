@@ -1,18 +1,8 @@
 #pragma once
 #include "Client_Defines.h"
-#include "GameObject.h"
-#include "Animation.h"
-#include "FPS_Camera.h"
-#include "Core_Camera.h"
 #include "Pawn.h"
-#include "CUi_SpecialHit.h"
 
-enum EventType
-{
-	SSDA,
-	ADSD,
-	ADDSD,
-};
+
 
 BEGIN(Engine)
 class CTexture;
@@ -72,17 +62,9 @@ private:
 	void Hit(void* pArg) override;
 private:
 	STATE			m_eState = STATE_IDLE;
-	_float			m_fHp = 5.f;
-	_float			m_fSpeed = 1.f;
-	_float			m_fPerceptionDist = 3.f;
-	_bool			m_bPushRecovery = { false };
+	D3DLIGHT9		m_ShotLightDesc;
+	_int			m_iLightIndex;
 
-	_float			m_fTimeAcc = 0.f;
-	_float			m_fDeathTime = 3.f;
-
-	_float			m_fFlyTimeAcc = 0.f;
-	_float			m_fFlyTime = 1.f;
-	_bool			m_bWallColl = false;
 private:
 	void Process_State(_float fTimeDelta);
 

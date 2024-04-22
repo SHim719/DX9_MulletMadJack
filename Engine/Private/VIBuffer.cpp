@@ -49,8 +49,6 @@ HRESULT CVIBuffer::Create_VertexBuffer()
 	if (nullptr == m_pGraphic_Device)
 		return E_FAIL;
 
-	/* 정점 배열을 할당한다. */
-	/* 1. 몇바이트나할당할까? 정점하나의 크기(Byte) * 정점의 갯수 */
 	if (FAILED(m_pGraphic_Device->CreateVertexBuffer(m_iVertexStride * m_iNumVertices, 0, m_FVF, D3DPOOL_MANAGED, &m_pVB, 0)))
 		return E_FAIL;
 

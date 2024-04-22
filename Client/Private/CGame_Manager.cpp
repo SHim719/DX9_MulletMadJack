@@ -39,7 +39,7 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 void CGame_Manager::Tick(_float fTimeDelta)
 {
-	CLight_Manager::Get_Instance()->Reset_Light();
+	//CLight_Manager::Get_Instance()->Reset_Light();
 
 	m_pGameInstance->Tick_Engine(fTimeDelta);
 
@@ -318,6 +318,10 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Bullet_Default"),
 		CVIBuffer_Bullet::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_BoxObject_Default"),
+		CVIBuffer_BoxObj::Create(m_pGraphic_Device))))
 		return E_FAIL;
 #pragma endregion
 	return S_OK;

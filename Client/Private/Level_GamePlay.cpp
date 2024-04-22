@@ -47,6 +47,22 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	Initialize_SodaMachine();
 
+	D3DLIGHT9 lightDesc{};
+	lightDesc.Type = D3DLIGHT_DIRECTIONAL;
+	lightDesc.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	lightDesc.Ambient = D3DXCOLOR(1.0f, 1.f, 1.f, 1.f);
+	lightDesc.Direction = _float3(1.f, -1.f, 1.f);
+
+	if (FAILED(m_pGraphic_Device->SetLight(9, &lightDesc)))
+		return E_FAIL;
+
+	D3DMATERIAL9		MaterialDesc{};
+	MaterialDesc.Diffuse = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
+	MaterialDesc.Ambient = D3DXCOLOR(0.3f, 0.3f, 0.3f, 0.3f);
+
+	m_pGraphic_Device->SetMaterial(&MaterialDesc);
+
+	m_pGraphic_Device->LightEnable(9, TRUE);
 	
 	return S_OK;
 }
@@ -100,8 +116,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 	CameraDesc.vEye = _float3(0.f, 0.65f, 1.7f);
 	CameraDesc.vAt = _float3(0.5f, 0.5f, 10.f);
 	CameraDesc.fFovy = D3DXToRadian(90.0f);
-	CameraDesc.fNear = 0.1f;
-	CameraDesc.fFar = 1000.0f;
+	CameraDesc.fNear = 0.001f;
+	CameraDesc.fFar = 100.0f;
 	CameraDesc.fSpeedPerSec = 6.f;
 	CameraDesc.fRotationPerSec = D3DXToRadian(90.0f);
 	CameraDesc.fMouseSensor = 0.1f;
@@ -125,31 +141,6 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 
 	return S_OK;
 }
-
-HRESULT CLevel_GamePlay::Ready_Layer_Chainsaw_Monster(const wstring& strLayerTag)
-{
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Chainsaw")))
-		return E_FAIL;
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Layer_Orange_Pants_Monster(const wstring& strLayerTag)
-{
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Orange_Pants")))
-		return E_FAIL;
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Layer_Drone_Monster(const wstring& strLayerTag)
-{
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Drone")))
-		return E_FAIL;
-
-	return S_OK;
-}
-
 
 
 void CLevel_GamePlay::Free()

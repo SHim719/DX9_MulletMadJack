@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize_Prototype()
 HRESULT CPlayer::Initialize(void * pArg)
 {
 	CBoxCollider::BOXCOLLISION_DESC desc;
-	desc.vScale = { 0.3f, 2.5f, 0.3f };
+	desc.vScale = { 0.3f, 1.8f, 0.3f };
 	desc.vOffset = { 0.f, 0.f, 0.f };
 
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
@@ -80,10 +80,13 @@ void CPlayer::Tick(_float fTimeDelta)
 		Set_InvincibleTime(Get_InvincibleTime() - fTimeDelta);
 		Set_Invincible(true);
 	}
-	else { 
-		Set_InvincibleTime(0.f); 
+	else if (Get_InvincibleTime() > -100.f)
+	{ 
+		Set_InvincibleTime(0.f);
 		Set_Invincible(false);
 	}
+
+
 
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pTransformCom->Head_Roll(fTimeDelta, fHeadTilt);
@@ -185,12 +188,8 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
-		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
-	}
-
-	if (m_pGameInstance->GetKeyDown(eKeyCode::P))
-	{
-		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
+		//CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
+		m_bHaveWeapon = true;
 	}
 #pragma endregion
 }
@@ -584,6 +583,7 @@ void CPlayer::Idle_State(_float fTimeDelta)
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 	{
 		m_pRigidbody->Add_GroundVelocity(-m_pTransformCom->Get_GroundRight() * m_fMoveSpeed);
+		Set_MoveState(MOVE);
 		HeadTilt(fTimeDelta, -2.f);
 	}
 	else if (m_pGameInstance->GetKeyUp(eKeyCode::A))
@@ -686,6 +686,8 @@ void CPlayer::Execution_State()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	if (CPlayer_Manager::ACTION_NONE == CPlayer_Manager::Get_Instance()->Get_Action_Type())
 	{
+		Set_Invincible(false);
+		Set_InvincibleTime(0.f);
 		SetState_Idle();
 		Kick();
 		if (m_pExecutionEnemy)
@@ -769,6 +771,11 @@ void CPlayer::SetState_Execution()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 	m_pRigidbody->Set_UseGravity(false);
 	m_pRigidbody->Set_Friction(0.f);
+
+	m_bHaveWeapon = false;
+
+	Set_Invincible(true);
+	Set_InvincibleTime(-150.f);
 }
 
 void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime)

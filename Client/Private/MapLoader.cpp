@@ -187,42 +187,54 @@ HRESULT CMapLoader::Load_MapObject(HANDLE hFile, LEVEL eLevel)
 	}
 
 	CLayer* pDoorLayer = m_pGameInstance->Find_Layer(eLevel, L"Door");
-	auto Doors = pDoorLayer->Get_GameObjects();
-
-	for (auto& pObj : Doors)
+	if (pDoorLayer)
 	{
-		CDoor* pDoor = static_cast<CDoor*>(pObj);
-		_bool isDoorRight;
-		ReadFile(hFile, &isDoorRight, sizeof(_bool), &dwByte, nullptr);
+		auto Doors = pDoorLayer->Get_GameObjects();
 
-		if (isDoorRight)
-			pDoor->Set_Direction(CDoor::DIRECTION::RIGHT);
-		else
-			pDoor->Set_Direction(CDoor::DIRECTION::LEFT);
+		for (auto& pObj : Doors)
+		{
+			CDoor* pDoor = static_cast<CDoor*>(pObj);
+			_bool isDoorRight;
+			ReadFile(hFile, &isDoorRight, sizeof(_bool), &dwByte, nullptr);
+
+			if (isDoorRight)
+				pDoor->Set_Direction(CDoor::DIRECTION::RIGHT);
+			else
+				pDoor->Set_Direction(CDoor::DIRECTION::LEFT);
+		}
 	}
+	
 
 	CLayer* pSodaMachineLayer = m_pGameInstance->Find_Layer(eLevel, L"SodaMachine");
-	auto Machines = pSodaMachineLayer->Get_GameObjects();
-
-	for (auto& pObj : Machines)
+	if (pSodaMachineLayer)
 	{
-		_float3 vPourPos = { 0.f, 0.f, 0.f };
-		ReadFile(hFile, &vPourPos, sizeof(_float3), &dwByte, nullptr);
-		static_cast<CSodaMachine*>(pObj)->Set_PourPos(vPourPos);
+		auto Machines = pSodaMachineLayer->Get_GameObjects();
+
+		for (auto& pObj : Machines)
+		{
+			_float3 vPourPos = { 0.f, 0.f, 0.f };
+			ReadFile(hFile, &vPourPos, sizeof(_float3), &dwByte, nullptr);
+			static_cast<CSodaMachine*>(pObj)->Set_PourPos(vPourPos);
+		}
 	}
+	
 
 	CLayer* pSpawnTriggerLayer = m_pGameInstance->Find_Layer(eLevel, L"SpawnTrigger");
-	auto spawnTriggers = pSpawnTriggerLayer->Get_GameObjects();
-
-	for (auto& pObj : spawnTriggers)
+	if (pSpawnTriggerLayer)
 	{
-		CSpawnTrigger* pSpawnTrigger = static_cast<CSpawnTrigger*>(pObj);
-		_uint iMin, iMax;
-		ReadFile(hFile, &iMin, sizeof(_uint), &dwByte, nullptr);
-		ReadFile(hFile, &iMax, sizeof(_uint), &dwByte, nullptr);
-		pSpawnTrigger->Set_MinIdx(iMin);
-		pSpawnTrigger->Set_MaxIdx(iMax);
+		auto spawnTriggers = pSpawnTriggerLayer->Get_GameObjects();
+
+		for (auto& pObj : spawnTriggers)
+		{
+			CSpawnTrigger* pSpawnTrigger = static_cast<CSpawnTrigger*>(pObj);
+			_uint iMin, iMax;
+			ReadFile(hFile, &iMin, sizeof(_uint), &dwByte, nullptr);
+			ReadFile(hFile, &iMax, sizeof(_uint), &dwByte, nullptr);
+			pSpawnTrigger->Set_MinIdx(iMin);
+			pSpawnTrigger->Set_MaxIdx(iMax);
+		}
 	}
+	
 
 	CloseHandle(hFile);
 	return S_OK;

@@ -45,6 +45,9 @@ void CSoda::Tick(_float fTimeDelta)
 
 void CSoda::LateTick(_float fTimeDelta)
 {
+	if (!m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
+		return;
+
 	_float4x4	ViewMatrix;
 		
 	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);

@@ -43,12 +43,13 @@ void CWall::Tick(_float fTimeDelta)
 
 void CWall::LateTick(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+	if (m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 5.f))
+		m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
 HRESULT CWall::Render()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, false);
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
@@ -60,6 +61,7 @@ HRESULT CWall::Render()
 
 	m_pBoxCollider->Render();
 
+	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	return S_OK;
 }
 

@@ -59,6 +59,19 @@ protected:
 	class CFPS_Camera*	m_pCamera = { nullptr };
 	class CPlayer*		m_pTarget = { nullptr };
 
+	_float			m_fHp = 8.f;
+	_float			m_fSpeed = 1.f;
+	_float			m_fPerceptionDist = 3.f;
+	_float			m_fRange = 1.f;
+	_bool			m_bPushRecovery = { false };
+
+	_float			m_fDeathTimeAcc = 0.f;
+	_float			m_fDeathTime = 3.f;
+
+	_float			m_fFlyTimeAcc = 0.f;
+	_float			m_fFlyTime = 1.f;
+	_bool			m_bWallColl = false;
+
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

@@ -109,7 +109,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../External/Inc/FMOD/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -120,6 +120,11 @@
       <AdditionalLibraryDirectories>../../EngineSDK/Lib/</AdditionalLibraryDirectories>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\External\lib\FMOD\Debug\fmodL.dll" "$(SolutionDir)\Client\Bin\"
+
+copy "$(SolutionDir)\External\lib\FMOD\Debug\fmodstudioL.dll" "$(SolutionDir)\Client\Bin\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -147,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../EngineSDK/Inc/;../Public/;../../External/Inc/FMOD/</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -160,6 +165,11 @@
       <AdditionalLibraryDirectories>../../EngineSDK/Lib/</AdditionalLibraryDirectories>
       <DelayLoadDLLs>%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)\External\lib\FMOD\Release\fmod.dll" "$(SolutionDir)\Client\Bin\"
+
+copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\Client\Bin\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -169,6 +179,7 @@
     <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\Public\Border.h" />
+    <ClInclude Include="..\Public\BoxObject.h" />
     <ClInclude Include="..\Public\CGame_Manager.h" />
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -186,10 +197,14 @@
     <ClInclude Include="..\Public\Drink.h" />
     <ClInclude Include="..\Public\CUi_Reload.h" />
     <ClInclude Include="..\Public\Drone_Monster.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\Public\Effect.h" />
+    <ClInclude Include="..\Public\Effect_Headers.h" />
     <ClInclude Include="..\Public\Execution_Knife.h" />
+    <ClInclude Include="..\Public\Explosion.h" />
+    <ClInclude Include="..\Public\HitBlood.h" />
     <ClInclude Include="..\public\Light_Manager.h" />
     <ClInclude Include="..\Public\Execution_Body.h" />
     <ClInclude Include="..\Public\Execution_Hand.h" />
@@ -246,6 +261,8 @@
     <ClInclude Include="..\Public\SpawnTrigger.h" />
     <ClInclude Include="..\Public\Terrain_Collider.h" />
     <ClInclude Include="..\Public\Trigger_Headers.h" />
+    <ClInclude Include="..\Public\Ventilador.h" />
+    <ClInclude Include="..\Public\VIBuffer_BoxObj.h" />
     <ClInclude Include="..\Public\VIBuffer_Bullet.h" />
     <ClInclude Include="..\Public\VIBuffer_Door.h" />
     <ClInclude Include="..\Public\VIBuffer_Floor_Border.h" />
@@ -290,11 +307,14 @@
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
+    <ClCompile Include="..\Private\BoxObject.cpp" />
     <ClCompile Include="..\Private\CGame_Manager.cpp" />
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\Private\Effect.cpp" />
+    <ClCompile Include="..\Private\HitBlood.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
     <ClCompile Include="..\Private\Shotgun_Reload.cpp" />
@@ -317,7 +337,7 @@
     <ClCompile Include="..\Private\CUi_PEACE.cpp" />
     <ClCompile Include="..\Private\Drink.cpp" />
     <ClCompile Include="..\Private\Drone_Monster.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Body.cpp" />
@@ -362,6 +382,8 @@
     <ClCompile Include="..\Private\Soda.cpp" />
     <ClCompile Include="..\Private\SpawnTrigger.cpp" />
     <ClCompile Include="..\Private\Terrain_Collider.cpp" />
+    <ClCompile Include="..\Private\Ventilador.cpp" />
+    <ClCompile Include="..\Private\VIBuffer_BoxObj.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Bullet.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Door.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp" />
@@ -394,6 +416,7 @@
     <ClCompile Include="..\Private\Pistol.cpp" />
     <ClCompile Include="..\Private\Pistol_Right_Hand.cpp" />
     <ClCompile Include="..\Private\Wall.cpp" />
+    <ClCompile Include="..\Public\Explosion.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

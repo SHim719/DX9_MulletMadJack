@@ -18,7 +18,7 @@ HRESULT CCollision_Manager::Initialize()
 
 void CCollision_Manager::Tick()
 {
-	Collision_Box(4, L"Player", L"Wall",Collision);
+	Collision_Box(3, L"Player", L"Wall",Collision);
 	//Collision_Box(4, L"Player", L"Floor");
 
 	Collision_Box(3, L"Player", L"Door", Collision);
@@ -62,8 +62,8 @@ void CCollision_Manager::Intersect_Ray()
 			_float fDist;
 			if (pVIBuffer->Intersect_Ray((*it)->Get_Transform(), RayDesc.vRayWorldPos, RayDesc.vRayDir, &fHitWorldPos, &fDist))
 			{
-				if (false == (*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg))
-					continue;
+				if ((*it)->On_Ray_Intersect(fHitWorldPos, fDist, RayDesc.pArg))
+					break;
 			}
 		}
 	}

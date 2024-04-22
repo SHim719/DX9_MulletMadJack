@@ -84,10 +84,6 @@ private:
 	void ColliderCheck();
 	void ColliderUpDown();
 
-	void OnCollisionEnter(CGameObject* pOther) override;
-	void OnTriggerEnter(CGameObject* pOther) override;
-	void Hit(void* pArg) override;
-
 	void Process_State(_float fTimeDelta);
 
 	void Idle_State(_float fTimeDelta);
@@ -127,6 +123,10 @@ public:
 	_float Get_InvincibleTime() { return m_fInvincibleTime; }
 
 	_float Get_InvincibleTimeLimit() { return m_fInvincibleTimeLimit; }
+
+	void OnCollisionEnter(CGameObject* pOther) override;
+	void OnTriggerEnter(CGameObject* pOther) override;
+	void Hit(void* pArg) override;
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;

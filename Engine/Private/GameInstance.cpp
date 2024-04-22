@@ -5,6 +5,8 @@
 #include "Object_Manager.h"
 #include "Collision_Manager.h"
 #include "Camera_Manager.h"
+#include "Sound_Manager.h"
+#include "Frustum.h"
 
 IMPLEMENT_SINGLETON(CGameInstance)
 
@@ -61,6 +63,15 @@ HRESULT CGameInstance::Initialize_Engine(_uint iNumLevels, const GRAPHIC_DESC& G
 	if (nullptr == m_pText)
 		return E_FAIL;
 
+	m_pSound_Manager = CSound_Manager::Create();
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+
+	m_pFrustum = CFrustum::Create(*ppOut);
+	if (nullptr == m_pFrustum)
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -84,6 +95,8 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 	m_pCollision_Manager->Tick();
 
 	m_pCamera_Manager->Render_CurCamera(fTimeDelta);
+
+	m_pFrustum->Tick();
 
 	m_pObject_Manager->LateTick(fTimeDelta);
 
@@ -389,7 +402,47 @@ void CGameInstance::Print_Big_Text(CText::Text_Info BigText)
 {
 	m_pText->Print_Big_Text(BigText);
 }
+#pragma endregion
 
+#pragma region SOUND_MANAGER
+HRESULT CGameInstance::Create_Sound(const string& strPath, const wstring& strSoundTag)
+{
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+
+	return m_pSound_Manager->Create_Sound(strPath, strSoundTag);
+}
+
+HRESULT CGameInstance::Play(const wstring& strSoundTag, _bool bLoop)
+{
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+
+	return m_pSound_Manager->Play(strSoundTag, bLoop);
+
+	return S_OK;
+}
+
+HRESULT CGameInstance::Stop(const wstring& strSoundTag)
+{
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+
+	return m_pSound_Manager->Stop(strSoundTag);
+}
+
+
+HRESULT CGameInstance::SetVolume(const wstring& strSoundTag, const _float& fVolume)
+{
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+
+	return m_pSound_Manager->SetVolume(strSoundTag, fVolume);
+}
+_bool CGameInstance::In_WorldFrustum(_float3 vWorldPos, _float fRadius)
+{
+	return m_pFrustum->In_WorldFrustum(vWorldPos, fRadius);
+}
 #pragma endregion
 
 void CGameInstance::Release_Engine()
@@ -411,5 +464,7 @@ void CGameInstance::Free()
 	Safe_Release(m_pUi_Manager);
 	Safe_Release(m_pCollision_Manager);
 	Safe_Release(m_pCamera_Manager);
+	Safe_Release(m_pSound_Manager);
+	Safe_Release(m_pFrustum);
 	Safe_Release(m_pGraphic_Device);
 }

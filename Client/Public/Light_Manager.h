@@ -3,7 +3,7 @@
 #include "Client_Defines.h"
 #include "Base.h"
 
-#define LIGHT_MAX 10
+#define LIGHT_MAX 9
 
 BEGIN(Client)
 class CLight_Manager : public CBase
@@ -22,8 +22,12 @@ public:
 	void Remove_Light(_uint iLightIdx);
 	HRESULT Set_Material(const D3DMATERIAL9& material);
 
-	HRESULT Enable_Light(_uint iLightIdx) { return m_pGraphic_Device->LightEnable(iLightIdx, TRUE); }
-	HRESULT Diable_Light(_uint iLightIdx) { return m_pGraphic_Device->LightEnable(iLightIdx, FALSE); }
+	HRESULT Enable_Light(_uint iLightIdx) 
+	{ 
+		return m_pGraphic_Device->LightEnable(iLightIdx, TRUE);
+	
+	}
+	HRESULT Disable_Light(_uint iLightIdx) { return m_pGraphic_Device->LightEnable(iLightIdx, FALSE); }
 private:
 	LPDIRECT3DDEVICE9 m_pGraphic_Device = { nullptr };
 	_bool m_bArrUseLight[LIGHT_MAX] = {};

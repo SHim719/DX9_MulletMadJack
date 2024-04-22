@@ -169,6 +169,8 @@ public:
 	void Rotation(const _float3& vAxis, _float fRadian);
 	void Rotation_XYZ(const _float3& vXYZ); // XYZ Degree 값 받아서 돌아줌.
 
+	void Set_RotationSpeed(_float fRadian) { m_fRotationPerSec = fRadian; }
+
 	void LookAt(const _float3& vWorldPoint);
 	void LookAt_ForLandObject(const _float3& vWorldPoint);
 	

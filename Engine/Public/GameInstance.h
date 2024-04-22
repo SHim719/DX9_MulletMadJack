@@ -110,8 +110,19 @@ public:
 #pragma region CText
 	void Print_Text(CText::Text_Info Text);
 	void Print_Big_Text(CText::Text_Info BigText);
-
 #pragma endregion
+
+#pragma region SOUND_MANAGER
+	HRESULT Create_Sound(const string& strPath, const wstring& strSoundTag);
+	HRESULT Play(const wstring& strSoundTag, _bool bLoop);
+	HRESULT Stop(const wstring& strSoundTag);
+	HRESULT SetVolume(const wstring& strSoundTag, const _float& fVolume);
+#pragma endregion
+
+#pragma region FRUSTUM
+	_bool In_WorldFrustum(_float3 vWorldPos, _float fRadius);
+#pragma endregion 
+
 private:
 	class CGraphic_Device*			m_pGraphic_Device = { nullptr };
 	class CLevel_Manager*			m_pLevel_Manager = { nullptr };
@@ -124,6 +135,8 @@ private:
 	class CCollision_Manager*		m_pCollision_Manager = { nullptr };
 	class CCamera_Manager*			m_pCamera_Manager = { nullptr };
 	class CText*					m_pText = { nullptr };
+	class CSound_Manager*			m_pSound_Manager = { nullptr };
+	class CFrustum*					m_pFrustum = { nullptr };
 
 public:
 	static void Release_Engine();
