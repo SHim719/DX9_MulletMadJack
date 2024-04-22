@@ -91,6 +91,8 @@ void CExecution_Head::Tick(_float fTimeDelta)
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Body"), false);
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Neck"), false);
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), false);
+		// minheok check this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		CGameInstance::Get_Instance()->Set_Ui_ActiveState(L"CUi_Finish");
 		AnimationDelayReset();
 	}
 

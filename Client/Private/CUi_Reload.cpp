@@ -29,6 +29,7 @@ void CUi_Reload::PriorityTick(_float fTimeDelta)
 
 void CUi_Reload::Tick(_float fTimeDelta)
 {
+	Blink(fTimeDelta);
 }
 
 void CUi_Reload::LateTick(_float fTimeDelta)
@@ -37,12 +38,14 @@ void CUi_Reload::LateTick(_float fTimeDelta)
 
 HRESULT CUi_Reload::Render()
 {
-	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
-		return E_FAIL;
+	if (m_bBlink)
+	{
+		if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
+			return E_FAIL;
 
-	m_pTextureCom->Bind_Texture(m_iTexture_Index);
-	m_pVIBufferCom->Render();
-
+		m_pTextureCom->Bind_Texture(m_iTexture_Index);
+		m_pVIBufferCom->Render();
+	}
 	return S_OK;
 }
 
@@ -98,6 +101,28 @@ HRESULT CUi_Reload::Add_Texture(void* pArg)
 		return E_FAIL;
 
 	return S_OK;
+}
+
+void CUi_Reload::Blink(_float fTimeDelta)
+{
+	if (m_bBlink)
+	{
+		m_fBlink += fTimeDelta;
+		if (m_fBlink > 0.5f)
+		{
+			m_fBlink = 0.f;
+			m_bBlink = false;
+		}	
+	}
+	else
+	{
+		m_fBlinkGap += fTimeDelta;
+		if (m_fBlinkGap > 0.5f)
+		{
+			m_bBlink = true;
+			m_fBlinkGap = 0;
+		}
+	}
 }
 
 CUi_Reload* CUi_Reload::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

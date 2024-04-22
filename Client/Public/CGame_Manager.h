@@ -54,6 +54,7 @@ public:
 public:
 	HRESULT Ready_Prototype_GameObjects();
 	HRESULT Ready_Prototype_Components();
+	void Ready_LobbyUi();
 	void Ready_Loading_BackGroundTextureAndUi(); // need Ready_Prototype_Components fuction
 	//Custom Prototype
 	HRESULT Ready_Execution_Texture();
@@ -82,8 +83,8 @@ private:
 
 
 private:
-	D3DVIEWPORT9 m_MainViewPort;
-	D3DVIEWPORT9 m_UiViewPort;
+	D3DVIEWPORT9 m_MainViewPort{};
+	D3DVIEWPORT9 m_UiViewPort{};
 	_float m_fShopTime = {0.5f};
 	_float m_fStageClearTime = { 0 };
 	_float m_fChangeTime = { 3.5f };

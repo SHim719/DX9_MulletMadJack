@@ -12,6 +12,7 @@ END
 BEGIN(Client)
 enum class TextType
 {
+	Default,
 	TutorialMidSpot,
 	TutorialClear,
 	ShopEnd,

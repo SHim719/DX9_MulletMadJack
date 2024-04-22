@@ -3,8 +3,8 @@
 #include "Client_Defines.h"
 #include "Base.h"
 
-/* 2. ·Îµù ´ÙÀ½ ·¹º§¿¡ ÇÊ¿äÇÑ ÀÚ¿øÀ» »ý¼ºÇÑ´Ù.  */
-/* ´ÙÀ½ ·¹º§¿¡ ´ëÇÑ ÀÚ¿ø ·Îµù : ¸ÖÆ¼½º·¹µå */
+/* 2. ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.  */
+/* ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¿ï¿½ ï¿½Îµï¿½ : ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 
 BEGIN(Engine)
 class CGameInstance;
@@ -52,6 +52,7 @@ private:
 	HRESULT Loading_For_Drone_Monster();
 	HRESULT Loading_For_Map_Texture();
 	HRESULT Loading_For_Effect_Texture();
+	HRESULT Loading_For_Sans_Texture();
 
 	HRESULT Ready_MapObject_Prototype();
 	HRESULT Ready_Monster_Prototype();

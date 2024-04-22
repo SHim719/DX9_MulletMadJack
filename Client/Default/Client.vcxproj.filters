@@ -151,12 +151,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\CUi_Clear_Victory">
       <UniqueIdentifier>{4527b87b-dfc7-4e0a-b39e-5432c4733454}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\CUi_Start">
-      <UniqueIdentifier>{30f36453-2343-443c-a983-5b6a2a6607b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor">
-      <UniqueIdentifier>{692c0838-891e-4753-a8fe-9d0027138c4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand">
       <UniqueIdentifier>{da29112f-0a6b-482d-b7b1-a463ce1ddbb2}</UniqueIdentifier>
     </Filter>
@@ -397,6 +391,42 @@
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_BoxObj">
       <UniqueIdentifier>{406a5dc0-7aaa-43ca-8182-575e73624ef1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Execution_Show">
+      <UniqueIdentifier>{7023b199-0d92-4300-ab2f-c2280650783e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Start">
+      <UniqueIdentifier>{30f36453-2343-443c-a983-5b6a2a6607b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor">
+      <UniqueIdentifier>{692c0838-891e-4753-a8fe-9d0027138c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Life\CUi_GreenCross">
+      <UniqueIdentifier>{971b05a7-4f2b-43a6-81be-04aca1eb2045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_GreenCrossActive">
+      <UniqueIdentifier>{7a69778e-7e24-494a-b468-372f93ecd482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Levels\Lobby">
+      <UniqueIdentifier>{e2b26e29-05d7-40d3-89de-327aa7408704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss">
+      <UniqueIdentifier>{73916b9b-5ba6-496a-aa3c-a63b1d880c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Sans_Bone">
+      <UniqueIdentifier>{621cd69a-a22b-40ea-971c-76b6dc5bfec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner">
+      <UniqueIdentifier>{886ff83f-0145-416f-a2fc-3af185244d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner">
+      <UniqueIdentifier>{d2004c3b-8f2c-4f41-b793-e0a5a167ac78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster">
+      <UniqueIdentifier>{c70d46f8-6b7b-49f7-a68b-fa436df04718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser">
+      <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -595,9 +625,6 @@
     <ClInclude Include="..\Public\Pistol_Barrel.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\White_Suit_Monster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\Pawn.h">
       <Filter>02.GameObjects\04. Enemy\Pawns</Filter>
     </ClInclude>
@@ -783,6 +810,36 @@
     </ClInclude>
     <ClInclude Include="..\Public\Katana_Effect.h">
       <Filter>04. UI\Ui\Effect\Slash\Katana</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Execution_Show.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Execution_Show</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_GreenCrossActive.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_GreenCrossActive</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_GreenCross.h">
+      <Filter>04. UI\Ui\CUi_Life\CUi_GreenCross</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CLevel_Lobby.h">
+      <Filter>01.Levels\Lobby</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CSans.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CSans_Bone.h">
+      <Filter>02.GameObjects\04. Enemy\Sans_Bone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CBone_Spawner.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CSans_Gaster.h">
+      <Filter>02.GameObjects\04. Enemy\Sans_Gaster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\White_Suit_Monster.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CGasterLaser.h">
+      <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1112,6 +1169,33 @@
     </ClCompile>
     <ClCompile Include="..\Private\Katana_Effect.cpp">
       <Filter>04. UI\Ui\Effect\Slash\Katana</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Execution_Show.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Execution_Show</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_GreenCrossActive.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_GreenCrossActive</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_GreenCross.cpp">
+      <Filter>04. UI\Ui\CUi_Life\CUi_GreenCross</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CLevel_Lobby.cpp">
+      <Filter>01.Levels\Lobby</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSans.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSans_Bone.cpp">
+      <Filter>02.GameObjects\04. Enemy\Sans_Bone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CBone_Spawner.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSans_Gaster.cpp">
+      <Filter>02.GameObjects\04. Enemy\Sans_Gaster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CGasterLaser.cpp">
+      <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

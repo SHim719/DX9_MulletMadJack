@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CUi_Reload final : public CUi
+class CUi_GreenCrossActive final : public CUi
 {
 protected:
-	CUi_Reload(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Reload(const CUi_Reload& rhs);
-	virtual ~CUi_Reload() = default;
+	CUi_GreenCrossActive(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_GreenCrossActive(const CUi_GreenCrossActive& rhs);
+	virtual ~CUi_GreenCrossActive() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -23,6 +23,8 @@ public:
 
 protected:
 	virtual HRESULT Initialize_Active() override;
+	virtual void Initialize_Set_ActiveTime() override;
+	virtual void Initialize_Set_Size() override;
 	virtual void Initialize_Set_Speed() override;
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg) override;
 
@@ -33,15 +35,15 @@ protected:
 
 
 private:
-	void Blink(_float fTimeDelta);
+	void CreateGreenCross(_float fTimeDelta);
 
 
 private:
-	_float m_fBlinkGap = { 0.f };
+	_float m_fCreateTime = { 0 };
 
 
 public:
-	static CUi_Reload* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_GreenCrossActive* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

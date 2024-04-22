@@ -24,6 +24,8 @@
 #include "MapLoader.h"
 
 #include "CUi_Combo.h"
+#include "CSans.h"
+#include "CSans_Gaster.h"
 
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -36,11 +38,15 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_iLevelID = LEVEL_GAMEPLAY;
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
+
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
 	
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
+
+	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
+	//	return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
@@ -142,6 +148,21 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 	return S_OK;
 }
 
+HRESULT CLevel_GamePlay::Ready_Layer_Sans_Boss(const wstring& strLayerTag)
+{
+	//if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Sans")))
+	//	return E_FAIL;
+
+	//GasterArg pArg;
+	//pArg.Pos = SansGasterPos::Middle;
+	//pArg._floor = 0;
+	//if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_CSans_Gaster"), &pArg))
+	//	return E_FAIL;
+
+
+	return S_OK;
+}
+
 
 void CLevel_GamePlay::Free()
 {
@@ -191,7 +212,11 @@ void CLevel_GamePlay::Test_Ui()
 	}
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::G))
 	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"));
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"));
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::Z))
+	{
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_GreenCrossActive"));
 	}
 }
 

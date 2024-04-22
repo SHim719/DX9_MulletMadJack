@@ -37,6 +37,8 @@ void CUi_Announcer::Tick(_float fTimeDelta)
 {
 	m_fActiveTime -= fTimeDelta;
 	m_fUniqueTextureTime += fTimeDelta;
+	m_fAnnouncerTextureTime += fTimeDelta;
+
 	if (m_fActiveTime > 0)
 	{
 		Move(fTimeDelta);
@@ -52,10 +54,15 @@ void CUi_Announcer::Tick(_float fTimeDelta)
 	}
 	if (m_fUniqueTextureTime > 0.2)
 	{
+
 		Texture_Switching(fTimeDelta);
 		m_fUniqueTextureTime = 0;
 	}
-
+	if (m_fAnnouncerTextureTime > 1)
+	{
+		m_fAnnouncerTextureTime = 0;
+		Announcer_Texture_Switching();
+	}
 	Set_Pos_TextBackGround();
 
 	if (m_bTextPrint)
@@ -70,13 +77,12 @@ void CUi_Announcer::LateTick(_float fTimeDelta)
 
 HRESULT CUi_Announcer::Render()
 {
+	Set_AnnouncerTexture();
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
-
 	m_pTextureCom->Bind_Texture(m_iTexture_Index);
 	m_pVIBufferCom->Render();
-
 
 	m_pUniqueTexture->Bind_Texture(m_iUniqueTextureIndex);
 	m_pVIBufferCom->Render();
@@ -104,6 +110,9 @@ HRESULT CUi_Announcer::Initialize_Active()
 
 	m_iPrintTextNumber = 0;
 	m_bTextPrint = false;
+	_uint m_iTextureIndexMin = { 0 };
+	_uint m_iTextureIndexMax = { 0 };
+
 	return S_OK;
 }
 
@@ -222,6 +231,13 @@ void CUi_Announcer::Texture_Switching(_float fTimeDelta)
 		m_iUniqueTextureIndex = 0;
 }
 
+void CUi_Announcer::Announcer_Texture_Switching()
+{
+	++m_iTexture_Index;
+	if (m_iTextureIndexMax < m_iTexture_Index)
+		m_iTexture_Index = m_iTextureIndexMin;
+}
+
 void CUi_Announcer::TextRender()
 {
 	if (m_pGameManager->Get_StageProgress() == StageProgress::ShopEnd
@@ -244,7 +260,6 @@ void CUi_Announcer::TextRender()
 		if (m_pGameManager->Get_MaxSize(TextType::TutorialMidSpot) >
 			m_pGameManager->Get_TextNumber(TextType::TutorialMidSpot))
 		{
-
 			m_pTextBackGround->Render();
 			m_pGameManager->Print_Text(TextType::TutorialMidSpot,
 				m_pGameManager->Get_TextNumber(TextType::TutorialMidSpot));
@@ -294,6 +309,134 @@ void CUi_Announcer::Cal_PrintTextNumber(_float fTimeDelta)
 	{
 		m_fPrintTextGap = 0;
 		++m_iPrintTextNumber;
+	}
+}
+
+void CUi_Announcer::Set_AnnouncerTexture()
+{
+	TextType type = TextType::Default;
+	_uint Number = m_pGameManager->Get_TextNumber(type);
+
+	if (m_pGameManager->Get_StageProgress() ==
+		StageProgress::TutorialMidSpot)
+	{
+		type = TextType::TutorialMidSpot;
+		Number = m_pGameManager->Get_TextNumber(type);
+	}
+	else if (m_pGameManager->Get_StageProgress() ==
+		StageProgress::TutorialClear)
+	{
+		type = TextType::TutorialClear;
+		Number = m_pGameManager->Get_TextNumber(type);
+	}
+	else if (m_pGameManager->Get_StageProgress() ==
+		StageProgress::ShopEnd
+		|| m_pGameManager->Get_StageProgress() ==
+		StageProgress::Changing)
+	{
+		type = TextType::ShopEnd;
+		Number = m_pGameManager->Get_TextNumber(type);
+	}
+
+	switch (type)
+	{
+	case TextType::Default:
+		m_iTextureIndexMin = 0;
+		m_iTextureIndexMax = 0;
+		break;
+	case TextType::TutorialMidSpot:
+		Set_TextureIndexTutorialMidSpot(Number);
+		break;
+	case TextType::TutorialClear:
+		Set_TextureIndexTutorialClear(Number);
+		break;
+	case TextType::ShopEnd:
+		Set_TextureIndexShopEnd(Number);
+		break;
+	case TextType::End:
+		break;
+	default:
+		break;
+	}
+
+	if (m_OldTextNumber != Number || m_OldType != type)
+	{
+		m_OldType = type;
+		m_OldTextNumber = Number;
+		m_iTexture_Index = m_iTextureIndexMin;
+	}
+}
+
+void CUi_Announcer::Set_TextureIndexTutorialMidSpot(_uint Number)
+{
+	if (Number == 0 || Number == 1)
+	{
+		m_iTextureIndexMin = 2;
+		m_iTextureIndexMax = 3;
+		
+	}
+	else if (Number == 2)
+	{
+		m_iTextureIndexMin = 0;
+		m_iTextureIndexMax = 1;
+	}
+	else if (Number == 3)
+	{
+		m_iTextureIndexMin = 4;
+		m_iTextureIndexMax = 5;
+	}
+	else if (Number == 4)
+	{
+		m_iTextureIndexMin = 2;
+		m_iTextureIndexMax = 3;
+	}
+	else if (Number == 5)
+	{
+		m_iTextureIndexMin = 6;
+		m_iTextureIndexMax = 7;
+	}
+}
+
+void CUi_Announcer::Set_TextureIndexTutorialClear(_uint Number)
+{
+	if (Number == 0)
+	{
+		m_iTextureIndexMin = 4;
+		m_iTextureIndexMax = 5;
+	}
+	else if (Number == 1 || Number == 2)
+	{
+		m_iTextureIndexMin = 6;
+		m_iTextureIndexMax = 7;
+	}
+	else if (Number == 3)
+	{
+		m_iTextureIndexMin = 4;
+		m_iTextureIndexMax = 5;
+	}
+	else if (Number == 4)
+	{
+		m_iTextureIndexMin = 2;
+		m_iTextureIndexMax = 3;
+	}
+	else if (Number == 5)
+	{
+		m_iTextureIndexMin = 6;
+		m_iTextureIndexMax = 7;
+	}
+}
+
+void CUi_Announcer::Set_TextureIndexShopEnd(_uint Number)
+{
+	if (Number == 0)
+	{
+		m_iTextureIndexMin = 4;
+		m_iTextureIndexMax = 5;
+	}
+	else
+	{
+		m_iTextureIndexMin = 0;
+		m_iTextureIndexMax = 1;
 	}
 }
 

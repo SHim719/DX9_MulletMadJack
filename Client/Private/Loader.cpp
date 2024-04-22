@@ -9,6 +9,12 @@
 #include "CGame_Manager.h"
 #include "MapObject_Header.h"
 #include "Effect_Headers.h"
+#include "CSans.h"
+#include "CSans_Bone.h"
+#include "CSans_Gaster.h"
+#include "CGasterLaser.h"
+#include "CSans_Gaster.h"
+
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -76,7 +82,7 @@ HRESULT CLoader::Loading_For_Logo_Level()
 HRESULT CLoader::Loading_For_GamePlay_Level()
 {
 	m_fProgress = 0.1f;
-	lstrcpy(m_szLoadingText, TEXT("로딩중"));
+	lstrcpy(m_szLoadingText, TEXT("LOADING.."));
 	if (FAILED(Loading_For_WhiteSuitMonster()))
 		return E_FAIL;
 
@@ -85,11 +91,15 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	if (FAILED(Loading_For_Drone_Monster()))
 		return E_FAIL;
+	m_fProgress = 0.3f;
 
 	if (FAILED(Loading_For_Map_Texture()))
 		return E_FAIL;
 
 	if (FAILED(Loading_For_Effect_Texture()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Sans_Texture()))
 		return E_FAIL;
 
 	//if (FAILED(Loading_For_Orange_Pants_Monster()))
@@ -105,26 +115,18 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	if (FAILED(Ready_Effect_Prototype()))
 		return E_FAIL;
-	
-	/* For Prototype_GameObject_Drone_Monster */
-	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Drone"),
-	//	CDrone_Monster::Create(m_pGraphic_Device))))
-	//	return E_FAIL;
-	//
+
 	///* For Prototype_GameObject_Orange_Pants_Monster */
 	//if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Orange_Pants"),
 	//	COrange_Pants_Monster::Create(m_pGraphic_Device))))
 	//	return E_FAIL;
 	//
-
-
-	lstrcpy(m_szLoadingText, TEXT("UI."));
 	if (FAILED(Loading_For_Ui()))
 		return E_FAIL;
 
 	Initialize_TextManager();
 
-	lstrcpy(m_szLoadingText, TEXT("완."));
+	lstrcpy(m_szLoadingText, TEXT("Wan."));
 	m_fProgress = 1.f;
 
 	m_isFinished = true;
@@ -275,6 +277,28 @@ HRESULT CLoader::Loading_For_Effect_Texture()
 	return S_OK;
 }
 
+HRESULT CLoader::Loading_For_Sans_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Idle"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Idle.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Bone"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/HalfBone.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Texture_GasterLaser"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("CSans_Gaster_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, 
+			TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Gaster/GasterBlaster%d.png"), 6))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
 HRESULT CLoader::Ready_MapObject_Prototype()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
@@ -414,6 +438,23 @@ HRESULT CLoader::Ready_Monster_Prototype()
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SpawnTrigger"),
 		CSpawnTrigger::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Sans"),
+		CSans::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Sans_Bone"),
+		CSans_Bone::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CGasterLaser"),
+		CGasterLaser::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CSans_Gaster"),
+		CSans_Gaster::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -569,7 +610,7 @@ HRESULT CLoader::Ready_ClearUi_Texture()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Announcer_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Clear/Announcer/Announcer.png"))))
+			L"../Bin/Resources/Textures/Ui/Clear/Announcer/Announcer%d.png", 8))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Sheet_Texture",
@@ -749,6 +790,26 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Reload_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/OnGoing/Reload.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Execution_Show_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/CUi_Execution_Weapon.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Execution_BackGround_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/CUi_Execution_BackGround.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Execution_WeaponBackGround_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/CUi_Execution_WeaponBackGround.png"))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_GreenCross_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Life/CUi_GreenCross.png"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -988,6 +1049,10 @@ HRESULT CLoader::Ready_Prototype_Ui_Life()
 		CUi_Combo::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_GreenCross"),
+		CUi_GreenCross::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1095,6 +1160,16 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Reload"),
 		eUiRenderType::Render_NonBlend,
 		CUi_Reload::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Execution_Show"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Execution_Show::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_GreenCrossActive"),
+		eUiRenderType::Render_NonBlend,
+		CUi_GreenCrossActive::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
