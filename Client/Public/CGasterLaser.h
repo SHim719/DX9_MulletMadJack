@@ -2,6 +2,7 @@
 #include "Client_Defines.h"
 #include "GameObject.h"
 #include "Animation.h"
+#include "CSans_Gaster.h"
 
 
 BEGIN(Engine)
@@ -13,9 +14,14 @@ END
 BEGIN(Client)
 enum class GasterLaserState
 {
-	Ready,
+	Warning,
 	Fire,
 	End
+};
+using GasterLaserArg = struct GasterLaserInfo
+{
+	SansGasterFirePos FirePos;
+	_float3 Pos = { 0, 0, 0 };
 };
 class CGasterLaser final : public CGameObject
 {
@@ -43,6 +49,7 @@ private:
 	HRESULT Add_Components();
 	HRESULT Add_Texture();
 	void Initialize_Arg(void* pArg);
+	void Arg_InitializeSetPosScale(SansGasterFirePos FirePos, _float3 Pos);
 
 
 private:
@@ -55,8 +62,9 @@ private:
 	_float m_fLife = { 1.5f };
 	_float m_fAlphaTime = { 0.f };
 	_float m_fScaleTime = { 0.f };
-	_float3 m_fScale = { 1, 1, 0 };
-	_uint m_iAlpha = { 0 };
+	_float3 m_fScale = { 1, 1, 1 };
+	_uint m_iAlpha = { 50 };
+
 
 private:
 	CVIBuffer_Box* m_pVIBufferCom = { nullptr };

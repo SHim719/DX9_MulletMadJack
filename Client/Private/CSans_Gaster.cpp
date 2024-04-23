@@ -1,4 +1,6 @@
 #include "CSans_Gaster.h"
+#include "CGasterLaser.h"
+
 
 CSans_Gaster::CSans_Gaster(LPDIRECT3DDEVICE9 pGraphic_Device)
 	:CGameObject(pGraphic_Device)
@@ -33,21 +35,32 @@ HRESULT CSans_Gaster::Initialize(void* pArg)
 void CSans_Gaster::Initialize_Arg(void* pArg)
 {
 	GasterArg* Arg = (GasterArg*)pArg;
+	m_eFirePos = Arg->FirePos;
 	_uint ifloor = Arg->_floor;
-	if (Arg->Pos == SansGasterPos::left)
+	switch (m_eFirePos)
 	{
-		_float3 Pos = { -0.5f, 1.f, 3.f };
-		m_pTransformCom->Set_Position(Pos);
-	}
-	else if (Arg->Pos == SansGasterPos::Middle)
-	{
-		_float3 Pos = { -0.5f, 1.f, 3.f };
-		m_pTransformCom->Set_Position(Pos);
-	}
-	else if (Arg->Pos == SansGasterPos::Right)
-	{
-		_float3 Pos = { -0.5f, 1.f, 3.f };
-		m_pTransformCom->Set_Position(Pos);
+	case SansGasterFirePos::Straight:
+		Set_ArgStraightPos(Arg->Pos);
+		break;		  
+	case SansGasterFirePos::BackWard:
+		Set_ArgBackWardPos(Arg->Pos);
+		break;		 
+	case SansGasterFirePos::Left:
+		Set_ArgLeftPos(Arg->Pos);
+		break;		
+	case SansGasterFirePos::Right:
+		Set_ArgRightPos(Arg->Pos);
+		break;		 
+	case SansGasterFirePos::Down:
+		Set_ArgDownPos(Arg->Pos);
+		break;		  
+	case SansGasterFirePos::Up:
+		Set_ArgUpPos(Arg->Pos);
+		break;		 
+	case SansGasterFirePos::End:
+		break;
+	default:
+		break;
 	}
 
 }
@@ -61,7 +74,7 @@ void CSans_Gaster::Tick(_float fTimeDelta)
 	m_fLife -= fTimeDelta;
 	if (m_fLife < 0)
 	{
-		//m_bDestroyed = true;
+		m_bDestroyed = true;
 	}
 	TextureSwitching(fTimeDelta);
 }
@@ -165,9 +178,114 @@ void CSans_Gaster::TextureSwitching(_float fTimeDelta)
 void CSans_Gaster::SetStateLaser()
 {
 	m_eState = GasterState::Laser;
-	_float3 Pos = { 0.f, 1.f, 3.f };
+
+	GasterLaserArg pArg;
+	pArg.FirePos = m_eFirePos;
+	pArg.Pos = m_OriginPos;
+
 	m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Layer_GasterLaser", 
-		TEXT("Prototype_CGasterLaser"), &Pos);
+		TEXT("Prototype_CGasterLaser"), &pArg);
+}
+
+void CSans_Gaster::Set_ArgStraightPos(SansGasterPos Pos)
+{	
+	_float3 FirstPos = { 0.f, 0.f, 0.f };
+	switch (Pos)
+	{
+	case SansGasterPos::left:
+		FirstPos = { -1.5f, 1.f, 3.f };
+		m_OriginPos = { -0.5f, 1.f, 3.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::Middle:
+		FirstPos = { 0, 1.f, 3.f };
+		m_OriginPos = { 0, 1.f, 3.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::Right:
+		FirstPos = { 1.5f, 1.f, 3.f };
+		m_OriginPos = { 0.5f, 1.f, 3.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::End:
+		break;
+	default:
+		break;
+	}
+}
+
+void CSans_Gaster::Set_ArgBackWardPos(SansGasterPos Pos)
+{
+	_float3 Rot = { 0, 180, 0 };
+	m_pTransformCom->Rotation_XYZ(Rot);
+
+	_float3 FirstPos = { 0.f, 0.f, 0.f };
+	switch (Pos)
+	{
+	case SansGasterPos::left:
+		FirstPos = { -1.5f, 1.f, 1.f };
+		m_OriginPos = { -0.5f, 1.f, 1.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::Middle:
+		FirstPos = { 0, 1.f, 1.f };
+		m_OriginPos = { 0, 1.f, 1.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::Right:
+		FirstPos = { 1.5f, 1.f, -1.f };
+		m_OriginPos = { 0.5f, 1.f, -1.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::End:
+		break;
+	default:
+		break;
+	}
+}
+
+void CSans_Gaster::Set_ArgLeftPos(SansGasterPos Pos)
+{
+	_float3 Rot = { 0, 270, 0 };
+	m_pTransformCom->Rotation_XYZ(Rot);
+	_float3 FirstPos = { 0.f, 0.f, 0.f };
+	switch (Pos)
+	{
+	case SansGasterPos::left:
+		FirstPos = { -1.f, 1.f, -1.f };
+		m_OriginPos = { -1.f, 1.f, -1.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::Middle:
+		FirstPos = { -1.f, 1.f, 0.f };
+		m_OriginPos = { -1.f, 1.f, 0.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::Right:
+		FirstPos = { -1.f, 1.f, 1.f };
+		m_OriginPos = { -1.f, 1.f, 1.f };
+		m_pTransformCom->Set_Position(FirstPos);
+		break;
+	case SansGasterPos::End:
+		break;
+	default:
+		break;
+	}
+}
+
+void CSans_Gaster::Set_ArgRightPos(SansGasterPos Pos)
+{
+	_float3 Rot = { 0, 90, 0 };
+	m_pTransformCom->Rotation_XYZ(Rot);
+
+}
+
+void CSans_Gaster::Set_ArgDownPos(SansGasterPos Pos)
+{
+}
+
+void CSans_Gaster::Set_ArgUpPos(SansGasterPos Pos)
+{
 }
 
 CSans_Gaster* CSans_Gaster::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

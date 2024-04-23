@@ -1,5 +1,6 @@
 #include "CGasterLaser.h"
 
+
 CGasterLaser::CGasterLaser(LPDIRECT3DDEVICE9 pGraphic_Device)
 	:CGameObject(pGraphic_Device)
 {
@@ -27,7 +28,7 @@ HRESULT CGasterLaser::Initialize(void* pArg)
 
 	m_pAnimationCom->Play_Animation(TEXT("GasterLaser"), 0.1f, true);
 
-	m_eState = GasterLaserState::Ready;
+	m_eState = GasterLaserState::Warning;
 
 	m_strTag = "GasterLaser";
 
@@ -43,10 +44,10 @@ void CGasterLaser::Tick(_float fTimeDelta)
 	m_fLife -= fTimeDelta;
 	if (m_fLife < 0)
 	{
-		//m_bDestroyed = true;
+		m_bDestroyed = true;
 	}
 	AdjustAlpha(fTimeDelta);
-	AdjustScale(fTimeDelta);
+
 }
 
 void CGasterLaser::LateTick(_float fTimeDelta)
@@ -60,9 +61,20 @@ void CGasterLaser::BeginRenderState()
 	m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 	m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
-	m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR,
-		D3DCOLOR_RGBA(255, 255, 255, m_iAlpha));
 	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	if (m_eState == GasterLaserState::Warning)
+	{
+		m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+		m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
+		m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR,
+			D3DCOLOR_RGBA(255, 0, 0, m_iAlpha));
+	}
+	else
+	{
+		m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR,
+			D3DCOLOR_RGBA(255, 255, 255, 255));
+	}
 }
 
 HRESULT CGasterLaser::Render()
@@ -81,12 +93,13 @@ HRESULT CGasterLaser::Render()
 		m_pBoxCollider->Render();
 
 	EndRenderState();
-
+	
 	return S_OK;
 }
 
 void CGasterLaser::EndRenderState()
 {
+	m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 	m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -127,13 +140,41 @@ HRESULT CGasterLaser::Add_Texture()
 
 void CGasterLaser::Initialize_Arg(void* pArg)
 {
-	_float3* Pos = (_float3*)pArg;
+	GasterLaserArg* Arg = (GasterLaserArg*)pArg;
+	SansGasterFirePos FirePos = Arg->FirePos;
+	Arg_InitializeSetPosScale(FirePos, Arg->Pos);
+}
 
-	_float3 Size = {1.f, 1.f, 1.f};
-
-	m_pTransformCom->Set_Scale(Size);
-
-	m_pTransformCom->Set_Position(*Pos);
+void CGasterLaser::Arg_InitializeSetPosScale(SansGasterFirePos FirePos, _float3 Pos)
+{
+	_float3 Scale{};
+	switch (FirePos)
+	{
+	case SansGasterFirePos::Straight:
+		Scale = { 1.5f, 1.5f, 2.5f };
+		Pos += {0.f, 0.f, -1.3f};
+		m_pTransformCom->Set_Scale(Scale);
+		m_pTransformCom->Set_Position(Pos);
+		break;
+	case SansGasterFirePos::BackWard:
+		Scale = { 1.5f, 1.5f, 2.5f };
+		Pos += {0.f, 0.f, 1.3f};
+		m_pTransformCom->Set_Scale(Scale);
+		m_pTransformCom->Set_Position(Pos);
+		break;
+	case SansGasterFirePos::Left:
+		break;
+	case SansGasterFirePos::Right:
+		break;
+	case SansGasterFirePos::Down:
+		break;
+	case SansGasterFirePos::Up:
+		break;
+	case SansGasterFirePos::End:
+		break;
+	default:
+		break;
+	}
 }
 
 void CGasterLaser::AdjustAlpha(_float fTimeDelta)
@@ -141,7 +182,7 @@ void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 	m_fAlphaTime += fTimeDelta;
 	if (m_fLife > 0.8)
 	{
-		m_eState = GasterLaserState::Ready;
+		m_eState = GasterLaserState::Warning;
 		if (m_fAlphaTime > 0.05)
 		{
 			m_fAlphaTime = 0;
@@ -150,7 +191,7 @@ void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 				m_iAlpha = 255;
 			}
 			else
-				m_iAlpha += 20;
+				m_iAlpha += 5;
 		}
 	}
 	else if (m_fLife > 0.2)
@@ -176,21 +217,41 @@ void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 
 void CGasterLaser::AdjustScale(_float fTimeDelta)
 {
-	if (m_eState == GasterLaserState::Ready)
-	{
-		m_fScaleTime += fTimeDelta;
-		if (m_fScaleTime > 0.1)
-		{
-			m_fScaleTime = 0.f;
-			m_fScale.z += 1.5;
-			m_pTransformCom->Set_Scale(m_fScale);
-			_float3 Pos = m_pTransformCom->Get_Pos();
-			Pos.z -= 0.75;
-			m_pTransformCom->Set_PosZ(Pos.z);
-		}
-	}
-}
+	//if (m_eState == GasterLaserState::Warning)
+	//{
+	//	m_fScaleTime += fTimeDelta;
 
+	//	//if (m_fScaleTime > 0.1)
+	//	//{
+	//	//	m_fScaleTime = 0.f;
+	//	//	m_fScale.x += 1;
+	//	//	m_pTransformCom->Set_Scale(m_fScale);
+	//	//	//_float3 Pos = m_pTransformCom->Get_Pos();
+	//	//	//Pos.x -= 0.5;
+	//	//	//m_pTransformCom->Set_PosX(Pos.x);
+	//	//}
+
+	//	if (m_fScaleTime > 0.1)
+	//	{
+	//		m_fScaleTime = 0.f;
+	//		m_fScale.y += 1;
+	//		m_pTransformCom->Set_Scale(m_fScale);
+	//		//_float3 Pos = m_pTransformCom->Get_Pos();
+	//		//Pos.y += 0.5;
+	//		//m_pTransformCom->Set_PosY(Pos.y);
+	//	}
+
+	//	//if (m_fScaleTime > 0.1)
+	//	//{
+	//	//	m_fScaleTime = 0.f;
+	//	//	m_fScale.z += 1;
+	//	//	m_pTransformCom->Set_Scale(m_fScale);
+	//	//	_float3 Pos = m_pTransformCom->Get_Pos();
+	//	//	Pos.z -= 0.5;
+	//	//	m_pTransformCom->Set_PosZ(Pos.z);
+	//	//}
+	//}
+}
 
 CGasterLaser* CGasterLaser::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {

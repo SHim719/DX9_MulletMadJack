@@ -45,8 +45,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
+		return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
@@ -152,13 +152,6 @@ HRESULT CLevel_GamePlay::Ready_Layer_Sans_Boss(const wstring& strLayerTag)
 	//if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_Sans")))
 	//	return E_FAIL;
 
-	//GasterArg pArg;
-	//pArg.Pos = SansGasterPos::Middle;
-	//pArg._floor = 0;
-	//if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_CSans_Gaster"), &pArg))
-	//	return E_FAIL;
-
-
 	return S_OK;
 }
 
@@ -216,6 +209,26 @@ void CLevel_GamePlay::Test_Ui()
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::Z))
 	{
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_GreenCrossActive"));
+	}
+	else if (m_pGameInstance->GetKeyDown(eKeyCode::V))
+	{
+		GasterArg pArg;
+		pArg.Pos = SansGasterPos::Middle;
+		pArg.FirePos = SansGasterFirePos::Left;
+		pArg._floor = 0;
+		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Gaster", TEXT("Prototype_CSans_Gaster"), &pArg);
+
+
+		pArg.Pos = SansGasterPos::left;
+		pArg.FirePos = SansGasterFirePos::Left;
+		pArg._floor = 0;
+		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Gaster", TEXT("Prototype_CSans_Gaster"), &pArg);
+
+
+		//pArg.Pos = SansGasterPos::Right;
+		//pArg.FirePos = SansGasterFirePos::Straight;
+		//pArg._floor = 0;
+		//m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Gaster", TEXT("Prototype_CSans_Gaster"), &pArg);
 	}
 }
 

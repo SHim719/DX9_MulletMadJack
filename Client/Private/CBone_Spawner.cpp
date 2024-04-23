@@ -1,7 +1,6 @@
 #include "CBone_Spawner.h"
 #include "GameInstance.h"
-#include "CSans_Bone.h"
-
+#include "CBoneRoop.h"
 
 CBone_Spawner::CBone_Spawner()
 	:m_pGameInstance(CGameInstance::Get_Instance())
@@ -44,7 +43,7 @@ void CBone_Spawner::FirstFloorLeft(_float Speed)
 	SansBoneArg pArg;
 	pArg.floor = 1;
 	pArg.fSpeed = Speed;
-	pArg.Size = SansBoneSize::leftHalf;
+	pArg.Size = SansBonePos::Left;
 	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), 
 		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 }
@@ -54,7 +53,7 @@ void CBone_Spawner::FirstFloorRight(_float Speed)
 	SansBoneArg pArg;
 	pArg.floor = 1;
 	pArg.fSpeed = Speed;
-	pArg.Size = SansBoneSize::RightHalf;
+	pArg.Size = SansBonePos::Right;
 	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
 		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 }
@@ -64,13 +63,13 @@ void CBone_Spawner::FirstFloorAll(_float Speed)
 	SansBoneArg pArg;
 	pArg.floor = 1;
 	pArg.fSpeed = Speed;
-	pArg.Size = SansBoneSize::leftHalf;
+	pArg.Size = SansBonePos::Left;
 	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
 		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 
 	pArg.floor = 1;
 	pArg.fSpeed = Speed;
-	pArg.Size = SansBoneSize::RightHalf;
+	pArg.Size = SansBonePos::Right;
 	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
 		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
 }
