@@ -32,10 +32,19 @@
 
 #pragma endregion
 
-#include "CrossHair.h"
-#include "Phone.h"
+#pragma region Camera
+
 #include "FPS_Camera.h"
 #include "Dash_Effect.h"
+#include "Blood_Effect.h"
+
+#pragma endregion
+
+
+
+
+#include "CrossHair.h"
+#include "Phone.h"
 #include "Drink.h"
 #include "Player.h"
 #include "Kick.h"

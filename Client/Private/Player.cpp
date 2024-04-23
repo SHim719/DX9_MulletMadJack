@@ -193,7 +193,6 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
-		//CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
 		m_bHaveWeapon = true;
 	}
 #pragma endregion
@@ -546,6 +545,7 @@ void CPlayer::OnCollisionEnter(CGameObject* pOther)
 		if (m_bHaveWeapon)
 		{
 			static_cast<CPawn*>(pOther)->SetState_Execution();
+			static_cast<CPawn*>(pOther)->Set_Execution_Target();
 			SetState_Execution();
 			CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
 			m_pExecutionEnemy = static_cast<CPawn*>(pOther);

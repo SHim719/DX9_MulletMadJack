@@ -463,6 +463,21 @@
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Elevator_R">
       <UniqueIdentifier>{1061b2aa-2076-44cc-b4a7-4072b248ff99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\Blood">
+      <UniqueIdentifier>{04c8cd6f-f390-40a7-8b5e-8cb5ea2febd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\MathManager">
+      <UniqueIdentifier>{a697414d-99e9-4ab7-96fc-dd07cea47909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening">
+      <UniqueIdentifier>{61060200-e759-44eb-adac-e08463fb5df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Opening">
+      <UniqueIdentifier>{55d20017-bc93-453e-9702-ec8179ebc4b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening">
+      <UniqueIdentifier>{cb7a1990-e950-42cd-ad0a-a9aa6a965bda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -873,6 +888,10 @@
     <ClInclude Include="..\Public\Flying_Katana.h">
       <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Blood_Effect.h">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MathManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1247,6 +1266,10 @@
     <ClCompile Include="..\Private\Flying_Katana.cpp">
       <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
     </ClCompile>
+    <ClCompile Include="..\Private\Blood_Effect.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\MathManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">

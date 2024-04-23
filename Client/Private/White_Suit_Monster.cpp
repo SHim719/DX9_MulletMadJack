@@ -44,6 +44,8 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
 
     m_strTag = "Monster";
+    m_substrTag = "White_Suit_Monster";
+
     m_fHp = 10.f;
 
     return S_OK;
@@ -255,6 +257,7 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
     CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+    m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
     pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
     switch (pDesc->eHitType)

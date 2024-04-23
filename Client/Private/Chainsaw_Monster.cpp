@@ -37,6 +37,7 @@ HRESULT CChainsaw_Monster::Initialize(void* pArg)
 	m_pAnimationCom->Play_Animation(TEXT("Idle_Up"), 0.1f, true);
 
 	m_strTag = "Monster";
+	m_substrTag = "Chainsaw_Monster";
 
 	m_fHp = 15.f;
 	return S_OK;
@@ -182,6 +183,7 @@ void CChainsaw_Monster::Hit(void* pArg)
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
 	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
 	m_bThisFrameHit = true;

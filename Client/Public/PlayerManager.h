@@ -138,6 +138,9 @@ public:
 
 	_int Get_SlashCount() { m_iSlashCount++; if (m_iSlashCount >= 3) m_iSlashCount = 0; return m_iSlashCount; }
 	_int Get_RealSlashCount() { return m_iSlashCount; }
+
+	void Set_Executrion_Target(string _strExecutionTarget) { m_strExecutionTarget = _strExecutionTarget; }
+	string Get_Execution_Target() { return m_strExecutionTarget; }
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -178,6 +181,8 @@ private:
 	_int						m_iWeaponMaxMagezine = 8;
 
 	_int						m_iSlashCount = 0;
+
+	string						m_strExecutionTarget = "";
 
 private:
 

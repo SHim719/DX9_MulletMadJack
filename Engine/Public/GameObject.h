@@ -78,7 +78,7 @@ protected:
 	_bool m_bThisFrameHit = { false };
 
 	string m_strTag = "";
-
+	string m_substrTag = "";
 public:
 	void Set_Destroy(_bool b) { m_bDestroyed = b; }
 	_bool Is_Destroyed() { return m_bDestroyed; }
@@ -90,6 +90,7 @@ public:
 	_bool Can_Intersect() { return m_bCanIntersect; }
 
 	const string& Get_Tag() const { return m_strTag; }
+	const string& Get_SubTag() const { return m_substrTag; }
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;
 	virtual void Free() override;

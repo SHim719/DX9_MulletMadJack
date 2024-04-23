@@ -136,6 +136,7 @@ _bool COrange_Pants_Monster::Check_EggShot(_float3 vHitLocalPos)
 void COrange_Pants_Monster::Hit(void* pArg)
 {
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
 
 	switch (pDesc->eHitType)
 	{

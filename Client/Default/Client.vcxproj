@@ -178,6 +178,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Private\Execution_Neck.h" />
     <ClInclude Include="..\Public\Animation.h" />
     <ClInclude Include="..\Public\BackGround.h" />
+    <ClInclude Include="..\Public\Blood_Effect.h" />
     <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\BoxObject.h" />
     <ClInclude Include="..\Public\CBone_Spawner.h" />
@@ -225,6 +226,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Execution_Hand.h" />
     <ClInclude Include="..\Public\Execution_Head.h" />
     <ClInclude Include="..\Public\MapObject_Header.h" />
+    <ClInclude Include="..\Public\MathManager.h" />
     <ClInclude Include="..\Public\Monster_Headers.h" />
     <ClInclude Include="..\Public\Door.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
@@ -324,6 +326,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
   <ItemGroup>
     <ClCompile Include="..\Private\Animation.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
+    <ClCompile Include="..\Private\Blood_Effect.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\BoxObject.cpp" />
     <ClCompile Include="..\Private\CBone_Spawner.cpp" />
@@ -348,6 +351,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\CUi_Execution_Show.cpp" />
     <ClCompile Include="..\Private\CUi_GreenCrossActive.cpp" />
     <ClCompile Include="..\Private\CUi_GreenCross.cpp" />
+    <ClCompile Include="..\Private\MathManager.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
     <ClCompile Include="..\Private\Shotgun_Reload.cpp" />
