@@ -640,7 +640,6 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
     CPlayer::WEAPON_TYPE eWeaponType =CPlayer_Manager::Get_Instance()->Get_WeaponType();
     CUi_SpecialHit::SpecialHit_Desc Arg;
-    // TODO: ���� Ÿ�Կ� ���� ��� ���� 
     switch (pDesc->eHitType)
     {
     case CPawn::HEAD_SHOT: {

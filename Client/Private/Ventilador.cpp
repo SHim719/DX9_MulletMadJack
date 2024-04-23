@@ -2,6 +2,8 @@
 
 #include "GameInstance.h"
 
+#include "CUi_SpecialHit.h"
+
 
 CVentilador::CVentilador(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
@@ -43,16 +45,20 @@ void CVentilador::Tick(_float fTimeDelta)
 void CVentilador::LateTick(_float fTimeDelta)
 {
 	if (m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 3.f))
-		m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_BLEND, this);
+		m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
 HRESULT CVentilador::Render()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, false);
 
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	//m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+	//m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	//m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
@@ -65,7 +71,8 @@ HRESULT CVentilador::Render()
 
 	m_pBoxCollider->Render();
 
-	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 	return S_OK;
 }
@@ -73,7 +80,16 @@ HRESULT CVentilador::Render()
 void CVentilador::OnTriggerEnter(CGameObject* pOther)
 {
 	// Blood Effect
+	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+	pHitBlood->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos());
+	pHitBlood->Get_Transform()->Set_Scale({ 5.f, 5.f, 1.f });
 
+	CUi_SpecialHit::SpecialHit_Desc Arg;
+	Arg.Hit = eSpecialHit::FINISHED;
+	Arg.iCount = 8;
+	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+
+	pOther->Set_Destroy(true);
 }
 
 HRESULT CVentilador::Add_Components()

@@ -51,12 +51,11 @@ void CRenderer::Clear()
 
 void CRenderer::Sort_AlphaBlendObj()
 {
-	if (1 >= m_RenderObjects[RENDER_BLEND].size())
+	if (m_RenderObjects[RENDER_BLEND].size() <= 1)
 		return;
 
 	_float4x4 ViewMatrix;
 	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
-
 
 	m_RenderObjects[RENDER_BLEND].sort([&](CGameObject* pLeft, CGameObject* pRight)
 		{

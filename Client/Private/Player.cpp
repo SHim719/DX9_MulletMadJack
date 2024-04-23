@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize_Prototype()
 HRESULT CPlayer::Initialize(void * pArg)
 {
 	CBoxCollider::BOXCOLLISION_DESC desc;
-	desc.vScale = { 0.3f, 1.8f, 0.3f };
+	desc.vScale = { 0.3f, 1.f, 0.3f };
 	desc.vOffset = { 0.f, 0.f, 0.f };
 
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
@@ -560,23 +560,13 @@ void CPlayer::OnCollisionEnter(CGameObject* pOther)
 
 }
 
-void CPlayer::OnTriggerEnter(CGameObject* pOther)
-{
-	if ("Bullet" == pOther->Get_Tag()) {
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
-		if (false == m_bInvincible && m_fPlayerHp > 0.f) {
-			Set_PlayerHP_Add(-1.f);
-			Set_InvincibleTime(Get_InvincibleTimeLimit());
-		}
-	}
-}
-
 void CPlayer::Hit(void* pArg)
 {
 	_float* pDamage = (_float*)pArg;
 	if (false == m_bInvincible && m_fPlayerHp > 0.f) {
 		Set_PlayerHP_Add(-*pDamage);
 		Set_InvincibleTime(Get_InvincibleTimeLimit());
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
 	}
 }
 
@@ -596,7 +586,6 @@ void CPlayer::Process_State(_float fTimeDelta)
 	case SLOPE_STATE:
 		Slope_State(fTimeDelta);
 		break;
-
 	case EXECUTION_STATE:
 		Execution_State();
 		break;

@@ -30,6 +30,7 @@ void CCollision_Manager::Tick()
 
 	Collision_Box(3, L"Monster", L"Wall", Collision);
 	Collision_Box(3, L"Monster", L"Floor", Collision);
+	Collision_Box(3, L"Monster", L"Ventilador", Trigger);
 
 	Collision_Box(3, L"Soda", L"Player", Trigger);
 	Collision_Box(3, L"Soda", L"Floor", Collision);

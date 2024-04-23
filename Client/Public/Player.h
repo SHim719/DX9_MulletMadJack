@@ -127,7 +127,6 @@ public:
 	_float Get_InvincibleTimeLimit() { return m_fInvincibleTimeLimit; }
 
 	void OnCollisionEnter(CGameObject* pOther) override;
-	void OnTriggerEnter(CGameObject* pOther) override;
 	void Hit(void* pArg) override;
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

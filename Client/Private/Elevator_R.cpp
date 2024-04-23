@@ -49,7 +49,8 @@ void CElevator_R::Tick(_float fTimeDelta)
 
 void CElevator_R::LateTick(_float fTimeDelta)
 {
-	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+	if (m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
+		m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
 HRESULT CElevator_R::Render()
