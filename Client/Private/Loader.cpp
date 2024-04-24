@@ -9,11 +9,7 @@
 #include "CGame_Manager.h"
 #include "MapObject_Header.h"
 #include "Effect_Headers.h"
-#include "CSans.h"
-#include "CSans_Bone.h"
-#include "CSans_Gaster.h"
-#include "CGasterLaser.h"
-#include "CSans_Gaster.h"
+#include "Sans_Include.h"
 
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -460,7 +456,7 @@ HRESULT CLoader::Ready_Monster_Prototype()
 		CSans::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Sans_Bone"),
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CSans_Bone"),
 		CSans_Bone::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
@@ -472,6 +468,13 @@ HRESULT CLoader::Ready_Monster_Prototype()
 		CSans_Gaster::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CBoneRoop"),
+		CBoneRoop::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CGasterRoop"),
+		CGasterRoop::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	return S_OK;
 }

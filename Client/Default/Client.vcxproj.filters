@@ -409,20 +409,11 @@
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss">
       <UniqueIdentifier>{73916b9b-5ba6-496a-aa3c-a63b1d880c75}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Sans_Bone">
-      <UniqueIdentifier>{621cd69a-a22b-40ea-971c-76b6dc5bfec8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner">
       <UniqueIdentifier>{886ff83f-0145-416f-a2fc-3af185244d62}</UniqueIdentifier>
     </Filter>
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner">
       <UniqueIdentifier>{d2004c3b-8f2c-4f41-b793-e0a5a167ac78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster">
-      <UniqueIdentifier>{c70d46f8-6b7b-49f7-a68b-fa436df04718}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser">
-      <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana">
       <UniqueIdentifier>{86e09d34-2e90-4a1a-a1d2-0a18a0db121f}</UniqueIdentifier>
@@ -462,6 +453,21 @@
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Elevator_R">
       <UniqueIdentifier>{1061b2aa-2076-44cc-b4a7-4072b248ff99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone">
+      <UniqueIdentifier>{621cd69a-a22b-40ea-971c-76b6dc5bfec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster">
+      <UniqueIdentifier>{c70d46f8-6b7b-49f7-a68b-fa436df04718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser">
+      <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop">
+      <UniqueIdentifier>{1f532e40-e48f-476f-a4f6-e28b67e5ea27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop">
+      <UniqueIdentifier>{f9971649-adf2-4749-b051-448cc06ee1ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -841,19 +847,31 @@
       <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CSans_Bone.h">
-      <Filter>02.GameObjects\04. Enemy\Sans_Bone</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CBone_Spawner.h">
       <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CSans_Gaster.h">
-      <Filter>02.GameObjects\04. Enemy\Sans_Gaster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\White_Suit_Monster.h">
       <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CGaster_Spawner.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\CGasterLaser.h">
-      <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CBoneRoop.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Sans_Include.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CGasterRoop.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\StageEndTrigger.h">
       <Filter>02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
@@ -1218,16 +1236,25 @@
       <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CSans_Bone.cpp">
-      <Filter>02.GameObjects\04. Enemy\Sans_Bone</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CBone_Spawner.cpp">
       <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CSans_Gaster.cpp">
-      <Filter>02.GameObjects\04. Enemy\Sans_Gaster</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CGasterLaser.cpp">
-      <Filter>02.GameObjects\04. Enemy\Sans_Gaster\CGasterLaser</Filter>
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CGaster_Spawner.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CBoneRoop.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CGasterRoop.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\StageEndTrigger.cpp">
       <Filter>02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>

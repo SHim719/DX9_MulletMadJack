@@ -2,6 +2,7 @@
 #include "FPS_Camera.h"
 #include "CBone_Spawner.h"
 #include "PlayerManager.h"
+#include "CGaster_Spawner.h"
 
 
 CSans::CSans(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -37,7 +38,7 @@ HRESULT CSans::Initialize(void* pArg)
     m_pTransformCom->Set_Scale(Scale);
     m_pBoxCollider->Set_Scale({ 1.f, 1.f, 1.f });
 
-    _float3 Pos = { 0.f, 1.f, 3.f };
+    _float3 Pos = { 0.f, 1.f, 8.f };
     m_pTransformCom->Set_Position(Pos);
 
     m_pRigidbody->Set_Friction(0.f);
@@ -49,8 +50,9 @@ HRESULT CSans::Initialize(void* pArg)
     m_eState = SANSSTATE::STATE_IDLE;
     m_ePatternState = SANSPatternSTATE::End;
 
-    m_pBoneSpawner = CBone_Spawner::Create();
-    
+    //m_pBoneSpawner = CBone_Spawner::Create();
+    m_pGasterSpawner = CGaster_Spawner::Create();
+
     return S_OK;
 }
 
@@ -66,16 +68,17 @@ void CSans::Tick(_float fTimeDelta)
     if (m_fTest > 2)
     {
         m_fTest = 0;
-        _float3 Pos = m_pTransformCom->Get_Pos();
-        cout << "X:" << Pos.x << endl;
-        cout << "Y:" << Pos.y << endl;
-        cout << "Z:" << Pos.z << endl;
-        CPlayer* player = CPlayer_Manager::Get_Instance()->Get_Player();
-        CTransform* Trans = player->Get_Transform();
-        Pos = Trans->Get_Pos();
-        cout << "PlayerX:" << Pos.x << endl;
-        cout << "PlayerY:" << Pos.y << endl;
-        cout << "PlayerZ:" << Pos.z << endl;
+        
+        //_float3 Pos = m_pTransformCom->Get_Pos();
+        //cout << "X:" << Pos.x << endl;
+        //cout << "Y:" << Pos.y << endl;
+        //cout << "Z:" << Pos.z << endl;
+        //CPlayer* player = CPlayer_Manager::Get_Instance()->Get_Player();
+        //CTransform* Trans = player->Get_Transform();
+        //Pos = Trans->Get_Pos();
+        //cout << "PlayerX:" << Pos.x << endl;
+        //cout << "PlayerY:" << Pos.y << endl;
+        //cout << "PlayerZ:" << Pos.z << endl;
     }
 }
 
@@ -199,7 +202,8 @@ void CSans::State_Pattern()
             break;
         }
 
-        m_pBoneSpawner->Spawn(m_eState, m_ePatternState);
+       // m_pBoneSpawner->Spawn(m_eState, m_ePatternState);
+        m_pGasterSpawner->Spawn(m_eState, m_ePatternState);
         Initialize_PatternTime();
     }
 }
@@ -209,13 +213,13 @@ void CSans::Initialize_PatternTime()
     switch (m_ePatternTimeGap)
     {
     case CSans::PatternTimeGAP::SMALL:
-        m_fPatternTime = 0.5f;
+        m_fPatternTime = 2.f;
         break;
     case CSans::PatternTimeGAP::DEFAULT:
-        m_fPatternTime = 1.f;
+        m_fPatternTime = 4.f;
         break;
     case CSans::PatternTimeGAP::BIG:
-        m_fPatternTime = 1.5f;
+        m_fPatternTime = 6.f;
         break;
     default:
         break;
@@ -254,6 +258,7 @@ void CSans::Free()
 {
 	__super::Free();
 
+    Safe_Release(m_pGasterSpawner);
     Safe_Release(m_pBoneSpawner);
     Safe_Release(m_pTarget);
     Safe_Release(m_pRigidbody);

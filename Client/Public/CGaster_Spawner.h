@@ -2,21 +2,21 @@
 #include "Client_Defines.h"
 #include "Base.h"
 #include "CSans.h"
-#include "CBoneRoop.h"
+#include "CGasterRoop.h"
 
 
 BEGIN(Client)
 
-class CBone_Spawner : public CBase
+class CGaster_Spawner : public CBase
 {
 private:
-	CBone_Spawner();
-	virtual ~CBone_Spawner() = default;
+	CGaster_Spawner();
+	virtual ~CGaster_Spawner() = default;
 
 
 public:
 	void Spawn(SANSSTATE State, SANSPatternSTATE PatternState);
-	BoneRoopArg CreateRoop(SansBonePos Pos, SansBoneDir Dir, _float RoopGap, _uint Floor, _float Speed, _float LifeTime);
+	GasterRoopArg CreateRoop(SansGasterFirePos FirePos, SansGasterPos Pos, _float RoopGap, _uint Floor, _float LifeTime);
 
 
 private:
@@ -27,16 +27,10 @@ private:
 
 
 private:
-	_float m_fRoopTime = { 0 };
-	_float m_fLifeTime = { 0 };
-	_bool m_bRoop = { false };
-
-
-private:
 	class CGameInstance* m_pGameInstance = { nullptr };
 
 public:
-	static CBone_Spawner* Create();
+	static CGaster_Spawner* Create();
 	virtual void Free() override;
 };
 

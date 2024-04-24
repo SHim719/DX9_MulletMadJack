@@ -12,16 +12,27 @@ END
 
 BEGIN(Client)
 //pArg = pos_and_size, appear_floor, speed
-enum class SansBoneSize
+enum class SansBonePos
 {
-	leftHalf,
-	RightHalf,
+	Left,
+	Middle,
+	Right,
 	End
 };
-
+enum class SansBoneDir
+{
+	Straight,
+	BackWard,
+	Left,
+	Right,
+	Down,
+	Up,
+	End
+};
 using SansBoneArg = struct SansBoneInfo
 {
-	SansBoneSize Size = { SansBoneSize::End };
+	SansBonePos Pos = { SansBonePos::End };
+	SansBoneDir Dir = { SansBoneDir::End };
 	_uint floor = { 0 };
 	_float fSpeed = { 0 };
 };

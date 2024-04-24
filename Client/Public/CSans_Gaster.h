@@ -18,17 +18,32 @@ enum class SansGasterPos
 	Right,
 	End
 };
+enum class SansGasterFirePos
+{
+	Straight,
+	BackWard,
+	Left,
+	Right,
+	Down,
+	Up,
+	End
+};
 enum class GasterState
 {
 	Go_Down,
-	Laser,
 	Go_Up,
+	Go_Left,
+	Go_Right,
+	Go_Straight,
+	Go_BackWard,
+	Laser,
 	End
 };
-//pArg = À§Ä¡(¿ÞÂÊ, ¿À¸¥ÂÊ, Áß¾Ó,), Ãþ¼ö
+
 using GasterArg = struct SansGasterInfo
 {
 	SansGasterPos Pos = { SansGasterPos::End };
+	SansGasterFirePos FirePos = { SansGasterFirePos::End };
 	_uint _floor = { 0 };
 };
 
@@ -60,12 +75,30 @@ private:
 	HRESULT Add_Components();
 	HRESULT Add_Texture();
 	void TextureSwitching(_float fTimeDelta);
+	void Move(_float fTimeDelta);
 	void SetStateLaser();
+	void SetStateSwitching();
+
+	void Set_ArgStraightPos(SansGasterPos Pos);
+	void Set_ArgBackWardPos(SansGasterPos Pos);
+	void Set_ArgLeftPos(SansGasterPos Pos);
+	void Set_ArgRightPos(SansGasterPos Pos);
+	void Set_ArgDownPos(SansGasterPos Pos);
+	void Set_ArgUpPos(SansGasterPos Pos);
+
+	void SetState(GasterState State) { m_eState = State; }
+	void SetOriginState(GasterState State) { m_eOriginState = State; }
 
 private:
 	_float m_fLife = { 4.f };
 	_float m_fTextureSwitching = { 0 };
+	_float3 m_OriginPos = { 0, 0, 0 };
+	_float m_fStateSwitching = { 0 };
+	_bool m_bCreateLaser = { false };
+	_uint m_iFloor = { 0 };
+	GasterState m_eOriginState = { GasterState::End };
 	GasterState m_eState = { GasterState::End };
+	SansGasterFirePos m_eFirePos = { SansGasterFirePos::End };
 
 
 private:
