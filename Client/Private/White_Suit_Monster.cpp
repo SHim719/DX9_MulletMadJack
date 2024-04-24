@@ -544,6 +544,9 @@ void CWhite_Suit_Monster::SetState_Shot()
     if (STATE_DEATH == m_eState)
         return;
     m_eState = STATE_SHOT;
+    m_pGameInstance->Play(L"White_Suit_Shoot", false);
+    m_pGameInstance->SetVolume(L"White_Suit_Shoot", 0.3f);
+
     m_pAnimationCom->Play_Animation(L"Shot", 0.15f, false);
 
     _float3 vBulletPos = m_pTransformCom->Get_Pos();
@@ -632,6 +635,9 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
     if (STATE_DEATH == m_eState)
         return;
     m_eState = STATE_DEATH;
+    m_pGameInstance->Play(L"White_Suit_Death", false);
+    m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
+
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
     m_bCanIntersect = false;
     m_pBoxCollider->Set_Active(false);

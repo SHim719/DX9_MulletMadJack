@@ -39,7 +39,7 @@ HRESULT CMainApp::Initialize()
 
 	//m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM.mp3", L"TestBgm");
 	//m_pGameInstance->Play(L"TestBgm", true);
-
+	// 적은 볼륨작게(0.1~0.5f) 플레이어는 상대적으로 크게(0.6~1.0), 
 
 	return S_OK;
 }

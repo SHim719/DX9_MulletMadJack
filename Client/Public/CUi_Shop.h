@@ -67,6 +67,7 @@ private:
 	_float3 m_OriginScale = { 2900, 1200, 1 };
 	_float3 m_OriginPos = { 0, -139, 0 };
 
+	_bool m_bCheck_UpgradeHover = { false };
 
 private:
 	vector<class CUi_Shop_UpGrade*> m_UpgradeVec;

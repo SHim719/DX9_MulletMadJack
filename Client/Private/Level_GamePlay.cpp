@@ -36,6 +36,8 @@ CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 HRESULT CLevel_GamePlay::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY;
+	m_pGameInstance->Play(L"Gameplay", true);
+	m_pGameInstance->SetVolume(L"Gameplay", 0.5f);
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 

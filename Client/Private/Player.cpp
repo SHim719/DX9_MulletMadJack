@@ -135,11 +135,17 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (GetKeyState('Z') & 0x8000)
 	{
+		/*m_pGameInstance->Play(L"Player_Footstep", false);
+		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+
 		m_pTransformCom->Go_Straight(fTimeDelta);
 	}
 
 	if (GetKeyState('X') & 0x8000)
 	{
+		/*m_pGameInstance->Play(L"Player_Footstep", false);
+		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+
 		m_pTransformCom->Go_Backward(fTimeDelta);
 	}
 
@@ -165,6 +171,9 @@ void CPlayer::Key_Input(_float fTimeDelta)
 			}
 			else {
 				if (eWeaponType == PISTOL) {
+					m_pGameInstance->Play(L"Pistol_Reload", false);
+					m_pGameInstance->SetVolume(L"Pistol_Reload", 1.f);
+
 					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SPIN);
 				}
 				else {
@@ -177,6 +186,9 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKeyDown(eKeyCode::R) && eAnimationType == IDLE)
 	{
 		if (eWeaponType == PISTOL) {
+			m_pGameInstance->Play(L"Pistol_Reload", false);
+			m_pGameInstance->SetVolume(L"Pistol_Reload", 1.f);
+
 			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
 		}
 		else {
@@ -186,6 +198,9 @@ void CPlayer::Key_Input(_float fTimeDelta)
 #pragma region TestCode
 	if (m_pGameInstance->GetKeyDown(eKeyCode::N))
 	{
+		m_pGameInstance->Play(L"Player_Weapon_Change", false);
+		m_pGameInstance->SetVolume(L"Player_Weapon_Change", 1.f);
+
 		if(eWeaponType == PISTOL) CPlayer_Manager::Get_Instance()->WeaponChange(SHOTGUN);
 		else if (eWeaponType == SHOTGUN) CPlayer_Manager::Get_Instance()->WeaponChange(KATANA);
 		else CPlayer_Manager::Get_Instance()->WeaponChange(PISTOL);
@@ -342,16 +357,25 @@ void CPlayer::Fire_Pistol()
 {
 	Camera_Shake_Order(100000.f, 0.2f);
 	for (int i = 0; i < 6; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CPistol_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
+
+	m_pGameInstance->Play(L"Pistol_Fire", false);
+	m_pGameInstance->SetVolume(L"Pistol_Fire", 1.f);
 }
 
 void CPlayer::Fire_Shotgun() {
 	Camera_Shake_Order(800000.f, 0.4f);
 	for (int i = 0; i < 12; i++) { m_pGameInstance->Add_Ui_LifeClone(TEXT("CShotgun_Gunfire"), eUiRenderType::Render_NonBlend, &i); }
+
+	m_pGameInstance->Play(L"Shotgun_Fire", false);
+	m_pGameInstance->SetVolume(L"Shotgun_Fire", 1.f);
 }
 
 void CPlayer::Slash_Katana(){
 	Camera_Shake_Order(600000.f, 0.4f);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Effect"), true);
+
+	m_pGameInstance->Play(L"Katana_Swing", false);
+	m_pGameInstance->SetVolume(L"Katana_Swing", 1.f);
 }
 
 void CPlayer::Active_Reset()
@@ -382,6 +406,9 @@ void CPlayer::Camera_Reset()
 
 void CPlayer::Kick()
 {
+	m_pGameInstance->Play(L"Player_Kick_Hit", false);
+	m_pGameInstance->SetVolume(L"Player_Kick_Hit", 1.f);
+
 	Camera_Shake_Order(2500000.f, 0.2f);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);
 }
@@ -567,6 +594,9 @@ void CPlayer::Hit(void* pArg)
 		Set_PlayerHP_Add(-*pDamage);
 		Set_InvincibleTime(Get_InvincibleTimeLimit());
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
+
+		m_pGameInstance->Play(L"Player_Damaged", false);
+		m_pGameInstance->SetVolume(L"Player_Damaged", 0.3f);
 	}
 }
 
@@ -599,6 +629,9 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::W))
 	{
+		/*m_pGameInstance->Play(L"Player_Footstep", false);
+		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+
 		Set_MoveState(MOVE);
 		m_pRigidbody->Set_GroundVelocity(m_pTransformCom->Get_GroundLook() * m_fMoveSpeed);
 	}
@@ -609,6 +642,9 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::S))
 	{
+		/*m_pGameInstance->Play(L"Player_Footstep", false);
+		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+
 		Set_MoveState(MOVE);
 		m_pRigidbody->Set_GroundVelocity(-m_pTransformCom->Get_GroundLook() * m_fMoveSpeed);
 	}
@@ -619,6 +655,9 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 	{
+		/*m_pGameInstance->Play(L"Player_Footstep", false);
+		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+
 		m_pRigidbody->Add_GroundVelocity(-m_pTransformCom->Get_GroundRight() * m_fMoveSpeed);
 		Set_MoveState(MOVE);
 		HeadTilt(fTimeDelta, -2.f);
@@ -631,6 +670,9 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::D))
 	{
+		/*m_pGameInstance->Play(L"Player_Footstep", false);
+		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+
 		m_pRigidbody->Add_GroundVelocity(m_pTransformCom->Get_GroundRight() * m_fMoveSpeed);
 		Set_MoveState(MOVE);
 		HeadTilt(fTimeDelta, 2.f);
@@ -750,6 +792,8 @@ void CPlayer::SetState_Idle()
 void CPlayer::SetState_Dash()
 {
 	ePlayerState = DASH_STATE;
+	m_pGameInstance->Play(L"Player_Dash", false);
+	m_pGameInstance->SetVolume(L"Player_Dash", 1.f);
 	
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 		m_pRigidbody->Set_GroundVelocity(-m_pTransformCom->Get_GroundRight() * 15.f);

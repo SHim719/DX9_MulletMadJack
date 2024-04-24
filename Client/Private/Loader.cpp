@@ -124,6 +124,24 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Loading_For_Ui()))
 		return E_FAIL;
 
+	if (FAILED(Ready_BGM()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Player_Weapon_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Player_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Monster_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Effect_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Announcer_Sound()))
+		return E_FAIL;
+
 	Initialize_TextManager();
 
 	lstrcpy(m_szLoadingText, TEXT("Wan."));
@@ -1287,6 +1305,111 @@ HRESULT CLoader::Ready_Prototype_Effect()
 HRESULT CLoader::Ready_Active_Camera_Effect()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Camera_Dash", eUiRenderType::Render_Blend, CDash_Effect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_BGM()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Gameplay.wav", L"Gameplay")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Stinger_Stage_End.wav", L"Stage_End")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Player_Weapon_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/pistol/Pistol_Fire0.wav", L"Pistol_Fire")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/pistol/Pistol_Upgraded_Reload.wav", L"Pistol_Reload")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Fire0.wav", L"Shotgun_Fire")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Swing0.wav", L"Katana_Swing")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Player_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Footstep_Stone4.wav", L"Player_Footstep")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player/Player_Hit0.wav", L"Player_Damaged")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Kick_Hit0.wav", L"Player_Kick_Hit")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Drink_Soda.wav", L"Player_Soda_Drink")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Weapon_Change0.wav", L"Player_Weapon_Change")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Player_Dash0.wav", L"Player_Dash")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Monster_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Pistol_Shoot1.wav", L"White_Suit_Shoot")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/General_Death0.wav", L"White_Suit_Death")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Drone_Alert0.wav", L"Drone_Attack")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Drone_Death0.wav", L"Drone_Death")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Explosion0.wav", L"Drone_Explosion")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/bank_boss_chainsaw/Chainsaw_Attack.wav", L"Chainsaw_Jump")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Chainsaw_Attack0.wav", L"Chainsaw_Attack")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/General_Death4.wav", L"Chainsaw_Death")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Effect_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Ambiences/SodaMachine_Pinball.wav", L"Soda_Pour")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Ambiences/Soda_Drop.wav", L"Soda_Drop")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/GUI/Trailer_Hover.wav", L"Upgrade_Hover")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/GUI/Trailer_Select.wav", L"Upgrade_Select")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Announcer_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Announcer/Full_Life.wav", L"Full_Life")))
 		return E_FAIL;
 
 	return S_OK;
