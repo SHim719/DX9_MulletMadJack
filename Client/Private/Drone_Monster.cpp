@@ -231,6 +231,9 @@ void CDrone_Monster::State_Death()
 		pEffect->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos());
 		pEffect->Get_Transform()->Set_Scale({ 3.f, 3.f, 1.f });
 
+		m_pGameInstance->Play(L"Drone_Explosion", false);
+		m_pGameInstance->SetVolume(L"Drone_Explosion", 0.5f);
+
 		Call_MonsterDieUi(eMonsterGrade::Middle);
 
 		CUi_SpecialHit::SpecialHit_Desc Arg;
@@ -274,6 +277,8 @@ void CDrone_Monster::SetState_Rush()
 		return;
 
 	m_eState = STATE_RUSH;
+	m_pGameInstance->Play(L"Drone_Attack", false);
+	m_pGameInstance->SetVolume(L"Drone_Attack", 0.3f);
 
 	m_pAnimationCom->Play_Animation(L"Rush", 0.1f, true);
 }
@@ -313,6 +318,9 @@ void CDrone_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 		return;
 
 	m_eState = STATE_DEATH;
+	m_pGameInstance->Play(L"Drone_Death", false);
+	m_pGameInstance->SetVolume(L"Drone_Death", 0.5f);
+
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 	m_pAnimationCom->Play_Animation(L"Death", 0.1f, false);
 }

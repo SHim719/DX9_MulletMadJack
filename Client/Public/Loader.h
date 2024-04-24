@@ -76,6 +76,13 @@ private:
 	HRESULT Ready_Prototype_Effect();
 	HRESULT Ready_Active_Camera_Effect();
 
+	HRESULT Ready_BGM();
+	HRESULT Ready_Player_Weapon_Sound();
+	HRESULT Ready_Player_Sound();
+	HRESULT Ready_Monster_Sound();
+	HRESULT Ready_Effect_Sound();
+	HRESULT Ready_Announcer_Sound();
+
 	void Initialize_TextManager();
 
 public:

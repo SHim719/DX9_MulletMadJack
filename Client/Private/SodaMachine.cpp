@@ -101,6 +101,9 @@ void CSodaMachine::OnCollisionEnter(CGameObject* pOther)
 	m_eState = POURING;
 	m_iPourCount = 6;
 
+	m_pGameInstance->Play(L"Soda_Pour", false);
+	m_pGameInstance->SetVolume(L"Soda_Pour", 0.5f);
+
 	m_pBanner->Set_Destroy(true);
 }
 
@@ -125,6 +128,9 @@ void CSodaMachine::Pouring_Soda(_float fTimeDelta)
 		static_cast<CRigidbody*>(pObj->Find_Component(L"Rigidbody"))->Set_Velocity(vLook * fLookSpeed + vUp * fUpSpeed);
 		m_fPourTime = 0.f;
 		m_iPourCount--;
+
+		m_pGameInstance->Play(L"Soda_Drop", false);
+		m_pGameInstance->SetVolume(L"Soda_Drop", 0.5f);
 	}
 
 	if (0 == m_iPourCount)

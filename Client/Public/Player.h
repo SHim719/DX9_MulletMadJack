@@ -48,7 +48,7 @@ public:
 		Camera_Reset();
 		this->ePlayerState = ePlayerState; }
 
-	void Set_MoveState(MOVE_STATE eMoveState) { 
+	void Set_MoveState(MOVE_STATE eMoveState) {
 		//Move_Reset();
 		this->eMoveState = eMoveState; 
 	}

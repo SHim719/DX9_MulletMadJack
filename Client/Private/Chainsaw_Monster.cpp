@@ -491,6 +491,8 @@ void CChainsaw_Monster::SetState_Slash()
 		return;
 
 	m_eState = STATE_SLASH;
+	m_pGameInstance->Play(L"Chainsaw_Attack", false);
+	m_pGameInstance->SetVolume(L"Chainsaw_Attack", 0.3f);
 
 	m_pAnimationCom->Play_Animation(L"Slash", 0.1f, false);
 
@@ -506,6 +508,9 @@ void CChainsaw_Monster::SetState_Jump()
 		return;
 
 	m_eState = STATE_JUMP;
+	m_pGameInstance->Play(L"Chainsaw_Jump", false);
+	m_pGameInstance->SetVolume(L"Chainsaw_Jump", 0.3f);
+
 	m_pAnimationCom->Play_Animation(L"Jump", 0.05f, false);
 
 	_float3 vToTargetDir = (m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos());
@@ -587,6 +592,9 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 		return;
 
 	m_eState = STATE_DEATH;
+	m_pGameInstance->Play(L"Chainsaw_Death", false);
+	m_pGameInstance->SetVolume(L"Chainsaw_Death", 0.3f);
+
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 	m_pRigidbody->Set_UseGravity(false);
 	m_pBoxCollider->Set_Active(false);

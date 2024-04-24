@@ -333,13 +333,26 @@ void CUi_Shop::Check_Picking()
 		if (true == (bool)PtInRect(&m_PickScale[i], ptMouse))
 		{
 			if (!Player_Select(i))
+			{
 				m_UpgradeVec[i]->Set_Focusing(true);
+
+				/*if (!m_bCheck_UpgradeHover)
+				{
+					m_pGameInstance->Play(L"Upgrade_Hover", false);
+					m_pGameInstance->SetVolume(L"Upgrade_Hover", 0.5f);
+
+					m_bCheck_UpgradeHover = true;
+				}*/
+			}
 			else
+			{
 				m_UpgradeVec[i]->Set_Focusing(false);
+			}
 		}
 		else
 		{
 			m_UpgradeVec[i]->Set_Focusing(false);
+			//m_bCheck_UpgradeHover = false;
 		}
 	}
 }
@@ -350,6 +363,9 @@ bool CUi_Shop::Player_Select(_uint iNumber)
 	{
 		m_UpgradeVec[iNumber]->Set_Picked();
 		m_eProgress = ShopProgress::Select;
+		m_pGameInstance->Play(L"Upgrade_Select", false);
+		m_pGameInstance->SetVolume(L"Upgrade_Select", 0.5f);
+
 		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::ShopEnd);
 		m_fChangeProgressTime = 1;
 		return true;

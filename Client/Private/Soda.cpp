@@ -126,6 +126,12 @@ void CSoda::OnTriggerStay(CGameObject* pOther)
 	if ("Player" == pOther->Get_Tag())
 	{
 		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
+		m_pGameInstance->Play(L"Player_Soda_Drink", false);
+		m_pGameInstance->SetVolume(L"Player_Soda_Drink", 1.f);
+
+		m_pGameInstance->Play(L"Full_Life", false);
+		m_pGameInstance->SetVolume(L"Full_Life", 1.f);
+
 		m_pGameInstance->Set_Ui_ActiveState(L"CUi_GreenCrossActive", true);
 		m_bDestroyed = true;
 	}
