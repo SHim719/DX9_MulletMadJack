@@ -183,8 +183,12 @@ void CChainsaw_Monster::Hit(void* pArg)
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
 	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
+
+	if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA) {
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), false);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
+	}
 
 	m_bThisFrameHit = true;
 

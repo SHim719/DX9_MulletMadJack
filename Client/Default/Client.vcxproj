@@ -226,7 +226,6 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Execution_Hand.h" />
     <ClInclude Include="..\Public\Execution_Head.h" />
     <ClInclude Include="..\Public\MapObject_Header.h" />
-    <ClInclude Include="..\Public\MathManager.h" />
     <ClInclude Include="..\Public\Monster_Headers.h" />
     <ClInclude Include="..\Public\Door.h" />
     <ClInclude Include="..\Public\CUi_Announcer.h" />
@@ -262,12 +261,14 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\CUi_UpGrade_Focus.h" />
     <ClInclude Include="..\Public\CUi_UpGrade_Select.h" />
     <ClInclude Include="..\Public\Phone.h" />
+    <ClInclude Include="..\Public\Pistol_Opening.h" />
     <ClInclude Include="..\Public\Pistol_Reload_Left_Arm.h" />
     <ClInclude Include="..\Public\Pistol_Reload_Left_Hand.h" />
     <ClInclude Include="..\Public\Player_Include.h" />
     <ClInclude Include="..\Public\Rigidbody.h" />
     <ClInclude Include="..\Public\Shotgun.h" />
     <ClInclude Include="..\Public\Shotgun_GunFire.h" />
+    <ClInclude Include="..\Public\Shotgun_Opening.h" />
     <ClInclude Include="..\Public\Shotgun_Reload.h" />
     <ClInclude Include="..\Public\Shotgun_Shot.h" />
     <ClInclude Include="..\Public\Shotgun_SpinA.h" />
@@ -351,9 +352,10 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\CUi_Execution_Show.cpp" />
     <ClCompile Include="..\Private\CUi_GreenCrossActive.cpp" />
     <ClCompile Include="..\Private\CUi_GreenCross.cpp" />
-    <ClCompile Include="..\Private\MathManager.cpp" />
+    <ClCompile Include="..\Private\Pistol_Opening.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />
+    <ClCompile Include="..\Private\Shotgun_Opening.cpp" />
     <ClCompile Include="..\Private\Shotgun_Reload.cpp" />
     <ClCompile Include="..\Private\Shotgun_Shot.cpp" />
     <ClCompile Include="..\Private\Shotgun_SpinA.cpp" />

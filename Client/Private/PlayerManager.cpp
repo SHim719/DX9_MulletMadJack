@@ -20,10 +20,11 @@ void CPlayer_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 void CPlayer_Manager::Tick(_float fTimeDelta)
 {
 
+	//WeaponChange End
 	if (Get_TempDisablePosition() == Get_TempDisablePositionLimit() && Get_Action_Type() == ACTION_WEAPONCHANGE) {
 		Set_Action_Type(ACTION_NONE);
 		m_bTempDisable = false;
-		m_pPlayer->Set_AnimationType(CPlayer::SPIN);
+		m_pPlayer->Set_AnimationType(CPlayer::OPENING);
 	}
 
 
@@ -61,7 +62,7 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 			m_bTempDisable = true;
 			if (m_bTempDisableEnd == true && m_bActionIDLE == true) {
 				Set_DisableEnd(false);
-				Set_PlayerHP_Add(10.f);
+				Set_PlayerHP_Add(15.f);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_DrinkSoda"), true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Drink"),	   true);
 				m_bActionIDLE = false;
@@ -115,7 +116,7 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 	if (m_bTempDisable == false) {
 		_float TempDisablePosition = Get_TempDisablePosition();
 
-		if (TempDisablePosition >= 0.f && Get_DisableEnd() == false)
+		if (TempDisablePosition > 0.f && Get_DisableEnd() == false)
 		{
 			TempDisablePosition -= fTimeDelta * 4000.f;
 			Set_TempDisablePosition(TempDisablePosition);

@@ -1223,6 +1223,9 @@ HRESULT CLoader::Ready_Active_Gun()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Hand", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Hand::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Opening", eUiRenderType::Render_NonBlend, CPistol_Opening::Create(m_pGraphic_Device))))
+		return E_FAIL;
 #pragma endregion
 
 #pragma region ShotgunRegion

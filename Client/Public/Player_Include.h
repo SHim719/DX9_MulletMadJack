@@ -10,6 +10,7 @@
 #include "Pistol_Barrel.h"
 #include "Pistol_Reload_Left_Hand.h"
 #include "Pistol_Reload_Left_Arm.h"
+#include "Pistol_Opening.h"
 
 #pragma endregion
 

@@ -891,7 +891,12 @@
     <ClInclude Include="..\Public\Blood_Effect.h">
       <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\MathManager.h" />
+    <ClInclude Include="..\Public\Pistol_Opening.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Opening</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_Opening.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1269,7 +1274,12 @@
     <ClCompile Include="..\Private\Blood_Effect.cpp">
       <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\MathManager.cpp" />
+    <ClCompile Include="..\Private\Pistol_Opening.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Opening</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_Opening.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Client.ico">
