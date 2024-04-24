@@ -368,6 +368,11 @@ HRESULT CGame_Manager::Ready_Execution_Texture()
 			L"../Bin/Resources/Textures/Execution/Weapon/Knife/HAND%d.png", 3))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Execution_Body2_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Execution/Body/Chainsaw/BODY%d.png", 3))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

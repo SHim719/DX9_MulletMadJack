@@ -38,6 +38,7 @@ HRESULT CChainsaw_Monster::Initialize(void* pArg)
 	m_pAnimationCom->Play_Animation(TEXT("Idle_Up"), 0.1f, true);
 
 	m_strTag = "Monster";
+	m_substrTag = "Chainsaw_Monster";
 
 	m_fHp = 10.f;
 	m_fSpeed = 1.5f;
@@ -188,6 +189,12 @@ void CChainsaw_Monster::Hit(void* pArg)
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
 	_bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
+	if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA) {
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), false);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
+	}
+
+	m_bThisFrameHit = true;
 
 	switch (pDesc->eHitType)
 	{

@@ -475,6 +475,21 @@
     <Filter Include="02.GameObjects\04. Enemy\Pawns\EnemyCorpse">
       <UniqueIdentifier>{2c79712d-e08d-4057-b31b-2da68fdcc9d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\Blood">
+      <UniqueIdentifier>{04c8cd6f-f390-40a7-8b5e-8cb5ea2febd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\MathManager">
+      <UniqueIdentifier>{a697414d-99e9-4ab7-96fc-dd07cea47909}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening">
+      <UniqueIdentifier>{61060200-e759-44eb-adac-e08463fb5df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Opening">
+      <UniqueIdentifier>{55d20017-bc93-453e-9702-ec8179ebc4b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening">
+      <UniqueIdentifier>{cb7a1990-e950-42cd-ad0a-a9aa6a965bda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -900,6 +915,15 @@
     <ClInclude Include="..\Public\Enemy_Corpse.h">
       <Filter>02.GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Blood_Effect.h">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Pistol_Opening.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Opening</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Shotgun_Opening.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1285,6 +1309,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Corpse.cpp">
       <Filter>02.GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Blood_Effect.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Pistol_Opening.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Opening</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Shotgun_Opening.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

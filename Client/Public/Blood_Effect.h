@@ -5,12 +5,12 @@
 
 BEGIN(Client)
 
-class CExecution_Body final : public CUi
+class CBlood_Effect final : public CUi
 {
 protected:
-	CExecution_Body(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CExecution_Body(const CExecution_Body& rhs);
-	virtual ~CExecution_Body() = default;
+	CBlood_Effect(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CBlood_Effect(const CBlood_Effect& rhs);
+	virtual ~CBlood_Effect() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -20,6 +20,9 @@ public:
 	virtual void Tick(_float fTimeDelta);
 	virtual void LateTick(_float fTimeDelta);
 	virtual HRESULT Render();
+
+	void Begin_RenderState();
+	void End_RenderState();
 
 protected:
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg);
@@ -51,7 +54,9 @@ private:
 
 	_float2 Lissajous_Curve(_float _fTimeDelta, _float& _fLissajousTime, _float _fPosX, _float _fPosY, _float _fWitth, _float _fHeight, _float _fLagrangianX, _float _fLagrangianY, _float _fPhaseDelta, _float _fLissajousSpeed = 1);
 
-	CTexture* Texture_Tag();
+	void Adjust_Alpha(_float fTimeDelta);
+	void Alpha_Initialize(){ m_iAlpha = m_iAlphaOrigin; }
+
 protected:
 	virtual HRESULT Add_Components(void* pArg);
 	virtual HRESULT Add_Texture(void* pArg);
@@ -64,13 +69,16 @@ private:
 	_float m_fTimeDelay = 0.f;
 	_float m_fDivide = 1.f;
 
+	_float m_iAlphaOrigin = 200;
+	_float m_iAlpha = 200;
+
 	_float3 m_fScale = { 0.f , 0.f, 1.f };
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
 
-	CTexture* m_pTexture_Chainsaw = nullptr;
-	
+	_int   m_iSlashCount = 0;
+
 public:
 	virtual void Free() override;
 };

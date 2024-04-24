@@ -45,6 +45,8 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
 
     m_strTag = "Monster";
+    m_substrTag = "White_Suit_Monster";
+
     m_fHp = 10.f;
 
     return S_OK;
@@ -267,6 +269,10 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
     _bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
+    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA) {
+        m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), false);
+        m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_Blood"), true);
+    }
 
     switch (pDesc->eHitType)
     {

@@ -1013,7 +1013,12 @@ HRESULT CLoader::Ready_PlayerGunUi_Texture()
 
 HRESULT CLoader::Ready_Camera_Effect_Texture()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures", CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Dash_Textures", 
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Dash/CircleLines%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Blood_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Filter/Blood_Filter.png"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -1233,6 +1238,9 @@ HRESULT CLoader::Ready_Active_Gun()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Reload_Hand", eUiRenderType::Render_NonBlend, CPistol_Reload_Left_Hand::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Pistol_Opening", eUiRenderType::Render_NonBlend, CPistol_Opening::Create(m_pGraphic_Device))))
+		return E_FAIL;
 #pragma endregion
 
 #pragma region ShotgunRegion
@@ -1302,6 +1310,9 @@ HRESULT CLoader::Ready_Prototype_Effect()
 HRESULT CLoader::Ready_Active_Camera_Effect()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Camera_Dash", eUiRenderType::Render_Blend, CDash_Effect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Camera_Blood", eUiRenderType::Render_Blend, CBlood_Effect::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

@@ -155,7 +155,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		m_pTransformCom->Head_Roll(fTimeDelta, -320.f);
 	}
 
-	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton) && eAnimationType == IDLE)
+	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton) && eAnimationType != SPIN)
 	{
 		if (eAnimationType == IDLE || eWeaponType == PISTOL) {
 			if (CPlayer_Manager::Get_Instance()->Get_Magazine() > 0) {
@@ -164,10 +164,10 @@ void CPlayer::Key_Input(_float fTimeDelta)
 				CPlayer_Manager::Get_Instance()->Fire_Magazine();
 			}
 			else {
-				if (eWeaponType == PISTOL) {
+				if (eWeaponType == PISTOL && eAnimationType == IDLE) {
 					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SPIN);
 				}
-				else {
+				else if(eAnimationType != RELOAD){
 					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(RELOAD);
 				}
 			}
@@ -193,7 +193,6 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
-		//CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
 		m_bHaveWeapon = true;
 	}
 #pragma endregion
@@ -260,6 +259,9 @@ void CPlayer::Render_Pistol()
 		case RELOAD:
 			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Reload"), true);
 			return;
+		case OPENING:
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Opening"), true);
+			return;
 		default:
 			return;
 	}
@@ -283,6 +285,9 @@ void CPlayer::Render_Shotgun()
 		else {m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); }
 		return;
 	}
+	case OPENING:
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); 
+		return;
 	case RELOAD:
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), true);
 		return;
@@ -304,13 +309,15 @@ void CPlayer::Render_Katana()
 	case SHOT:
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Slash"), true);
 		return;
-	case SPIN:{
-		srand((unsigned int)time(NULL));
-		int i = rand() % 2;
-		if (i == 0) { m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true); }
-		else { m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); }
+	case SPIN:
+		//Temp
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), true);
 		return;
-	}
+	case OPENING:
+		//Temp
+		Set_AnimationType(IDLE);
+		//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), true);
+		return;
 	case RELOAD:
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), true);
 		return;
@@ -546,6 +553,7 @@ void CPlayer::OnCollisionEnter(CGameObject* pOther)
 		if (m_bHaveWeapon)
 		{
 			static_cast<CPawn*>(pOther)->SetState_Execution();
+			static_cast<CPawn*>(pOther)->Set_Execution_Target();
 			SetState_Execution();
 			CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
 			m_pExecutionEnemy = static_cast<CPawn*>(pOther);

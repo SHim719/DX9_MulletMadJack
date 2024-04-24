@@ -67,6 +67,8 @@ void CExecution_Head::Tick(_float fTimeDelta)
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Body"), false);
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Neck"), false);
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), false);
+				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("CUi_Finish"), true);
+				CPlayer_Manager::Get_Instance()->Set_PlayerHP_Add(15.f);
 				CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
 				POINT		ptWindow = { g_iWinSizeX >> 1, g_iWinSizeY >> 1 };
 				ClientToScreen(g_hWnd, &ptWindow);

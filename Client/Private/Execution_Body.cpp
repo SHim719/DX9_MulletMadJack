@@ -50,12 +50,12 @@ void CExecution_Body::Tick(_float fTimeDelta)
 	//m_fDivide -= fTimeDelta * 1.5f;
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.9f));
 
-	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
+	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= Texture_Tag()->Get_MaxTextureNum()) {
 		m_iTexture_Index++;
 		AnimationDelayReset();
 	}
 
-	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
+	if (m_iTexture_Index > Texture_Tag()->Get_MaxTextureNum()) {
 		m_iTexture_Index = 0;
 		AnimationDelayReset();
 	}
@@ -79,7 +79,7 @@ HRESULT CExecution_Body::Render()
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
 
-	if (FAILED(m_pTextureCom->Bind_Texture(m_iTexture_Index)))
+	if (FAILED(Texture_Tag()->Bind_Texture(m_iTexture_Index)))
 		return E_FAIL;
 
 	m_pVIBufferCom->Render();
@@ -116,7 +116,7 @@ void CExecution_Body::Default_Set_Size()
 
 POINT CExecution_Body::Get_Texture_Info()
 {
-	if (m_pTextureCom == nullptr)
+	if (Texture_Tag() == nullptr)
 		return { 0, 0 };
 
 	return { 1024,1024 };
@@ -130,6 +130,14 @@ _float2 CExecution_Body::Lissajous_Curve(_float _fTimeDelta, _float& _fLissajous
 	_fPosY = _fHeight * cos(_fLagrangianY * _fLissajousTime);
 
 	return { _fPosX,_fPosY };
+}
+
+CTexture* CExecution_Body::Texture_Tag()
+{
+	string str = CPlayer_Manager::Get_Instance()->Get_Execution_Target();
+	
+	if (str == "Chainsaw_Monster") return m_pTexture_Chainsaw;
+	else return m_pTextureCom;
 }
 
 HRESULT CExecution_Body::Add_Components(void* pArg)
@@ -147,7 +155,7 @@ HRESULT CExecution_Body::Add_Components(void* pArg)
 
 	if (FAILED(Add_Texture(pArg)))
 		return E_FAIL;
-
+	
 	return S_OK;
 }
 
@@ -157,6 +165,11 @@ HRESULT CExecution_Body::Add_Texture(void* pArg)
 	if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Execution_Body_Texture")
 		, (CComponent**)&m_pTextureCom)))
 		return E_FAIL;
+
+	if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Execution_Body2_Texture")
+		, (CComponent**)&m_pTexture_Chainsaw)))
+		return E_FAIL;
+
 
 	return S_OK;
 
@@ -179,4 +192,5 @@ CUi* CExecution_Body::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 void CExecution_Body::Free()
 {
 	__super::Free();
+	Safe_Release(m_pTexture_Chainsaw);
 }

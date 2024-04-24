@@ -1,16 +1,15 @@
 #pragma once
 #include "Client_Defines.h"
-#include "PlayerManager.h"
 #include "CUi.h"
 
 BEGIN(Client)
 
-class CExecution_Body final : public CUi
+class CPistol_Opening final : public CUi
 {
 protected:
-	CExecution_Body(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CExecution_Body(const CExecution_Body& rhs);
-	virtual ~CExecution_Body() = default;
+	CPistol_Opening(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CPistol_Opening(const CPistol_Opening& rhs);
+	virtual ~CPistol_Opening() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -43,15 +42,14 @@ private:
 	_float AnimationDelay(_float fTimeDelta) { return m_fTimeDelay -= fTimeDelta; }
 	void   AnimationDelayReset() { m_fTimeDelay = m_fTimeDelayOrigin; }
 
-	void Set_Divide(_float fDivide) { m_fDivide = fDivide; }
-	_float Get_Divide() { return m_fDivide; }
+	void	Set_Divide(_float fDivide) { m_fDivide = fDivide; }
+	_float  Get_Divide() { return m_fDivide; }
 
 	//POINT Get_Texture_Info() { return { m_pTextureCom->Get_TextureWidth(), m_pTextureCom->Get_TextureHeight() }; }
 	POINT Get_Texture_Info();
 
 	_float2 Lissajous_Curve(_float _fTimeDelta, _float& _fLissajousTime, _float _fPosX, _float _fPosY, _float _fWitth, _float _fHeight, _float _fLagrangianX, _float _fLagrangianY, _float _fPhaseDelta, _float _fLissajousSpeed = 1);
 
-	CTexture* Texture_Tag();
 protected:
 	virtual HRESULT Add_Components(void* pArg);
 	virtual HRESULT Add_Texture(void* pArg);
@@ -68,9 +66,6 @@ private:
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
-
-	CTexture* m_pTexture_Chainsaw = nullptr;
-	
 public:
 	virtual void Free() override;
 };

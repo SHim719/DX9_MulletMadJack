@@ -10,6 +10,7 @@
 #include "Pistol_Barrel.h"
 #include "Pistol_Reload_Left_Hand.h"
 #include "Pistol_Reload_Left_Arm.h"
+#include "Pistol_Opening.h"
 
 #pragma endregion
 
@@ -32,10 +33,19 @@
 
 #pragma endregion
 
-#include "CrossHair.h"
-#include "Phone.h"
+#pragma region Camera
+
 #include "FPS_Camera.h"
 #include "Dash_Effect.h"
+#include "Blood_Effect.h"
+
+#pragma endregion
+
+
+
+
+#include "CrossHair.h"
+#include "Phone.h"
 #include "Drink.h"
 #include "Player.h"
 #include "Kick.h"

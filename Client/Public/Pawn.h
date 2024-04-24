@@ -53,6 +53,8 @@ public:
 	virtual _bool Is_DeathState() { return false; }
 
 	void Set_SlopeStand(_bool bStand) { m_bSlopeStand = bStand; }
+	void Set_Execution_Target() { CPlayer_Manager::Get_Instance()->Set_Executrion_Target(Get_SubTag()); }
+
 protected:
 	void Call_MonsterDieUi(eMonsterGrade Grade);
 
