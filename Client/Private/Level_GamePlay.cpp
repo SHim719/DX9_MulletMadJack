@@ -49,6 +49,8 @@ HRESULT CLevel_GamePlay::Initialize()
 	//	return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
+	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
+	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 
 	Initialize_SodaMachine();
@@ -77,6 +79,7 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
 	Test_Ui();
 	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
+
 }
 
 HRESULT CLevel_GamePlay::Render()
@@ -89,6 +92,8 @@ void CLevel_GamePlay::Initialize_SodaMachine()
 	CLayer* pMachineLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine");
 	CLayer* pBannerLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine_Banner");
 
+	if (!pMachineLayer || !pBannerLayer)
+		return;
 	auto MachineLayerObjects = pMachineLayer->Get_GameObjects();
 	auto BannerLayerObjects = pBannerLayer->Get_GameObjects();
 	

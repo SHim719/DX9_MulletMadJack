@@ -52,11 +52,16 @@ void CFrustum::Tick()
 
 _bool CFrustum::In_WorldFrustum(_float3 vWorldPos, _float fRadius)
 {
+	_uint iCount = 0;
 	for (_uint i = 0; i < 6; ++i)
 	{
-		if (fRadius < D3DXPlaneDotCoord(&m_WorldFrustumPlane[i], &vWorldPos))
-			return false;
+		if (fRadius >= D3DXPlaneDotCoord(&m_WorldFrustumPlane[i], &vWorldPos))
+			iCount++;
 	}
+
+	if (iCount == 0)
+		return false;
+
 	return true;
 }
 

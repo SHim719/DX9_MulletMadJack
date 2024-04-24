@@ -3,7 +3,8 @@
 #include "Enemy_Bullet.h"
 #include "PlayerManager.h"
 #include "CUi_SpecialHit.h"
-#include "Light_Manager.h"
+#include "Enemy_Corpse.h"
+
 
 
 CWhite_Suit_Monster::CWhite_Suit_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -172,7 +173,6 @@ HRESULT CWhite_Suit_Monster::Begin_RenderState()
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-    m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, TRUE);
 
     return S_OK;
 }
@@ -180,8 +180,6 @@ HRESULT CWhite_Suit_Monster::Begin_RenderState()
 HRESULT CWhite_Suit_Monster::End_RenderState()
 {
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-    m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
-
     return S_OK;
 }
 
@@ -204,24 +202,35 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
     ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
     pDesc->fHitWorldPos = fHitWorldPos;
     pDesc->fDist = fDist;
-    if (Check_HeadShot(vHitLocalPos))
+
+    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() != CPlayer::KATANA)
     {
-        pDesc->eHitType = HEAD_SHOT;
-        Hit(pDesc);
-        return true;
+        if (Check_HeadShot(vHitLocalPos))
+        {
+            pDesc->eHitType = HEAD_SHOT;
+            Hit(pDesc);
+            return true;
+        }
+        else if (Check_EggShot(vHitLocalPos))
+        {
+            pDesc->eHitType = EGG_SHOT;
+            Hit(pDesc);
+            return true;
+        }
+        else if (Check_BodyShot(vHitLocalPos))
+        {
+            pDesc->eHitType = BODY_SHOT;
+            Hit(pDesc);
+            return true;
+        }
     }
-    else if (Check_EggShot(vHitLocalPos))
-    {
-        pDesc->eHitType = EGG_SHOT;
-        Hit(pDesc);
-        return true;
-    }
-    else if (Check_BodyShot(vHitLocalPos))
+    else
     {
         pDesc->eHitType = BODY_SHOT;
         Hit(pDesc);
         return true;
     }
+    
 
     return false;
 }
@@ -257,6 +266,8 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
     pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
+    _bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
+
     switch (pDesc->eHitType)
     {
     case CPawn::HEAD_SHOT:
@@ -266,7 +277,10 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     }    
     case CPawn::BODY_SHOT:
     {
-        m_fHp -= 3.f;
+        if (bHitByKatana)
+            m_fHp -= 8.f;
+        else
+            m_fHp -= 5.f;
         break;
     }
     case CPawn::EGG_SHOT:
@@ -278,7 +292,43 @@ void CWhite_Suit_Monster::Hit(void* pArg)
 
     if (m_fHp <= 0.f)
     {
-        SetState_Death(pDesc);
+        if (!bHitByKatana)
+        {
+            SetState_Death(pDesc);
+        }
+            
+        else
+        {
+            m_bDestroyed = true;
+
+            CEnemy_Corpse::ENEMYCORPSE_DESC desc;
+            desc.eType = WHITE_SUIT;
+            desc.isTop = true;
+            CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+            
+
+            _float3 vOffset = 0.15f * m_pTarget->Get_Transform()->Get_GroundRight();
+           
+            if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+                pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+            else
+                pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+               
+            pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
+            static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+
+
+
+            //vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
+            desc.isTop = false;
+            CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+            if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+                pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+            else
+                pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+            static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+        }
+        
     }
     else
     {
@@ -333,9 +383,10 @@ void CWhite_Suit_Monster::State_Idle()
 {
     if (D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos())) < m_fPerceptionDist)
     {
+        m_bFirstMeet = true;
         SetState_Alert();
     }
-    else
+    else if (m_bFirstMeet)
     {
         SetState_Move();
     }
@@ -385,12 +436,12 @@ void CWhite_Suit_Monster::State_Shot()
 {
     if (m_pAnimationCom->IsEndAnim())
     {
-        if (-1 != m_iLightIndex)
+        if (m_bSlopeStand)
         {
-            CLight_Manager::Get_Instance()->Disable_Light(m_iLightIndex);
-            CLight_Manager::Get_Instance()->Remove_Light(m_iLightIndex);
+            SetState_Shot();
+            return;
         }
-        
+            
         _float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
         if (fTargetDist < 6.f)
         {
@@ -404,12 +455,10 @@ void CWhite_Suit_Monster::State_Shot()
         {
             SetState_Idle();
         }
-
         else
         {
             SetState_Move();
         }
-        
     }
 }
 
@@ -417,7 +466,7 @@ void CWhite_Suit_Monster::State_Jump()
 {
     if (m_pAnimationCom->IsEndAnim())
     {
-        if (D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos())) < m_fPerceptionDist)
+        if (D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos())) < 9.f)
         {
             SetState_Shot();
         }
@@ -500,6 +549,8 @@ void CWhite_Suit_Monster::SetState_Idle()
         return;
     m_eState = STATE_IDLE;
 
+    m_pAnimationCom->Play_Animation(L"Idle", 0.1f, true);
+
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
@@ -516,7 +567,7 @@ void CWhite_Suit_Monster::SetState_Alert()
     if (STATE_DEATH == m_eState)
         return;
     m_eState = STATE_ALERT;
-    m_pAnimationCom->Play_Animation(L"Alert", 0.1f, false);
+    m_pAnimationCom->Play_Animation(L"Alert", 0.15f, false);
 
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
@@ -556,10 +607,6 @@ void CWhite_Suit_Monster::SetState_Shot()
     pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
     static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
 
-    m_ShotLightDesc.Position = m_pTransformCom->Get_Pos() + m_pTransformCom->Get_GroundLook();
-    m_iLightIndex = CLight_Manager::Get_Instance()->Set_Light(m_ShotLightDesc);
-    if (-1 != m_iLightIndex)
-        CLight_Manager::Get_Instance()->Enable_Light(m_iLightIndex);
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
@@ -577,16 +624,19 @@ void CWhite_Suit_Monster::SetState_Jump()
     m_pRigidbody->Set_Velocity(m_pTarget->Get_Transform()->Get_Right() * m_fSpeed * fRand);
 }
 
-void CWhite_Suit_Monster::SetState_Execution()
+_bool CWhite_Suit_Monster::SetState_Execution()
 {
     if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState
         || STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
+        return false;
 
     m_bCanIntersect = false;
     m_pBoxCollider->Set_Active(false);
 
     m_eState = STATE_EXECUTION;
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
+
+    return true;
 }
 
 void CWhite_Suit_Monster::SetState_Fly(_float3 vLook)

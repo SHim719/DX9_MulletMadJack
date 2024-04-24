@@ -81,7 +81,7 @@ public:
 	void SetState_Slash();
 	void SetState_Jump();
 	void SetState_GetUp();
-	void SetState_Execution()			override;
+	_bool SetState_Execution()			override;
 	void SetState_Fly(_float3 vLook)	override;
 	void SetState_FlyDeath();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);

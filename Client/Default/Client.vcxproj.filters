@@ -463,6 +463,12 @@
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Elevator_R">
       <UniqueIdentifier>{1061b2aa-2076-44cc-b4a7-4072b248ff99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Levels\02. Map2">
+      <UniqueIdentifier>{4667eaaa-08dc-437c-922c-f5236b073904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\EnemyCorpse">
+      <UniqueIdentifier>{2c79712d-e08d-4057-b31b-2da68fdcc9d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -873,6 +879,9 @@
     <ClInclude Include="..\Public\Flying_Katana.h">
       <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Enemy_Corpse.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1246,6 +1255,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Flying_Katana.cpp">
       <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Enemy_Corpse.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

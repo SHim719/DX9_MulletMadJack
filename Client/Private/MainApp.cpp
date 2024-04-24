@@ -27,7 +27,6 @@ HRESULT CMainApp::Initialize()
 
 	CGame_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 	CPlayer_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
-	CLight_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 
 	ShowCursor(FALSE);
 

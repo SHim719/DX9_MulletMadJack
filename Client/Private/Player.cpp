@@ -29,8 +29,8 @@ HRESULT CPlayer::Initialize_Prototype()
 HRESULT CPlayer::Initialize(void * pArg)
 {
 	CBoxCollider::BOXCOLLISION_DESC desc;
-	desc.vScale = { 0.3f, 1.f, 0.3f };
-	desc.vOffset = { 0.f, 0.f, 0.f };
+	desc.vScale = { 0.3f, 1.2f, 0.3f };
+	desc.vOffset = { 0.f, -0.2f, 0.f };
 
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
 	if (nullptr == m_pBoxCollider)

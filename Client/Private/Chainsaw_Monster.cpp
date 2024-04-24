@@ -3,6 +3,7 @@
 #include "PlayerManager.h"
 #include "CUi_SpecialHit.h"
 #include "FPS_Camera.h"
+#include "Enemy_Corpse.h"
 
 CChainsaw_Monster::CChainsaw_Monster(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CPawn{ pGraphic_Device }
@@ -38,7 +39,9 @@ HRESULT CChainsaw_Monster::Initialize(void* pArg)
 
 	m_strTag = "Monster";
 
-	m_fHp = 15.f;
+	m_fHp = 10.f;
+	m_fSpeed = 1.5f;
+	m_fPerceptionDist = 4.f;
 	return S_OK;
 }
 
@@ -184,7 +187,7 @@ void CChainsaw_Monster::Hit(void* pArg)
 	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
-	m_bThisFrameHit = true;
+	_bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
 
 	switch (pDesc->eHitType)
 	{
@@ -193,7 +196,14 @@ void CChainsaw_Monster::Hit(void* pArg)
 		break;
 
 	case CPawn::BODY_SHOT:
-		m_fHp -= 3.f;
+		if (bHitByKatana)
+		{
+			m_fHp -= 8.f;
+			m_bThisFrameHit = true;
+		}
+			
+		else
+			m_fHp -= 3.f;
 		break;
 
 	case CPawn::EGG_SHOT:
@@ -202,7 +212,46 @@ void CChainsaw_Monster::Hit(void* pArg)
 	}
 
 	if (m_fHp <= 0.f)
-		SetState_Death(pDesc);
+	{
+		if (!bHitByKatana)
+		{
+			SetState_Death(pDesc);
+		}
+
+		else
+		{
+			m_bDestroyed = true;
+
+
+			//CEnemy_Corpse::ENEMYCORPSE_DESC desc;
+			//desc.eType = CHAINSAW;
+			//desc.isTop = true;
+			//CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+			//
+			//
+			//_float3 vOffset = 0.15f * m_pTarget->Get_Transform()->Get_GroundRight();
+			//
+			//if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+			//	pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+			//else
+			//	pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+			//
+			//pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
+			//static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+			//
+			//
+			//
+			////vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
+			//desc.isTop = false;
+			//CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+			//if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+			//	pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+			//else
+			//	pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+			//static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+		}
+	}
+		
 }
 
 void CChainsaw_Monster::Process_State(_float fTimeDelta)
@@ -440,8 +489,8 @@ void CChainsaw_Monster::SetState_Slash()
 
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 
-	_float fDamage = 3.f;
-	//m_pTarget->Hit(&fDamage);
+	_float fDamage = 1.f;
+	m_pTarget->Hit(&fDamage);
 }
 
 void CChainsaw_Monster::SetState_Jump()
@@ -471,11 +520,11 @@ void CChainsaw_Monster::SetState_GetUp()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
-void CChainsaw_Monster::SetState_Execution()
+_bool CChainsaw_Monster::SetState_Execution()
 {
 	if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState
 		|| STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
-		return;
+		return false;
 
 	m_bCanIntersect = false;
 	m_pBoxCollider->Set_Active(false);
@@ -483,6 +532,8 @@ void CChainsaw_Monster::SetState_Execution()
 	m_eState = STATE_EXECUTION;
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 	m_pRigidbody->Set_UseGravity(false);
+
+	return true;
 }
 
 void CChainsaw_Monster::SetState_Fly(_float3 vLook)
