@@ -84,6 +84,7 @@ private:
 	CBoxCollider* m_pBoxCollider = { nullptr };
 	CRigidbody* m_pRigidbody = { nullptr };
 	class CBone_Spawner* m_pBoneSpawner = { nullptr };
+	class CGaster_Spawner* m_pGasterSpawner = { nullptr };
 
 
 public:

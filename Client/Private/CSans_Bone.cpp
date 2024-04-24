@@ -126,21 +126,27 @@ HRESULT CSans_Bone::Add_Texture()
 
 void CSans_Bone::Initialize_Arg(void* pArg)
 {
-    //jeongrae incomplete
     SansBoneArg* Arg = (SansBoneArg*)pArg;
-    SansBonePos Size = Arg->Size;
+    SansBonePos BonePos = Arg->Pos;
     _uint floor = Arg->floor;
     m_pTransformCom->Set_Speed(Arg->fSpeed);
     _float3 Pos = {};
     _float3 Scale = {};
-    if (Size == SansBonePos::Left)
+    if (BonePos == SansBonePos::Left)
     {
         Pos = { -1.f, 0.7f, 4.f };
         Scale = { 2.f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
     }
-    else if (Size == SansBonePos::Right)
+    else if (BonePos == SansBonePos::Middle)
+    {
+        Pos = { 1.f, 0.7f, 4.f };
+        Scale = { 2.f, 0.5f, 1.f };
+        m_pTransformCom->Set_Position(Pos);
+        m_pTransformCom->Set_Scale(Scale);
+    }
+    else if (BonePos == SansBonePos::Right)
     {
         Pos = { 1.f, 0.7f, 4.f };
         Scale = { 2.f, 0.5f, 1.f };

@@ -19,10 +19,20 @@ enum class SansBonePos
 	Right,
 	End
 };
-
+enum class SansBoneDir
+{
+	Straight,
+	BackWard,
+	Left,
+	Right,
+	Down,
+	Up,
+	End
+};
 using SansBoneArg = struct SansBoneInfo
 {
-	SansBonePos Size = { SansBonePos::End };
+	SansBonePos Pos = { SansBonePos::End };
+	SansBoneDir Dir = { SansBoneDir::End };
 	_uint floor = { 0 };
 	_float fSpeed = { 0 };
 };

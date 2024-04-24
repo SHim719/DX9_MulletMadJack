@@ -448,6 +448,9 @@
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop">
       <UniqueIdentifier>{1f532e40-e48f-476f-a4f6-e28b67e5ea27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop">
+      <UniqueIdentifier>{f9971649-adf2-4749-b051-448cc06ee1ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -846,6 +849,12 @@
     <ClInclude Include="..\Public\CBoneRoop.h">
       <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Sans_Include.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CGasterRoop.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1207,6 +1216,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CBoneRoop.cpp">
       <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CGasterRoop.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

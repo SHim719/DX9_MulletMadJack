@@ -75,7 +75,9 @@ private:
 	HRESULT Add_Components();
 	HRESULT Add_Texture();
 	void TextureSwitching(_float fTimeDelta);
+	void Move(_float fTimeDelta);
 	void SetStateLaser();
+	void SetStateSwitching();
 
 	void Set_ArgStraightPos(SansGasterPos Pos);
 	void Set_ArgBackWardPos(SansGasterPos Pos);
@@ -84,12 +86,20 @@ private:
 	void Set_ArgDownPos(SansGasterPos Pos);
 	void Set_ArgUpPos(SansGasterPos Pos);
 
+	void SetState(GasterState State) { m_eState = State; }
+	void SetOriginState(GasterState State) { m_eOriginState = State; }
+
 private:
 	_float m_fLife = { 4.f };
 	_float m_fTextureSwitching = { 0 };
 	_float3 m_OriginPos = { 0, 0, 0 };
+	_float m_fStateSwitching = { 0 };
+	_bool m_bCreateLaser = { false };
+	_uint m_iFloor = { 0 };
+	GasterState m_eOriginState = { GasterState::End };
 	GasterState m_eState = { GasterState::End };
 	SansGasterFirePos m_eFirePos = { SansGasterFirePos::End };
+
 
 private:
 	CVIBuffer_Rect* m_pVIBufferCom = { nullptr };

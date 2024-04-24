@@ -1,0 +1,9 @@
+#pragma once
+#include "CSans.h"
+#include "CSans_Bone.h"
+#include "CSans_Gaster.h"
+#include "CBone_Spawner.h"
+#include "CGaster_Spawner.h"
+#include "CGasterLaser.h"
+#include "CBoneRoop.h"
+#include "CGasterRoop.h"

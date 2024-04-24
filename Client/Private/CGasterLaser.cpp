@@ -151,24 +151,40 @@ void CGasterLaser::Arg_InitializeSetPosScale(SansGasterFirePos FirePos, _float3 
 	switch (FirePos)
 	{
 	case SansGasterFirePos::Straight:
-		Scale = { 1.5f, 1.5f, 2.5f };
-		Pos += {0.f, 0.f, -1.3f};
+		Scale = { 0.8f, 0.8f, 20.f };
+		Pos += { 0.f, 0.f, -10.05f };
 		m_pTransformCom->Set_Scale(Scale);
 		m_pTransformCom->Set_Position(Pos);
 		break;
 	case SansGasterFirePos::BackWard:
-		Scale = { 1.5f, 1.5f, 2.5f };
-		Pos += {0.f, 0.f, 1.3f};
+		Scale = { 0.8f, 0.8f, 20.f };
+		Pos += { 0.f, 0.f, 10.05f };
 		m_pTransformCom->Set_Scale(Scale);
 		m_pTransformCom->Set_Position(Pos);
 		break;
 	case SansGasterFirePos::Left:
+		Scale = { 20.f, 0.8f, 0.8f };
+		Pos += { 10.05f, 0.f, 0.f };
+		m_pTransformCom->Set_Scale(Scale);
+		m_pTransformCom->Set_Position(Pos);
 		break;
 	case SansGasterFirePos::Right:
+		Scale = { 20.f, 0.8f, 0.8f };
+		Pos += {-10.05f, 0.f, 0.f};
+		m_pTransformCom->Set_Scale(Scale);
+		m_pTransformCom->Set_Position(Pos);
 		break;
 	case SansGasterFirePos::Down:
+		Scale = { 0.8f, 20.f, 0.8f };
+		Pos += {0.f, 10.05f, 0.f};
+		m_pTransformCom->Set_Scale(Scale);
+		m_pTransformCom->Set_Position(Pos);
 		break;
 	case SansGasterFirePos::Up:
+		Scale = { 0.8f, 20.f, 0.8f };
+		Pos += {0.f, -10.05f, 0.f};
+		m_pTransformCom->Set_Scale(Scale);
+		m_pTransformCom->Set_Position(Pos);
 		break;
 	case SansGasterFirePos::End:
 		break;
@@ -180,7 +196,7 @@ void CGasterLaser::Arg_InitializeSetPosScale(SansGasterFirePos FirePos, _float3 
 void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 {
 	m_fAlphaTime += fTimeDelta;
-	if (m_fLife > 0.8)
+	if (m_fLife > 0.7)
 	{
 		m_eState = GasterLaserState::Warning;
 		if (m_fAlphaTime > 0.05)
@@ -194,15 +210,15 @@ void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 				m_iAlpha += 5;
 		}
 	}
-	else if (m_fLife > 0.2)
+	else if (m_fLife > 0.4)
 	{
 		m_eState = GasterLaserState::Fire;
 		m_iAlpha = 255;
 	}
-	else if (m_fLife <= 0.2)
+	else if (m_fLife <= 0.4)
 	{
 		m_eState = GasterLaserState::End;
-		if (m_fAlphaTime > 0.05)
+		if (m_fAlphaTime > 0.08)
 		{
 			m_fAlphaTime = 0;
 			if (m_iAlpha <= 50)

@@ -2,6 +2,7 @@
 #include "GameInstance.h"
 #include "CBoneRoop.h"
 
+
 CBone_Spawner::CBone_Spawner()
 	:m_pGameInstance(CGameInstance::Get_Instance())
 {
@@ -38,73 +39,40 @@ void CBone_Spawner::Spawn(SANSSTATE State, SANSPatternSTATE PatternState)
 	}
 }
 
-void CBone_Spawner::FirstFloorLeft(_float Speed)
+BoneRoopArg CBone_Spawner::CreateRoop(SansBonePos Pos, SansBoneDir Dir, _float RoopGap, _uint Floor, _float Speed,_float LifeTime)
 {
-	SansBoneArg pArg;
-	pArg.floor = 1;
-	pArg.fSpeed = Speed;
-	pArg.Size = SansBonePos::Left;
-	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), 
-		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
+	BoneRoopArg pArg;
+
+	pArg.Pos = Pos;
+	pArg.Dir = Dir;
+	pArg.RoopGap = RoopGap;
+	pArg.Floor = Floor;
+	pArg.Speed = Speed;
+	pArg.LifeTime = LifeTime;
+
+	return pArg;
 }
-
-void CBone_Spawner::FirstFloorRight(_float Speed)
-{
-	SansBoneArg pArg;
-	pArg.floor = 1;
-	pArg.fSpeed = Speed;
-	pArg.Size = SansBonePos::Right;
-	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
-		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
-}
-
-void CBone_Spawner::FirstFloorAll(_float Speed)
-{
-	SansBoneArg pArg;
-	pArg.floor = 1;
-	pArg.fSpeed = Speed;
-	pArg.Size = SansBonePos::Left;
-	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
-		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
-
-	pArg.floor = 1;
-	pArg.fSpeed = Speed;
-	pArg.Size = SansBonePos::Right;
-	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
-		L"Sans_Bone", L"Prototype_Sans_Bone", &pArg);
-}
-
-void CBone_Spawner::SecondFloorLeft(_float Speed)
-{
-	
-}
-
-void CBone_Spawner::SecondFloorRight(_float Speed)
-{
-}
-
-void CBone_Spawner::SecondFloorAll(_float Speed)
-{
-}
-
 
 void CBone_Spawner::SansState1(SANSPatternSTATE PatternState)
 {
+	BoneRoopArg pArg{};
 	switch (PatternState)
 	{
 	case SANSPatternSTATE::READY:
 		break;
 	case SANSPatternSTATE::FIRST:
-		FirstFloorLeft();
+		pArg = CreateRoop(SansBonePos::Left, SansBoneDir::Straight, 0.5f, 1, 1.f, 3);
+		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"BoneRoop", L"Prototype_CBoneRoop",
+			&pArg);
 		break;
 	case SANSPatternSTATE::SECOND:
-		FirstFloorRight();
+		
 		break;
 	case SANSPatternSTATE::THIRD:
-		FirstFloorAll();
+		
 		break;
 	case SANSPatternSTATE::FOURTH:
-		FirstFloorAll();
+		
 		break;
 	case SANSPatternSTATE::End:
 		break;
@@ -120,16 +88,16 @@ void CBone_Spawner::SansState2(SANSPatternSTATE PatternState)
 	case SANSPatternSTATE::READY:
 		break;
 	case SANSPatternSTATE::FIRST:
-		FirstFloorAll();
+		
 		break;
 	case SANSPatternSTATE::SECOND:
-		FirstFloorAll();
+		
 		break;
 	case SANSPatternSTATE::THIRD:
-		FirstFloorLeft();
+		
 		break;
 	case SANSPatternSTATE::FOURTH:
-		FirstFloorAll();
+		
 		break;
 	case SANSPatternSTATE::End:
 		break;

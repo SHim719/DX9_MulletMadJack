@@ -2,7 +2,7 @@
 #include "Client_Defines.h"
 #include "Base.h"
 #include "CSans.h"
-#include "CSans_Bone.h"
+#include "CBoneRoop.h"
 
 
 BEGIN(Client)
@@ -16,14 +16,7 @@ private:
 
 public:
 	void Spawn(SANSSTATE State, SANSPatternSTATE PatternState);
-	void Roop(SansBonePos Pos, _float RoopGap, _uint Floor,_float Speed, _float LifeTime);
-	void Tick(_float fTimeDelta);
-	void FirstFloorLeft(_float Speed = 1);
-	void FirstFloorRight(_float Speed = 1);
-	void FirstFloorAll(_float Speed = 1);
-	void SecondFloorLeft(_float Speed = 1);
-	void SecondFloorRight(_float Speed = 1);
-	void SecondFloorAll(_float Speed = 1);
+	BoneRoopArg CreateRoop(SansBonePos Pos, SansBoneDir Dir, _float RoopGap, _uint Floor, _float Speed, _float LifeTime);
 
 
 private:

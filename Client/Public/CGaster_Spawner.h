@@ -2,6 +2,8 @@
 #include "Client_Defines.h"
 #include "Base.h"
 #include "CSans.h"
+#include "CGasterRoop.h"
+
 
 BEGIN(Client)
 
@@ -14,9 +16,7 @@ private:
 
 public:
 	void Spawn(SANSSTATE State, SANSPatternSTATE PatternState);
-	void FirstFloorLeft(_float Speed = 1);
-	void FirstFloorRight(_float Speed = 1);
-	void FirstFloorAll(_float Speed = 1);
+	GasterRoopArg CreateRoop(SansGasterFirePos FirePos, SansGasterPos Pos, _float RoopGap, _uint Floor, _float LifeTime);
 
 
 private:
