@@ -216,6 +216,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Effect_Headers.h" />
     <ClInclude Include="..\Public\Elevator_L.h" />
     <ClInclude Include="..\Public\Elevator_R.h" />
+    <ClInclude Include="..\Public\Enemy_Corpse.h" />
     <ClInclude Include="..\Public\Execution_Knife.h" />
     <ClInclude Include="..\Public\Explosion.h" />
     <ClInclude Include="..\Public\Flying_Katana.h" />
@@ -343,6 +344,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\Private\Elevator_L.cpp" />
     <ClCompile Include="..\Private\Elevator_R.cpp" />
+    <ClCompile Include="..\Private\Enemy_Corpse.cpp" />
     <ClCompile Include="..\Private\Flying_Katana.cpp" />
     <ClCompile Include="..\Private\HitBlood.cpp" />
     <ClCompile Include="..\Private\Katana.cpp" />

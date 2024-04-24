@@ -109,6 +109,42 @@ void CVIBuffer_Rect::Scaling_Texcoord(const _float3& vScale)
 {
 }
 
+void CVIBuffer_Rect::Flip_Horizontal()
+{
+	VTXNORMAL* pVertices = { nullptr };
+
+	m_pVB->Lock(0, 0, (void**)&pVertices, 0);
+
+	pVertices[0].vTexcoord = _float2(1.0f, 0.f);
+
+	pVertices[1].vTexcoord = _float2(0.0f, 0.f);
+
+	pVertices[2].vTexcoord = _float2(0.0f, 1.0f);
+
+	pVertices[3].vTexcoord = _float2(1.0f, 1.0f);
+
+	m_pVB->Unlock();
+}
+
+void CVIBuffer_Rect::Set_OriginTexCoord()
+{
+	VTXNORMAL* pVertices = { nullptr };
+
+	m_pVB->Lock(0, 0, (void**)&pVertices, 0);
+
+	pVertices[0].vTexcoord = _float2(0.0f, 0.f);
+
+	pVertices[1].vTexcoord = _float2(1.0f, 0.f);
+
+	pVertices[2].vTexcoord = _float2(1.0f, 1.0f);
+
+	pVertices[3].vTexcoord = _float2(0.0f, 1.0f);
+
+	m_pVB->Unlock();
+
+
+}
+
 CVIBuffer_Rect * CVIBuffer_Rect::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CVIBuffer_Rect*	pInstance = new CVIBuffer_Rect(pGraphic_Device);

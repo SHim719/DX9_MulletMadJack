@@ -78,6 +78,7 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
 	Test_Ui();
 	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
+
 }
 
 HRESULT CLevel_GamePlay::Render()
@@ -90,9 +91,8 @@ void CLevel_GamePlay::Initialize_SodaMachine()
 	CLayer* pMachineLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine");
 	CLayer* pBannerLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine_Banner");
 
-	if (pMachineLayer == nullptr || pBannerLayer == nullptr)
+	if (!pMachineLayer || !pBannerLayer)
 		return;
-
 	auto MachineLayerObjects = pMachineLayer->Get_GameObjects();
 	auto BannerLayerObjects = pBannerLayer->Get_GameObjects();
 	

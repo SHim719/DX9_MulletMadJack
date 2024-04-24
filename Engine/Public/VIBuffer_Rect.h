@@ -21,6 +21,9 @@ public:
 public:
 	void Scaling_Texcoord(const _float3& vScale)	override;
 
+	void Flip_Horizontal();
+	void Set_OriginTexCoord();
+
 public:
 	static CVIBuffer_Rect* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CComponent* Clone(void* pArg) override;

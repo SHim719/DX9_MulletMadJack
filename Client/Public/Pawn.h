@@ -47,11 +47,12 @@ public:
 
 public:
 	virtual void SetState_Pushed(_float3 vLook) {}
-	virtual void SetState_Execution() {}
+	virtual _bool SetState_Execution() { return false; }
 	virtual void SetState_Fly(_float3 vLook) {}
 
 	virtual _bool Is_DeathState() { return false; }
 
+	void Set_SlopeStand(_bool bStand) { m_bSlopeStand = bStand; }
 protected:
 	void Call_MonsterDieUi(eMonsterGrade Grade);
 
@@ -61,7 +62,7 @@ protected:
 
 	_float			m_fHp = 8.f;
 	_float			m_fSpeed = 1.f;
-	_float			m_fPerceptionDist = 3.f;
+	_float			m_fPerceptionDist = 5.f;
 	_float			m_fRange = 1.f;
 	_bool			m_bPushRecovery = { false };
 
@@ -71,6 +72,8 @@ protected:
 	_float			m_fFlyTimeAcc = 0.f;
 	_float			m_fFlyTime = 1.f;
 	_bool			m_bWallColl = false;
+	_bool			m_bFirstMeet = false;
+	_bool			m_bSlopeStand = false;
 
 public:
 	virtual CGameObject* Clone(void* pArg) = 0;

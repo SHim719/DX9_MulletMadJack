@@ -62,8 +62,6 @@ private:
 	void Hit(void* pArg) override;
 private:
 	STATE			m_eState = STATE_IDLE;
-	D3DLIGHT9		m_ShotLightDesc;
-	_int			m_iLightIndex;
 
 private:
 	void Process_State(_float fTimeDelta);
@@ -87,7 +85,7 @@ public:
 	void SetState_Pushed(_float3 vLook) override;
 	void SetState_Shot();
 	void SetState_Jump();
-	void SetState_Execution()			override;
+	_bool SetState_Execution()			override;
 	void SetState_Fly(_float3 vLook)	override;
 	void SetState_FlyDeath();
 	void SetState_Hit();
