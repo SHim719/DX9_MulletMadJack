@@ -1338,7 +1338,7 @@ HRESULT CLoader::Ready_Active_Camera_Effect()
 
 HRESULT CLoader::Ready_BGM()
 {
-	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Gameplay.wav", L"Gameplay")))
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Boss_Eye.wav", L"Gameplay")))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Stinger_Stage_End.wav", L"Stage_End")))

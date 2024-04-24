@@ -58,22 +58,22 @@ void CGaster_Spawner::SansState1(SANSPatternSTATE PatternState)
 	case SANSPatternSTATE::READY:
 		break;
 	case SANSPatternSTATE::FIRST:
-		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::left, 2.f, 1, 3.1);
+		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::left, 2.f, 1, 3.1f);
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterRoop", L"Prototype_CGasterRoop",
 			&pArg);
-		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Middle, 2.f, 1, 3.1);
+		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Middle, 2.f, 1, 3.1f);
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterRoop", L"Prototype_CGasterRoop",
 			&pArg);
-		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Right, 2.f, 1, 3.1);
+		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Right, 2.f, 1, 3.1f);
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterRoop", L"Prototype_CGasterRoop",
 			&pArg);
-		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::left, 2.f, 3, 3.1);
+		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::left, 2.f, 3, 3.1f);
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterRoop", L"Prototype_CGasterRoop",
 			&pArg);
-		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Middle, 2.f, 3, 3.1);
+		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Middle, 2.f, 3, 3.1f);
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterRoop", L"Prototype_CGasterRoop",
 			&pArg);
-		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Right, 2.f, 3, 3.1);
+		pArg = CreateRoop(SansGasterFirePos::Straight, SansGasterPos::Right, 2.f, 3, 3.1f);
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterRoop", L"Prototype_CGasterRoop",
 			&pArg);
 		break;
