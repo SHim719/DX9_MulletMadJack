@@ -89,6 +89,9 @@ void CVentilador::OnTriggerEnter(CGameObject* pOther)
 	Arg.iCount = 8;
 	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
 
+	m_pGameInstance->Play(L"Vent_Death", false);
+	m_pGameInstance->SetVolume(L"Vent_Death", 0.5f);
+
 	pOther->Set_Destroy(true);
 }
 

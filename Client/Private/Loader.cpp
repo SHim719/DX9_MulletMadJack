@@ -133,6 +133,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Ready_Announcer_Sound()))
 		return E_FAIL;
 
+	if (FAILED(Ready_Streamer_Sound()))
+		return E_FAIL;
+
 	Initialize_TextManager();
 
 	lstrcpy(m_szLoadingText, TEXT("Wan."));
@@ -1395,6 +1398,9 @@ HRESULT CLoader::Ready_BGM()
 
 	
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Elevator_FX.wav", L"Elevator_FX")))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1409,7 +1415,22 @@ HRESULT CLoader::Ready_Player_Weapon_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Fire0.wav", L"Shotgun_Fire")))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Swing0.wav", L"Katana_Swing")))
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Reload.wav", L"Shotgun_Reload")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Load_Spin0.wav", L"Shotgun_SpinA")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Load_Spin1.wav", L"Shotgun_SpinB")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Player_Sword_Slash0.wav", L"Katana_Slash")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Hit_Metal1.wav", L"Katana_Hit_Metal")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Cutting_Flesh.wav", L"Katana_Cutting_Flesh")))
 		return E_FAIL;
 
 	return S_OK;
@@ -1435,6 +1456,21 @@ HRESULT CLoader::Ready_Player_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Player_Dash0.wav", L"Player_Dash")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Player_Dash1.wav", L"Player_AirDash")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Player_Jump0.wav", L"Player_Jump")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Touch_Ground.wav", L"Player_Land")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Finish_Punch0.wav", L"Player_Execution_Punch")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Finish_Special0.wav", L"Player_Execution_Weapon")))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1443,10 +1479,19 @@ HRESULT CLoader::Ready_Monster_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Pistol_Shoot1.wav", L"White_Suit_Shoot")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Hit0.wav", L"White_Suit_Slashed")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Electricity_0.wav", L"White_Suit_Electrified")))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/General_Death0.wav", L"White_Suit_Death")))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Drone_Alert0.wav", L"Drone_Attack")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Hit1.wav", L"Drone_Slashed")))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Drone_Death0.wav", L"Drone_Death")))
@@ -1461,7 +1506,16 @@ HRESULT CLoader::Ready_Monster_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Chainsaw_Attack0.wav", L"Chainsaw_Attack")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Hit2.wav", L"Chainsaw_Slashed")))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/General_Death4.wav", L"Chainsaw_Death")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Electricity_1.wav", L"Chainsaw_Electrified")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Enemies/Vent_Death0.wav", L"Vent_Death")))
 		return E_FAIL;
 
 	return S_OK;
@@ -1481,12 +1535,26 @@ HRESULT CLoader::Ready_Effect_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/GUI/Trailer_Select.wav", L"Upgrade_Select")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Ambiences/Blood_Splatter.wav", L"Blood_Splatter")))
+		return E_FAIL;
+
 	return S_OK;
 }
 
 HRESULT CLoader::Ready_Announcer_Sound()
 {
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Announcer/Full_Life.wav", L"Full_Life")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Announcer/Congratulations.wav", L"Congratulations")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Streamer_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Streamer/Thank_You.wav", L"Streamer_Thank_You")))
 		return E_FAIL;
 
 	return S_OK;

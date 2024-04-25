@@ -116,6 +116,8 @@ HRESULT CPlayer::Render()
 
 void CPlayer::Key_Input(_float fTimeDelta)
 {
+	m_fSoundTime += fTimeDelta;
+
 	if (m_pGameInstance->GetKey(eKeyCode::One)) {
 		Set_TimeDivide(1.f);
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_BulletTime"), false);
@@ -135,16 +137,26 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (GetKeyState('Z') & 0x8000)
 	{
-		/*m_pGameInstance->Play(L"Player_Footstep", false);
-		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+		if (m_fSoundTime >= 1.f)
+		{
+			m_pGameInstance->Play(L"Player_Footstep", false);
+			m_pGameInstance->SetVolume(L"Player_Footstep", 0.3f);
+
+			m_fSoundTime = 0.f;
+		}
 
 		m_pTransformCom->Go_Straight(fTimeDelta);
 	}
 
 	if (GetKeyState('X') & 0x8000)
 	{
-		/*m_pGameInstance->Play(L"Player_Footstep", false);
-		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+		if (m_fSoundTime >= 1.f)
+		{
+			m_pGameInstance->Play(L"Player_Footstep", false);
+			m_pGameInstance->SetVolume(L"Player_Footstep", 0.3f);
+
+			m_fSoundTime = 0.f;
+		}
 
 		m_pTransformCom->Go_Backward(fTimeDelta);
 	}
@@ -176,6 +188,12 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SPIN);
 				}
+				else if (eWeaponType == SHOTGUN && eAnimationType != RELOAD) {
+					m_pGameInstance->Play(L"Shotgun_Reload", false);
+					m_pGameInstance->SetVolume(L"Shotgun_Reload", 1.f);
+
+					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(RELOAD);
+				}
 				else if(eAnimationType != RELOAD){
 					CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(RELOAD);
 				}
@@ -192,6 +210,9 @@ void CPlayer::Key_Input(_float fTimeDelta)
 			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::SPIN);
 		}
 		else {
+			m_pGameInstance->Play(L"Shotgun_Reload", false);
+			m_pGameInstance->SetVolume(L"Shotgun_Reload", 1.f);
+
 			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::RELOAD);
 		}
 	}
@@ -296,8 +317,14 @@ void CPlayer::Render_Shotgun()
 	case SPIN: {
 		srand((unsigned int)time(NULL));
 		int i = rand() % 2;
-		if (i == 0) { m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true); }
-		else {m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); }
+		if (i == 0)
+		{
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinA"), true);
+		}
+		else
+		{
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true);
+		}
 		return;
 	}
 	case OPENING:
@@ -381,8 +408,8 @@ void CPlayer::Slash_Katana(){
 	Camera_Shake_Order(600000.f, 0.4f);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Effect"), true);
 
-	m_pGameInstance->Play(L"Katana_Swing", false);
-	m_pGameInstance->SetVolume(L"Katana_Swing", 1.f);
+	m_pGameInstance->Play(L"Katana_Slash", false);
+	m_pGameInstance->SetVolume(L"Katana_Slash", 1.f);
 }
 
 void CPlayer::Active_Reset()
@@ -540,6 +567,15 @@ void CPlayer::ColliderUpDown()
 		_float3 vPos = fHitWorldPos;
 		vPos.y += 1.0f;
 		m_pTransformCom->Set_Position(vPos);
+
+		if (m_bJumped)
+		{
+			m_pGameInstance->Play(L"Player_Land", false);
+			m_pGameInstance->SetVolume(L"Player_Land", 1.f);
+
+			m_bJumped = false;
+		}
+
 		m_pRigidbody->Set_OnGround();
 		m_bCanAirDash = true;
 
@@ -652,13 +688,20 @@ void CPlayer::Process_State(_float fTimeDelta)
 
 void CPlayer::Idle_State(_float fTimeDelta)
 {
+	m_fSoundTime += fTimeDelta;
+
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 	m_pRigidbody->Set_GroundVelocity(_float3(0.f, 0.f, 0.f));
 
 	if (m_pGameInstance->GetKey(eKeyCode::W))
 	{
-		/*m_pGameInstance->Play(L"Player_Footstep", false);
-		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+		if (m_fSoundTime >= 1.f)
+		{
+			m_pGameInstance->Play(L"Player_Footstep", false);
+			m_pGameInstance->SetVolume(L"Player_Footstep", 0.3f);
+
+			m_fSoundTime = 0.f;
+		}
 
 		Set_MoveState(MOVE);
 		m_pRigidbody->Set_GroundVelocity(m_pTransformCom->Get_GroundLook() * m_fMoveSpeed);
@@ -670,8 +713,13 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::S))
 	{
-		/*m_pGameInstance->Play(L"Player_Footstep", false);
-		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+		if (m_fSoundTime >= 1.f)
+		{
+			m_pGameInstance->Play(L"Player_Footstep", false);
+			m_pGameInstance->SetVolume(L"Player_Footstep", 0.3f);
+
+			m_fSoundTime = 0.f;
+		}
 
 		Set_MoveState(MOVE);
 		m_pRigidbody->Set_GroundVelocity(-m_pTransformCom->Get_GroundLook() * m_fMoveSpeed);
@@ -683,8 +731,13 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 	{
-		/*m_pGameInstance->Play(L"Player_Footstep", false);
-		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+		if (m_fSoundTime >= 1.f)
+		{
+			m_pGameInstance->Play(L"Player_Footstep", false);
+			m_pGameInstance->SetVolume(L"Player_Footstep", 0.3f);
+
+			m_fSoundTime = 0.f;
+		}
 
 		m_pRigidbody->Add_GroundVelocity(-m_pTransformCom->Get_GroundRight() * m_fMoveSpeed);
 		Set_MoveState(MOVE);
@@ -698,8 +751,13 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKey(eKeyCode::D))
 	{
-		/*m_pGameInstance->Play(L"Player_Footstep", false);
-		m_pGameInstance->SetVolume(L"Player_Footstep", 1.f);*/
+		if (m_fSoundTime >= 1.f)
+		{
+			m_pGameInstance->Play(L"Player_Footstep", false);
+			m_pGameInstance->SetVolume(L"Player_Footstep", 0.3f);
+
+			m_fSoundTime = 0.f;
+		}
 
 		m_pRigidbody->Add_GroundVelocity(m_pTransformCom->Get_GroundRight() * m_fMoveSpeed);
 		Set_MoveState(MOVE);
@@ -713,6 +771,11 @@ void CPlayer::Idle_State(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::Space) && m_pRigidbody->IsGround())
 	{
+		m_pGameInstance->Play(L"Player_Jump", false);
+		m_pGameInstance->SetVolume(L"Player_Jump", 1.f);
+
+		m_bJumped = true;
+
 		m_pRigidbody->Set_VelocityY(5.f);
 		m_pRigidbody->Set_Ground(false);
 	}
@@ -838,6 +901,8 @@ void CPlayer::SetState_Dash()
 void CPlayer::SetState_AirDash()
 {
 	ePlayerState = AIRDASH_STATE;
+	m_pGameInstance->Play(L"Player_AirDash", false);
+	m_pGameInstance->SetVolume(L"Player_AirDash", 1.f);
 
 	if (m_pGameInstance->GetKey(eKeyCode::A))
 		m_pRigidbody->Set_GroundVelocity(-m_pTransformCom->Get_GroundRight() * 15.f);

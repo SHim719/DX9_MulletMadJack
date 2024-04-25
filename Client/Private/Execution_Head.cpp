@@ -58,6 +58,10 @@ void CExecution_Head::Tick(_float fTimeDelta)
 			if(m_fDelayedAnimation < 0.f){
 				CPlayer_Manager::Get_Instance()->Camera_Shake_Order(0.1f, 2000000.f);
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), true);
+
+				m_pGameInstance->Play(L"Player_Execution_Weapon", false);
+				m_pGameInstance->SetVolume(L"Player_Execution_Weapon", 0.3f);
+
 				m_iTexture_Index++;
 			}
 		}else if(m_iTexture_Index == m_pTextureCom->Get_MaxTextureNum()){

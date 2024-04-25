@@ -210,6 +210,18 @@ void CChainsaw_Monster::Hit(void* pArg)
 	case CPawn::BODY_SHOT:
 		if (bHitByKatana)
 		{
+			/*m_pGameInstance->Play(L"Chainsaw_Slashed", false);
+			m_pGameInstance->SetVolume(L"Chainsaw_Slashed", 1.f);
+			m_pGameInstance->Play(L"Chainsaw_Electrified", false);
+			m_pGameInstance->SetVolume(L"Chainsaw_Electrified", 1.f);
+			m_pGameInstance->Play(L"Katana_Hit_Metal", false);
+			m_pGameInstance->SetVolume(L"Katana_Hit_Metal", 1.f);*/
+
+			m_pGameInstance->Play(L"Katana_Cutting_Flesh", false);
+			m_pGameInstance->SetVolume(L"Katana_Cutting_Flesh", 0.5f);
+			m_pGameInstance->Play(L"Blood_Splatter", false);
+			m_pGameInstance->SetVolume(L"Blood_Splatter", 0.5f);
+
 			m_fHp -= 8.f;
 			m_bThisFrameHit = true;
 		}
@@ -322,14 +334,24 @@ void CChainsaw_Monster::State_Idle()
 {
 	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 
-	if (!m_bFirstMeet &&  (m_fPerceptionDist < fTargetDist && fTargetDist < 9.f))
-	{
-		SetState_Jump();
-	}
-	else if (m_bFirstMeet || fTargetDist < m_fPerceptionDist)
+	//if (!m_bFirstMeet &&  (m_fPerceptionDist < fTargetDist && fTargetDist < 9.f))
+	//{
+	//	SetState_Jump();
+	//}
+	//else if (m_bFirstMeet || fTargetDist < m_fPerceptionDist)
+	//{
+	//	SetState_Move();
+	//}
+	if (fTargetDist < m_fPerceptionDist)
 	{
 		SetState_Move();
 	}
+	else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
+	{
+		SetState_Jump();
+	}
+	else
+		SetState_Idle();
 }
 
 void CChainsaw_Monster::State_Move()
@@ -345,6 +367,7 @@ void CChainsaw_Monster::State_Move()
 	else if (m_fPerceptionDist < fTargetDist && fTargetDist < 9.f)
 	{
 		SetState_Jump();
+		return;
 	}
 	else if (fTargetDist > 9.f)
 	{
@@ -384,10 +407,21 @@ void CChainsaw_Monster::State_Slash()
 	{
 		_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 		if (fTargetDist < m_fRange)
+		{
 			SetState_Slash();
+		}
+		else if (m_fRange <= fTargetDist && fTargetDist < m_fPerceptionDist)
+		{
+			SetState_Move();
+		}
+		else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 9.f)
+		{
+			SetState_Jump();
+		}
 		else
+		{
 			SetState_Idle();
-			
+		}	
 	}
 }
 

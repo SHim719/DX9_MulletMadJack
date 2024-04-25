@@ -107,6 +107,7 @@ void CTerrain_Collider::Check_Up()
 			vPos.y += 0.75f;
 			pTransform->Set_State(CTransform::STATE_POSITION, &vPos);
 			pRigidbody->Set_OnGround();
+
 			return;
 		}
 	}

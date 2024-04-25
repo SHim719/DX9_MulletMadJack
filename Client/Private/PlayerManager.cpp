@@ -48,6 +48,10 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 				/*m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Kick"), true);*/
 				Set_MouseLock(false);
 				Set_Invincible(true);
+
+				m_pGameInstance->Play(L"Player_Execution_Punch", false);
+				m_pGameInstance->SetVolume(L"Player_Execution_Punch", 0.5f);
+
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Neck"), true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Head"), true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Execution_Body"), true);

@@ -301,7 +301,21 @@ void CWhite_Suit_Monster::Hit(void* pArg)
     case CPawn::BODY_SHOT:
     {
         if (bHitByKatana)
+        {
+            /*m_pGameInstance->Play(L"White_Suit_Slashed", false);
+            m_pGameInstance->SetVolume(L"White_Suit_Slashed", 1.f);
+            m_pGameInstance->Play(L"White_Suit_Electrified", false);
+            m_pGameInstance->SetVolume(L"White_Suit_Electrified", 1.f);
+            m_pGameInstance->Play(L"Katana_Hit_Metal", false);
+            m_pGameInstance->SetVolume(L"Katana_Hit_Metal", 1.f);*/
+
+            m_pGameInstance->Play(L"Katana_Cutting_Flesh", false);
+            m_pGameInstance->SetVolume(L"Katana_Cutting_Flesh", 0.5f);
+            m_pGameInstance->Play(L"Blood_Splatter", false);
+            m_pGameInstance->SetVolume(L"Blood_Splatter", 0.5f);
+
             m_fHp -= 8.f;
+        }
         else
             m_fHp -= 5.f;
         break;

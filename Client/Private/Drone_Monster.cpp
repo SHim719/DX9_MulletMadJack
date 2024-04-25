@@ -144,6 +144,14 @@ void CDrone_Monster::Hit(void* pArg)
 
 	m_fHp -= 4.f;
 
+	if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA)
+	{
+		m_pGameInstance->Play(L"Katana_Cutting_Flesh", false);
+		m_pGameInstance->SetVolume(L"Katana_Cutting_Flesh", 0.5f);
+		m_pGameInstance->Play(L"Blood_Splatter", false);
+		m_pGameInstance->SetVolume(L"Blood_Splatter", 0.5f);
+	}
+
 	if (m_fHp <= 0.f)
 		SetState_Death(pDesc);
 }
@@ -177,11 +185,10 @@ void CDrone_Monster::State_Idle()
 {
 	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 
-	if (fTargetDist < 9.f)
+	if (fTargetDist < m_fPerceptionDist)
 	{
 		SetState_Move();
 	}
-
 }
 
 void CDrone_Monster::State_Move()
@@ -191,6 +198,10 @@ void CDrone_Monster::State_Move()
 	if (fTargetDist < 2.f)
 	{
 		SetState_Rush();
+	}
+	else if (fTargetDist >= m_fPerceptionDist)
+	{
+		SetState_Idle();
 		return;
 	}
 
@@ -204,10 +215,16 @@ void CDrone_Monster::State_Rush()
 {
 	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 
+	if (fTargetDist > m_fPerceptionDist)
+	{
+		SetState_Idle();
+		return;
+	}
+
 	_float3 vToTargetDir = (m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos());
 	D3DXVec3Normalize(&vToTargetDir, &vToTargetDir);
 
-	m_pRigidbody->Set_Velocity(vToTargetDir * m_fSpeed * 3.f);
+	m_pRigidbody->Set_Velocity(vToTargetDir * m_fSpeed * 0.5f);
 }
 
 void CDrone_Monster::State_Bound(_float fTimeDelta)
@@ -298,7 +315,7 @@ void CDrone_Monster::SetState_Bound()
 	m_pAnimationCom->Play_Animation(L"Bound", 0.1f, false);
 
 	_float3 vVelocity = m_pRigidbody->Get_Velocity();
-	m_pRigidbody->Set_Velocity(-vVelocity);
+	m_pRigidbody->Set_Velocity(-vVelocity * 2.f);
 	m_fBoundTimeAcc = 0.f;
 }
 
