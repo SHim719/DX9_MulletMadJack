@@ -1,4 +1,4 @@
-	#pragma once
+ï»¿#pragma once
 
 #include "../Default/stdafx.h"
 #include <process.h>
@@ -6,7 +6,7 @@
 #include "Client_Components.h"
 #include "Client_Struct.h"
 
-/* Å¬¶óÀÌ¾ğÆ®¿¡¼­ Á¦ÀÛÇÏ´Â ¸ğµç Å¬·¡½ºµéÀÌ °øÅëÀûÀ¸·Î ÀÚÁÖ »ç¿ëÇÏ´Â Á¤ÀÇµéÀ» ¸ğ¾ÆµĞ´Ù. */
+/* í´ë¼ì´ì–¸íŠ¸ì—ì„œ ì œì‘í•˜ëŠ” ëª¨ë“  í´ë˜ìŠ¤ë“¤ì´ ê³µí†µì ìœ¼ë¡œ ìì£¼ ì‚¬ìš©í•˜ëŠ” ì •ì˜ë“¤ì„ ëª¨ì•„ë‘”ë‹¤. */
 namespace Client
 {
 	const unsigned int		g_iWinSizeX = 1280;

@@ -23,7 +23,7 @@ HRESULT CShotgun_Opening::Initialize(void* pArg)
 		return E_FAIL;
 
 	Default_Set_Size();
-	Default_Set_Delay(0.2f);
+	Default_Set_Delay(0.02f);
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 	Set_Texture_Index(0);
 
@@ -35,7 +35,7 @@ HRESULT CShotgun_Opening::Initialize_Active()
 	Set_Texture_Index(0);
 	Default_Set_Size();
 	Initialize_Set_Scale_Pos_Rotation(NULL);
-
+	m_bAnimaitonReverse = false;
 	return S_OK;
 }
 
@@ -50,16 +50,22 @@ void CShotgun_Opening::Tick(_float fTimeDelta)
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 
 	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
-		m_iTexture_Index++;
+		if(m_bAnimaitonReverse == false) m_iTexture_Index++;
+		else if (m_iTexture_Index == 0) {
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Opening"), false);
+			CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::IDLE);
+			AnimationDelayReset();
+		}else m_iTexture_Index--;
+
 		AnimationDelayReset();
 	}
 
 	//Animation End
 	if (m_iTexture_Index > m_pTextureCom->Get_MaxTextureNum()) {
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Opening"), false);
-		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(CPlayer::ANIMATION_TYPE::IDLE);
-		AnimationDelayReset();
+		m_bAnimaitonReverse = true;
+		m_iTexture_Index--;
 	}
+
 
 	m_fScale = { Get_Texture_Info().x / m_fDivide , Get_Texture_Info().y / m_fDivide, 1.f };
 
@@ -91,8 +97,8 @@ HRESULT CShotgun_Opening::Render()
 
 void CShotgun_Opening::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
-	Set_Ui_Pos(250, -100);
-	Set_Divide(1.5f);
+	Set_Ui_Pos(0, -200);
+	Set_Divide(0.8f);
 
 	m_fScale = { m_UiDesc.m_fSizeX / Get_Divide() , m_UiDesc.m_fSizeY / Get_Divide(), 1.f };
 	m_fRotation = { 0.f, 0.f, 0.f };

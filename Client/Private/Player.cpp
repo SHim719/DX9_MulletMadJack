@@ -1,7 +1,7 @@
 #include "..\Public\Player.h"
 #include "GameInstance.h"
 #include "PlayerManager.h"
-
+#include "CSans_Gaster.h"
 #include "Pawn.h"
 
 
@@ -101,8 +101,7 @@ void CPlayer::Tick(_float fTimeDelta)
 
 void CPlayer::LateTick(_float fTimeDelta)
 {
-	if(m_bHaveWeapon == true) m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), true);
-	else m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), false);
+	Execution_Alert();
 
 
 	ColliderCheck();
@@ -229,7 +228,12 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
 	{
+		m_pTransformCom->Set_Position({ 0.f, 3.f, 0.f });
+
+
+
 		m_bHaveWeapon = true;
+		//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Opening"), true);
 	}
 #pragma endregion
 }
@@ -276,6 +280,22 @@ void CPlayer::Reload_Warning()
 {
 	if (CPlayer_Manager::Get_Instance()->Get_Magazine() <= 2)	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), true);
 	else														m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
+
+	if (CPlayer_Manager::Get_Instance()->Get_Player_AnimationType() == OPENING || 
+		CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_EXECUTION ||
+		CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_CUTIN_SHOP) 
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Reload"), false);
+}
+
+void CPlayer::Execution_Alert()
+{
+	if (m_bHaveWeapon == true) m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), true);
+	else m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), false);
+
+	if (CPlayer_Manager::Get_Instance()->Get_Player_AnimationType() == OPENING ||
+		CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_EXECUTION ||
+		CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_CUTIN_SHOP)
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), false);
 }
 
 void CPlayer::Render_Pistol()
@@ -328,7 +348,7 @@ void CPlayer::Render_Shotgun()
 		return;
 	}
 	case OPENING:
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_SpinB"), true); 
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Opening"), true); 
 		return;
 	case RELOAD:
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), true);
@@ -356,9 +376,7 @@ void CPlayer::Render_Katana()
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), true);
 		return;
 	case OPENING:
-		//Temp
-		Set_AnimationType(IDLE);
-		//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana"), true);
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Opening"), true);
 		return;
 	case RELOAD:
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Shotgun_Reload"), true);

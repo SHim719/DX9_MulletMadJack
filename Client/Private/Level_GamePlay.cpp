@@ -52,13 +52,16 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
+	//if(FAILED(Ready_Layer_Beholder(L"Monster")))
+		//return E_FAIL;
+
 	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
 	//	return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
-
+	//::Get_Instance()->Load(L"../Bin/Resources/DataFiles/TestMh.dat", (LEVEL)m_iLevelID);
 
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 
@@ -162,6 +165,15 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 		MSG_BOX(TEXT("Failed to Create Player"));
 		return E_FAIL;
 	}
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_Beholder(const wstring& strLayerTag)
+{
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag,
+		TEXT("Prototype_Beholder")))
+		return E_FAIL;
 
 	return S_OK;
 }

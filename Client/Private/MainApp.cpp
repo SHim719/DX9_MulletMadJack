@@ -5,6 +5,7 @@
 #include "CGame_Manager.h"
 #include "PlayerManager.h"
 #include "Light_Manager.h"
+#include "MathManager.h"
 #include "MapLoader.h"
 
 CMainApp::CMainApp()
@@ -27,7 +28,7 @@ HRESULT CMainApp::Initialize()
 
 	CGame_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 	CPlayer_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
-
+	CMath_Manager::Get_Instance()->Initialize(m_pGraphic_Device);
 	ShowCursor(FALSE);
 
 
@@ -45,6 +46,7 @@ void CMainApp::Tick(_float fTimeDelta)
 {
 	CGame_Manager::Get_Instance()->Tick(fTimeDelta);	
 	CPlayer_Manager::Get_Instance()->Tick(fTimeDelta);
+	CMath_Manager::Get_Instance()->Tick(fTimeDelta);
 }
 
 HRESULT CMainApp::Render()
@@ -84,6 +86,7 @@ void CMainApp::Free()
 	CGame_Manager::Get_Instance()->Free();
 	CPlayer_Manager::Get_Instance()->Free();
 	CLight_Manager::Get_Instance()->Free();
+	CMath_Manager::Get_Instance()->Free();
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pGameInstance);	
 
