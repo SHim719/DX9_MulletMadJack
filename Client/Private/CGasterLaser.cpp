@@ -48,6 +48,7 @@ void CGasterLaser::Tick(_float fTimeDelta)
 	}
 	AdjustAlpha(fTimeDelta);
 
+	m_pTransformCom->Rotation_XYZ({0.f,0.f,45.f});
 }
 
 void CGasterLaser::LateTick(_float fTimeDelta)

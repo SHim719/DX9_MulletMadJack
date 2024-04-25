@@ -490,6 +490,12 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening">
       <UniqueIdentifier>{cb7a1990-e950-42cd-ad0a-a9aa6a965bda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Beholder">
+      <UniqueIdentifier>{42e6d976-e968-44fd-89e4-338766ae84f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser">
+      <UniqueIdentifier>{3d35c9ce-e818-42ed-9c2d-031a1ca8934e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -924,6 +930,18 @@
     <ClInclude Include="..\Public\Shotgun_Opening.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Katana_Opening.h">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Beholder.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\TrackingLaser.h">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MathManager.h">
+      <Filter>97. Manager\MathManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1318,6 +1336,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\Shotgun_Opening.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Katana_Opening.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Beholder.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\TrackingLaser.cpp">
+      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\MathManager.cpp">
+      <Filter>97. Manager\MathManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

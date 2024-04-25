@@ -1,15 +1,16 @@
 #pragma once
 #include "Client_Defines.h"
+#include "PlayerManager.h"
 #include "CUi.h"
 
 BEGIN(Client)
 
-class CShotgun_Opening final : public CUi
+class CKatana_Opening final : public CUi
 {
 protected:
-	CShotgun_Opening(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CShotgun_Opening(const CShotgun_Opening& rhs);
-	virtual ~CShotgun_Opening() = default;
+	CKatana_Opening(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CKatana_Opening(const CKatana_Opening& rhs);
+	virtual ~CKatana_Opening() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -42,8 +43,8 @@ private:
 	_float AnimationDelay(_float fTimeDelta) { return m_fTimeDelay -= fTimeDelta; }
 	void   AnimationDelayReset() { m_fTimeDelay = m_fTimeDelayOrigin; }
 
-	void	Set_Divide(_float fDivide) { m_fDivide = fDivide; }
-	_float  Get_Divide() { return m_fDivide; }
+	void Set_Divide(_float fDivide) { m_fDivide = fDivide; }
+	_float Get_Divide() { return m_fDivide; }
 
 	//POINT Get_Texture_Info() { return { m_pTextureCom->Get_TextureWidth(), m_pTextureCom->Get_TextureHeight() }; }
 	POINT Get_Texture_Info();
@@ -66,8 +67,6 @@ private:
 	_float3 m_fRotation = { 0.f, 0.f, 0.f };
 
 	_float m_fLissajousTime = 0.f;
-
-	_bool  m_bAnimaitonReverse = false;
 public:
 	virtual void Free() override;
 };

@@ -3,9 +3,6 @@
 #include "Client_Defines.h"
 #include "Base.h"
 
-/* 2. �ε� ���� ������ �ʿ��� �ڿ��� �����Ѵ�.  */
-/* ���� ������ ���� �ڿ� �ε� : ��Ƽ������ */
-
 BEGIN(Engine)
 class CGameInstance;
 END
@@ -53,6 +50,7 @@ private:
 	HRESULT Loading_For_Map_Texture();
 	HRESULT Loading_For_Effect_Texture();
 	HRESULT Loading_For_Sans_Texture();
+	HRESULT Loading_For_Boss_Texture();
 
 	HRESULT Ready_MapObject_Prototype();
 	HRESULT Ready_Monster_Prototype();

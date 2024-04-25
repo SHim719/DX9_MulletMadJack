@@ -22,6 +22,7 @@
 #include "Shotgun_SpinB.h"
 #include "Shotgun_GunFire.h"
 #include "Shotgun_Reload.h"
+#include "Shotgun_Opening.h"
 
 #pragma endregion
 
@@ -30,6 +31,7 @@
 #include "Katana.h"
 #include "Katana_Slash.h"
 #include "Katana_Effect.h"	
+#include "Katana_Opening.h"
 
 #pragma endregion
 
@@ -41,8 +43,13 @@
 
 #pragma endregion
 
+#pragma region Boss
 
+#include "Beholder.h"
 
+#pragma endregion
+
+#include "TrackingLaser.h"
 
 #include "CrossHair.h"
 #include "Phone.h"

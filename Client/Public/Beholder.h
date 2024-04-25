@@ -1,0 +1,135 @@
+#pragma once
+#include "Client_Defines.h"
+#include "Pawn.h"
+
+
+
+BEGIN(Engine)
+class CTexture;
+class CTransform;
+class CVIBuffer_Rect;
+END
+
+BEGIN(Client)
+
+class CBeholder final : public CPawn
+{
+public:
+
+	enum ATTACKORDER {
+		PLAYERTRACKING, ENDORDER
+	};
+
+	struct BeholderAttackOrder
+	{
+		//_float3 vLook;
+		//_float fTime = 0.f;
+		ATTACKORDER eOrder;
+		_float3		vMasterPos;
+	};
+
+private:
+
+	enum STATE
+	{
+		STATE_IDLE,
+		STATE_MOVE,
+		STATE_ALERT,
+		STATE_PUSHED,
+		STATE_SHOT,
+		STATE_JUMP,
+		STATE_HIT,
+		STATE_EXECUTION,
+		STATE_FLY,
+		STATE_FLYDEATH,
+		STATE_DEATH,
+		STATE_END
+	};
+
+private:
+	CBeholder(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CBeholder(const CBeholder& rhs);
+	virtual ~CBeholder() = default;
+
+public:
+	virtual HRESULT Initialize_Prototype();
+	virtual HRESULT Initialize(void* pArg) override;
+	virtual void PriorityTick(_float fTimeDelta) override;
+	virtual void Tick(_float fTimeDelta) override;
+	virtual void LateTick(_float fTimeDelta) override;
+	virtual HRESULT Render() override;
+
+private:
+	CVIBuffer* m_pVIBufferCom = { nullptr };
+	CAnimation* m_pAnimationCom = { nullptr };
+	CBoxCollider* m_pBoxCollider = { nullptr };
+	CRigidbody* m_pRigidbody = { nullptr };
+
+private:
+	_bool On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)		override;
+	void OnCollisionEnter(CGameObject* pOther) override;
+
+	_bool Check_HeadShot(_float3 vHitLocalPos);
+	_bool Check_BodyShot(_float3 vHitLocalPos);
+	_bool Check_EggShot(_float3  vHitLocalPos);
+
+	void Player_Tracking_Laser();
+	void Hit(void* pArg) override;
+private:
+	STATE			m_eState = STATE_IDLE;
+
+private:
+	void Process_State(_float fTimeDelta);
+
+	void State_Idle();
+	void State_Move();
+	void State_Alert();
+	void State_Pushed();
+	void State_Shot();
+	void State_Jump();
+	void State_Execution();
+	void State_Fly(_float fTimeDelta);
+	void State_FlyDeath(_float fTimeDelta);
+	void State_Hit();
+	void State_Death(_float fTimeDelta);
+
+public:
+	void SetState_Idle();
+	void SetState_Move();
+	void SetState_Alert();
+	void SetState_Pushed(_float3 vLook) override;
+	void SetState_Shot();
+	void SetState_Jump();
+	_bool SetState_Execution()			override;
+	void SetState_Fly(_float3 vLook)	override;
+	void SetState_FlyDeath();
+	void SetState_Hit();
+	void SetState_Death(ENEMYHIT_DESC* pDesc);
+
+public:
+	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
+
+private:
+	HRESULT			Add_Components();
+	HRESULT			Add_Textures();
+	HRESULT			Begin_RenderState()		override;
+	HRESULT			End_RenderState()		override;
+
+
+public:
+	static CBeholder* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual CGameObject* Clone(void* pArg) override;
+	virtual void Free() override;
+
+private:
+	_float			m_fDamagedTime = 0.f;
+
+	_float3			m_vTargetPos = { 0.f,0.f,0.f };
+	_float3			m_vTargetRecentPos = { 0.f,0.f,0.f };
+	_float3			m_vTargetDir = { 0.f,0.f,0.f };
+
+
+
+};
+
+END

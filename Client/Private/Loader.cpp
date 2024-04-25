@@ -98,6 +98,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Loading_For_Sans_Texture()))
 		return E_FAIL;
 
+	if (FAILED(Loading_For_Boss_Texture()))
+		return E_FAIL;
+
 	//if (FAILED(Loading_For_Orange_Pants_Monster()))
 	//	return E_FAIL;
 
@@ -326,6 +329,22 @@ HRESULT CLoader::Loading_For_Sans_Texture()
 	return S_OK;
 }
 
+HRESULT CLoader::Loading_For_Boss_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Beholder_Idle_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Idle/BEACON%d.png"), 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Beholder_Damaged_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Damaged/BEACON%d.png"), 2))))
+		return E_FAIL;
+
+
+	return S_OK;
+}
+
 HRESULT CLoader::Ready_MapObject_Prototype()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Wall"),
@@ -504,6 +523,14 @@ HRESULT CLoader::Ready_Monster_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CGasterRoop"),
 		CGasterRoop::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Beholder"),
+		CBeholder::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_TrackingLaser"),
+		CTrackingLaser::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -1022,6 +1049,11 @@ HRESULT CLoader::Ready_PlayerGunUi_Texture()
 			L"../Bin/Resources/Textures/Player/Katana/Slash/Slash%d.png", 5))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Katana_Opening_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/Katana/Opening/KATANA%d.png", 20))))
+		return E_FAIL;
+
 #pragma endregion
 
 
@@ -1277,6 +1309,9 @@ HRESULT CLoader::Ready_Active_Gun()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_Reload", eUiRenderType::Render_NonBlend, CShotgun_Reload::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Shotgun_Opening", eUiRenderType::Render_NonBlend, CShotgun_Opening::Create(m_pGraphic_Device))))
+		return E_FAIL;
 #pragma endregion
 
 #pragma region KatanaRegion
@@ -1288,6 +1323,9 @@ HRESULT CLoader::Ready_Active_Gun()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Effect", eUiRenderType::Render_NonBlend, CKatana_Effect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Katana_Opening", eUiRenderType::Render_NonBlend, CKatana_Opening::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 #pragma endregion

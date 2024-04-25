@@ -65,6 +65,7 @@ private:
 	void HeadTiltReset(_float fTimeDelta);
 	void Render_Weapon();
 	void Reload_Warning();
+	void Execution_Alert();
 
 	void Render_Pistol();
 	void Render_Shotgun();
