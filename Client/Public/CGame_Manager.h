@@ -62,6 +62,9 @@ public:
 
 public:
 	void Print_Text(TextType type, _uint Number);
+	void Print_Text_Sans(CText::Text_Info*);
+	void Render_Text();
+	void Clear_Sans_Text();
 	void Set_Pos_Text(TextType type, _uint Number, RECT Rect);
 	void Initialize_TextManager();
 
@@ -80,6 +83,7 @@ private:
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
 	StageProgress m_eProgress = { StageProgress::End };
 	StageProgress m_eOldProgress = { StageProgress::End };
+	vector<CText::Text_Info*> RenderTextVec;
 
 
 private:

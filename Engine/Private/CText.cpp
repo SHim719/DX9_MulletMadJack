@@ -12,6 +12,10 @@ CText::CText(LPDIRECT3DDEVICE9 pGraphic_Device, LPD3DXFONT Font, LPD3DXFONT BigF
 
 void CText::Print_Text(Text_Info TextInfo)
 {
+	int TextMaxLength = (_uint)wcslen(TextInfo.Text);
+	if (TextInfo.Length >= TextMaxLength)
+		TextInfo.Length = TextMaxLength;
+
 	m_pFont->DrawText(nullptr, TextInfo.Text, TextInfo.Length, &TextInfo.Rect,
 		DT_TOP | DT_LEFT | DT_WORDBREAK,
 		TextInfo.RGBA);

@@ -3,6 +3,8 @@
 #include "CBone_Spawner.h"
 #include "PlayerManager.h"
 #include "CGaster_Spawner.h"
+#include "Layer.h"
+#include "CGame_Manager.h"
 
 
 CSans::CSans(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -25,33 +27,34 @@ HRESULT CSans::Initialize(void* pArg)
     if (FAILED(Add_Components()))
         return E_FAIL;
 
-
     if (FAILED(Add_Textures()))
         return E_FAIL;
-
 
     m_pCamera = dynamic_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera());
     m_pTarget = CPlayer_Manager::Get_Instance()->Get_Player();
     Safe_AddRef(m_pTarget);
 
-    _float3 Scale = { 1.f, 1.f, 1.f };
+    _float3 Scale = { 2.f, 2.f, 2.f };
     m_pTransformCom->Set_Scale(Scale);
+    m_pBodyTransformCom->Set_Scale(Scale);
     m_pBoxCollider->Set_Scale({ 1.f, 1.f, 1.f });
 
-    _float3 Pos = { 0.f, 1.f, 8.f };
+    _float3 Pos = { 0.f, 1.f, 6.f };
     m_pTransformCom->Set_Position(Pos);
+    m_pBodyTransformCom->Set_Position(Pos);
 
     m_pRigidbody->Set_Friction(0.f);
     m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
     m_pRigidbody->Set_UseGravity(false);
 
-    m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
-
-    m_eState = SANSSTATE::STATE_IDLE;
-    m_ePatternState = SANSPatternSTATE::End;
-
-    //m_pBoneSpawner = CBone_Spawner::Create();
+    m_pBoneSpawner = CBone_Spawner::Create();
     m_pGasterSpawner = CGaster_Spawner::Create();
+
+    m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_TextBack");
+
+
+    //m_iPatternCount = 13;
+    //m_iSansTextCount = 18;
 
     return S_OK;
 }
@@ -64,52 +67,89 @@ void CSans::Tick(_float fTimeDelta)
 {
     SubPatternTime(fTimeDelta);
     State_Pattern();
-    m_fTest += fTimeDelta;
-    if (m_fTest > 2)
+
+    if (m_Turn == SansTurnBased::SansText)
     {
-        m_fTest = 0;
-        
-        //_float3 Pos = m_pTransformCom->Get_Pos();
-        //cout << "X:" << Pos.x << endl;
-        //cout << "Y:" << Pos.y << endl;
-        //cout << "Z:" << Pos.z << endl;
-        //CPlayer* player = CPlayer_Manager::Get_Instance()->Get_Player();
-        //CTransform* Trans = player->Get_Transform();
-        //Pos = Trans->Get_Pos();
-        //cout << "PlayerX:" << Pos.x << endl;
-        //cout << "PlayerY:" << Pos.y << endl;
-        //cout << "PlayerZ:" << Pos.z << endl;
+        Set_TextLength(fTimeDelta);
+        Set_Text();
     }
+    Adjust_BodyPos(fTimeDelta);
 }
 
 void CSans::LateTick(_float fTimeDelta)
 {
-    //m_pTransformCom->Set_Billboard_Matrix(m_pCamera->Get_Billboard_Matrix());
-
     m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
+}
+
+void CSans::RenderBegin()
+{
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 254);
 }
 
 HRESULT CSans::Render()
 {
+    RenderBegin();
+
     if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
-    m_pAnimationCom->Render();
+    if (FAILED(m_pLegTextureCom->Bind_Texture(0)))
+        return E_FAIL;
 
     if (FAILED(m_pVIBufferCom->Render()))
         return E_FAIL;
 
+    RenderBody();
+
+    RenderEnd();
 
 	return S_OK;
 }
 
+void CSans::RenderBody()
+{
+    m_pBodyTransformCom->Bind_WorldMatrix();
+
+    m_pBodyTextureCom->Bind_Texture(0);
+        
+    m_pVIBodyBufferCom->Render();
+}
+
+void CSans::RenderEnd()
+{
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+}
+
+void CSans::SetTurn(SansTurnBased Turn)
+{
+    m_Turn = Turn;
+
+    if (Turn == SansTurnBased::SansText)
+    {
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_TextBack");
+        ++m_iSansTextCount;
+        m_fTextLengthTime = 0;
+        m_iSansTextLength = 0;
+    }
+}
+
 HRESULT CSans::Add_Components()
 {
-    m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
+    m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>
+        (Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
 
-    m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
+    m_pTransformCom = dynamic_cast<CTransform*>
+        (Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
 
-    m_pAnimationCom = dynamic_cast<CAnimation*>(Add_Component(LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
+    m_pVIBodyBufferCom = dynamic_cast<CVIBuffer_Rect*>
+        (Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBufferBody")));
+
+    m_pBodyTransformCom = dynamic_cast<CTransform*>
+        (Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("TransformBody")));
+
 
     m_pRigidbody = dynamic_cast<CRigidbody*>(Add_Component(LEVEL_STATIC, TEXT("Rigidbody_Default"), TEXT("Rigidbody"), m_pTransformCom));
 
@@ -123,8 +163,8 @@ HRESULT CSans::Add_Components()
 
 HRESULT CSans::Add_Textures()
 {
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Idle"), TEXT("Idle"))))
-        return E_FAIL;
+    m_pLegTextureCom = dynamic_cast<CTexture*>(m_pGameInstance->Clone_Component(LEVEL_STATIC, TEXT("Texture_Sans_Leg")));
+    m_pBodyTextureCom = dynamic_cast<CTexture*>(m_pGameInstance->Clone_Component(LEVEL_STATIC, TEXT("Texture_Sans_Body")));
 
     return S_OK;
 }
@@ -134,95 +174,571 @@ void CSans::SubPatternTime(_float fTimeDelta)
     m_fPatternTime -= fTimeDelta;
 }
 
-void CSans::Set_PatternState(SANSPatternSTATE State)
+void CSans::Set_Pattern0Time()
 {
-    m_ePatternState = State;
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 1:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 2:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 3:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 4:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 5:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansTurn);
+        ++m_iPatternCount;
+        m_iDetailPatternCount = 0;
+        break;
+    default:  
+        break;
+    }
 }
 
-void CSans::Add_SansState()
+void CSans::Set_Pattern1Time()
 {
-    switch (m_eState)
+    switch (m_iDetailPatternCount)
     {
-    case SANSSTATE::STATE_IDLE:
-        m_eState = SANSSTATE::STATE_PATTERN1;
+    case 0:
+        m_fPatternTime = 1.1f;
         break;
-    case SANSSTATE::STATE_PATTERN1:
-        m_eState = SANSSTATE::STATE_PATTERN2;
+    case 1:
+        m_fPatternTime = 1.1f;
         break;
-    case SANSSTATE::STATE_PATTERN2:
-        m_eState = SANSSTATE::STATE_PATTERN3;
+    case 2:
+        m_fPatternTime = 1.1f;
         break;
-    case SANSSTATE::STATE_PATTERN3:
-        m_eState = SANSSTATE::STATE_PATTERN4;
+    case 3:
+        m_fPatternTime = 1.1f;
         break;
-    case SANSSTATE::STATE_PATTERN4:
-        m_eState = SANSSTATE::STATE_DEATH;
+    case 4:
+        m_fPatternTime = 1.1f;
         break;
-    case SANSSTATE::STATE_DEATH:
-        m_bDestroyed = true;
+    case 5:
+        m_fPatternTime = 2.5f;
         break;
-    case SANSSTATE::STATE_END:
+    case 6:
+        m_fPatternTime = 2.5f;
+        break;
+    case 7:
+        m_fPatternTime = 2.5f;
+        break;
+    case 8:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 9:
+        Add_SansPattern();
         break;
     default:
         break;
     }
+}
+
+void CSans::Set_Pattern2Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 1.f;
+        break;
+    case 1:
+        m_fPatternTime = 2.f;
+        break;
+    case 2:
+        m_fPatternTime = 2.f;
+        break;
+    case 3:
+        m_fPatternTime = 2.f;
+        break;
+    case 4:
+        m_fPatternTime = 2.f;
+        break;
+    case 5:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_Pattern3Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 1.f;
+        break;
+    case 1:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 2:
+        m_fPatternTime = 1.5f;
+        break;
+    case 3:
+        m_fPatternTime = 1.5f;
+        break;
+    case 4:
+        m_fPatternTime = 1.5f;
+        break;
+    case 5:
+        m_fPatternTime = 1.5f;
+        break;
+    case 6:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_Pattern4Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 1.f;
+        break;
+    case 1:
+        m_fPatternTime = 1.5f;
+        break;
+    case 2:
+        m_fPatternTime = 1.5f;
+        break;
+    case 3:
+        m_fPatternTime = 1.5f;
+        break;
+    case 4:
+        m_fPatternTime = 1.5f;
+        break;
+    case 5:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_Pattern5Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 1.f;
+        break;
+    case 1:
+        m_fPatternTime = 1.5f;
+        break;
+    case 2:
+        m_fPatternTime = 1.5f;
+        break;
+    case 3:
+        m_fPatternTime = 1.5f;
+        break;
+    case 4:
+        m_fPatternTime = 1.5f;
+        break;
+    case 5:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_Pattern14Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 1:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 2:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 3:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 4:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 5:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 6:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 7:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 8:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 9:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 10:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 11:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 12:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 13:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 14:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_Pattern17Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 1:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 2:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 3:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 4:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 5:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 6:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 7:
+        m_fPatternTime = 1.5f;
+        break; 
+    case 8:
+        m_fPatternTime = 1.5f;
+        break;
+    case 9:
+        m_fPatternTime = 1.5f;
+        break;
+    case 10:
+        m_fPatternTime = 1.5f;
+        break;
+    case 11:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_Pattern18Time()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 1:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 2:
+        m_fPatternTime = 0;
+        SetTurn(SansTurnBased::SansText);
+        break;
+    case 3:
+        m_fPatternTime = 1.5f;
+        break;
+    case 4:
+        m_fPatternTime = 1.5f;
+        break;
+    case 5:
+        m_fPatternTime = 1.5f;
+        break;
+    case 6:
+        m_fPatternTime = 1.5f;
+        break;
+    case 7:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Set_PatternDefaultTime()
+{
+    switch (m_iDetailPatternCount)
+    {
+    case 0:
+        m_fPatternTime = 1.f;
+        break;
+    case 1:
+        m_fPatternTime = 1.5f;
+        break;
+    case 2:
+        m_fPatternTime = 1.5f;
+        break;
+    case 3:
+        m_fPatternTime = 1.5f;
+        break;
+    case 4:
+        m_fPatternTime = 1.5f;
+        break;
+    case 5:
+        Add_SansPattern();
+        break;
+    default:
+        break;
+    }
+}
+
+void CSans::Add_SansPattern()
+{
+    CLayer* pBoneLayer = m_pGameInstance->Find_Layer(LEVEL_GAMEPLAY, L"Layer_Bone");
+    CLayer* pGasterLayer = m_pGameInstance->Find_Layer(LEVEL_GAMEPLAY, L"Layer_Gaster");
+
+    if (pBoneLayer)
+    {
+        list<CGameObject*>& BoneLayerObjects = pBoneLayer->Get_GameObjects();
+        for (auto iter : BoneLayerObjects)
+            iter->Set_Destroy(true);
+    }
+    if (pGasterLayer)
+    {
+        list<CGameObject*>& GasterLayerObjects = pGasterLayer->Get_GameObjects();
+        for (auto iter : GasterLayerObjects)
+            iter->Set_Destroy(true);
+    }
+
+    ++m_iPatternCount;
+    m_iDetailPatternCount = 0;
+
+    SetTurn(SansTurnBased::PlayerTurn);
 }
 
 void CSans::State_Pattern()
 {
-    if (m_fPatternTime < 0)
+    if (m_fPatternTime <= 0 && m_Turn == SansTurnBased::SansTurn)
     {
-        switch (m_ePatternState)
+        switch (m_iPatternCount)
         {
-        case SANSPatternSTATE::READY:
-            Set_PatternState(SANSPatternSTATE::FIRST);        
+        case 0:
+            Set_Pattern0Time();
             break;
-
-        case SANSPatternSTATE::FIRST:
-            Set_PatternState(SANSPatternSTATE::SECOND);
+        case 1:
+            Set_Pattern1Time();
             break;
-
-        case SANSPatternSTATE::SECOND:
-            Set_PatternState(SANSPatternSTATE::THIRD);
+        case 2:
+            Set_Pattern2Time();
             break;
-
-        case SANSPatternSTATE::THIRD:
-            Set_PatternState(SANSPatternSTATE::FOURTH);
+        case 3:
+            Set_Pattern3Time();
             break;
-
-        case SANSPatternSTATE::FOURTH:
-            Set_PatternState(SANSPatternSTATE::End);
+        case 4:
+            Set_Pattern4Time();
             break;
-
-        case SANSPatternSTATE::End:
-            Set_PatternState(SANSPatternSTATE::READY);
-            Add_SansState();
+        case 5:
+            Set_Pattern5Time();
+            break;
+        case 6:
+            Set_PatternDefaultTime();
+            break;
+        case 7:
+            Set_PatternDefaultTime();
+            break;
+        case 8:
+            Set_PatternDefaultTime();
+            break;
+        case 9:
+            Set_PatternDefaultTime();
+            break;
+        case 10:
+            Set_PatternDefaultTime();
+            break;
+        case 11:
+            Set_PatternDefaultTime();
+            break;
+        case 12:
+            Set_PatternDefaultTime();
+            break;
+        case 13:
+            Set_PatternDefaultTime();
+            break;
+        case 14:
+            Set_Pattern14Time();
+            break;
+        case 15:
+            Set_PatternDefaultTime();
+            break;
+        case 16:
+            Set_PatternDefaultTime();
+            break;
+        case 17:
+            Set_Pattern17Time();
+            break;
+        case 18:
+            Set_Pattern18Time();
+            break;
+        case 19:
+            Set_PatternDefaultTime();
+            break;
+        case 20:
+            Set_PatternDefaultTime();
+            break;
+        case 21:
+            Set_PatternDefaultTime();
+            break;
+        case 22:
+            Set_PatternDefaultTime();
+            break;
+        case 23:
+            Set_PatternDefaultTime();
             break;
         default:
             break;
         }
-
-       // m_pBoneSpawner->Spawn(m_eState, m_ePatternState);
-        m_pGasterSpawner->Spawn(m_eState, m_ePatternState);
-        Initialize_PatternTime();
+        cout << m_iPatternCount << endl;
+        m_pBoneSpawner->Spawn(m_iPatternCount, m_iDetailPatternCount);
+        m_pGasterSpawner->Spawn(m_iPatternCount, m_iDetailPatternCount);
+        ++m_iDetailPatternCount;
     }
 }
 
-void CSans::Initialize_PatternTime()
+void CSans::Set_Text()
 {
-    switch (m_ePatternTimeGap)
+    CText::Text_Info* Info = CGame_Manager::Get_Instance()->Get_Text(TextType::Sans, m_iSansTextCount);
+    Info->Rect = { 300, 20, 800, 120 };
+    Info->RGBA = D3DCOLOR_RGBA(0, 0, 0, 255);
+    Info->Length = m_iSansTextLength;
+    CGame_Manager::Get_Instance()->Print_Text_Sans(Info);
+}
+
+void CSans::Set_TextLength(_float fTimeDelta)
+{
+    m_fTextLengthTime += fTimeDelta;
+    if (m_fTextLengthTime >= 0.5)
     {
-    case CSans::PatternTimeGAP::SMALL:
-        m_fPatternTime = 2.f;
-        break;
-    case CSans::PatternTimeGAP::DEFAULT:
-        m_fPatternTime = 4.f;
-        break;
-    case CSans::PatternTimeGAP::BIG:
-        m_fPatternTime = 6.f;
-        break;
-    default:
-        break;
+        ++m_iSansTextLength;
+    }
+}
+
+void CSans::Adjust_BodyPos(_float fTimeDelta)
+{
+    m_fBodyPosTime += fTimeDelta;
+    if (m_fBodyPosTime > 0.1)
+    {
+        m_fBodyPosTime = 0;
+        ++m_iSansIndex;
+        if (m_iSansIndex == 12)
+            m_iSansIndex = 0;
+
+        _uint Index = m_iSansIndex % 12;
+        _float3 BodyPos = m_pBodyTransformCom->Get_Pos();
+        switch (Index)
+        {
+        case 0:
+            BodyPos.y += 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 1:
+            BodyPos.x -= 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 2:
+            BodyPos.y -= 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 3:
+            BodyPos.y -= 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 4:
+            BodyPos.x += 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 5:
+            BodyPos.y += 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 6:
+            BodyPos.y += 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 7:
+            BodyPos.x += 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 8:
+            BodyPos.y -= 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 9:
+            BodyPos.y -= 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 10:
+            BodyPos.x -= 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        case 11:
+            BodyPos.y += 0.01f;
+            m_pBodyTransformCom->Set_Position(BodyPos);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -236,7 +752,7 @@ CSans* CSans::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 
         Safe_Release(pInstance);
     }
-
+    
     return pInstance;
 }
 
@@ -258,11 +774,14 @@ void CSans::Free()
 {
 	__super::Free();
 
+    Safe_Release(m_pVIBodyBufferCom);
+    Safe_Release(m_pBodyTransformCom);
     Safe_Release(m_pGasterSpawner);
     Safe_Release(m_pBoneSpawner);
     Safe_Release(m_pTarget);
     Safe_Release(m_pRigidbody);
-    Safe_Release(m_pAnimationCom);
+    Safe_Release(m_pBodyTextureCom);
+    Safe_Release(m_pLegTextureCom);
     Safe_Release(m_pTransformCom);
     Safe_Release(m_pVIBufferCom);
     Safe_Release(m_pBoxCollider);

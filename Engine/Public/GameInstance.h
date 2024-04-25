@@ -79,6 +79,7 @@ public:
 #pragma region UI_MANAGER
 	HRESULT Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, class CUi* Ui_LifePrototype);
 	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui_RenderType, class CUi* Ui_Active);
+	class CUi* Add_Ui_PartCloneRender(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
 	HRESULT Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
 	HRESULT Add_Ui_ShopActive(const wstring& Ui_ShopTag, class CUi* Ui_Shop);
 	class CUi* Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg);

@@ -47,11 +47,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
+		return E_FAIL;
 
-	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
-	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
+	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
+	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 
 	Initialize_SodaMachine();
@@ -141,7 +141,6 @@ HRESULT CLevel_GamePlay::Ready_Layer_Camera(const wstring& strLayerTag)
 
 HRESULT CLevel_GamePlay::Ready_Layer_Player()
 {
-
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player")));
 	CPlayer_Manager::Get_Instance()->Set_Player(pPlayer);
 

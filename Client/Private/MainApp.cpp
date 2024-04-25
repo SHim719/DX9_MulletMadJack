@@ -33,7 +33,7 @@ HRESULT CMainApp::Initialize()
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 	//	return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_SANS)))
 		return E_FAIL;
 
 	//m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM.mp3", L"TestBgm");

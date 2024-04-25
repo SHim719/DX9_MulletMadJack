@@ -278,6 +278,14 @@ HRESULT CGameInstance::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType 
 	return m_pUi_Manager->Add_Ui_Active(Ui_ActiveTag, Ui_RenderType, Ui_Active);
 }
 
+class CUi* CGameInstance::Add_Ui_PartCloneRender(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
+{
+	if (nullptr == m_pUi_Manager)
+		return nullptr;
+
+	return m_pUi_Manager->Add_Ui_PartCloneRender(Ui_LifePrototypeTag, UiRenderType, pArg);
+}
+
 HRESULT CGameInstance::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
 {
 	if (nullptr == m_pUi_Manager)

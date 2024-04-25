@@ -20,6 +20,7 @@ private:
 public:
 	HRESULT Add_Ui_LifePrototype(const wstring& Ui_LifePrototypeTag, class CUi* Ui_LifePrototype);
 	HRESULT Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
+	class CUi* Add_Ui_PartCloneRender(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg);
 	class CUi* Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg);
 	HRESULT Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType UiRenderType, class CUi* Ui_Active);
 
@@ -54,14 +55,14 @@ private:
 	map<const wstring, class CUi*> m_Ui_LifePrototypes;
 	list<class CUi*> m_Ui_LifeClonelist;
 	list<class CUi*> m_Ui_LifeBlendClonelist;
-
+	list<class CUi*> m_Ui_Partlist;
 	map<const wstring, class CUi*> m_Ui_Active;
 	map<const wstring, class CUi*> m_Ui_ActiveBlend;
 
 	map<const wstring, class CUi*> m_Ui_ShopActive;
 
-
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;
+
 private:
 	_float4x4 m_ViewMatrix;
 	_float4x4 m_ProjMatrix;

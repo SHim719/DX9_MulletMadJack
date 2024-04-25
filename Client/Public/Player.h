@@ -128,6 +128,18 @@ public:
 
 	void OnCollisionEnter(CGameObject* pOther) override;
 	void Hit(void* pArg) override;
+
+	//JeongRae Sans
+public:
+	void SansHit();
+	void SansLevelEnterInitialize();
+	void SansLevelExitInitialize();
+
+
+private:
+	vector<class CUi_Sans_Heart*> m_SansHeartVec;
+
+
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;

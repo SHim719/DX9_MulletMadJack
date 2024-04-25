@@ -90,7 +90,7 @@ private:
 	void SetOriginState(GasterState State) { m_eOriginState = State; }
 
 private:
-	_float m_fLife = { 4.f };
+	_float m_fLife = { 3.5f };
 	_float m_fTextureSwitching = { 0 };
 	_float3 m_OriginPos = { 0, 0, 0 };
 	_float m_fStateSwitching = { 0 };

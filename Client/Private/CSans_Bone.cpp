@@ -118,7 +118,7 @@ HRESULT CSans_Bone::Add_Components()
 
 HRESULT CSans_Bone::Add_Texture()
 {
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Bone"), TEXT("Bone"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Sans_Bone"), TEXT("Bone"))))
         return E_FAIL;
 
     return S_OK;
@@ -134,24 +134,41 @@ void CSans_Bone::Initialize_Arg(void* pArg)
     _float3 Scale = {};
     if (BonePos == SansBonePos::Left)
     {
-        Pos = { -1.f, 0.7f, 4.f };
-        Scale = { 2.f, 0.5f, 1.f };
+        Pos = { -1.5f, 0.7f, 4.f };
+        Scale = { 1.5f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
     }
     else if (BonePos == SansBonePos::Middle)
     {
-        Pos = { 1.f, 0.7f, 4.f };
-        Scale = { 2.f, 0.5f, 1.f };
+        Pos = { 0.f, 0.7f, 4.f };
+        Scale = { 1.5f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
     }
     else if (BonePos == SansBonePos::Right)
     {
-        Pos = { 1.f, 0.7f, 4.f };
-        Scale = { 2.f, 0.5f, 1.f };
+        Pos = { 1.5f, 0.7f, 4.f };
+        Scale = { 1.5f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
+    }
+
+    _float3 AdjustFloorPos = m_pTransformCom->Get_Pos();
+    switch (floor)
+    {
+    case 1:
+        break;
+    case 2:
+        AdjustFloorPos.y += 1.5f;
+        m_pTransformCom->Set_Position(AdjustFloorPos);
+        break;
+    case 3:
+        AdjustFloorPos.y += 3.f;
+        m_pTransformCom->Set_Position(AdjustFloorPos);
+        break;
+    default:
+        break;
     }
 }
 

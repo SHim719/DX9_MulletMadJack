@@ -33,7 +33,7 @@ private:
 
 
 private:
-	_float m_fRoopTime = { 0 };
+	_float m_fRoopTime = { 999 };
 	_float m_fRoopGap = { 0 };
 	_float m_fLifeTime = { 0 };
 	_uint m_iFloor = { 0 };

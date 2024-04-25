@@ -16,6 +16,7 @@ namespace Client
 		LEVEL_LOADING, 
 		LEVEL_LOGO,
 		LEVEL_GAMEPLAY,
+		LEVEL_SANS,
 		LEVEL_END };
 
 	enum class UIPOS

@@ -24,12 +24,13 @@ HRESULT CGasterRoop::Initialize(void* pArg)
 
 void CGasterRoop::Tick(_float fTimeDelta)
 {
+	Roop(fTimeDelta);
 	m_fLifeTime -= fTimeDelta;
 	if (m_fLifeTime < 0)
 	{
 		m_bDestroyed = true;
 	}
-	Roop(fTimeDelta);
+
 }
 
 void CGasterRoop::Roop(_float fTimeDelta)
@@ -44,6 +45,8 @@ void CGasterRoop::Roop(_float fTimeDelta)
 		pArg.Pos = m_ePos;
 		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"GasterLaser", L"Prototype_CSans_Gaster", &pArg);
 	}
+	if (m_fRoopGap == 0)
+		m_bDestroyed = true;
 }
 
 CGasterRoop* CGasterRoop::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

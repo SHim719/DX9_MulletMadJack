@@ -5,6 +5,7 @@
 #include "Level_Logo.h"
 #include "Level_GamePlay.h"
 #include "CUi_LoadingBackGround.h"
+#include "CSansLevel.h"
 
 
 CLevel_Loading::CLevel_Loading(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -56,6 +57,9 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 				break;
 			case LEVEL_GAMEPLAY:
 				pLevel = CLevel_GamePlay::Create(m_pGraphic_Device);
+				break;
+			case LEVEL_SANS:
+				pLevel = CSansLevel::Create(m_pGraphic_Device);
 				break;
 			}
 
