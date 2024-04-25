@@ -83,7 +83,7 @@ void CEnemy_Bullet::OnTriggerEnter(CGameObject* pOther)
 {
 	if ("Player" == pOther->Get_Tag())
 	{
-		float fDamage = 3.f;
+		float fDamage = 1.f;
 		pOther->Hit(&fDamage);
 	}
 
@@ -98,7 +98,7 @@ HRESULT CEnemy_Bullet::Add_Components()
 	TransformDesc.fSpeedPerSec = 12.f;
 	m_pTransformCom = dynamic_cast<CTransform*>(__super::Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), &TransformDesc));
 
-	m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component(LEVEL_GAMEPLAY, TEXT("Enemy_Bullet_Texture"), TEXT("Enemy_Bullet_Texture")));
+	m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component(LEVEL_STATIC, TEXT("Enemy_Bullet_Texture"), TEXT("Enemy_Bullet_Texture")));
 
 	CBoxCollider::BOXCOLLISION_DESC pDesc;
 	pDesc.vScale = { 0.25f, 0.25f, 0.5f };

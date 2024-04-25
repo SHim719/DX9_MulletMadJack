@@ -27,6 +27,9 @@
 #include "CSans.h"
 #include "CSans_Gaster.h"
 
+#include "Trigger_Headers.h"
+#include "Level_Map2.h"
+
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device }
@@ -51,7 +54,10 @@ HRESULT CLevel_GamePlay::Initialize()
 	//	return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
+	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
+
+
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 
 	Initialize_SodaMachine();
@@ -72,6 +78,9 @@ HRESULT CLevel_GamePlay::Initialize()
 	m_pGraphic_Device->SetMaterial(&MaterialDesc);
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
+
+	static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
+	(LEVEL_GAMEPLAY2);
 	
 	return S_OK;
 }
@@ -105,6 +114,8 @@ void CLevel_GamePlay::Initialize_SodaMachine()
 
 		++BannerIt;
 	}
+
+
 }
 
 CLevel_GamePlay* CLevel_GamePlay::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -165,10 +176,9 @@ HRESULT CLevel_GamePlay::Ready_Layer_Sans_Boss(const wstring& strLayerTag)
 
 void CLevel_GamePlay::Free()
 {
-
 	__super::Free();
-
 }
+
 
 void CLevel_GamePlay::Test_Ui()
 {

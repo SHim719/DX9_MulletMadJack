@@ -55,7 +55,7 @@ void CRenderer::Sort_AlphaBlendObj()
 		return;
 
 	_float4x4 ViewMatrix;
-	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
+ 	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
 
 	m_RenderObjects[RENDER_BLEND].sort([&](CGameObject* pLeft, CGameObject* pRight)
 		{

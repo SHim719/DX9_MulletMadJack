@@ -11,3 +11,4 @@
 #include "VIBuffer_BoxObj.h"
 #include "VIBuffer_Elevator_L.h"
 #include "VIBuffer_Elevator_R.h" 
+#include "VIBuffer_MoveWall.h"

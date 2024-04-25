@@ -16,6 +16,10 @@ namespace Client
 		LEVEL_LOADING, 
 		LEVEL_LOGO,
 		LEVEL_GAMEPLAY,
+		LEVEL_GAMEPLAY2,
+		LEVEL_SANS,
+		LEVEL_ELEVATOR,
+		LEVEL_BOSS,
 		LEVEL_END };
 
 	enum class UIPOS
@@ -42,6 +46,7 @@ namespace Client
 		VENTILADOR,
 		ELEVATOR_L,
 		ELEVATOR_R,
+		MOVEWALL,
 		OBJTYPE_END,
 	};
 
@@ -50,6 +55,7 @@ namespace Client
 		WHITE_SUIT,
 		CHAINSAW,
 		DRONE,
+		WHITE_SUIT_SLOPE,
 		MONSTER_END,
 	};
 

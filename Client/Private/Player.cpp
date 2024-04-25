@@ -29,7 +29,7 @@ HRESULT CPlayer::Initialize_Prototype()
 HRESULT CPlayer::Initialize(void * pArg)
 {
 	CBoxCollider::BOXCOLLISION_DESC desc;
-	desc.vScale = { 0.3f, 1.2f, 0.3f };
+	desc.vScale = { 0.8f, 1.2f, 0.8f };
 	desc.vOffset = { 0.f, -0.2f, 0.f };
 
 	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &desc));
@@ -473,27 +473,42 @@ void CPlayer::Shot()
 		_float3 vRayDir = *D3DXVec3Normalize(&vRayDir, &(fMouseWorld_Far - fMouseWorld_Near));
 
 		RAY_DESC rayDesc{};
-		rayDesc.iLevel = LEVEL_GAMEPLAY;
-		rayDesc.strDstLayer = L"Monster";
+		rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
+		
 		rayDesc.vRayWorldPos = fMouseWorld_Near;
+		rayDesc.vRayDir = vRayDir;
 
 		CPawn::ENEMYHIT_DESC pDesc;
 		rayDesc.pArg = &pDesc;
-
 		if (eWeaponType == SHOTGUN || eWeaponType == KATANA) {
-			for (int i{ -5 }; i <= 5; ++i) {
-				for (int j{ -5 }; j <= 5; ++j) {
-					
+
+			rayDesc.strDstLayer = L"Monster";
+			m_pGameInstance->Add_RayDesc(rayDesc);
+
+			rayDesc.strDstLayer = L"SlopeMonster";
+			m_pGameInstance->Add_RayDesc(rayDesc);
+
+			for (int i{ -3 }; i <= 3; ++i) {
+				for (int j{ -3 }; j <= 3; ++j) {
+					if (i == 0 && j == 0)
+						continue;
 					_float3 TempRayDir = vRayDir + _float3(i * 0.1f, j * 0.1f, 0.f);
 					
 					rayDesc.vRayDir = TempRayDir;
+					rayDesc.strDstLayer = L"Monster";
+					m_pGameInstance->Add_RayDesc(rayDesc);
 
+					rayDesc.strDstLayer = L"SlopeMonster";
 					m_pGameInstance->Add_RayDesc(rayDesc);
 				}
 			}
 		}
 		else {
-			rayDesc.vRayDir = vRayDir;
+			
+			rayDesc.strDstLayer = L"Monster";
+			m_pGameInstance->Add_RayDesc(rayDesc);
+
+			rayDesc.strDstLayer = L"SlopeMonster";
 			m_pGameInstance->Add_RayDesc(rayDesc);
 		}
 	}
@@ -511,12 +526,15 @@ void CPlayer::ColliderUpDown()
 	rayDesc.iLevel = m_pGameInstance->Get_CurrentLevelID();
 	rayDesc.strDstLayer = L"Floor";
 	rayDesc.vRayDir = { 0.f, -1.f, 0.f };
-	rayDesc.vRayWorldPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+
+	_float3 vPlayerPos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
+	rayDesc.vRayWorldPos = vPlayerPos;
 
 	CGameObject* pHitObj = nullptr;
 	_float3 fHitWorldPos;
 	_float fDist = 0.f;
 
+	//&& m_pRigidbody->Get_Velocity().y < 0.f
 	if (m_pGameInstance->Ray_Cast(rayDesc, pHitObj, fHitWorldPos, fDist) && fDist <= 1.0f)
 	{
 		_float3 vPos = fHitWorldPos;
@@ -579,11 +597,13 @@ void CPlayer::OnCollisionEnter(CGameObject* pOther)
 
 		if (m_bHaveWeapon)
 		{
-			static_cast<CPawn*>(pOther)->SetState_Execution();
-			static_cast<CPawn*>(pOther)->Set_Execution_Target();
-			SetState_Execution();
-			CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
-			m_pExecutionEnemy = static_cast<CPawn*>(pOther);
+			if (static_cast<CPawn*>(pOther)->SetState_Execution())
+			{
+				static_cast<CPawn*>(pOther)->Set_Execution_Target();
+				SetState_Execution();
+				CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_EXECUTION);
+				m_pExecutionEnemy = static_cast<CPawn*>(pOther);
+			}
 		}
 		else
 		{
@@ -774,7 +794,7 @@ void CPlayer::Execution_State()
 	if (CPlayer_Manager::ACTION_NONE == CPlayer_Manager::Get_Instance()->Get_Action_Type())
 	{
 		Set_Invincible(false);
-		Set_InvincibleTime(0.f);
+		Set_InvincibleTime(1.5f);
 		SetState_Idle();
 		Kick();
 		if (m_pExecutionEnemy)

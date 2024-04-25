@@ -25,6 +25,8 @@ class CChainsaw_Monster final : public CPawn
 		STATE_EXECUTION,
 		STATE_FLY,
 		STATE_FLYDEATH,
+		STATE_AIR,
+		STATE_LANDING,
 		STATE_DEATH,
 		STATE_END,
 	};
@@ -60,6 +62,7 @@ private:
 	void Hit(void* pArg) override;
 
 	STATE			m_eState = STATE_IDLE;
+	_bool			m_bFirstMeet = true;
 private:
 	void Process_State(_float fTimeDelta);
 
@@ -74,6 +77,8 @@ private:
 	void State_FlyDeath(_float fTimeDelta);
 	void State_Death(_float fTimeDelta);
 
+	void State_Air();
+	void State_Landing();
 public:
 	void SetState_Idle();
 	void SetState_Move();
@@ -85,6 +90,8 @@ public:
 	void SetState_Fly(_float3 vLook)	override;
 	void SetState_FlyDeath();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
+	void SetState_Air()					override;
+	void SetState_Landing()				override;
 
 private:
 	HRESULT			Add_Components();

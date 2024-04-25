@@ -18,31 +18,30 @@ HRESULT CCollision_Manager::Initialize()
 
 void CCollision_Manager::Tick()
 {
-	Collision_Box(3, L"Player", L"Wall",Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"Wall", Collision);
 	//Collision_Box(4, L"Player", L"Floor");
 
-	Collision_Box(3, L"Player", L"Door", Collision);
-	Collision_Box(3, L"Player", L"SpawnTrigger", Trigger);
-	Collision_Box(3, L"Player", L"Trigger", Trigger);
-	Collision_Box(3, L"Player", L"Elevator", Trigger);
-	Collision_Box(3, L"Player", L"SodaMachine", Collision);
-	Collision_Box(3, L"Player", L"Monster", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"Door", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"SpawnTrigger", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"Trigger", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"Elevator", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"SodaMachine", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Player", L"Monster", Collision);
 
-	Collision_Box(3, L"Monster", L"Wall", Collision);
-	Collision_Box(3, L"Monster", L"Floor", Collision);
-	Collision_Box(3, L"Monster", L"Ventilador", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Wall", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Floor", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Ventilador", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"SlopeMonster", L"Player", Trigger);
 
-	Collision_Box(3, L"Corpse", L"Floor", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Floor", Collision);
 
-	Collision_Box(3, L"Soda", L"Player", Trigger);
-	Collision_Box(3, L"Soda", L"Floor", Collision);
-	Collision_Box(3, L"Soda", L"Soda", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Soda", L"Player", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Soda", L"Floor", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Soda", L"Soda", Collision);
 	
 
-	Collision_Box(3, L"Bullet", L"Player", Trigger);
-	Collision_Box(3, L"Bullet", L"Wall", Trigger);
-
-
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Player", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Wall", Trigger);
 
 	Intersect_Ray();
 }
@@ -59,6 +58,12 @@ void CCollision_Manager::Intersect_Ray()
 
 		for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 		{
+			if (false == (*it)->Is_Active())
+				continue;
+
+			if (!(*it)->Can_Intersect())
+				continue;
+
 			CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
 			if (nullptr == pVIBuffer)
 				continue;
@@ -87,6 +92,9 @@ _bool CCollision_Manager::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pO
 
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 	{
+		if (false == (*it)->Is_Active())
+			continue;
+
 		CVIBuffer* pVIBuffer = dynamic_cast<CVIBuffer*>((*it)->Find_Component(L"VIBuffer"));
 		if (nullptr == pVIBuffer)
 			continue;
@@ -177,9 +185,9 @@ void CCollision_Manager::Collision_Box(_uint iLevel, const wstring& strDstLayer,
 					}
 					else
 					{
-						(*DstIt)->OnCollisionStay(*SrcIt);
 						pDstTransform->Add_Pos(fDist);
-
+						(*DstIt)->OnCollisionStay(*SrcIt);
+						
 						(*SrcIt)->OnCollisionStay(*DstIt);
 					}
 				}

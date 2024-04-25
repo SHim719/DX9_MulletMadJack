@@ -29,6 +29,8 @@ private:
 		STATE_FLY,
 		STATE_FLYDEATH,
 		STATE_DEATH,
+		STATE_AIR,
+		STATE_LANDING,
 		STATE_END
 	};
 
@@ -77,6 +79,8 @@ private:
 	void State_FlyDeath(_float fTimeDelta);
 	void State_Hit();
 	void State_Death(_float fTimeDelta);
+	void State_Air();
+	void State_Landing();
 
 public:
 	void SetState_Idle();
@@ -90,6 +94,8 @@ public:
 	void SetState_FlyDeath();
 	void SetState_Hit();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
+	void SetState_Air()					override;
+	void SetState_Landing()				override;
 
 public:
 	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }

@@ -138,7 +138,7 @@ HRESULT CUi_DrinkSoda::Add_Texture(void* pArg)
         TEXT("CUi_DrinkSoda_Texture"),
         (CComponent**)&m_pTextureCom)))
         return E_FAIL;
-
+    
     return S_OK;
 }
 

@@ -348,6 +348,11 @@ int CGameInstance::Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag)
 	return m_pUi_Manager->Get_Ui_ActiveTextureIndex(Ui_ActiveTag);
 }
 
+CUi* CGameInstance::Get_ActiveBlendUI(const wstring& strKey)
+{
+	return m_pUi_Manager->Get_ActiveBlendUI(strKey);
+}
+
 #pragma endregion
 
 #pragma region COLLISION_MANAGER

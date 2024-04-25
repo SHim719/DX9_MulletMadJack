@@ -49,6 +49,8 @@ public:
 	virtual void SetState_Pushed(_float3 vLook) {}
 	virtual _bool SetState_Execution() { return false; }
 	virtual void SetState_Fly(_float3 vLook) {}
+	virtual void SetState_Air() {}
+	virtual void SetState_Landing() {}
 
 	virtual _bool Is_DeathState() { return false; }
 

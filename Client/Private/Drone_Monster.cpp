@@ -39,7 +39,7 @@ HRESULT CDrone_Monster::Initialize(void* pArg)
 
 	m_strTag = "Monster";
 
-	m_fHp = 8.f;
+	m_fHp = 3.f;
 	m_fFlyTime = 1.5f;
 	m_fSpeed = 2.f;
 	return S_OK;
@@ -97,7 +97,12 @@ _bool CDrone_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _float
 
 	if (m_bThisFrameHit)
 		return true;
-	if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
+
+	CPlayer::WEAPON_TYPE ePlayerWeapon = CPlayer_Manager::Get_Instance()->Get_WeaponType();
+	if (ePlayerWeapon == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
+		return false;
+
+	if (ePlayerWeapon == CPlayer::SHOTGUN && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 5.f)
 		return false;
 
 	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
@@ -134,7 +139,7 @@ void CDrone_Monster::Hit(void* pArg)
 
 	m_bThisFrameHit = true;
 
-	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBlood");
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
 	m_fHp -= 4.f;
@@ -345,19 +350,19 @@ HRESULT CDrone_Monster::Add_Components()
 
 HRESULT CDrone_Monster::Add_Textures()
 {
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Death"), TEXT("Death"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Drone_Death"), TEXT("Death"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Move"), TEXT("Move"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Drone_Move"), TEXT("Move"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Bound"), TEXT("Bound"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Drone_Bound"), TEXT("Bound"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Attack"), TEXT("Rush"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Drone_Attack"), TEXT("Rush"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Drone_Pushed"), TEXT("Pushed"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Drone_Pushed"), TEXT("Pushed"))))
 		return E_FAIL;
 
 	return S_OK;

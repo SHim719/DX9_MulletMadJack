@@ -40,8 +40,8 @@ HRESULT CChainsaw_Monster::Initialize(void* pArg)
 	m_strTag = "Monster";
 	m_substrTag = "Chainsaw_Monster";
 
-	m_fHp = 10.f;
-	m_fSpeed = 1.5f;
+	m_fHp = 8.f;
+	m_fSpeed = 2.f;
 	m_fPerceptionDist = 4.f;
 	return S_OK;
 }
@@ -104,7 +104,12 @@ _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _fl
 
 	if (m_bThisFrameHit)
 		return true;
-	if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
+
+	CPlayer::WEAPON_TYPE ePlayerWeapon = CPlayer_Manager::Get_Instance()->Get_WeaponType();
+	if (ePlayerWeapon == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
+		return false;
+
+	if (ePlayerWeapon == CPlayer::SHOTGUN && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 5.f)
 		return false;
 
 	_float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
@@ -185,7 +190,7 @@ void CChainsaw_Monster::Hit(void* pArg)
 {
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
-	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBlood");
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
 	_bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
@@ -210,7 +215,7 @@ void CChainsaw_Monster::Hit(void* pArg)
 		}
 			
 		else
-			m_fHp -= 3.f;
+			m_fHp -= 4.f;
 		break;
 
 	case CPawn::EGG_SHOT:
@@ -230,32 +235,35 @@ void CChainsaw_Monster::Hit(void* pArg)
 			m_bDestroyed = true;
 
 
-			//CEnemy_Corpse::ENEMYCORPSE_DESC desc;
-			//desc.eType = CHAINSAW;
-			//desc.isTop = true;
-			//CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
-			//
-			//
-			//_float3 vOffset = 0.15f * m_pTarget->Get_Transform()->Get_GroundRight();
-			//
-			//if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
-			//	pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
-			//else
-			//	pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
-			//
+			CEnemy_Corpse::ENEMYCORPSE_DESC desc;
+			desc.eType = CHAINSAW;
+			desc.isTop = true;
+			CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+			
+			_float3 vOffset = 0.25f * m_pTarget->Get_Transform()->Get_GroundRight();
+			
+			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+				pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+			else
+				pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+			
 			//pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
-			//static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
-			//
-			//
-			//
-			////vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
-			//desc.isTop = false;
-			//CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
-			//if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
-			//	pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
-			//else
-			//	pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
-			//static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+			static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+			
+			
+			
+			//vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
+			desc.isTop = false;
+			CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+			else
+				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+			static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+
+			CGameObject* pHitEffect
+				= m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");
+			pHitEffect->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos());
 		}
 	}
 		
@@ -281,6 +289,7 @@ void CChainsaw_Monster::Process_State(_float fTimeDelta)
 		State_Slash();
 		break;
 
+
 	case CChainsaw_Monster::STATE_JUMP:
 		State_Jump();
 		break;
@@ -297,6 +306,12 @@ void CChainsaw_Monster::Process_State(_float fTimeDelta)
 	case CChainsaw_Monster::STATE_FLYDEATH:
 		State_FlyDeath(fTimeDelta);
 		break;
+	case CChainsaw_Monster::STATE_AIR:
+		State_Air();
+		break;
+	case CChainsaw_Monster::STATE_LANDING:
+		State_Landing();
+		break;
 	case CChainsaw_Monster::STATE_DEATH:
 		State_Death(fTimeDelta);
 		break;
@@ -307,11 +322,11 @@ void CChainsaw_Monster::State_Idle()
 {
 	_float fTargetDist = D3DXVec3Length(&(m_pTarget->Get_Transform()->Get_Pos() - m_pTransformCom->Get_Pos()));
 
-	if (fTargetDist > m_fPerceptionDist)
+	if (!m_bFirstMeet &&  (m_fPerceptionDist < fTargetDist && fTargetDist < 9.f))
 	{
 		SetState_Jump();
 	}
-	else
+	else if (m_bFirstMeet || fTargetDist < m_fPerceptionDist)
 	{
 		SetState_Move();
 	}
@@ -327,7 +342,7 @@ void CChainsaw_Monster::State_Move()
 
 		return;
 	}
-	else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 4.f)
+	else if (m_fPerceptionDist < fTargetDist && fTargetDist < 9.f)
 	{
 		SetState_Jump();
 	}
@@ -394,11 +409,11 @@ void CChainsaw_Monster::State_GetUp()
 		{
 			SetState_Slash();
 		}
-		else if (m_fRange <= fTargetDist && fTargetDist < m_fPerceptionDist)
+		else if (m_fPerceptionDist >= fTargetDist && fTargetDist < 6.f)
 		{
 			SetState_Move();
 		}
-		else if (m_fPerceptionDist <= fTargetDist && fTargetDist < 5.f)
+		else if (m_fPerceptionDist < fTargetDist && fTargetDist < 9.f)
 		{
 			SetState_Jump();
 		}
@@ -441,6 +456,20 @@ void CChainsaw_Monster::State_Death(_float fTimeDelta)
 
 		if (m_fDeathTime <= 0.f)
 			m_bDestroyed = true;
+	}
+}
+
+void CChainsaw_Monster::State_Air()
+{
+	if (m_pRigidbody->IsGround())
+		SetState_Landing();
+}
+
+void CChainsaw_Monster::State_Landing()
+{
+	if (m_pAnimationCom->IsEndAnim())
+	{
+		SetState_Move();
 	}
 }
 
@@ -517,7 +546,7 @@ void CChainsaw_Monster::SetState_Jump()
 	vToTargetDir.y = 0.f;
 	D3DXVec3Normalize(&vToTargetDir, &vToTargetDir);
 
-	vToTargetDir *= 8.f;
+	vToTargetDir *= 6.f;
 	vToTargetDir.y = 4.f;
 
 	m_pRigidbody->Set_Velocity(vToTargetDir);
@@ -629,6 +658,20 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
 }
 
+void CChainsaw_Monster::SetState_Air()
+{
+	m_eState = STATE_AIR;
+
+	m_pAnimationCom->Play_Animation(L"Air", 0.1f, false);
+}
+
+void CChainsaw_Monster::SetState_Landing()
+{
+	m_eState = STATE_LANDING;
+
+	m_pAnimationCom->Play_Animation(L"Landing", 0.1f, false);
+}
+
 HRESULT CChainsaw_Monster::Add_Components()
 {
 	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
@@ -649,49 +692,55 @@ HRESULT CChainsaw_Monster::Add_Components()
 
 HRESULT CChainsaw_Monster::Add_Textures()
 {
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Headshot"), TEXT("Death_Headshot"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Headshot"), TEXT("Death_Headshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Slash"), TEXT("Slash"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Slash"), TEXT("Slash"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Bodyshot"), TEXT("Death_Bodyshot"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Bodyshot"), TEXT("Death_Bodyshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Pushed"), TEXT("Pushed"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Pushed"), TEXT("Pushed"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Pushed_Recovery"), TEXT("Pushed_Recovery"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Pushed_Recovery"), TEXT("Pushed_Recovery"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_HeadExplode_Backward"), TEXT("HeadExplode_Backward"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_HeadExplode_Backward"), TEXT("HeadExplode_Backward"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Floor"), TEXT("Death_Fly_Floor"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Death_Push_Floor"), TEXT("Death_Fly_Floor"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Death_Fly"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Start_Push_Floor"), TEXT("Death_Fly"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Death_Fly_Wall"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Death_Push_Wall"), TEXT("Death_Fly_Wall"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_GetUp"), TEXT("GetUp"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_GetUp"), TEXT("GetUp"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Groinshot"), TEXT("Death_Groinshot"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Groinshot"), TEXT("Death_Groinshot"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Idle_Up"), TEXT("Idle_Up"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Idle_Up"), TEXT("Idle_Up"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Jump"), TEXT("Jump"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Jump"), TEXT("Jump"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Death_Shotgun"), TEXT("Death_Shotgun"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Death_Shotgun"), TEXT("Death_Shotgun"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Chainsaw_Monster_Walk"), TEXT("Walk"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Monster_Walk"), TEXT("Walk"))))
+		return E_FAIL;
+
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Air"), TEXT("Air"))))
+		return E_FAIL;
+
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Landing"), TEXT("Landing"))))
 		return E_FAIL;
 
 	return S_OK;

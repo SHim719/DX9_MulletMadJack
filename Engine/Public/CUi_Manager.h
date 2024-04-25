@@ -49,7 +49,7 @@ public:
 //for UiClear
 	void Set_Enter(bool _Enter);
 
-
+	CUi* Get_ActiveBlendUI(const wstring& strKey);
 private:
 	map<const wstring, class CUi*> m_Ui_LifePrototypes;
 	list<class CUi*> m_Ui_LifeClonelist;
@@ -60,8 +60,8 @@ private:
 
 	map<const wstring, class CUi*> m_Ui_ShopActive;
 
-
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;
+
 private:
 	_float4x4 m_ViewMatrix;
 	_float4x4 m_ProjMatrix;

@@ -45,6 +45,21 @@ HRESULT CExplosion::Add_Components()
 	return S_OK;
 }
 
+HRESULT CExplosion::Begin_RenderState()
+{
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	return S_OK;
+}
+
+HRESULT CExplosion::End_RenderState()
+{
+	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+
+	return S_OK;
+}
+
 CExplosion* CExplosion::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CExplosion* pInstance = new CExplosion(pGraphic_Device);

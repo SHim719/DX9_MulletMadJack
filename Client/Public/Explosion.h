@@ -19,6 +19,9 @@ public:
 private:
     HRESULT Add_Components();
 
+    HRESULT Begin_RenderState() override;
+    HRESULT End_RenderState() override;
+
 public:
     static CExplosion* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
     CExplosion* Clone(void* pArg)   override;

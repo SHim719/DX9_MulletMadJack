@@ -53,11 +53,17 @@ void CSpawnTrigger::OnTriggerEnter(CGameObject* pOther)
 		case DRONE:
 			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"Monster", L"Prototype_Drone");
 			break;
+
+		case WHITE_SUIT_SLOPE:
+			pMonster = m_pGameInstance->Add_Clone(iLevelID, L"SlopeMonster", L"Prototype_White_Suit_Slope");
+			break;
 		}
 
 		if (pMonster)
 		{
-			pMonster->Get_Transform()->Set_Position(m_vecSpawnInfos[i].vPosition);
+			auto tr = pMonster->Get_Transform();
+			tr->Set_Pos(m_vecSpawnInfos[i].vPosition);
+			static_cast<CBoxCollider*>(pMonster->Find_Component(L"Collider"))->Update_BoxCollider(tr->Get_WorldMatrix());
 		}
 	}
 	m_bDestroyed = true;

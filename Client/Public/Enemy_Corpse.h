@@ -49,6 +49,7 @@ private:
 
 private:
 	_bool	m_bFlip = false;
+	_float	m_fDeathTime = 4.f;
 
 public:
 	static CEnemy_Corpse* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

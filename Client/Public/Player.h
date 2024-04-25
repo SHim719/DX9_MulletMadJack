@@ -59,6 +59,9 @@ public:
 	PLAYER_STATE	Get_PlayerState() { return ePlayerState; }
 	MOVE_STATE		Get_MoveState() { return eMoveState; }
 
+
+	void Active_Reset();
+	void Camera_Reset();
 private:
 	void Key_Input(_float fTimeDelta);
 	void HeadTilt(_float fTimeDelta, _float fDirection);
@@ -75,8 +78,8 @@ private:
 	void Fire_Shotgun();
 	void Slash_Katana();
 
-	void Active_Reset();
-	void Camera_Reset();
+	//void Active_Reset();
+	//void Camera_Reset();
 
 	void Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime);
 	void Camera_Event(_float fTimeDelta);
@@ -157,6 +160,7 @@ private:
 	_bool m_bCanAirDash = true;
 
 	_float m_fMoveSpeed = 5.f;
+	//_float m_fMoveSpeed = 25.f;
 
 	_float m_fShakePower = 0.f;
 	_float m_fShakeTime = 0.f;
@@ -172,7 +176,7 @@ private:
 	_bool  m_bInvincible = false;
 
 	_float m_fInvincibleTime = 0.f;
-	_float m_fInvincibleTimeLimit = 0.5f;
+	_float m_fInvincibleTimeLimit = 1.5f;
 };
 
 END

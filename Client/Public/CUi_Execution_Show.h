@@ -57,10 +57,6 @@ private:
 	CTransform* m_pBackGroundTransformCom = { nullptr };
 	CVIBuffer_Rect* m_pBackGroundVIBufferCom = { nullptr };
 	Ui_Pos_Size_Rotation m_WeaponBackGround = {};
-
-	
-
-
 public:
 	static CUi_Execution_Show* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

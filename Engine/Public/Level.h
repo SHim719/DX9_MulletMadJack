@@ -17,13 +17,14 @@ public:
 		return m_iLevelID;
 	}
 protected:
-	virtual HRESULT Initialize();
-
+	
 public:
 	virtual void PriorityTick(_float fTimeDelta);
 	virtual void Tick(_float fTimeDelta);
 	virtual void LateTick(_float fTimeDelta);
 	virtual HRESULT Render();
+	virtual HRESULT Initialize();
+
 
 protected:
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };

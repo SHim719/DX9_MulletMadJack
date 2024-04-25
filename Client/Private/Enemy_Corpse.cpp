@@ -53,7 +53,19 @@ HRESULT CEnemy_Corpse::Initialize(void* pArg)
 		break;
 	}
 	case CHAINSAW:
+	{
+		_float3 vScale = _float3(1.3f, 1.3f, 1.f);
+		if (pDesc->isTop)
+		{
+			m_pAnimation->Play_Animation(L"CS_Up", 0.1f, false);
+		}
+		else
+		{
+			m_pAnimation->Play_Animation(L"CS_Bottom", 0.1f, false);
+		}
+		m_pTransformCom->Set_Scale(vScale);
 		break;
+	}
 	case DRONE:
 		break;
 	}
@@ -72,6 +84,12 @@ void CEnemy_Corpse::PriorityTick(_float fTimeDelta)
 
 void CEnemy_Corpse::Tick(_float fTimeDelta)
 {
+	m_fDeathTime -= fTimeDelta;
+	if (m_fDeathTime <= 0.f)
+	{
+		m_bDestroyed = true;
+		return;
+	}
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 
 	m_pAnimation->Update(fTimeDelta);
@@ -137,10 +155,16 @@ HRESULT CEnemy_Corpse::Add_Components()
 
 HRESULT CEnemy_Corpse::Init_Animations()
 {
-	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Katana_Left_Up"), TEXT("WS_Up"))))
+	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Katana_Left_Up"), TEXT("WS_Up"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Katana_Left_Bottom"), TEXT("WS_Bottom"))))
+	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Katana_Left_Bottom"), TEXT("WS_Bottom"))))
+		return E_FAIL;
+
+	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Katana_Left_Up"), TEXT("CS_Up"))))
+		return E_FAIL;
+
+	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Chainsaw_Katana_Left_Down"), TEXT("CS_Bottom"))))
 		return E_FAIL;
 
 	return S_OK;

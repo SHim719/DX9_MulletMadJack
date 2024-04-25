@@ -4,7 +4,9 @@
 #include "Loader.h"
 #include "Level_Logo.h"
 #include "Level_GamePlay.h"
+#include "Elevator_Level.h"
 #include "CUi_LoadingBackGround.h"
+#include "Level_Map2.h"
 
 
 CLevel_Loading::CLevel_Loading(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -56,6 +58,9 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 				break;
 			case LEVEL_GAMEPLAY:
 				pLevel = CLevel_GamePlay::Create(m_pGraphic_Device);
+				break;
+			case LEVEL_ELEVATOR:
+				pLevel = CElevator_Level::Create(m_pGraphic_Device);
 				break;
 			}
 

@@ -3,8 +3,7 @@
 #include "Client_Defines.h"
 #include "Base.h"
 
-/* 2. �ε� ���� ������ �ʿ��� �ڿ��� �����Ѵ�.  */
-/* ���� ������ ���� �ڿ� �ε� : ��Ƽ������ */
+
 
 BEGIN(Engine)
 class CGameInstance;
@@ -47,6 +46,7 @@ private:
 private:
 	HRESULT Loading_For_Logo_Level();
 	HRESULT Loading_For_GamePlay_Level();
+
 	HRESULT Loading_For_WhiteSuitMonster();
 	HRESULT Loading_For_Chainsaw_Monster();
 	HRESULT Loading_For_Drone_Monster();

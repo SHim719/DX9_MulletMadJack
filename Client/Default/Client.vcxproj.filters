@@ -4,50 +4,8 @@
     <Filter Include="99.Defines">
       <UniqueIdentifier>{3adbd17b-c224-4d61-9067-175bbd3d0d56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00.MainApp">
-      <UniqueIdentifier>{edc3c5d1-ea6b-4e29-b34d-540396673e0f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="98.Default">
       <UniqueIdentifier>{9a853736-99fd-4100-b927-5433508f68ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels">
-      <UniqueIdentifier>{2fd56b7c-25e0-41fb-978b-b8be6be0a2aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\00.Logo">
-      <UniqueIdentifier>{4e722de4-25c0-4767-ab76-c59b8e6ac8da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\01.GamePlay">
-      <UniqueIdentifier>{3633d539-ba40-45a1-af35-e3498a82938f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\99.Loading">
-      <UniqueIdentifier>{be2ac9e1-e35a-4a34-8056-9663d0403a24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\99.Loading\Loader">
-      <UniqueIdentifier>{003e5800-e803-40c3-8190-b56169342c0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects">
-      <UniqueIdentifier>{e561c34e-d6f4-478c-9e8b-6bb897b1098c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\00. BackGround">
-      <UniqueIdentifier>{947006ed-8b8b-4500-bb19-2de0997ff178}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject">
-      <UniqueIdentifier>{ec5af1d3-0896-4284-9686-f22d59252249}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\02. Player">
-      <UniqueIdentifier>{fded826a-41b6-4111-816e-d84d506046f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Wall">
-      <UniqueIdentifier>{b759e0b2-67e3-426e-89e7-1c77d5f0b90d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Floor">
-      <UniqueIdentifier>{c4fb5a17-6726-4303-bee1-2eb53f19ba32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\03. Camera">
-      <UniqueIdentifier>{9204bc79-9a62-42ac-a0c7-89d3c6afe6db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\03. Camera\01. FPS_Camera">
-      <UniqueIdentifier>{38d66a05-f387-4c82-b9a8-7f47aaed8a58}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Client_Components">
       <UniqueIdentifier>{4bbf10dd-1327-4520-b373-5bcb6768e3af}</UniqueIdentifier>
@@ -55,38 +13,17 @@
     <Filter Include="03. Client_Components\Animation">
       <UniqueIdentifier>{4ac07784-c5ca-46d8-a244-4bfa158541b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\MapObject">
-      <UniqueIdentifier>{6ad062de-0955-446e-9bb6-08b98f57cb4a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\TriggerObject">
-      <UniqueIdentifier>{0f6b1636-a57c-4cca-8811-a45d18b0d2c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\SodaMachine">
-      <UniqueIdentifier>{080dc5e1-e497-4e7a-9b4e-7edac65ecad8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\SodaMachine\Banner">
-      <UniqueIdentifier>{6c873ab4-1a31-4a3c-8d5f-980a4832deaf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Border">
-      <UniqueIdentifier>{ece3a37e-3646-4c28-b81c-0bff274dc67f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Client_Components\VIBuffers">
       <UniqueIdentifier>{f98235cf-4e29-4313-8fc4-7a025f727aa5}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\CVIBuffer_Border">
       <UniqueIdentifier>{9bd1b528-320c-4af8-9936-bc7e9c54741c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Soda">
-      <UniqueIdentifier>{b5f96136-11e5-47c6-86c7-e698715ba7b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Client_Components\Rigidbody">
       <UniqueIdentifier>{919c6503-9fe5-4987-be73-c23f3c7142c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Door">
       <UniqueIdentifier>{ee9c996b-dfaa-4282-a227-143caf2fc904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Door">
-      <UniqueIdentifier>{23a3b385-a1a6-42dd-bad9-401411a4bd39}</UniqueIdentifier>
     </Filter>
     <Filter Include="97. Manager">
       <UniqueIdentifier>{917e7d2a-74dc-4341-a9d3-99dd0cb1e949}</UniqueIdentifier>
@@ -265,30 +202,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\Execution\Neck">
       <UniqueIdentifier>{9d56822c-dad3-4051-835e-eb75f2cde1a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\04. Enemy">
-      <UniqueIdentifier>{9fc429b0-8228-49fe-ad25-49aa487f48d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Enemy_Bullet">
-      <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns">
-      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\White_Suit_Monster">
-      <UniqueIdentifier>{967ebb23-2cbc-4697-aef7-c9792331ae04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Drone_Monster">
-      <UniqueIdentifier>{039f30b6-647a-4871-b011-9f392df52a43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Chainsaw_Monster">
-      <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster">
-      <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Slope">
-      <UniqueIdentifier>{716240c5-bd9f-4473-82de-4b9b879a4271}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\Left_Hand\Drink">
       <UniqueIdentifier>{b397f897-2594-4be7-b452-aa187410c4f8}</UniqueIdentifier>
     </Filter>
@@ -370,21 +283,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB">
       <UniqueIdentifier>{edb8cbe6-c0b2-4f0a-9c99-09e2551e596d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\05. Effect">
-      <UniqueIdentifier>{b71b9ae5-32dc-4c47-a877-48240ff54371}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\05. Effect\01. Explosion">
-      <UniqueIdentifier>{c96d5057-8cbb-40df-8ecf-13e0a0003e25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\05. Effect\02. HitBlood">
-      <UniqueIdentifier>{2bf378e9-be5e-4f5b-b317-4160620bb03f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Ventilador">
-      <UniqueIdentifier>{44d8320d-eb21-4d39-b50d-53146d2b4410}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Box">
-      <UniqueIdentifier>{d879e28d-ebbd-45d7-a06f-4f4bc92052a1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_BoxObj">
       <UniqueIdentifier>{406a5dc0-7aaa-43ca-8182-575e73624ef1}</UniqueIdentifier>
     </Filter>
@@ -403,18 +301,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\CUi_GreenCrossActive">
       <UniqueIdentifier>{7a69778e-7e24-494a-b468-372f93ecd482}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Levels\Lobby">
-      <UniqueIdentifier>{e2b26e29-05d7-40d3-89de-327aa7408704}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss">
-      <UniqueIdentifier>{73916b9b-5ba6-496a-aa3c-a63b1d880c75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner">
-      <UniqueIdentifier>{886ff83f-0145-416f-a2fc-3af185244d62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner">
-      <UniqueIdentifier>{d2004c3b-8f2c-4f41-b793-e0a5a167ac78}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana">
       <UniqueIdentifier>{86e09d34-2e90-4a1a-a1d2-0a18a0db121f}</UniqueIdentifier>
     </Filter>
@@ -430,50 +316,11 @@
     <Filter Include="04. UI\Ui\Effect\Slash\Katana">
       <UniqueIdentifier>{d473191d-fa1d-440f-89ab-078f58741267}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\02. Player\Flying_Katana">
-      <UniqueIdentifier>{fe1bc42d-750e-46f7-bcd7-5a0d38e615e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger">
-      <UniqueIdentifier>{0a2dd1f7-eab8-41f4-87f0-e347d11ac960}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger">
-      <UniqueIdentifier>{198f5808-5b6c-4f38-853b-6bc276e09589}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Elevator">
-      <UniqueIdentifier>{7e8c3fc8-9305-4469-bba6-9bfe8715f492}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Elevator\Elevator_L">
-      <UniqueIdentifier>{7bd17be4-cf62-4adc-a3e4-3f84da2acc89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\01. MapObject\Elevator\Elevator_R">
-      <UniqueIdentifier>{fae98dcc-6757-4a9a-b0cd-dd582afb367e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03. Client_Components\VIBuffers\ViBuffer_Elevator_L">
       <UniqueIdentifier>{eeedd68d-8b47-437d-baf8-f8ca9c0800f5}</UniqueIdentifier>
     </Filter>
     <Filter Include="03. Client_Components\VIBuffers\VIBuffer_Elevator_R">
       <UniqueIdentifier>{1061b2aa-2076-44cc-b4a7-4072b248ff99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone">
-      <UniqueIdentifier>{621cd69a-a22b-40ea-971c-76b6dc5bfec8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster">
-      <UniqueIdentifier>{c70d46f8-6b7b-49f7-a68b-fa436df04718}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser">
-      <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop">
-      <UniqueIdentifier>{1f532e40-e48f-476f-a4f6-e28b67e5ea27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop">
-      <UniqueIdentifier>{f9971649-adf2-4749-b051-448cc06ee1ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\02. Map2">
-      <UniqueIdentifier>{4667eaaa-08dc-437c-922c-f5236b073904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\EnemyCorpse">
-      <UniqueIdentifier>{2c79712d-e08d-4057-b31b-2da68fdcc9d2}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\Blood">
       <UniqueIdentifier>{04c8cd6f-f390-40a7-8b5e-8cb5ea2febd6}</UniqueIdentifier>
@@ -490,6 +337,180 @@
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening">
       <UniqueIdentifier>{cb7a1990-e950-42cd-ad0a-a9aa6a965bda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. Client_Components\VIBuffers\VIBuffer_MoveWall">
+      <UniqueIdentifier>{bed3980a-c525-45c5-8b91-b27ac76a778b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\ElevatorLevelManager">
+      <UniqueIdentifier>{1b3ae071-7b92-41c8-adf4-f1a19aa06686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Clear\FadeInOut">
+      <UniqueIdentifier>{b1f77cc7-a819-4e1e-8eda-ee2269960dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects">
+      <UniqueIdentifier>{e561c34e-d6f4-478c-9e8b-6bb897b1098c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\00. BackGround">
+      <UniqueIdentifier>{947006ed-8b8b-4500-bb19-2de0997ff178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject">
+      <UniqueIdentifier>{ec5af1d3-0896-4284-9686-f22d59252249}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Wall">
+      <UniqueIdentifier>{b759e0b2-67e3-426e-89e7-1c77d5f0b90d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Floor">
+      <UniqueIdentifier>{c4fb5a17-6726-4303-bee1-2eb53f19ba32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\MapObject">
+      <UniqueIdentifier>{6ad062de-0955-446e-9bb6-08b98f57cb4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\TriggerObject">
+      <UniqueIdentifier>{0f6b1636-a57c-4cca-8811-a45d18b0d2c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger">
+      <UniqueIdentifier>{0a2dd1f7-eab8-41f4-87f0-e347d11ac960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger">
+      <UniqueIdentifier>{198f5808-5b6c-4f38-853b-6bc276e09589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\SodaMachine">
+      <UniqueIdentifier>{080dc5e1-e497-4e7a-9b4e-7edac65ecad8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\SodaMachine\Banner">
+      <UniqueIdentifier>{6c873ab4-1a31-4a3c-8d5f-980a4832deaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Border">
+      <UniqueIdentifier>{ece3a37e-3646-4c28-b81c-0bff274dc67f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Soda">
+      <UniqueIdentifier>{b5f96136-11e5-47c6-86c7-e698715ba7b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Door">
+      <UniqueIdentifier>{23a3b385-a1a6-42dd-bad9-401411a4bd39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Slope">
+      <UniqueIdentifier>{716240c5-bd9f-4473-82de-4b9b879a4271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Ventilador">
+      <UniqueIdentifier>{44d8320d-eb21-4d39-b50d-53146d2b4410}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Box">
+      <UniqueIdentifier>{d879e28d-ebbd-45d7-a06f-4f4bc92052a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Elevator">
+      <UniqueIdentifier>{7e8c3fc8-9305-4469-bba6-9bfe8715f492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Elevator\Elevator_L">
+      <UniqueIdentifier>{7bd17be4-cf62-4adc-a3e4-3f84da2acc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\Elevator\Elevator_R">
+      <UniqueIdentifier>{fae98dcc-6757-4a9a-b0cd-dd582afb367e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\MoveWall">
+      <UniqueIdentifier>{27c2145e-43e4-4373-b711-e91bd3689129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\02. Player">
+      <UniqueIdentifier>{fded826a-41b6-4111-816e-d84d506046f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\02. Player\Flying_Katana">
+      <UniqueIdentifier>{fe1bc42d-750e-46f7-bcd7-5a0d38e615e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\03. Camera">
+      <UniqueIdentifier>{9204bc79-9a62-42ac-a0c7-89d3c6afe6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\03. Camera\01. FPS_Camera">
+      <UniqueIdentifier>{38d66a05-f387-4c82-b9a8-7f47aaed8a58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy">
+      <UniqueIdentifier>{9fc429b0-8228-49fe-ad25-49aa487f48d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Enemy_Bullet">
+      <UniqueIdentifier>{b9513606-903e-43af-954c-b65a33fa223f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns">
+      <UniqueIdentifier>{1d5c329e-e471-4ac0-8c69-bded61f6117e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\White_Suit_Monster">
+      <UniqueIdentifier>{967ebb23-2cbc-4697-aef7-c9792331ae04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Drone_Monster">
+      <UniqueIdentifier>{039f30b6-647a-4871-b011-9f392df52a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Chainsaw_Monster">
+      <UniqueIdentifier>{145a221f-1429-48fe-bf5f-a8da25a5ba36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Orange_Pants_Monster">
+      <UniqueIdentifier>{a5c36ec3-dd5d-4189-9db1-abd508f35e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss">
+      <UniqueIdentifier>{73916b9b-5ba6-496a-aa3c-a63b1d880c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner">
+      <UniqueIdentifier>{886ff83f-0145-416f-a2fc-3af185244d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop">
+      <UniqueIdentifier>{1f532e40-e48f-476f-a4f6-e28b67e5ea27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner">
+      <UniqueIdentifier>{d2004c3b-8f2c-4f41-b793-e0a5a167ac78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop">
+      <UniqueIdentifier>{f9971649-adf2-4749-b051-448cc06ee1ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone">
+      <UniqueIdentifier>{621cd69a-a22b-40ea-971c-76b6dc5bfec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster">
+      <UniqueIdentifier>{c70d46f8-6b7b-49f7-a68b-fa436df04718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser">
+      <UniqueIdentifier>{45fc1b54-5a25-4680-a51a-b47eef9602ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\EnemyCorpse">
+      <UniqueIdentifier>{2c79712d-e08d-4057-b31b-2da68fdcc9d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Slope_Monster">
+      <UniqueIdentifier>{11903ca1-8faf-4b32-a02c-8f3ae13e4e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\05. Effect">
+      <UniqueIdentifier>{b71b9ae5-32dc-4c47-a877-48240ff54371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\05. Effect\01. Explosion">
+      <UniqueIdentifier>{c96d5057-8cbb-40df-8ecf-13e0a0003e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\05. Effect\02. HitBlood">
+      <UniqueIdentifier>{2bf378e9-be5e-4f5b-b317-4160620bb03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\05. Effect\03. BloodKatanaEffect">
+      <UniqueIdentifier>{1378e5f6-8593-4ae3-ab55-fd17b13bd80c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels">
+      <UniqueIdentifier>{2fd56b7c-25e0-41fb-978b-b8be6be0a2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\00.Logo">
+      <UniqueIdentifier>{4e722de4-25c0-4767-ab76-c59b8e6ac8da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\01.GamePlay">
+      <UniqueIdentifier>{3633d539-ba40-45a1-af35-e3498a82938f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\99.Loading">
+      <UniqueIdentifier>{be2ac9e1-e35a-4a34-8056-9663d0403a24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\99.Loading\Loader">
+      <UniqueIdentifier>{003e5800-e803-40c3-8190-b56169342c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\Lobby">
+      <UniqueIdentifier>{e2b26e29-05d7-40d3-89de-327aa7408704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\02. Map2">
+      <UniqueIdentifier>{4667eaaa-08dc-437c-922c-f5236b073904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\03. ElevatorMap">
+      <UniqueIdentifier>{0d25a20f-181c-450c-946f-579789c1f403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. MainApp">
+      <UniqueIdentifier>{edc3c5d1-ea6b-4e29-b34d-540396673e0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -505,31 +526,31 @@
       <Filter>98.Default</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\MainApp.h">
-      <Filter>00.MainApp</Filter>
+      <Filter>00. MainApp</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Client_Defines.h">
       <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Level_Logo.h">
-      <Filter>01.Levels\00.Logo</Filter>
+      <Filter>01. Levels\00.Logo</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Level_GamePlay.h">
-      <Filter>01.Levels\01.GamePlay</Filter>
+      <Filter>01. Levels\01.GamePlay</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Level_Loading.h">
-      <Filter>01.Levels\99.Loading</Filter>
+      <Filter>01. Levels\99.Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Player.h">
-      <Filter>02.GameObjects\02. Player</Filter>
+      <Filter>02. GameObjects\02. Player</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\BackGround.h">
-      <Filter>02.GameObjects\00. BackGround</Filter>
+      <Filter>02. GameObjects\00. BackGround</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Wall.h">
-      <Filter>02.GameObjects\01. MapObject\Wall</Filter>
+      <Filter>02. GameObjects\01. MapObject\Wall</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Floor.h">
-      <Filter>02.GameObjects\01. MapObject\Floor</Filter>
+      <Filter>02. GameObjects\01. MapObject\Floor</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_MonsterDie.h">
       <Filter>04. UI\Ui\CUi_Life\MonsterDie</Filter>
@@ -544,7 +565,7 @@
       <Filter>03. Client_Components\Animation</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Enemy_Bullet.h">
-      <Filter>02.GameObjects\04. Enemy\Enemy_Bullet</Filter>
+      <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Background.h">
       <Filter>04. UI\Ui\Part\Background</Filter>
@@ -589,22 +610,22 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Loader.h">
-      <Filter>01.Levels\99.Loading\Loader</Filter>
+      <Filter>01. Levels\99.Loading\Loader</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\MapObject.h">
-      <Filter>02.GameObjects\01. MapObject\MapObject</Filter>
+      <Filter>02. GameObjects\01. MapObject\MapObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\TriggerObject.h">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+      <Filter>02. GameObjects\01. MapObject\TriggerObject</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SodaMachine_Banner.h">
-      <Filter>02.GameObjects\01. MapObject\SodaMachine\Banner</Filter>
+      <Filter>02. GameObjects\01. MapObject\SodaMachine\Banner</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SodaMachine.h">
-      <Filter>02.GameObjects\01. MapObject\SodaMachine</Filter>
+      <Filter>02. GameObjects\01. MapObject\SodaMachine</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Border.h">
-      <Filter>02.GameObjects\01. MapObject\Border</Filter>
+      <Filter>02. GameObjects\01. MapObject\Border</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Client_Components.h">
       <Filter>99.Defines</Filter>
@@ -667,16 +688,16 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Barrel</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Pawn.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Floor_Border.h">
       <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\FPS_Camera.h">
-      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+      <Filter>02. GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Soda.h">
-      <Filter>02.GameObjects\01. MapObject\Soda</Filter>
+      <Filter>02. GameObjects\01. MapObject\Soda</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Rigidbody.h">
       <Filter>03. Client_Components\Rigidbody</Filter>
@@ -685,7 +706,7 @@
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Door</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Door.h">
-      <Filter>02.GameObjects\01. MapObject\Door</Filter>
+      <Filter>02. GameObjects\01. MapObject\Door</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\MapLoader.h">
       <Filter>97. Manager\MapLoader</Filter>
@@ -730,13 +751,13 @@
       <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Chainsaw_Monster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Chainsaw_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Chainsaw_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Drone_Monster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Drone_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Drone_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Orange_Pants_Monster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Orange_Pants_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Sphere.h">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Sphere</Filter>
@@ -748,7 +769,7 @@
       <Filter>97. Manager\LightManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\SpawnTrigger.h">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger</Filter>
+      <Filter>02. GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Trigger_Headers.h">
       <Filter>99.Defines</Filter>
@@ -775,7 +796,7 @@
       <Filter>04. UI\Ui\CUi_Active\Execution\Neck</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Slope.h">
-      <Filter>02.GameObjects\01. MapObject\Slope</Filter>
+      <Filter>02. GameObjects\01. MapObject\Slope</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\MapObject_Header.h">
       <Filter>99.Defines</Filter>
@@ -823,13 +844,13 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Effect.h">
-      <Filter>02.GameObjects\05. Effect</Filter>
+      <Filter>02. GameObjects\05. Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Explosion.h">
-      <Filter>02.GameObjects\05. Effect\01. Explosion</Filter>
+      <Filter>02. GameObjects\05. Effect\01. Explosion</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\HitBlood.h">
-      <Filter>02.GameObjects\05. Effect\02. HitBlood</Filter>
+      <Filter>02. GameObjects\05. Effect\02. HitBlood</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Effect_Headers.h">
       <Filter>99.Defines</Filter>
@@ -838,10 +859,10 @@
       <Filter>03. Client_Components\VIBuffers\VIBuffer_BoxObj</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\BoxObject.h">
-      <Filter>02.GameObjects\01. MapObject\Box</Filter>
+      <Filter>02. GameObjects\01. MapObject\Box</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Ventilador.h">
-      <Filter>02.GameObjects\01. MapObject\Ventilador</Filter>
+      <Filter>02. GameObjects\01. MapObject\Ventilador</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Katana_Slash.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Slash</Filter>
@@ -862,46 +883,46 @@
       <Filter>04. UI\Ui\CUi_Life\CUi_GreenCross</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CLevel_Lobby.h">
-      <Filter>01.Levels\Lobby</Filter>
+      <Filter>01. Levels\Lobby</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CSans.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CSans_Bone.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CBone_Spawner.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CSans_Gaster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\White_Suit_Monster.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CGaster_Spawner.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CGasterLaser.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CBoneRoop.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Sans_Include.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CGasterRoop.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\StageEndTrigger.h">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
+      <Filter>02. GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Elevator_L.h">
-      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_L</Filter>
+      <Filter>02. GameObjects\01. MapObject\Elevator\Elevator_L</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Elevator_R.h">
-      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_R</Filter>
+      <Filter>02. GameObjects\01. MapObject\Elevator\Elevator_R</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\VIBuffer_Elevator_L.h">
       <Filter>03. Client_Components\VIBuffers\ViBuffer_Elevator_L</Filter>
@@ -910,10 +931,10 @@
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Elevator_R</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Flying_Katana.h">
-      <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
+      <Filter>02. GameObjects\02. Player\Flying_Katana</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Enemy_Corpse.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Blood_Effect.h">
       <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
@@ -924,6 +945,30 @@
     <ClInclude Include="..\Public\Shotgun_Opening.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\White_Suit_Slope.h">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Slope_Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_MoveWall.h">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_MoveWall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\MoveWall.h">
+      <Filter>02. GameObjects\01. MapObject\MoveWall</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Elevator_Level.h">
+      <Filter>01. Levels\03. ElevatorMap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\ElevatorLevelManager.h">
+      <Filter>97. Manager\ElevatorLevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\HitBloodKatanaEffect.h">
+      <Filter>02. GameObjects\05. Effect\03. BloodKatanaEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Map2.h">
+      <Filter>01. Levels\02. Map2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUI_FadeInOut.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\FadeInOut</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -933,31 +978,31 @@
       <Filter>98.Default</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\MainApp.cpp">
-      <Filter>00.MainApp</Filter>
+      <Filter>00. MainApp</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Level_Logo.cpp">
-      <Filter>01.Levels\00.Logo</Filter>
+      <Filter>01. Levels\00.Logo</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Level_GamePlay.cpp">
-      <Filter>01.Levels\01.GamePlay</Filter>
+      <Filter>01. Levels\01.GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Level_Loading.cpp">
-      <Filter>01.Levels\99.Loading</Filter>
+      <Filter>01. Levels\99.Loading</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Loader.cpp">
-      <Filter>01.Levels\99.Loading\Loader</Filter>
+      <Filter>01. Levels\99.Loading\Loader</Filter>
     </ClCompile>
     <ClCompile Include="..\private\Player.cpp">
-      <Filter>02.GameObjects\02. Player</Filter>
+      <Filter>02. GameObjects\02. Player</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\BackGround.cpp">
-      <Filter>02.GameObjects\00. BackGround</Filter>
+      <Filter>02. GameObjects\00. BackGround</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Wall.cpp">
-      <Filter>02.GameObjects\01. MapObject\Wall</Filter>
+      <Filter>02. GameObjects\01. MapObject\Wall</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Floor.cpp">
-      <Filter>02.GameObjects\01. MapObject\Floor</Filter>
+      <Filter>02. GameObjects\01. MapObject\Floor</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_MonsterDie.cpp">
       <Filter>04. UI\Ui\CUi_Life\MonsterDie</Filter>
@@ -972,7 +1017,7 @@
       <Filter>03. Client_Components\Animation</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Bullet.cpp">
-      <Filter>02.GameObjects\04. Enemy\Enemy_Bullet</Filter>
+      <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
       <Filter>04. UI\Ui\Part\Background</Filter>
@@ -1014,19 +1059,19 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\CUi_LiveStream</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\MapObject.cpp">
-      <Filter>02.GameObjects\01. MapObject\MapObject</Filter>
+      <Filter>02. GameObjects\01. MapObject\MapObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\TriggerObject.cpp">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject</Filter>
+      <Filter>02. GameObjects\01. MapObject\TriggerObject</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SodaMachine.cpp">
-      <Filter>02.GameObjects\01. MapObject\SodaMachine</Filter>
+      <Filter>02. GameObjects\01. MapObject\SodaMachine</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SodaMachine_Banner.cpp">
-      <Filter>02.GameObjects\01. MapObject\SodaMachine\Banner</Filter>
+      <Filter>02. GameObjects\01. MapObject\SodaMachine\Banner</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Border.cpp">
-      <Filter>02.GameObjects\01. MapObject\Border</Filter>
+      <Filter>02. GameObjects\01. MapObject\Border</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Floor.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
@@ -1077,19 +1122,19 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Pistol\Pistol_Reload</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\White_Suit_Monster.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\White_Suit_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Pawn.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Floor_Border.cpp">
       <Filter>03. Client_Components\VIBuffers\CVIBuffer_Border</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\FPS_Camera.cpp">
-      <Filter>02.GameObjects\03. Camera\01. FPS_Camera</Filter>
+      <Filter>02. GameObjects\03. Camera\01. FPS_Camera</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Soda.cpp">
-      <Filter>02.GameObjects\01. MapObject\Soda</Filter>
+      <Filter>02. GameObjects\01. MapObject\Soda</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Rigidbody.cpp">
       <Filter>03. Client_Components\Rigidbody</Filter>
@@ -1098,7 +1143,7 @@
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Door</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Door.cpp">
-      <Filter>02.GameObjects\01. MapObject\Door</Filter>
+      <Filter>02. GameObjects\01. MapObject\Door</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\MapLoader.cpp">
       <Filter>97. Manager\MapLoader</Filter>
@@ -1134,13 +1179,13 @@
       <Filter>04. UI\Ui\CUi_Active\CUi_Clear\Peace</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Drone_Monster.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Drone_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Drone_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Chainsaw_Monster.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Chainsaw_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Chainsaw_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Orange_Pants_Monster.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Orange_Pants_Monster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Orange_Pants_Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Sphere.cpp">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Sphere</Filter>
@@ -1152,7 +1197,7 @@
       <Filter>97. Manager\LightManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\SpawnTrigger.cpp">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger</Filter>
+      <Filter>02. GameObjects\01. MapObject\TriggerObject\99. SpawnTrigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Finish.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Finish</Filter>
@@ -1176,7 +1221,7 @@
       <Filter>04. UI\Ui\CUi_Active\Execution\Punch</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Slope.cpp">
-      <Filter>02.GameObjects\01. MapObject\Slope</Filter>
+      <Filter>02. GameObjects\01. MapObject\Slope</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Execution_Knife.cpp">
       <Filter>04. UI\Ui\CUi_Active\Execution\Weapon</Filter>
@@ -1227,22 +1272,22 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_SpinB</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Effect.cpp">
-      <Filter>02.GameObjects\05. Effect</Filter>
+      <Filter>02. GameObjects\05. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Public\Explosion.cpp">
-      <Filter>02.GameObjects\05. Effect\01. Explosion</Filter>
+      <Filter>02. GameObjects\05. Effect\01. Explosion</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\HitBlood.cpp">
-      <Filter>02.GameObjects\05. Effect\02. HitBlood</Filter>
+      <Filter>02. GameObjects\05. Effect\02. HitBlood</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_BoxObj.cpp">
       <Filter>03. Client_Components\VIBuffers\VIBuffer_BoxObj</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\BoxObject.cpp">
-      <Filter>02.GameObjects\01. MapObject\Box</Filter>
+      <Filter>02. GameObjects\01. MapObject\Box</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Ventilador.cpp">
-      <Filter>02.GameObjects\01. MapObject\Ventilador</Filter>
+      <Filter>02. GameObjects\01. MapObject\Ventilador</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Katana.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Idle</Filter>
@@ -1263,40 +1308,40 @@
       <Filter>04. UI\Ui\CUi_Life\CUi_GreenCross</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CLevel_Lobby.cpp">
-      <Filter>01.Levels\Lobby</Filter>
+      <Filter>01. Levels\Lobby</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CSans.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CSans_Bone.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Bone</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CBone_Spawner.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CSans_Gaster.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CGasterLaser.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Sans_Gaster\CGasterLaser</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CGaster_Spawner.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CBoneRoop.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Bone_Spawner\BoneRoop</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CGasterRoop.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\Sans_Boss\Gaster_Spawner\GasterRoop</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\StageEndTrigger.cpp">
-      <Filter>02.GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
+      <Filter>02. GameObjects\01. MapObject\TriggerObject\0. StageEndTrigger</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Elevator_L.cpp">
-      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_L</Filter>
+      <Filter>02. GameObjects\01. MapObject\Elevator\Elevator_L</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Elevator_R.cpp">
-      <Filter>02.GameObjects\01. MapObject\Elevator\Elevator_R</Filter>
+      <Filter>02. GameObjects\01. MapObject\Elevator\Elevator_R</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\VIBuffer_Elevator_L.cpp">
       <Filter>03. Client_Components\VIBuffers\ViBuffer_Elevator_L</Filter>
@@ -1305,10 +1350,10 @@
       <Filter>03. Client_Components\VIBuffers\VIBuffer_Elevator_R</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Flying_Katana.cpp">
-      <Filter>02.GameObjects\02. Player\Flying_Katana</Filter>
+      <Filter>02. GameObjects\02. Player\Flying_Katana</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Corpse.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
+      <Filter>02. GameObjects\04. Enemy\Pawns\EnemyCorpse</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Blood_Effect.cpp">
       <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Blood</Filter>
@@ -1318,6 +1363,30 @@
     </ClCompile>
     <ClCompile Include="..\Private\Shotgun_Opening.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Shotgun\Shotgun_Opening</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\White_Suit_Slope.cpp">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Slope_Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_MoveWall.cpp">
+      <Filter>03. Client_Components\VIBuffers\VIBuffer_MoveWall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\MoveWall.cpp">
+      <Filter>02. GameObjects\01. MapObject\MoveWall</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Elevator_Level.cpp">
+      <Filter>01. Levels\03. ElevatorMap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\ElevatorLevelManager.cpp">
+      <Filter>97. Manager\ElevatorLevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\HitBloodKatanaEffect.cpp">
+      <Filter>02. GameObjects\05. Effect\03. BloodKatanaEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_Map2.cpp">
+      <Filter>01. Levels\02. Map2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUI_FadeInOut.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Clear\FadeInOut</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

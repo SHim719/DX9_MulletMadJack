@@ -10,6 +10,12 @@
 #include "Light_Manager.h"
 #include "Player.h"
 
+#include "Ui_Include.h"
+
+#include "Level_GamePlay.h"
+#include "Level_Map2.h"
+#include "Elevator_Level.h"
+
 IMPLEMENT_SINGLETON(CGame_Manager)
 
 CGame_Manager::CGame_Manager()
@@ -39,13 +45,15 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 void CGame_Manager::Tick(_float fTimeDelta)
 {
-	//CLight_Manager::Get_Instance()->Reset_Light();
-
 	m_pGameInstance->Tick_Engine(fTimeDelta);
+
+	if (m_eOldProgress == StageProgress::Level_Change && m_eProgress == StageProgress::Level_Change)
+		Level_Changing();
 
 	Change_Check();
 	Adjust_ViewPort(fTimeDelta);
 	Call_Shop(fTimeDelta);
+
 	Cal_Change_Time(fTimeDelta);
 	Cal_StageClear_Time(fTimeDelta);
 }
@@ -61,12 +69,13 @@ void CGame_Manager::Clear()
 
 void CGame_Manager::Start()
 {
-	m_pGameInstance->Set_Enter(false);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), true);
 	ShowCursor(FALSE);
 	CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor"));
+
+	Set_StageProgress(StageProgress::OnGoing);
 }
 
 void CGame_Manager::Render()
@@ -112,8 +121,15 @@ void CGame_Manager::Change_Check()
 		case StageProgress::Shopping:
 			m_pGameInstance->Set_Ui_ShopActiveState(TEXT("CUi_Shop"));
 			break;
+		case StageProgress::Level_Change:
+			if (!m_pFadeInOutUI)
+				m_pFadeInOutUI = static_cast<CUI_FadeInOut*>(m_pGameInstance->Get_ActiveBlendUI(L"CUi_FadeInOut"));
+			m_pFadeInOutUI->Set_Active(true);
+			m_pFadeInOutUI->Set_FadeOut(200.f);
+			break;
 		case StageProgress::Changing:
 			m_fChangeTime = 3.f;
+			m_pGameInstance->Set_Enter(false);
 			break;
 		case StageProgress::Start:
 			Start();
@@ -162,7 +178,7 @@ void CGame_Manager::Adjust_ViewPort(_float fTimeDelta)
 	{
 		Reduce_ViewPort(fTimeDelta);
 	}
-	else if (m_eProgress == StageProgress::Start)
+	else if (m_eProgress == StageProgress::Changing)
 	{
 		Extend_ViewPort(fTimeDelta);
 	}
@@ -186,12 +202,7 @@ void CGame_Manager::Cal_Change_Time(_float fTimeDelta)
 	m_fChangeTime -= fTimeDelta;
 	if (m_fChangeTime < 0 && m_eProgress == StageProgress::Changing)
 	{
-		Set_StageProgress(StageProgress::Start);
-		m_fChangeTime = 3.5f;
-	}
-	else if (m_fChangeTime < 0 && m_eProgress == StageProgress::Start)
-	{
-		Set_StageProgress(StageProgress::OnGoing);
+		Set_StageProgress(StageProgress::Level_Change);
 		m_fChangeTime = 3.5f;
 	}
 }
@@ -204,9 +215,41 @@ void CGame_Manager::Cal_StageClear_Time(_float fTimeDelta)
 	}
 	else if (m_eProgress == StageProgress::Start)
 	{
-		m_fStageClearTime = 3.5f;
+		m_fStageClearTime = 0.f;
 	}
 
+}
+
+void CGame_Manager::Level_Changing()
+{
+	if (m_pFadeInOutUI->Get_State() == CUI_FadeInOut::FADEOUT && m_pFadeInOutUI->IsFinished())
+	{
+		CLevel* pLevel = nullptr;
+		switch (m_eToChangeLevel)
+		{
+		case LEVEL_GAMEPLAY2:
+			pLevel = CLevel_Map2::Create(m_pGraphic_Device);
+			break;
+		case LEVEL_SANS:
+			break;
+		case LEVEL_ELEVATOR:
+			pLevel = CElevator_Level::Create(m_pGraphic_Device);
+			break;
+		case LEVEL_BOSS:
+			break;
+		}
+		CPlayer_Manager::Get_Instance()->Get_Player()->Active_Reset();
+		m_pGameInstance->Change_Level(pLevel);
+		m_pFadeInOutUI->Set_FadeIn(350.f);
+		pLevel->Initialize();
+		Start();
+		m_fStageClearTime = 0.f;
+	}
+
+	if (m_pFadeInOutUI->Get_State() == CUI_FadeInOut::FADEIN && m_pFadeInOutUI->IsFinished())
+	{
+		m_pFadeInOutUI->Set_Active(false);
+	}
 }
 
 void CGame_Manager::Player_UpGrade(void* pArg)
@@ -332,6 +375,11 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_Elevator_R_Default"),
 		CVIBuffer_Elevator_R::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("VIBuffer_MoveWall_Default"),
+		CVIBuffer_MoveWall::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 #pragma endregion
 	return S_OK;
 }

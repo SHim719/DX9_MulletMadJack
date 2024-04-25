@@ -4,6 +4,12 @@
 #include "CTextManager.h"
 
 
+BEGIN(Engine)
+
+class CLevel;
+END
+
+
 BEGIN(Client)
 enum class StageProgress
 {
@@ -13,6 +19,7 @@ enum class StageProgress
 	TutorialClear,
 	Shopping,
 	ShopEnd,
+	Level_Change,
 	Changing,
 	Start,
 	End
@@ -33,7 +40,6 @@ public:
 	void Start();
 	void Render();
 
-
 private:
 	void Change_Check();
 	void Reduce_ViewPort(_float fTimeDelta);
@@ -42,6 +48,7 @@ private:
 	void Call_Shop(_float fTimeDelta);
 	void Cal_Change_Time(_float fTimeDelta);
 	void Cal_StageClear_Time(_float fTimeDelta);
+	void Level_Changing();
 
 public:
 	void Set_StageProgress(StageProgress Progress) { m_eProgress = Progress; }
@@ -75,13 +82,15 @@ public:
 
 	size_t Get_MaxSize(TextType type) { return m_pTextManager->Get_Max_Size(type); }
 
+	void Set_Change_Level(LEVEL eLevel) { m_eToChangeLevel = eLevel;}
+	
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
 	StageProgress m_eProgress = { StageProgress::End };
 	StageProgress m_eOldProgress = { StageProgress::End };
 
-
+	class CUI_FadeInOut* m_pFadeInOutUI = { nullptr };
 private:
 	D3DVIEWPORT9 m_MainViewPort{};
 	D3DVIEWPORT9 m_UiViewPort{};
@@ -89,7 +98,7 @@ private:
 	_float m_fStageClearTime = { 0 };
 	_float m_fChangeTime = { 3.5f };
 
-
+	LEVEL m_eToChangeLevel;
 private:
 	CTextManager* m_pTextManager = { nullptr };
 	_uint m_iTextPrintOrder[_uint(TextType::End)] = {};

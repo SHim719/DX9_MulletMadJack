@@ -178,6 +178,11 @@ public:
 		m_WorldMatrix._41 = vPos.x; m_WorldMatrix._42 = vPos.y; m_WorldMatrix._43 = vPos.z; 
 		Update_Offset(); 
 	}
+
+	void Set_Pos(const _float3& vPos)
+	{
+		Set_State(STATE_POSITION, &vPos);
+	}
 private:
 	void Update_Offset();
 

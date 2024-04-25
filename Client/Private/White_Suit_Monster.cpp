@@ -41,6 +41,7 @@ HRESULT CWhite_Suit_Monster::Initialize(void* pArg)
     m_pRigidbody->Set_Friction(0.f);
     m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
     m_pRigidbody->Set_UseGravity(false);
+    
 
     m_pAnimationCom->Play_Animation(TEXT("Idle"), 0.1f, true);
 
@@ -119,52 +120,58 @@ HRESULT CWhite_Suit_Monster::Add_Components()
 
 HRESULT CWhite_Suit_Monster::Add_Textures()
 {
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Idle"), TEXT("Idle"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Idle"), TEXT("Idle"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Walk"), TEXT("Walk"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Walk"), TEXT("Walk"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Jump"), TEXT("Jump"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Jump"), TEXT("Jump"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Pushed"), TEXT("Pushed"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Pushed"), TEXT("Pushed"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Pushed_Recovery"), TEXT("Pushed_Recovery"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Pushed_Recovery"), TEXT("Pushed_Recovery"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Aim"), TEXT("Alert"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Aim"), TEXT("Alert"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Shot"), TEXT("Shot"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Shot"), TEXT("Shot"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Hit"), TEXT("Hit"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Hit"), TEXT("Hit"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Bodyshot"), TEXT("Death_Bodyshot"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Bodyshot"), TEXT("Death_Bodyshot"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Headshot"), TEXT("Death_Headshot"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Headshot"), TEXT("Death_Headshot"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Groinshot"), TEXT("Death_Eggshot"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Groinshot"), TEXT("Death_Eggshot"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun")))) 
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Death_Shotgun"), TEXT("Death_Shotgun")))) 
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("Head_Explode"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_HeadExplode"), TEXT("Head_Explode"))))
         return E_FAIL;
     
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Fly"), TEXT("Death_Fly"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Fly"), TEXT("Death_Fly"))))
           return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Floor"), TEXT("Death_Fly_Floor"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Death_Push_Floor"), TEXT("Death_Fly_Floor"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_White_Suit_Monster_Death_Push_Wall"), TEXT("Death_Fly_Wall"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Monster_Death_Push_Wall"), TEXT("Death_Fly_Wall"))))
+        return E_FAIL;
+
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Air"), TEXT("Air"))))
+        return E_FAIL;
+
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_White_Suit_Landing"), TEXT("Landing"))))
         return E_FAIL;
 
     return S_OK;
@@ -195,8 +202,12 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
     if (m_bThisFrameHit)
         return true;
 
-    if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
-		return false;
+    CPlayer::WEAPON_TYPE ePlayerWeapon = CPlayer_Manager::Get_Instance()->Get_WeaponType();
+    if (ePlayerWeapon == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
+        return false;
+
+    if (ePlayerWeapon == CPlayer::SHOTGUN && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 5.f)
+        return false;
 
     _float4x4   WorldMatrixInverse = m_pTransformCom->Get_WorldMatrix_Inverse();
     _float3     vHitLocalPos = *D3DXVec3TransformCoord(&_float3(), &fHitWorldPos, &WorldMatrixInverse);
@@ -243,6 +254,12 @@ void CWhite_Suit_Monster::OnCollisionEnter(CGameObject* pOther)
     {
         m_bWallColl = true;
     }
+
+    if ("Floor" == pOther->Get_Tag()
+        && m_pTransformCom->Get_Pos().y > pOther->Get_Transform()->Get_Pos().y)
+    {
+        m_pRigidbody->Set_Ground(true);
+    }
 }
 
 _bool CWhite_Suit_Monster::Check_HeadShot(_float3 vHitLocalPos)
@@ -265,7 +282,7 @@ void CWhite_Suit_Monster::Hit(void* pArg)
 {
     ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
-    CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
+    CGameObject* pHitBlood = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBlood");
     pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
 
     _bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
@@ -333,6 +350,10 @@ void CWhite_Suit_Monster::Hit(void* pArg)
             else
                 pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
             static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+
+            CGameObject* pHitEffect
+                = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");
+            pHitEffect->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos());
         }
         
     }
@@ -381,7 +402,12 @@ void CWhite_Suit_Monster::Process_State(_float fTimeDelta)
     case CWhite_Suit_Monster::STATE_DEATH:
         State_Death(fTimeDelta);
         break;
-
+    case CWhite_Suit_Monster::STATE_AIR:
+        State_Air();
+        break;
+    case CWhite_Suit_Monster::STATE_LANDING:
+        State_Landing();
+        break; 
     }
 }
 
@@ -547,6 +573,19 @@ void CWhite_Suit_Monster::State_Death(_float fTimeDelta)
             m_bDestroyed = true;
         }
     }
+}
+
+void CWhite_Suit_Monster::State_Air()
+{
+    if (m_pRigidbody->IsGround())
+        SetState_Landing();
+}
+
+void CWhite_Suit_Monster::State_Landing()
+{
+    if (m_pAnimationCom->IsEndAnim())
+        SetState_Move();
+    
 }
 
 void CWhite_Suit_Monster::SetState_Idle()
@@ -726,6 +765,24 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
         m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
         break;
     }
+}
+
+void CWhite_Suit_Monster::SetState_Air()
+{
+    m_eState = STATE_AIR;
+
+    m_pAnimationCom->Play_Animation(L"Air", 0.1f, false);
+
+    m_pRigidbody->Set_UseGravity(true);
+}
+
+void CWhite_Suit_Monster::SetState_Landing()
+{
+    m_eState = STATE_LANDING;
+
+    m_pAnimationCom->Play_Animation(L"Landing", 0.1f, false);
+
+    m_pRigidbody->Set_UseGravity(false);
 }
 
 CWhite_Suit_Monster* CWhite_Suit_Monster::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
