@@ -58,6 +58,7 @@ void CDrink::Tick(_float fTimeDelta)
 		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Drink"), false);
 		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
 		AnimationDelayReset();
+		return;
 	}
 
 	m_fScale = { Get_Texture_Info().x / m_fDivide , Get_Texture_Info().y / m_fDivide, 1.f };

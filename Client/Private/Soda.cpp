@@ -123,7 +123,8 @@ HRESULT CSoda::Add_Components()
 
 void CSoda::OnTriggerStay(CGameObject* pOther)
 {
-	if ("Player" == pOther->Get_Tag() && CPlayer_Manager::Get_Instance()->Get_Action_Type() != CPlayer_Manager::ACTION_DRINKCAN)
+	if ("Player" == pOther->Get_Tag() && CPlayer_Manager::Get_Instance()->Get_Action_Type() != CPlayer_Manager::ACTION_DRINKCAN
+		&& CPlayer_Manager::Get_Instance()->Is_ActionIdle())
 	{
 		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
 		m_pGameInstance->Play(L"Player_Soda_Drink", false);

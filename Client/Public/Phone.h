@@ -67,7 +67,6 @@ private:
 
 	_float m_fLissajousTime = 0.f;
 
-
 	//for Phone_BackGround
 private:
 	void Initialize_BackGround();
@@ -77,7 +76,6 @@ private:
 	void Set_BackGroundRotation();
 	void Set_BackGroundTexture();
 	HRESULT Render_BackGround();
-
 
 private:
 	CVIBuffer_Rect* m_pBackGroundVIBufferCom = { nullptr };
@@ -131,7 +129,6 @@ private:
 	_float m_fFaceChangeTime = { 0 };
 	_uint m_iFaceTexture = { 0 };
 	Ui_Pos_Size_Rotation m_Face = {};
-
 
 public:
 	virtual void Free() override;

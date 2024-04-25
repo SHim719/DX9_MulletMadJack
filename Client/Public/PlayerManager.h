@@ -141,6 +141,8 @@ public:
 
 	void Set_Executrion_Target(string _strExecutionTarget) { m_strExecutionTarget = _strExecutionTarget; }
 	string Get_Execution_Target() { return m_strExecutionTarget; }
+
+	_bool Is_ActionIdle() { return m_bActionIDLE; }
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };

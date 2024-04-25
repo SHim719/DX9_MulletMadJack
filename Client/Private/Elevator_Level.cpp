@@ -75,11 +75,11 @@ CElevator_Level* CElevator_Level::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CElevator_Level* pInstance = new CElevator_Level(pGraphic_Device);
 
-	if (FAILED(pInstance->Initialize()))
-	{
-		MSG_BOX(TEXT("Failed to Created : CElevator_Level"));
-		Safe_Release(pInstance);
-	}
+	//if (FAILED(pInstance->Initialize()))
+	//{
+	//	MSG_BOX(TEXT("Failed to Created : CElevator_Level"));
+	//	Safe_Release(pInstance);
+	//}
 
 	return pInstance;
 }

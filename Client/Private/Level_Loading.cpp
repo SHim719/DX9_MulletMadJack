@@ -29,11 +29,8 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 
 	m_pLoadingBackGround = (CUi_LoadingBackGround*)m_pGameInstance->Add_Ui_PartClone
 	(L"CUi_LoadingBackGround", nullptr);
-	/* �ε� ������ �����ֱ����� ��ü(���, �ε���, �ε�������Ʈ)���� �����Ѵ�. */
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
-
-	/* �ڿ��ε��� ���� �δ���ü�� �������ش�. */
 	m_pLoader = CLoader::Create(m_pGraphic_Device, eNextLevelID);
 	if (nullptr == m_pLoader)
 		return E_FAIL;	
@@ -68,6 +65,7 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 				break;
 			case LEVEL_ELEVATOR:
 				pLevel = CElevator_Level::Create(m_pGraphic_Device);
+				break;
 			case LEVEL_SANS:
 				pLevel = CSansLevel::Create(m_pGraphic_Device);
 				break;

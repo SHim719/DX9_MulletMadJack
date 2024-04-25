@@ -101,8 +101,8 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Loading_For_Effect_Texture()))
 		return E_FAIL;
 
-	if (FAILED(Loading_For_Sans_Texture()))
-		return E_FAIL;
+	//if (FAILED(Loading_For_Sans_Texture()))
+	//	return E_FAIL;
 
 	if (FAILED(Loading_For_Boss_Texture()))
 		return E_FAIL;
@@ -161,8 +161,8 @@ HRESULT CLoader::Loading_For_Sans_Level()
 	if (FAILED(Loading_For_Map_Texture()))
 		return E_FAIL;
 
-	if (FAILED(Loading_For_Sans_Texture()))
-		return E_FAIL;
+	//if (FAILED(Loading_For_Sans_Texture()))
+	//	return E_FAIL;
 
 	if (FAILED(Ready_Monster_Prototype()))
 		return E_FAIL;
