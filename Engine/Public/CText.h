@@ -12,7 +12,7 @@ public:
 		RECT Rect = { 0, 0, 0, 0 };
 		int Length = { 0 };
 		D3DCOLOR RGBA = D3DCOLOR_RGBA(255, 255, 255, 255);
-
+		bool m_bPrint = { false };
 	};
 private:
 	CText(LPDIRECT3DDEVICE9 pGraphic_Device, LPD3DXFONT Font, LPD3DXFONT BigFont);

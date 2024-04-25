@@ -26,7 +26,7 @@ HRESULT CSans_Gaster::Initialize(void* pArg)
 
 	Initialize_Arg(pArg);
 
-	m_pTransformCom->Set_Speed(24);
+	m_pTransformCom->Set_Speed(50);
 
 	m_strTag = "Sans_Gaster";
 
@@ -89,6 +89,7 @@ void CSans_Gaster::Tick(_float fTimeDelta)
 	{
 		m_bDestroyed = true;
 	}
+
 	TextureSwitching(fTimeDelta);
 
 	if (m_eState == GasterState::Laser)
@@ -153,7 +154,7 @@ HRESULT CSans_Gaster::Add_Components()
 	(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform")));
 
 	m_pTextureCom = dynamic_cast<CTexture*>(__super::Add_Component
-	(LEVEL_GAMEPLAY, TEXT("CSans_Gaster_Texture"), TEXT("CSans_Gaster_Texture")));
+	(LEVEL_STATIC, TEXT("CSans_Gaster_Texture"), TEXT("CSans_Gaster_Texture")));
 
 	CBoxCollider::BOXCOLLISION_DESC pDesc;
 	pDesc.vScale = { 0.25f, 0.25f, 0.5f };
@@ -174,7 +175,7 @@ HRESULT CSans_Gaster::Add_Texture()
 void CSans_Gaster::TextureSwitching(_float fTimeDelta)
 {
 	m_fTextureSwitching += fTimeDelta;
-	if (m_fTextureSwitching > 0.2)
+	if (m_fTextureSwitching > 0.1)
 	{
 		if (m_eState != GasterState::Laser && !m_bCreateLaser)
 		{
@@ -239,7 +240,7 @@ void CSans_Gaster::SetStateLaser()
 	pArg.FirePos = m_eFirePos;
 	pArg.Pos = m_OriginPos;
 
-	m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Layer_GasterLaser", 
+	m_pGameInstance->Add_Clone(LEVEL_SANS, L"Layer_Gaster", 
 		TEXT("Prototype_CGasterLaser"), &pArg);
 }
 
@@ -280,17 +281,17 @@ void CSans_Gaster::Set_ArgStraightPos(SansGasterPos Pos)
 	switch (Pos)
 	{
 	case SansGasterPos::left:
-		FirstPos = { -1.5f, 25.f, 4.f };
+		FirstPos = { -1.5f, 26.f, 4.f };
 		m_OriginPos = { -1.5f, 1.f, 4.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Middle:
-		FirstPos = { 0, 25.f, 4.f };
+		FirstPos = { 0, 26.f, 4.f };
 		m_OriginPos = { 0, 1.f, 4.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Right:
-		FirstPos = { 1.5f, 25.f, 4.f };
+		FirstPos = { 1.5f, 26.f, 4.f };
 		m_OriginPos = { 1.5f, 1.f, 4.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
@@ -330,17 +331,17 @@ void CSans_Gaster::Set_ArgBackWardPos(SansGasterPos Pos)
 	switch (Pos)
 	{
 	case SansGasterPos::left:
-		FirstPos = { -1.5f, 25.f, -4.f };
+		FirstPos = { -1.5f, 26.f, -4.f };
 		m_OriginPos = { -1.5f, 1.f, -4.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Middle:
-		FirstPos = { 0, 25.f, -4.f };
+		FirstPos = { 0, 26.f, -4.f };
 		m_OriginPos = { 0, 1.f, -4.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Right:
-		FirstPos = { 1.5f, 25.f, -4.f };
+		FirstPos = { 1.5f, 26.f, -4.f };
 		m_OriginPos = { 1.5f, 1.f, -4.f};
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
@@ -379,17 +380,17 @@ void CSans_Gaster::Set_ArgLeftPos(SansGasterPos Pos)
 	switch (Pos)
 	{
 	case SansGasterPos::left:
-		FirstPos = { -4.f, 1.f, 25.5f };
+		FirstPos = { -4.f, 1.f, 26.5f };
 		m_OriginPos = { -4.f, 1.f, 1.5f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Middle:
-		FirstPos = { -4.f, 1.f, 24.f };
+		FirstPos = { -4.f, 1.f, 25.f };
 		m_OriginPos = { -4.f, 1.f, 0.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Right:
-		FirstPos = { -4.f, 1.f, 22.5f };
+		FirstPos = { -4.f, 1.f, 23.5f };
 		m_OriginPos = { -4.f, 1.f, -1.5f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
@@ -427,17 +428,17 @@ void CSans_Gaster::Set_ArgRightPos(SansGasterPos Pos)
 	switch (Pos)
 	{
 	case SansGasterPos::left:
-		FirstPos = { 4.f, 1.f, 25.5f };
+		FirstPos = { 4.f, 1.f, 26.5f };
 		m_OriginPos = { 4.f, 1.f, 1.5f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Middle:
-		FirstPos = { 4.f, 1.f, 24.f };
+		FirstPos = { 4.f, 1.f, 25.f };
 		m_OriginPos = { 4.f, 1.f, 0.f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Right:
-		FirstPos = { 4.f, 1.f, 22.5 };
+		FirstPos = { 4.f, 1.f, 23.5f };
 		m_OriginPos = { 4.f, 1.f, -1.5f };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
@@ -474,17 +475,17 @@ void CSans_Gaster::Set_ArgDownPos(SansGasterPos Pos)
 	switch (Pos)
 	{
 	case SansGasterPos::left:
-		FirstPos = { -1.5f, -4.f, 24.f };
+		FirstPos = { -1.5f, -4.f, 25.f };
 		m_OriginPos = { -1.5f, -4.f, 0 };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Middle:
-		FirstPos = { 0.f, -4.f, 24.f };
+		FirstPos = { 0.f, -4.f, 25.f };
 		m_OriginPos = { 0.f, -4.f, 0 };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Right:
-		FirstPos = { 1.5f, -4.f, 24.f };
+		FirstPos = { 1.5f, -4.f, 25.f };
 		m_OriginPos = { 1.5f, -4.f, 0 };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
@@ -522,17 +523,17 @@ void CSans_Gaster::Set_ArgUpPos(SansGasterPos Pos)
 	switch (Pos)
 	{
 	case SansGasterPos::left:
-		FirstPos = { -1.5f, 4.f, 24.f };
+		FirstPos = { -1.5f, 4.f, 25.f };
 		m_OriginPos = { -1.5f, 4.f, 0 };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Middle:
-		FirstPos = { 0, 4.f, 24.f };
+		FirstPos = { 0, 4.f, 25.f };
 		m_OriginPos = { 0, 4.f, 0 };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;
 	case SansGasterPos::Right:
-		FirstPos = { 1.5f, 4.f, 24.f };
+		FirstPos = { 1.5f, 4.f, 25.f };
 		m_OriginPos = { 1.5f, 4.f, 0 };
 		m_pTransformCom->Set_Position(FirstPos);
 		break;

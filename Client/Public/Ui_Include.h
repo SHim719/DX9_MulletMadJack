@@ -41,3 +41,5 @@
 #include "CUi_GreenCrossActive.h"
 #include "CUi_GreenCross.h"
 #include "CUI_FadeInOut.h"
+#include "CUi_Sans_TextBack.h"
+#include "CUi_Sans_Heart.h"

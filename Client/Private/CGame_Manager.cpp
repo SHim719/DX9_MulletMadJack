@@ -41,6 +41,7 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Execution_Texture();
 
 	Ready_Active_Execution();
+
 }
 
 void CGame_Manager::Tick(_float fTimeDelta)
@@ -85,7 +86,7 @@ void CGame_Manager::Render()
 		m_pGameInstance->Render_Begin();
 		m_pGameInstance->Draw();
 		m_pGameInstance->Ui_Render();
-	
+		Render_Text();
 		m_pGameInstance->Render_End();
 	}
 	else
@@ -96,6 +97,7 @@ void CGame_Manager::Render()
 		m_pGameInstance->Ui_Shop_Render();
 		m_pGraphic_Device->SetViewport(&m_UiViewPort);
 		m_pGameInstance->Ui_Render();
+		Render_Text();
 		m_pGameInstance->Render_End();
 	}
 
@@ -273,7 +275,24 @@ void CGame_Manager::Ready_Loading_BackGroundTextureAndUi()
 
 void CGame_Manager::Print_Text(TextType type, _uint Number)
 {
+	m_pTextManager->Get_Text(type, Number);
 	m_pTextManager->Print_Text(type, Number);
+}
+
+void CGame_Manager::Print_Text_Sans(CText::Text_Info* Text)
+{
+	RenderTextVec.emplace_back(Text);
+}
+
+void CGame_Manager::Render_Text()
+{
+	for (auto& iter : RenderTextVec)
+		m_pGameInstance->Print_Text(*iter);
+}
+
+void CGame_Manager::Clear_Sans_Text()
+{
+	RenderTextVec.clear();
 }
 
 void CGame_Manager::Set_Pos_Text(TextType type, _uint Number, RECT Rect)

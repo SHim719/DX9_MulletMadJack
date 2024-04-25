@@ -16,6 +16,7 @@ enum class TextType
 	TutorialMidSpot,
 	TutorialClear,
 	ShopEnd,
+	Sans,
 	End
 };
 class CTextManager : public CBase
@@ -30,12 +31,12 @@ public:
 	void Initialize_TutorialClearText();
 	void Initialize_TutorialMidSpotText();
 	void Initialize_ShopEndText();
-
+	void Initialize_SansText();
 
 public:
 	void Print_Text(TextType type, _uint Number);
 	void Set_Pos_Text(TextType type, _uint Number, RECT Rect);
-	CText::Text_Info* Get_Text(TextType type, _uint Number) { return &m_Text[_uint(type)][Number]; }
+	CText::Text_Info* Get_Text(TextType type, _uint Number);
 	size_t Get_Max_Size(TextType type) { return m_Text[_uint(type)].size(); }
 
 

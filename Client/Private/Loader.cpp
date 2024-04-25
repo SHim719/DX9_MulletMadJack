@@ -59,6 +59,9 @@ unsigned int CLoader::Loading()
 	case LEVEL_GAMEPLAY:
 		hr = Loading_For_GamePlay_Level();
 		break;
+	case LEVEL_SANS:
+		hr = Loading_For_Sans_Level();
+		break;
 	}
 
 	LeaveCriticalSection(&m_CriticalSection);
@@ -149,6 +152,34 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	m_isFinished = true;
 
+	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Sans_Level()
+{
+
+	if (FAILED(Loading_For_Map_Texture()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Sans_Texture()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Monster_Prototype()))
+		return E_FAIL;
+
+	if (FAILED(Ready_MapObject_Prototype()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Ui()))
+		return E_FAIL;
+
+	Initialize_TextManager();
+
+	lstrcpy(m_szLoadingText, TEXT("Wan."));
+	m_fProgress = 1.f;
+
+	m_isFinished = true;
+	
 	return S_OK;
 }
 
@@ -327,6 +358,14 @@ HRESULT CLoader::Loading_For_Sans_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Idle.png")))))
 		return E_FAIL;
 	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Texture_Sans_Body"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/SansBody.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Texture_Sans_Leg"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Sans_Leg.png")))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Texture_Sans_Bone"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/HalfBone.png")))))
 		return E_FAIL;
@@ -338,6 +377,11 @@ HRESULT CLoader::Loading_For_Sans_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("CSans_Gaster_Texture"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, 
 			TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Gaster/GasterBlaster%d.png"), 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("CUi_Sans_Heart_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Ui/Part/SansHeart.png")))))
 		return E_FAIL;
 
 	return S_OK;
@@ -946,6 +990,11 @@ HRESULT CLoader::Ready_TextUi_Texture()
 			L"../Bin/Resources/Textures/Ui/Text/TextBackGround.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Sans_TextBack_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Text/SansTextBackGround.png"))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1187,6 +1236,10 @@ HRESULT CLoader::Ready_Prototype_Ui_Life()
 		CUi_GreenCross::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CUi_Sans_Heart"),
+		CUi_Sans_Heart::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1260,6 +1313,11 @@ HRESULT CLoader::Ready_Active_UiClear()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Clear_Victory"),
 		eUiRenderType::Render_NonBlend,
 		CUi_Clear_Victory::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Sans_TextBack"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Sans_TextBack::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

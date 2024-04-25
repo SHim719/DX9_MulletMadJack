@@ -74,6 +74,24 @@ HRESULT CUi_Manager::Add_Ui_LifeClone(const wstring& Ui_LifePrototypeTag, eUiRen
 	return S_OK;
 }
 
+class CUi* CUi_Manager::Add_Ui_PartCloneRender(const wstring& Ui_LifePrototypeTag, eUiRenderType UiRenderType, void* pArg)
+{
+	auto pLife = m_Ui_LifePrototypes.find(Ui_LifePrototypeTag);
+	if (m_Ui_LifePrototypes.end() == pLife)
+		return nullptr;
+
+	CUi* pUi_Life = (pLife->second)->Clone(pArg);
+	if (nullptr == pUi_Life)
+		return nullptr;
+
+	if (UiRenderType == eUiRenderType::Render_NonBlend)
+	{
+		m_Ui_Partlist.emplace_back(pUi_Life);
+	}
+
+	return pUi_Life;
+}
+
 CUi* CUi_Manager::Add_Ui_PartClone(const wstring& Ui_PartPrototypeTag, void* pArg)
 {
 	auto pLife = m_Ui_LifePrototypes.find(Ui_PartPrototypeTag);
@@ -149,6 +167,21 @@ void CUi_Manager::Tick(_float fTimeDelta)
 		{
 			(*iter)->Tick(fTimeDelta);
 			++iter;
+		}
+	}
+
+	auto Partiter = m_Ui_Partlist.begin();
+	for (; Partiter != m_Ui_Partlist.end(); )
+	{
+		if ((*Partiter)->Is_Dead())
+		{
+			Safe_Release(*Partiter);
+			Partiter = m_Ui_Partlist.erase(Partiter);
+		}
+		else
+		{
+			(*Partiter)->Tick(fTimeDelta);
+			++Partiter;
 		}
 	}
 
@@ -278,22 +311,20 @@ HRESULT CUi_Manager::Ui_Render()
 	for (auto& Clone : m_Ui_LifeClonelist)
 		Clone->Render();
 
+	for (auto& PartClone : m_Ui_Partlist)
+		PartClone->Render();
+	
 	for (auto& iter : m_Ui_Active) {
 		if (iter.second->Get_Active() == true)
 			iter.second->Render();
 	}
 
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
-
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-
 	m_pGraphic_Device->SetRenderState(D3DRS_SRCBLEND,
 		D3DBLEND_SRCALPHA);
 	m_pGraphic_Device->SetRenderState(D3DRS_DESTBLEND,
 		D3DBLEND_INVSRCALPHA);
-
 
 	for (auto& BlendClone : m_Ui_LifeBlendClonelist)
 		BlendClone->Render();
@@ -302,7 +333,6 @@ HRESULT CUi_Manager::Ui_Render()
 		if(iter.second->Get_Active() == true)
 			iter.second->Render();
 	}
-
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 	return S_OK;
 }
@@ -424,6 +454,9 @@ void CUi_Manager::Free()
 		Safe_Release(Clone);
 	m_Ui_LifeClonelist.clear();
 
+	for (auto& PartClone : m_Ui_Partlist)
+		Safe_Release(PartClone);
+	m_Ui_Partlist.clear();
 
 	for (auto& BlendClone : m_Ui_LifeBlendClonelist)
 		Safe_Release(BlendClone);

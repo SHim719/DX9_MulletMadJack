@@ -72,11 +72,6 @@ void CPhone::Tick(_float fTimeDelta)
     m_pTransformCom->Set_Scale(m_fScale);
     m_pTransformCom->Rotation_XYZ(m_fRotation);
 
-
-    // kimminheok delete this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // delete membervariable m_fTestDelta too and 
-    // Synchronize_PlayerLife_Number fuction qualification change
     m_fTestDelta += fTimeDelta;
 }
 
@@ -340,12 +335,7 @@ void CPhone::Set_PhoneRotation()
 
 void CPhone::Synchronize_PlayerLife_Number()
 {
-
 	m_fLifeTime = (_uint)CPlayer_Manager::Get_Instance()->Get_PlayerHP();
-	if (m_fLifeTime > 15)
-	{
-		m_fLifeTime = 15;
-	}
 
     m_iFirstNumTextureNum = m_fLifeTime / 10;
     m_iSecondNumTextureNum = m_fLifeTime - (m_iFirstNumTextureNum * 10);

@@ -28,7 +28,17 @@ HRESULT CSans_Bone::Initialize(void* pArg)
 
     m_pAnimationCom->Play_Animation(TEXT("Bone"), 0.1f, true);
 
+    CBoxCollider::BOXCOLLISION_DESC pDesc;
+    pDesc.vScale = m_pTransformCom->Get_Scale();
+    pDesc.vOffset = { 0.f, 0.f, 0.f };
+    m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
+    (LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
+
+
+    m_pBoxCollider->Set_Active(true);
+
     m_strTag = "SansBone";
+
     return S_OK;
 }
 
@@ -45,6 +55,7 @@ void CSans_Bone::Tick(_float fTimeDelta)
     }
 
     Move(fTimeDelta);
+    m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CSans_Bone::LateTick(_float fTimeDelta)
@@ -93,6 +104,11 @@ void CSans_Bone::EndRenderState()
 
 void CSans_Bone::OnTriggerEnter(CGameObject* pOther)
 {
+    if ("Player" == pOther->Get_Tag())
+    {
+        int a = 10;
+    }
+   
 }
 
 HRESULT CSans_Bone::Add_Components()
@@ -106,19 +122,12 @@ HRESULT CSans_Bone::Add_Components()
     m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component
     (LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
 
-    CBoxCollider::BOXCOLLISION_DESC pDesc;
-    pDesc.vScale = { 0.25f, 0.25f, 0.5f };
-    pDesc.vOffset = { 0.f, 0.f, 0.f };
-
-    m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
-    (LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
-
     return S_OK;
 }
 
 HRESULT CSans_Bone::Add_Texture()
 {
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_Sans_Bone"), TEXT("Bone"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_Sans_Bone"), TEXT("Bone"))))
         return E_FAIL;
 
     return S_OK;
@@ -134,24 +143,41 @@ void CSans_Bone::Initialize_Arg(void* pArg)
     _float3 Scale = {};
     if (BonePos == SansBonePos::Left)
     {
-        Pos = { -1.f, 0.7f, 4.f };
-        Scale = { 2.f, 0.5f, 1.f };
+        Pos = { -1.5f, 0.7f, 4.f };
+        Scale = { 1.5f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
     }
     else if (BonePos == SansBonePos::Middle)
     {
-        Pos = { 1.f, 0.7f, 4.f };
-        Scale = { 2.f, 0.5f, 1.f };
+        Pos = { 0.f, 0.7f, 4.f };
+        Scale = { 1.5f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
     }
     else if (BonePos == SansBonePos::Right)
     {
-        Pos = { 1.f, 0.7f, 4.f };
-        Scale = { 2.f, 0.5f, 1.f };
+        Pos = { 1.5f, 0.7f, 4.f };
+        Scale = { 1.5f, 0.5f, 1.f };
         m_pTransformCom->Set_Position(Pos);
         m_pTransformCom->Set_Scale(Scale);
+    }
+
+    _float3 AdjustFloorPos = m_pTransformCom->Get_Pos();
+    switch (floor)
+    {
+    case 1:
+        break;
+    case 2:
+        AdjustFloorPos.y += 1.5f;
+        m_pTransformCom->Set_Position(AdjustFloorPos);
+        break;
+    case 3:
+        AdjustFloorPos.y += 3.f;
+        m_pTransformCom->Set_Position(AdjustFloorPos);
+        break;
+    default:
+        break;
     }
 }
 

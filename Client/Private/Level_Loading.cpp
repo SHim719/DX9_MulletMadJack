@@ -7,6 +7,7 @@
 #include "Elevator_Level.h"
 #include "CUi_LoadingBackGround.h"
 #include "Level_Map2.h"
+#include "CSansLevel.h"
 
 
 CLevel_Loading::CLevel_Loading(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -28,11 +29,11 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 
 	m_pLoadingBackGround = (CUi_LoadingBackGround*)m_pGameInstance->Add_Ui_PartClone
 	(L"CUi_LoadingBackGround", nullptr);
-	/* ·Îµù ·¹º§¿¡ º¸¿©ÁÖ±âÀ§ÇÑ °´Ã¼(¹è°æ, ·Îµù¹Ù, ·Îµù»óÅÂÆùÆ®)µéÀ» »ý¼ºÇÑ´Ù. */
+	/* ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼(ï¿½ï¿½ï¿½, ï¿½Îµï¿½ï¿½ï¿½, ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½. */
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 
-	/* ÀÚ¿ø·ÎµùÀ» À§ÇÑ ·Î´õ°´Ã¼¸¦ »ý¼ºÇØÁØ´Ù. */
+	/* ï¿½Ú¿ï¿½ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Î´ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½. */
 	m_pLoader = CLoader::Create(m_pGraphic_Device, eNextLevelID);
 	if (nullptr == m_pLoader)
 		return E_FAIL;	
@@ -67,6 +68,8 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 				break;
 			case LEVEL_ELEVATOR:
 				pLevel = CElevator_Level::Create(m_pGraphic_Device);
+			case LEVEL_SANS:
+				pLevel = CSansLevel::Create(m_pGraphic_Device);
 				break;
 			}
 

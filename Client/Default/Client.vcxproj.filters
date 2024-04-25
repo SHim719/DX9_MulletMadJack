@@ -517,6 +517,18 @@
     <Filter Include="02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser">
       <UniqueIdentifier>{3d35c9ce-e818-42ed-9c2d-031a1ca8934e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Levels\Sans">
+      <UniqueIdentifier>{3c7a35da-9523-4d53-9429-ba0bd2ee730c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Sans">
+      <UniqueIdentifier>{bdb3fe4a-0fe6-4407-8b13-ee53f8add30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Sans">
+      <UniqueIdentifier>{86711f82-ebd2-414b-8c57-8cb6df7bb358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\Sans\CUi_Sans_Heart">
+      <UniqueIdentifier>{24631911-c1b0-4cc0-bc4d-3b481f4179b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -987,6 +999,15 @@
     <ClInclude Include="..\Public\MathManager.h">
       <Filter>97. Manager\MathManager</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CSansLevel.h">
+      <Filter>01.Levels\Sans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Sans_TextBack.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Sans</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_Sans_Heart.h">
+      <Filter>04. UI\Ui\Sans\CUi_Sans_Heart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1417,6 +1438,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\MathManager.cpp">
       <Filter>97. Manager\MathManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSansLevel.cpp">
+      <Filter>01.Levels\Sans</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Sans_TextBack.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Sans</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Sans_Heart.cpp">
+      <Filter>04. UI\Ui\Sans\CUi_Sans_Heart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

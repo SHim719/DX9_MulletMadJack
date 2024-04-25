@@ -30,7 +30,15 @@ HRESULT CGasterLaser::Initialize(void* pArg)
 
 	m_eState = GasterLaserState::Warning;
 
-	m_strTag = "GasterLaser";
+	CBoxCollider::BOXCOLLISION_DESC pDesc;
+	pDesc.vScale = m_pTransformCom->Get_Scale();
+	pDesc.vOffset = { 0.f, 0.f, 0.f };
+	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
+	(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
+
+	m_pBoxCollider->Set_Active(false);
+
+	m_strTag = "SansLaser";
 
 	return S_OK;
 }
@@ -47,8 +55,11 @@ void CGasterLaser::Tick(_float fTimeDelta)
 		m_bDestroyed = true;
 	}
 	AdjustAlpha(fTimeDelta);
-
-	m_pTransformCom->Rotation_XYZ({0.f,0.f,45.f});
+	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	if (m_eState == GasterLaserState::Fire)
+	{
+		m_pBoxCollider->Set_Active(true);
+	}
 }
 
 void CGasterLaser::LateTick(_float fTimeDelta)
@@ -74,7 +85,7 @@ void CGasterLaser::BeginRenderState()
 	else
 	{
 		m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR,
-			D3DCOLOR_RGBA(255, 255, 255, 255));
+			D3DCOLOR_RGBA(255, 255, 255, m_iAlpha));
 	}
 }
 
@@ -121,19 +132,12 @@ HRESULT CGasterLaser::Add_Components()
 	m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component
 	(LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
 
-	CBoxCollider::BOXCOLLISION_DESC pDesc;
-	pDesc.vScale = { 0.25f, 0.25f, 0.5f };
-	pDesc.vOffset = { 0.f, 0.f, 0.f };
-
-	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
-	(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
-
 	return S_OK;
 }
 
 HRESULT CGasterLaser::Add_Texture()
 {
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_GasterLaser"), TEXT("GasterLaser"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Texture_GasterLaser"), TEXT("GasterLaser"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -197,10 +201,11 @@ void CGasterLaser::Arg_InitializeSetPosScale(SansGasterFirePos FirePos, _float3 
 void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 {
 	m_fAlphaTime += fTimeDelta;
-	if (m_fLife > 0.7)
+
+	if (m_fLife > 0.6)
 	{
 		m_eState = GasterLaserState::Warning;
-		if (m_fAlphaTime > 0.05)
+		if (m_fAlphaTime > 0.1)
 		{
 			m_fAlphaTime = 0;
 			if (m_iAlpha >= 235)
@@ -208,18 +213,20 @@ void CGasterLaser::AdjustAlpha(_float fTimeDelta)
 				m_iAlpha = 255;
 			}
 			else
-				m_iAlpha += 5;
+				m_iAlpha += 15;
 		}
 	}
-	else if (m_fLife > 0.4)
+
+	else if (m_fLife > 0.3)
 	{
 		m_eState = GasterLaserState::Fire;
 		m_iAlpha = 255;
 	}
-	else if (m_fLife <= 0.4)
+
+	else if (m_fLife <= 0.3)
 	{
 		m_eState = GasterLaserState::End;
-		if (m_fAlphaTime > 0.08)
+		if (m_fAlphaTime > 0.05)
 		{
 			m_fAlphaTime = 0;
 			if (m_iAlpha <= 50)

@@ -26,16 +26,18 @@ HRESULT CBoneRoop::Initialize(void* pArg)
 void CBoneRoop::Tick(_float fTimeDelta)
 {
 	m_fLifeTime -= fTimeDelta;
+	Roop(fTimeDelta);
 	if (m_fLifeTime < 0)
 	{
 		m_bDestroyed = true;
 	}
-	Roop(fTimeDelta);
+
 }
 
 void CBoneRoop::Roop(_float fTimeDelta)
 {
 	m_fRoopTime += fTimeDelta;
+
 	if (m_fRoopTime > m_fRoopGap)
 	{
 		m_fRoopTime = 0;
@@ -43,8 +45,11 @@ void CBoneRoop::Roop(_float fTimeDelta)
 		pArg.floor = m_iFloor;
 		pArg.fSpeed = m_fSpeed;
 		pArg.Pos = m_ePos;
-		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"SansBone", L"Prototype_CSans_Bone", &pArg);
+		m_pGameInstance->Add_Clone(LEVEL_SANS, L"Layer_Bone", L"Prototype_CSans_Bone", &pArg);
 	}
+
+	if (m_fRoopGap == 0)
+		m_bDestroyed = true;
 }
 
 CBoneRoop* CBoneRoop::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

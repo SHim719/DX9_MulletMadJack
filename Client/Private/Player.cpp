@@ -1,8 +1,10 @@
-#include "..\Public\Player.h"
+#include "Player.h"
 #include "GameInstance.h"
 #include "PlayerManager.h"
 #include "CSans_Gaster.h"
 #include "Pawn.h"
+
+#include "CUi_Sans_Heart.h"
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -11,7 +13,7 @@ CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 }
 
 CPlayer::CPlayer(const CPlayer & rhs)
-	: CGameObject{ rhs }
+	: CGameObject{rhs}
 {
 }
 
@@ -102,6 +104,10 @@ void CPlayer::Tick(_float fTimeDelta)
 void CPlayer::LateTick(_float fTimeDelta)
 {
 	Execution_Alert();
+	//if(m_bHaveWeapon == true) 
+	//	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), true);
+	//else 
+	//	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"), false);
 
 
 	ColliderCheck();
@@ -110,6 +116,7 @@ void CPlayer::LateTick(_float fTimeDelta)
 
 HRESULT CPlayer::Render()
 {
+	
 	return S_OK;
 }
 
@@ -682,6 +689,49 @@ void CPlayer::Hit(void* pArg)
 	}
 }
 
+void CPlayer::SansHit()
+{
+	auto iter = m_SansHeartVec.begin();
+	if (iter != m_SansHeartVec.end())
+	{
+		(*iter)->Set_Dead();
+		m_SansHeartVec.erase(iter);
+	}
+
+}
+
+void CPlayer::SansLevelEnterInitialize()
+{
+	CUi_Sans_Heart* Heart = nullptr;
+	m_SansHeartVec.reserve(5);
+	_float3 Pos = {600, 200, 0};
+	for (size_t i = 0; i < 5; ++i)
+	{
+		Pos.x -= 50;
+		Heart = (CUi_Sans_Heart*)(m_pGameInstance->
+			Add_Ui_PartCloneRender(L"CUi_Sans_Heart", 
+				eUiRenderType::Render_NonBlend, Pos));
+		m_SansHeartVec.emplace_back(Heart);
+	
+	}
+
+	Set_HpLimit(99);
+	Set_PlayerHP(99);
+}
+
+void CPlayer::SansLevelExitInitialize()
+{
+	for (size_t i = 0; i < m_SansHeartVec.size(); ++i)
+	{
+		Safe_Release(m_SansHeartVec[i]);
+	}
+	m_SansHeartVec.clear();
+	Set_HpLimit(15);
+	Set_PlayerHP(15);
+}
+
+
+
 void CPlayer::Process_State(_float fTimeDelta)
 {
 	switch (ePlayerState)
@@ -990,6 +1040,12 @@ void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShake
 void CPlayer::Free()
 {
 	__super::Free();
+
+	for (size_t i = 0; i < m_SansHeartVec.size(); ++i)
+	{
+		m_SansHeartVec[i]->Set_Dead();
+	}
+	m_SansHeartVec.clear();
 	Safe_Release(m_pBoxCollider);
 	Safe_Release(m_pRigidbody);
 	Safe_Release(m_pTransformCom);

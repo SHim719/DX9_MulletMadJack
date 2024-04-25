@@ -1,0 +1,37 @@
+#pragma once
+
+#include "Client_Defines.h"
+#include "Level.h"
+#include "FPS_Camera.h"
+
+BEGIN(Client)
+
+class CSansLevel final : public CLevel
+{
+private:
+	CSansLevel(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual ~CSansLevel() = default;
+
+public:
+	virtual HRESULT Initialize() override;
+	virtual void Tick(_float fTimeDelta) override;
+	virtual HRESULT Render() override;
+
+
+private:
+	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
+	HRESULT Ready_Layer_Player();
+	HRESULT Ready_Layer_Sans_Boss(const wstring& strLayerTag);
+	class CPlayer* m_pPlayer = { nullptr };
+	class CFPS_Camera* m_pFPS_Camera = { nullptr };
+	class CSans* m_pSans = { nullptr };
+
+	// delete this !!!!!!!!!!!!!!!!!!!!!!!!!!
+	_float m_itesttime = { 0 };
+
+public:
+	static CSansLevel* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	virtual void Free() override;
+};
+
+END
