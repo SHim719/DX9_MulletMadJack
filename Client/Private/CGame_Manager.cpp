@@ -191,6 +191,10 @@ void CGame_Manager::Cal_Change_Time(_float fTimeDelta)
 	}
 	else if (m_fChangeTime < 0 && m_eProgress == StageProgress::Start)
 	{
+		m_pGameInstance->Stop(L"Elevator_FX");
+		m_pGameInstance->Play(L"Gameplay", true);
+		m_pGameInstance->SetVolume(L"Gameplay", 0.5f);
+
 		Set_StageProgress(StageProgress::OnGoing);
 		m_fChangeTime = 3.5f;
 	}

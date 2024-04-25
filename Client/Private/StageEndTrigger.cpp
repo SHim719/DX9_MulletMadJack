@@ -42,6 +42,10 @@ void CStageEndTrigger::OnTriggerEnter(CGameObject* pOther)
 
 	m_pGameInstance->Play(L"Stage_End", false);
 	m_pGameInstance->SetVolume(L"Stage_End", 0.5f);
+	m_pGameInstance->Play(L"Congratulations", false);
+	m_pGameInstance->SetVolume(L"Congratulations", 0.5f);
+	m_pGameInstance->Play(L"Elevator_FX", true);
+	m_pGameInstance->SetVolume(L"Elevator_FX", 1.f);
 
 	m_bDestroyed = true;
 }

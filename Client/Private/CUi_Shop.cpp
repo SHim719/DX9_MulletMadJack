@@ -26,6 +26,9 @@ HRESULT CUi_Shop::Initialize_Prototype()
 	m_PickScale.push_back(RECT{ 460, 230, 630, 550 });
 	m_PickScale.push_back(RECT{ 650, 230, 820, 550 });
 
+	for (int i = 0; i < 3; ++i)
+		m_vecCheck_UpgradeHover.push_back(false);
+
 	return S_OK;
 }
 
@@ -336,13 +339,13 @@ void CUi_Shop::Check_Picking()
 			{
 				m_UpgradeVec[i]->Set_Focusing(true);
 
-				/*if (!m_bCheck_UpgradeHover)
+				if (!m_vecCheck_UpgradeHover[i])
 				{
 					m_pGameInstance->Play(L"Upgrade_Hover", false);
 					m_pGameInstance->SetVolume(L"Upgrade_Hover", 0.5f);
 
-					m_bCheck_UpgradeHover = true;
-				}*/
+					m_vecCheck_UpgradeHover[i] = true;
+				}
 			}
 			else
 			{
@@ -352,7 +355,7 @@ void CUi_Shop::Check_Picking()
 		else
 		{
 			m_UpgradeVec[i]->Set_Focusing(false);
-			//m_bCheck_UpgradeHover = false;
+			m_vecCheck_UpgradeHover[i] = false;
 		}
 	}
 }

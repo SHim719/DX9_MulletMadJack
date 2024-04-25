@@ -173,6 +173,10 @@ private:
 
 	_float m_fInvincibleTime = 0.f;
 	_float m_fInvincibleTimeLimit = 0.5f;
+
+	_float m_fSoundTime = 0.f;
+
+	_bool m_bJumped = false;
 };
 
 END

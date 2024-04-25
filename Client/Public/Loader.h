@@ -82,6 +82,7 @@ private:
 	HRESULT Ready_Monster_Sound();
 	HRESULT Ready_Effect_Sound();
 	HRESULT Ready_Announcer_Sound();
+	HRESULT Ready_Streamer_Sound();
 
 	void Initialize_TextManager();
 

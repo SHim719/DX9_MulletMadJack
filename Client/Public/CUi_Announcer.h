@@ -65,6 +65,7 @@ private:
 	TextType m_OldType = { TextType::Default };
 	bool m_bTextPrint = { false };
 	bool m_bTextureIndexChanged = { false };
+	_bool m_bAnnounced = { false };
 	class CGame_Manager* m_pGameManager = { nullptr };
 	class CText_BackGround* m_pTextBackGround = { nullptr };
 
