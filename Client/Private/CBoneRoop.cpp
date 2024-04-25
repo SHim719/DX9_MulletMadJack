@@ -45,7 +45,7 @@ void CBoneRoop::Roop(_float fTimeDelta)
 		pArg.floor = m_iFloor;
 		pArg.fSpeed = m_fSpeed;
 		pArg.Pos = m_ePos;
-		m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Layer_Bone", L"Prototype_CSans_Bone", &pArg);
+		m_pGameInstance->Add_Clone(LEVEL_SANS, L"Layer_Bone", L"Prototype_CSans_Bone", &pArg);
 	}
 
 	if (m_fRoopGap == 0)

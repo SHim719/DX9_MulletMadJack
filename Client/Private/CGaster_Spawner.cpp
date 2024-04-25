@@ -96,7 +96,7 @@ void CGaster_Spawner::Add_Laser(SansGasterFirePos FirePos, SansGasterPos Pos, _f
 {
 	GasterRoopArg pArg{};
 	pArg = CreateRoop(FirePos, Pos, RoopGap, Floor, LifeTime);
-	m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Layer_Gaster", L"Prototype_CGasterRoop",
+	m_pGameInstance->Add_Clone(LEVEL_SANS, L"Layer_Gaster", L"Prototype_CGasterRoop",
 		&pArg);
 }
 

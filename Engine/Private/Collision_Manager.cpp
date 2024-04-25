@@ -43,6 +43,9 @@ void CCollision_Manager::Tick()
 	Collision_Box(3, L"Bullet", L"Wall", Trigger);
 
 
+	Collision_Box(4, L"Layer_Bone", L"Player", Trigger);
+	Collision_Box(4, L"Layer_Gaster", L"Player", Trigger);
+
 
 	Intersect_Ray();
 }

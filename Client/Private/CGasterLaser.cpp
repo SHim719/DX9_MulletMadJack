@@ -30,7 +30,15 @@ HRESULT CGasterLaser::Initialize(void* pArg)
 
 	m_eState = GasterLaserState::Warning;
 
-	m_strTag = "GasterLaser";
+	CBoxCollider::BOXCOLLISION_DESC pDesc;
+	pDesc.vScale = m_pTransformCom->Get_Scale();
+	pDesc.vOffset = { 0.f, 0.f, 0.f };
+	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
+	(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
+
+	m_pBoxCollider->Set_Active(false);
+
+	m_strTag = "SansLaser";
 
 	return S_OK;
 }
@@ -47,7 +55,11 @@ void CGasterLaser::Tick(_float fTimeDelta)
 		m_bDestroyed = true;
 	}
 	AdjustAlpha(fTimeDelta);
-
+	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+	if (m_eState == GasterLaserState::Fire)
+	{
+		m_pBoxCollider->Set_Active(true);
+	}
 }
 
 void CGasterLaser::LateTick(_float fTimeDelta)
@@ -119,13 +131,6 @@ HRESULT CGasterLaser::Add_Components()
 
 	m_pAnimationCom = dynamic_cast<CAnimation*>(__super::Add_Component
 	(LEVEL_STATIC, TEXT("Animation_Default"), TEXT("Animation"), this));
-
-	CBoxCollider::BOXCOLLISION_DESC pDesc;
-	pDesc.vScale = { 0.25f, 0.25f, 0.5f };
-	pDesc.vOffset = { 0.f, 0.f, 0.f };
-
-	m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
-	(LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));
 
 	return S_OK;
 }

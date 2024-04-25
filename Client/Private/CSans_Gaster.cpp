@@ -240,7 +240,7 @@ void CSans_Gaster::SetStateLaser()
 	pArg.FirePos = m_eFirePos;
 	pArg.Pos = m_OriginPos;
 
-	m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Layer_Gaster", 
+	m_pGameInstance->Add_Clone(LEVEL_SANS, L"Layer_Gaster", 
 		TEXT("Prototype_CGasterLaser"), &pArg);
 }
 

@@ -106,7 +106,7 @@ void CBone_Spawner::Add_Bone(SansBonePos Pos, SansBoneDir Dir, _float RoopGap, _
 {
 	BoneRoopArg pArg{};
 	pArg = CreateRoop(Pos, Dir, RoopGap, Floor, Speed, LifeTime);
-	m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Layer_Bone", L"Prototype_CBoneRoop",
+	m_pGameInstance->Add_Clone(LEVEL_SANS, L"Layer_Bone", L"Prototype_CBoneRoop",
 		&pArg);
 }
 

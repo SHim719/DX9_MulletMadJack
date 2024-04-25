@@ -546,8 +546,8 @@ void CSans::Set_PatternDefaultTime()
 
 void CSans::Add_SansPattern()
 {
-    CLayer* pBoneLayer = m_pGameInstance->Find_Layer(LEVEL_GAMEPLAY, L"Layer_Bone");
-    CLayer* pGasterLayer = m_pGameInstance->Find_Layer(LEVEL_GAMEPLAY, L"Layer_Gaster");
+    CLayer* pBoneLayer = m_pGameInstance->Find_Layer(LEVEL_SANS, L"Layer_Bone");
+    CLayer* pGasterLayer = m_pGameInstance->Find_Layer(LEVEL_SANS, L"Layer_Gaster");
 
     if (pBoneLayer)
     {
