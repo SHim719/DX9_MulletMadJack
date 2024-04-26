@@ -1,7 +1,7 @@
 #pragma once
 #include "Client_Defines.h"
 #include "Pawn.h"
-
+#include "MathManager.h"
 
 
 BEGIN(Engine)
@@ -17,7 +17,7 @@ class CBeholder final : public CPawn
 public:
 
 	enum ATTACKORDER {
-		PLAYERTRACKING, ENDORDER
+		PLAYERTRACKING, FREETRACKING, ENDORDER
 	};
 
 	struct BeholderAttackOrder
@@ -25,6 +25,8 @@ public:
 		//_float3 vLook;
 		//_float fTime = 0.f;
 		ATTACKORDER eOrder;
+		_float vSpeed = 1.f;
+		_float3 vLook = { 0.f,0.f,0.f };
 		_float3		vMasterPos;
 	};
 
@@ -74,6 +76,8 @@ private:
 	_bool Check_EggShot(_float3  vHitLocalPos);
 
 	void Player_Tracking_Laser();
+	void All_Round_Laser();
+
 	void Hit(void* pArg) override;
 private:
 	STATE			m_eState = STATE_IDLE;

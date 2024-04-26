@@ -39,7 +39,7 @@ HRESULT CTrackingLaser::Initialize(void* pArg)
 
 void CTrackingLaser::PriorityTick(_float fTimeDelta)
 {
-	Prepair_Order();
+	Prepair_Order(fTimeDelta);
 }
 
 void CTrackingLaser::Tick(_float fTimeDelta)
@@ -118,12 +118,22 @@ void CTrackingLaser::OnTriggerEnter(CGameObject* pOther)
 
 }
 
-void CTrackingLaser::Prepair_Order()
+void CTrackingLaser::Prepair_Order(float _fTimeDelta)
 {
-	if (m_eState == TrackingLaserState::Warning) {
-		m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
-		m_vTargetPos.y -= 0.5f;
+	switch (m_eAttackOrder)
+	{
+	case CBeholder::ENDORDER:
+		return;
+	case CBeholder::PLAYERTRACKING:
+		PlayerTracking_Prepair();
+		return;
+	case CBeholder::FREETRACKING:
+		FreeTracking_Prepair(_fTimeDelta);
+		return;
+	default:
+		return;
 	}
+
 }
 
 void CTrackingLaser::Execute_Order()
@@ -134,6 +144,9 @@ void CTrackingLaser::Execute_Order()
 			return;
 		case CBeholder::PLAYERTRACKING:
 			PlayerTracking_Order();
+			return;
+		case CBeholder::FREETRACKING:
+			FreeTracking_Order();
 			return;
 		default:
 			return;
@@ -166,7 +179,52 @@ void CTrackingLaser::PlayerTracking_Order()
 
 	_float fLength = (_float)sqrt(pow(fabs(m_vTargetPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vTargetPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vTargetPos.z - m_vMasterPos.z), 2));
 
-	m_pTransformCom->Set_Scale({ 0.1f,fLength*1.1f, 0.1f });
+	m_pTransformCom->Set_Scale({ 0.1f,fLength, 0.1f });
+}
+
+void CTrackingLaser::PlayerTracking_Prepair()
+{
+	if (m_eState == TrackingLaserState::Warning) {
+		m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
+		m_vTargetPos.y -= 0.5f;
+	}
+}
+
+void CTrackingLaser::FreeTracking_Order()
+{
+	_float3 vDir = m_vLissajousPos + m_vMasterPos;
+
+	m_pTransformCom->Set_Position(vDir / 2);
+
+	//x¶û z Ãà acos
+
+	_float3 vAngleATAN = m_vMasterPos - m_vLissajousPos;
+	_float3 vAngleATANfabs = { fabs(vAngleATAN.x), fabs(vAngleATAN.y), fabs(vAngleATAN.z) };
+
+
+	_float fSide = (_float)sqrt(pow(vAngleATANfabs.x, 2) + pow(vAngleATANfabs.z, 2));
+
+	_float fAngleY = atan2(vAngleATAN.x, vAngleATAN.z);
+	_float fAngleX = atan2(fSide, vAngleATANfabs.y);
+
+	fAngleY = D3DXToDegree(fAngleY);
+	fAngleX = D3DXToDegree(fAngleX);
+
+	m_pTransformCom->Rotation_XYZ({ fAngleX, fAngleY, 0.f });
+	//m_pTransformCom->Set_Scale({ 1.f, 10.f, 1.f});
+
+	_float fLength = (_float)sqrt(pow(fabs(m_vLissajousPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vLissajousPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vLissajousPos.z - m_vMasterPos.z), 2));
+
+	m_pTransformCom->Set_Scale({ 0.1f,fLength , 0.1f });
+}
+
+void CTrackingLaser::FreeTracking_Prepair(float _fTimeDelta)
+{
+	if (m_eState == TrackingLaserState::Warning) {
+		_float2 fLissajousFloat = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, 10, 10, m_fLissajousLagrangianX, m_fLissajousLagrangianY, m_fLissajousPhaseDelta, m_fLissajousSpeed);
+
+		m_vLissajousPos = { m_vTargetPos.x + fLissajousFloat.x, 0.f, m_vTargetPos.z + fLissajousFloat.y };
+	}
 }
 
 HRESULT CTrackingLaser::Add_Components()
@@ -197,8 +255,23 @@ void CTrackingLaser::Initialize_Arg(void* pArg)
 	CBeholder::BeholderAttackOrder* pOrder = (CBeholder::BeholderAttackOrder*)pArg;
 
 	m_eAttackOrder = pOrder->eOrder;
-	m_vMasterPos = pOrder->vMasterPos;
-	m_vMasterPos.y -= 0.2f;
+
+	if(m_eAttackOrder == CBeholder::PLAYERTRACKING){
+		m_vMasterPos = pOrder->vMasterPos;
+		m_vMasterPos.y -= 0.2f;
+	}
+	else if (m_eAttackOrder == CBeholder::FREETRACKING) {
+		m_vMasterPos = pOrder->vMasterPos;
+		m_vTargetPos = pOrder->vLook;
+
+		m_fLissajousLagrangianX = CMath_Manager::Get_Instance()->Random_Int(1, 5);
+		m_fLissajousLagrangianY = CMath_Manager::Get_Instance()->Random_Int(1, 5);
+		m_fLissajousPhaseDelta = CMath_Manager::Get_Instance()->Random_Int(1, 4);
+		m_fLissajousSpeed = CMath_Manager::Get_Instance()->Random_Float(0.5, 1);
+		//m_fLissajousSpeed = CMath_Manager::Get_Instance()->Random_Int(1, 5);
+
+
+	}
 	/*TrackingLaserArg* Arg = (TrackingLaserArg*)pArg;
 	SansGasterFirePos FirePos = Arg->FirePos;*/
 	Arg_InitializeSetPosScale();
@@ -214,6 +287,8 @@ void CTrackingLaser::Initialize_Order()
 			m_pTarget = CPlayer_Manager::Get_Instance()->Get_Player();
 			if(m_eState == TrackingLaserState::Warning)
 				m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
+			return;
+		case CBeholder::FREETRACKING:
 			return;
 		default:
 			return;

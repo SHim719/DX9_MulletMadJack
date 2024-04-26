@@ -19,6 +19,10 @@ HRESULT CLandMine::Initialize_Prototype()
 
 HRESULT CLandMine::Initialize(void* pArg)
 {
+
+
+
+
 	if (E_FAIL == Add_Components())
 		return E_FAIL;
 

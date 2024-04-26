@@ -6,8 +6,6 @@
 #include "Enemy_Corpse.h"
 #include "FPS_Camera.h"
 
-
-
 CBeholder::CBeholder(LPDIRECT3DDEVICE9 pGraphic_Device)
     : CPawn{ pGraphic_Device }
 {
@@ -67,12 +65,9 @@ void CBeholder::Tick(_float fTimeDelta)
     m_pAnimationCom->Update(fTimeDelta);
 
     if (m_pGameInstance->GetKeyDown(eKeyCode::Enter)){
-
-        BeholderAttackOrder LaserOrder;
-        LaserOrder.eOrder = PLAYERTRACKING;
-        LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
-        CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
-
+        //Player_Tracking_Laser();
+    	All_Round_Laser();
+    
     }
 
 
@@ -98,7 +93,7 @@ HRESULT CBeholder::Render()
         return E_FAIL;
 
     m_pAnimationCom->Render();
-    Player_Tracking_Laser();
+
     if (FAILED(Begin_RenderState()))
         return E_FAIL;
 
@@ -236,9 +231,27 @@ _bool CBeholder::Check_EggShot(_float3 vHitLocalPos)
 void CBeholder::Player_Tracking_Laser()
 {
 
-    m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
-    m_vTargetRecentPos = m_pTarget->Get_Transform()->Get_Pos();
+    BeholderAttackOrder LaserOrder;
+    LaserOrder.eOrder = PLAYERTRACKING;
+    LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
+    CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
  
+}
+
+void CBeholder::All_Round_Laser()
+{
+    for(int i = 0; i < 30; ++i){
+    _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-15,15);
+    _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-5,25);
+
+    BeholderAttackOrder LaserOrder;
+    LaserOrder.eOrder = FREETRACKING;
+    LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
+    LaserOrder.vLook = { fRandomX, 0.f, fRandomZ };
+
+    CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+    }
+
 }
 
 void CBeholder::Hit(void* pArg)

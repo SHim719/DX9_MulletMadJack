@@ -28,9 +28,6 @@
     <Filter Include="97. Manager">
       <UniqueIdentifier>{917e7d2a-74dc-4341-a9d3-99dd0cb1e949}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97. Manager\PlayerManager">
-      <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
-    </Filter>
     <Filter Include="97. Manager\MapLoader">
       <UniqueIdentifier>{16581d3a-7611-4303-ab6c-61c29d5407cc}</UniqueIdentifier>
     </Filter>
@@ -543,6 +540,9 @@
     </Filter>
     <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser">
       <UniqueIdentifier>{28262f6b-923a-41db-8b62-da2228904c94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\PlayerManager">
+      <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

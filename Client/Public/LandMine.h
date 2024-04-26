@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "GameObject.h"
+#include "Beholder.h"
 
 BEGIN(Engine)
 class CVIBuffer_Rect;
