@@ -454,7 +454,7 @@ HRESULT CGameInstance::SetVolume(const wstring& strSoundTag, const _float& fVolu
 _bool CGameInstance::Is_Playing(const wstring& strSoundTag)
 {
 	if (nullptr == m_pSound_Manager)
-		return E_FAIL;
+		return false;
 
 	return m_pSound_Manager->Is_Playing(strSoundTag);
 }

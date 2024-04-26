@@ -86,8 +86,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
-	/*static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
-	(LEVEL_GAMEPLAY2);*/
+	static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
+	(LEVEL_GAMEPLAY2);
 	
 	return S_OK;
 }
