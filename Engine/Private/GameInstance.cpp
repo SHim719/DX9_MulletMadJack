@@ -451,6 +451,13 @@ HRESULT CGameInstance::SetVolume(const wstring& strSoundTag, const _float& fVolu
 
 	return m_pSound_Manager->SetVolume(strSoundTag, fVolume);
 }
+_bool CGameInstance::Is_Playing(const wstring& strSoundTag)
+{
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+
+	return m_pSound_Manager->Is_Playing(strSoundTag);
+}
 _bool CGameInstance::In_WorldFrustum(_float3 vWorldPos, _float fRadius)
 {
 	return m_pFrustum->In_WorldFrustum(vWorldPos, fRadius);

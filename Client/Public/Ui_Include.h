@@ -44,3 +44,4 @@
 #include "CUi_Sans_TextBack.h"
 #include "CUi_Sans_Heart.h"
 #include "CUi_Dead_FadeOut.h"
+#include "UI_Dialogue.h"

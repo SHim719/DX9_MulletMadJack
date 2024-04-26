@@ -4,7 +4,11 @@
 #include "CSans_Gaster.h"
 #include "Pawn.h"
 
+#include "Ui_Include.h"
 #include "CUi_Sans_Heart.h"
+#include "DialogueManager.h"
+
+
 
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -90,7 +94,6 @@ void CPlayer::Tick(_float fTimeDelta)
 	}
 
 
-
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pTransformCom->Head_Roll(fTimeDelta, fHeadTilt);
 	//cout << fHeadTilt << endl;
@@ -140,6 +143,11 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKey(eKeyCode::Four)) {
 		Set_TimeDivide(4.f);
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("Camera_BulletTime"), true);
+	}
+
+	if (m_pGameInstance->GetKeyDown(eKeyCode::M))
+	{
+		CDialogue_Manager::Get_Instance()->Start_Dialogue(DialogueEvent::FirstDialogue);
 	}
 
 	if (GetKeyState('Z') & 0x8000)
@@ -510,6 +518,9 @@ void CPlayer::Shot()
 {
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 	{
+		if (OPENING == eAnimationType || RELOAD == eAnimationType)
+			return;
+
 		_float3 fMouseNDC_Near = _float3(_float(g_iWinSizeX / 2) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY / 2) * 2.0f / g_iWinSizeY + 1, 0.f);
 		_float3 fMouseNDC_Far = _float3(_float(g_iWinSizeX / 2) * 2.0f / g_iWinSizeX - 1, -_float(g_iWinSizeY / 2) * 2.0f / g_iWinSizeY + 1, 1.f);
 

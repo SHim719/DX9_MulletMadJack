@@ -67,6 +67,7 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 			if (m_bTempDisableEnd == true && m_bActionIDLE == true) {
 				Set_DisableEnd(false);
 				Set_PlayerHP_Add(15.f);
+				m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_DrinkSoda"), false);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_DrinkSoda"), true);
 				m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Drink"),	   true);
 				m_bActionIDLE = false;

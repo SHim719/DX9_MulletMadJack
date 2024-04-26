@@ -212,6 +212,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\CUi_LoadingBackGround.h" />
     <ClInclude Include="..\Public\CUi_Sans_Heart.h" />
     <ClInclude Include="..\Public\CUi_Sans_TextBack.h" />
+    <ClInclude Include="..\Public\DialogueManager.h" />
     <ClInclude Include="..\Public\Drink.h" />
     <ClInclude Include="..\Public\CUi_Reload.h" />
     <ClInclude Include="..\Public\Drone_Monster.h">
@@ -298,6 +299,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Terrain_Collider.h" />
     <ClInclude Include="..\Public\TrackingLaser.h" />
     <ClInclude Include="..\Public\Trigger_Headers.h" />
+    <ClInclude Include="..\Public\UI_Dialogue.h" />
     <ClInclude Include="..\Public\Ventilador.h" />
     <ClInclude Include="..\Public\VIBuffer_BoxObj.h" />
     <ClInclude Include="..\Public\VIBuffer_Bullet.h" />
@@ -366,6 +368,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\CUi_Dead_FadeOut.cpp" />
     <ClCompile Include="..\Private\CUi_Sans_Heart.cpp" />
     <ClCompile Include="..\Private\CUi_Sans_TextBack.cpp" />
+    <ClCompile Include="..\Private\DialogueManager.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\Private\ElevatorLevelManager.cpp" />
     <ClCompile Include="..\Private\Elevator_L.cpp" />
@@ -461,6 +464,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\StageEndTrigger.cpp" />
     <ClCompile Include="..\Private\Terrain_Collider.cpp" />
     <ClCompile Include="..\Private\TrackingLaser.cpp" />
+    <ClCompile Include="..\Private\UI_Dialogue.cpp" />
     <ClCompile Include="..\Private\Ventilador.cpp" />
     <ClCompile Include="..\Private\VIBuffer_BoxObj.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Bullet.cpp" />

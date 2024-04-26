@@ -18,6 +18,7 @@
 #include <ctime>
 #include <random>
 #include <unordered_map>
+#include <functional>
 
 #include "Engine_Struct.h"
 #include "Engine_Function.h"

@@ -526,6 +526,12 @@
     <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DeadFadeOut">
       <UniqueIdentifier>{4e107ad0-4fc4-4bfd-9a43-981795677315}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Dialogue">
+      <UniqueIdentifier>{a667a470-6229-443b-9645-ea026c3ebbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\DialogueManager">
+      <UniqueIdentifier>{6f938b0a-bb9d-4843-aebd-3b824c3b3deb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1003,6 +1009,11 @@
     <ClInclude Include="..\Public\TrackingLaser.h" />
     <ClInclude Include="..\Public\CUi_Dead_FadeOut.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DeadFadeOut</Filter>
+    <ClInclude Include="..\Public\UI_Dialogue.h">
+      <Filter>04. UI\Ui\CUi_Active\Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\DialogueManager.h">
+      <Filter>97. Manager\DialogueManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1442,6 +1453,11 @@
     <ClCompile Include="..\Private\TrackingLaser.cpp" />
     <ClCompile Include="..\Private\CUi_Dead_FadeOut.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DeadFadeOut</Filter>
+    <ClCompile Include="..\Private\UI_Dialogue.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\DialogueManager.cpp">
+      <Filter>97. Manager\DialogueManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

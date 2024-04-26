@@ -996,6 +996,11 @@ HRESULT CLoader::Ready_TextUi_Texture()
 			L"../Bin/Resources/Textures/Ui/Text/SansTextBackGround.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Dialogue_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Dialogue/Dialogue.png"))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1380,6 +1385,10 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 		CUi_Dead_FadeOut::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("UI_Dialogue"),
+		eUiRenderType::Render_Blend,
+		CUI_Dialogue::Create(m_pGraphic_Device))))
+		return E_FAIL;
 	return S_OK;
 }
 
@@ -1665,6 +1674,14 @@ HRESULT CLoader::Ready_Announcer_Sound()
 HRESULT CLoader::Ready_Streamer_Sound()
 {
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Streamer/Thank_You.wav", L"Streamer_Thank_You")))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue0.wav", L"FirstDialogue0")))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue1.wav", L"FirstDialogue1")))
+		return E_FAIL;
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue2.wav", L"FirstDialogue2")))
 		return E_FAIL;
 
 	return S_OK;

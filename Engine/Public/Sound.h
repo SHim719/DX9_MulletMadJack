@@ -12,6 +12,7 @@ public:
 
     void Play(const bool& _bLoop);
     void Stop();
+    _bool Is_Playing();
     void SetVolume(const float& _fVolume);
     void SetLoop(const bool& _bLoop) { m_bLoop = _bLoop; }
 
