@@ -338,6 +338,9 @@ void CWhite_Suit_Monster::Hit(void* pArg)
         {
             m_bDestroyed = true;
 
+            m_pGameInstance->Play(L"White_Suit_Death", false);
+            m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
+
             CEnemy_Corpse::ENEMYCORPSE_DESC desc;
             desc.eType = WHITE_SUIT;
             desc.isTop = true;
@@ -525,7 +528,7 @@ void CWhite_Suit_Monster::State_Jump()
 
 void CWhite_Suit_Monster::State_Execution()
 {
-  
+
 }
 
 void CWhite_Suit_Monster::State_Fly(_float fTimeDelta)
@@ -635,6 +638,7 @@ void CWhite_Suit_Monster::SetState_Pushed(_float3 vLook)
 {
     if (STATE_DEATH == m_eState || STATE_EXECUTION == m_eState
         || STATE_FLY == m_eState || STATE_FLYDEATH == m_eState)
+        return;
 
     m_eState = STATE_PUSHED;
     
@@ -646,7 +650,7 @@ void CWhite_Suit_Monster::SetState_Pushed(_float3 vLook)
     m_pRigidbody->Set_Velocity(vLook * 15.f);
     m_pRigidbody->Set_Friction(5.f);
 
-    m_pAnimationCom->Play_Animation(L"Pushed", 150200.f, false);
+    m_pAnimationCom->Play_Animation(L"Pushed", 100000.f, false);
 }
 
 void CWhite_Suit_Monster::SetState_Shot()

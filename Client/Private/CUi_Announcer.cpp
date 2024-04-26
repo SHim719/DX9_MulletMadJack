@@ -250,13 +250,21 @@ void CUi_Announcer::TextRender()
 			Set_PrintTextNumber(TextType::ShopEnd, m_iPrintTextNumber);
 			m_pTextBackGround->Render();
 
-			if (!m_bAnnounced)
+			/*if (!CGame_Manager::Get_Instance()->Get_Announced())
+			{
+				m_pGameInstance->Play(L"Streamer_Thank_You", false);
+				m_pGameInstance->SetVolume(L"Streamer_Thank_You", 1.f);
+
+				CGame_Manager::Get_Instance()->Set_Announced(true);
+			}*/
+
+			/*if (!m_bAnnounced)
 			{
 				m_pGameInstance->Play(L"Streamer_Thank_You", false);
 				m_pGameInstance->SetVolume(L"Streamer_Thank_You", 1.f);
 
 				m_bAnnounced = true;
-			}
+			}*/
 
 			m_pGameManager->Print_Text(TextType::ShopEnd,
 				m_pGameManager->Get_TextNumber(TextType::ShopEnd));

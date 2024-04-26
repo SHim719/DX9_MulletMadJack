@@ -20,6 +20,7 @@ CLevel_Map2::CLevel_Map2(LPDIRECT3DDEVICE9 pGraphic_Device)
 HRESULT CLevel_Map2::Initialize()
 {
 	m_iLevelID = LEVEL_GAMEPLAY2;
+	m_pGameInstance->Stop(L"Elevator_FX");
 	m_pGameInstance->Play(L"Gameplay2", true);
 	m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
 

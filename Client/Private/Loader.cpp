@@ -1495,8 +1495,6 @@ HRESULT CLoader::Ready_BGM()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Stage2.wav", L"Gameplay2")))
 		return E_FAIL;
 
-	
-
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Elevator_FX.wav", L"Elevator_FX")))
 		return E_FAIL;
 
@@ -1530,6 +1528,18 @@ HRESULT CLoader::Ready_Player_Weapon_Sound()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Cutting_Flesh.wav", L"Katana_Cutting_Flesh")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Draw_Katana.wav", L"Katana_Opening")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Air0.wav", L"Katana_Air0")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Air1.wav", L"Katana_Air1")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/katana/Katana_Air2.wav", L"Katana_Air2")))
 		return E_FAIL;
 
 	return S_OK;
@@ -1568,6 +1578,9 @@ HRESULT CLoader::Ready_Player_Sound()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Finish_Special0.wav", L"Player_Execution_Weapon")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Sliding.wav", L"Player_Sliding")))
 		return E_FAIL;
 
 	return S_OK;

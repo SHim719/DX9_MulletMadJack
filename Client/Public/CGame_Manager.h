@@ -52,11 +52,13 @@ private:
 
 public:
 	void Set_StageProgress(StageProgress Progress) { m_eProgress = Progress; }
+	void Set_Announced(_bool Announced) { m_bAnnounced = Announced; }
 
 public:
 	void Player_UpGrade(void* pArg);
 	_float Get_StageClearTime() { return m_fStageClearTime; }
 	StageProgress Get_StageProgress() const { return m_eProgress; }
+	_bool Get_Announced() { return m_bAnnounced; }
 
 public:
 	HRESULT Ready_Prototype_GameObjects();
@@ -101,6 +103,7 @@ private:
 	_float m_fShopTime = {0.5f};
 	_float m_fStageClearTime = { 0 };
 	_float m_fChangeTime = { 3.5f };
+	_bool m_bAnnounced = { false };
 
 	LEVEL m_eToChangeLevel;
 private:

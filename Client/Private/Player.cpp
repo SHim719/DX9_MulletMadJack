@@ -228,9 +228,21 @@ void CPlayer::Key_Input(_float fTimeDelta)
 		m_pGameInstance->Play(L"Player_Weapon_Change", false);
 		m_pGameInstance->SetVolume(L"Player_Weapon_Change", 1.f);
 
-		if(eWeaponType == PISTOL) CPlayer_Manager::Get_Instance()->WeaponChange(SHOTGUN);
-		else if (eWeaponType == SHOTGUN) CPlayer_Manager::Get_Instance()->WeaponChange(KATANA);
-		else CPlayer_Manager::Get_Instance()->WeaponChange(PISTOL);
+		if (eWeaponType == PISTOL)
+		{
+			CPlayer_Manager::Get_Instance()->WeaponChange(SHOTGUN);
+		}
+		else if (eWeaponType == SHOTGUN)
+		{
+			m_pGameInstance->Play(L"Katana_Opening", false);
+			m_pGameInstance->SetVolume(L"Katana_Opening", 1.f);
+
+			CPlayer_Manager::Get_Instance()->WeaponChange(KATANA);
+		}
+		else
+		{
+			CPlayer_Manager::Get_Instance()->WeaponChange(PISTOL);
+		}
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::B))
@@ -433,8 +445,26 @@ void CPlayer::Slash_Katana(){
 	Camera_Shake_Order(600000.f, 0.4f);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Effect"), true);
 
-	m_pGameInstance->Play(L"Katana_Slash", false);
-	m_pGameInstance->SetVolume(L"Katana_Slash", 1.f);
+	/*m_pGameInstance->Play(L"Katana_Slash", false);
+	m_pGameInstance->SetVolume(L"Katana_Slash", 1.f);*/
+
+	int Katana_TextureIndex = m_pGameInstance->Get_Ui_ActiveTextureIndex(TEXT("Ui_Katana_Slash"));
+
+	if (Katana_TextureIndex == 0)
+	{
+		m_pGameInstance->Play(L"Katana_Air0", false);
+		m_pGameInstance->SetVolume(L"Katana_Air0", 1.f);
+	}
+	else if (Katana_TextureIndex == 1)
+	{
+		m_pGameInstance->Play(L"Katana_Air1", false);
+		m_pGameInstance->SetVolume(L"Katana_Air1", 1.f);
+	}
+	else if (Katana_TextureIndex == 2)
+	{
+		m_pGameInstance->Play(L"Katana_Air2", false);
+		m_pGameInstance->SetVolume(L"Katana_Air2", 1.f);
+	}
 }
 
 void CPlayer::Active_Reset()
@@ -607,6 +637,9 @@ void CPlayer::ColliderUpDown()
 		if (SLOPE_STATE == ePlayerState) {
 			m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Slide"), false);
 			SetState_Idle();
+
+			m_pGameInstance->Stop(L"Player_Sliding");
+			m_bSliding = false;
 		}
 
 		return;
@@ -990,6 +1023,14 @@ void CPlayer::SetState_AirDash()
 void CPlayer::SetState_Slope()
 {
 	ePlayerState = SLOPE_STATE;
+	
+	if (!m_bSliding)
+	{
+		m_pGameInstance->Play(L"Player_Sliding", true);
+		m_pGameInstance->SetVolume(L"Player_Sliding", 1.f);
+
+		m_bSliding = true;
+	}
 
 	_float3 vSlopeLook = m_pSlopeTransform->Get_Look();
 	vSlopeLook.x = -vSlopeLook.x;

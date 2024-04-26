@@ -246,6 +246,8 @@ void CChainsaw_Monster::Hit(void* pArg)
 		{
 			m_bDestroyed = true;
 
+			m_pGameInstance->Play(L"Chainsaw_Death", false);
+			m_pGameInstance->SetVolume(L"Chainsaw_Death", 0.3f);
 
 			CEnemy_Corpse::ENEMYCORPSE_DESC desc;
 			desc.eType = CHAINSAW;

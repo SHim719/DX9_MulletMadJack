@@ -22,8 +22,9 @@ CElevator_Level::CElevator_Level(LPDIRECT3DDEVICE9 pGraphic_Device)
 HRESULT CElevator_Level::Initialize()
 {
 	m_iLevelID = LEVEL_ELEVATOR;
-	//m_pGameInstance->Play(L"Gameplay", true);
-	//m_pGameInstance->SetVolume(L"Gameplay", 0.5f);
+	m_pGameInstance->Stop(L"Elevator_FX");
+	m_pGameInstance->Play(L"Gameplay2", true);
+	m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
 
 	CElevatorLevelManager::Get_Instance()->Initialize();
 
