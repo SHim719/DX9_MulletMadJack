@@ -210,12 +210,12 @@ void CChainsaw_Monster::Hit(void* pArg)
 	case CPawn::BODY_SHOT:
 		if (bHitByKatana)
 		{
-			/*m_pGameInstance->Play(L"Chainsaw_Slashed", false);
-			m_pGameInstance->SetVolume(L"Chainsaw_Slashed", 1.f);
-			m_pGameInstance->Play(L"Chainsaw_Electrified", false);
-			m_pGameInstance->SetVolume(L"Chainsaw_Electrified", 1.f);
-			m_pGameInstance->Play(L"Katana_Hit_Metal", false);
-			m_pGameInstance->SetVolume(L"Katana_Hit_Metal", 1.f);*/
+			//m_pGameInstance->Play(L"Chainsaw_Slashed", false);
+			//m_pGameInstance->SetVolume(L"Chainsaw_Slashed", 1.f);
+			//m_pGameInstance->Play(L"Chainsaw_Electrified", false);
+			//m_pGameInstance->SetVolume(L"Chainsaw_Electrified", 1.f);
+			//m_pGameInstance->Play(L"Katana_Hit_Metal", false);
+			//m_pGameInstance->SetVolume(L"Katana_Hit_Metal", 1.f);
 
 			m_pGameInstance->Play(L"Katana_Cutting_Flesh", false);
 			m_pGameInstance->SetVolume(L"Katana_Cutting_Flesh", 0.5f);

@@ -19,6 +19,13 @@ void CSound::Stop()
 	m_pChannel->stop();
 }
 
+_bool CSound::Is_Playing()
+{
+	_bool isPlaying;
+	m_pChannel->isPlaying(&isPlaying);
+	return isPlaying;
+}
+
 void CSound::SetVolume(const float& _fVolume)
 {
 	m_pChannel->setVolume(_fVolume);
@@ -44,7 +51,6 @@ CSound* CSound::Create(CFMOD_Core* pFMOD_Core, const string& strPath)
 		MSG_BOX(TEXT("Failed to Created : CSound"));
 		Safe_Release(pInstance);
 	}
-
 	return pInstance;
 }
 

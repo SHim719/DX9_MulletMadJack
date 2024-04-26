@@ -243,6 +243,7 @@ void CGame_Manager::Level_Changing()
 		CPlayer_Manager::Get_Instance()->Get_Player()->Active_Reset();
 		m_pGameInstance->Change_Level(pLevel);
 		m_pFadeInOutUI->Set_FadeIn(350.f);
+		m_pGameInstance->Stop(L"Elevator_FX");
 		pLevel->Initialize();
 		Start();
 		m_fStageClearTime = 0.f;

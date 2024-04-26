@@ -511,15 +511,6 @@
     <Filter Include="00. MainApp">
       <UniqueIdentifier>{edc3c5d1-ea6b-4e29-b34d-540396673e0f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Beholder">
-      <UniqueIdentifier>{42e6d976-e968-44fd-89e4-338766ae84f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser">
-      <UniqueIdentifier>{3d35c9ce-e818-42ed-9c2d-031a1ca8934e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Levels\Sans">
-      <UniqueIdentifier>{3c7a35da-9523-4d53-9429-ba0bd2ee730c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\CUi_Sans">
       <UniqueIdentifier>{bdb3fe4a-0fe6-4407-8b13-ee53f8add30d}</UniqueIdentifier>
     </Filter>
@@ -528,6 +519,12 @@
     </Filter>
     <Filter Include="04. UI\Ui\Sans\CUi_Sans_Heart">
       <UniqueIdentifier>{24631911-c1b0-4cc0-bc4d-3b481f4179b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Dialogue">
+      <UniqueIdentifier>{a667a470-6229-443b-9645-ea026c3ebbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\DialogueManager">
+      <UniqueIdentifier>{6f938b0a-bb9d-4843-aebd-3b824c3b3deb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -990,23 +987,23 @@
     <ClInclude Include="..\Public\Katana_Opening.h">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Beholder.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\TrackingLaser.h">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser</Filter>
-    </ClInclude>
     <ClInclude Include="..\Public\MathManager.h">
       <Filter>97. Manager\MathManager</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\CSansLevel.h">
-      <Filter>01.Levels\Sans</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Sans_TextBack.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Sans</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Sans_Heart.h">
       <Filter>04. UI\Ui\Sans\CUi_Sans_Heart</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Beholder.h" />
+    <ClInclude Include="..\Public\CSansLevel.h" />
+    <ClInclude Include="..\Public\UI_Dialogue.h">
+      <Filter>04. UI\Ui\CUi_Active\Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\TrackingLaser.h" />
+    <ClInclude Include="..\Public\DialogueManager.h">
+      <Filter>97. Manager\DialogueManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1430,23 +1427,23 @@
     <ClCompile Include="..\Private\Katana_Opening.cpp">
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Beholder.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\TrackingLaser.cpp">
-      <Filter>02.GameObjects\04. Enemy\Pawns\Beholder\BeholderLaser</Filter>
-    </ClCompile>
     <ClCompile Include="..\Private\MathManager.cpp">
       <Filter>97. Manager\MathManager</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\CSansLevel.cpp">
-      <Filter>01.Levels\Sans</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Sans_TextBack.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Sans</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Sans_Heart.cpp">
       <Filter>04. UI\Ui\Sans\CUi_Sans_Heart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Beholder.cpp" />
+    <ClCompile Include="..\Private\CSansLevel.cpp" />
+    <ClCompile Include="..\Private\UI_Dialogue.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\TrackingLaser.cpp" />
+    <ClCompile Include="..\Private\DialogueManager.cpp">
+      <Filter>97. Manager\DialogueManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
