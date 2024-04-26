@@ -73,6 +73,7 @@ private:
 	_float m_fLissajousTime = 0.f;
 
 	_int   m_iRandomSlash = 0;
+
 public:
 	virtual void Free() override;
 };

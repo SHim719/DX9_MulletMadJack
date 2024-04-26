@@ -224,6 +224,9 @@ void CUi_Shop::Change_Progress(_float fTimeDelta)
 		CGame_Manager::Get_Instance()->
 			Set_StageProgress(StageProgress::Changing);
 		m_bActive = false;
+		
+		/*if (CGame_Manager::Get_Instance()->Get_Announced())
+			CGame_Manager::Get_Instance()->Set_Announced(false);*/
 	}
 }
 
@@ -368,6 +371,8 @@ bool CUi_Shop::Player_Select(_uint iNumber)
 		m_eProgress = ShopProgress::Select;
 		m_pGameInstance->Play(L"Upgrade_Select", false);
 		m_pGameInstance->SetVolume(L"Upgrade_Select", 0.5f);
+		m_pGameInstance->Play(L"Streamer_Thank_You", false);
+		m_pGameInstance->SetVolume(L"Streamer_Thank_You", 1.f);
 
 		CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::ShopEnd);
 		m_fChangeProgressTime = 1;

@@ -288,6 +288,9 @@ void CWhite_Suit_Slope::Hit(void* pArg)
         {
             m_bDestroyed = true;
 
+            m_pGameInstance->Play(L"White_Suit_Death", false);
+            m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
+
             CEnemy_Corpse::ENEMYCORPSE_DESC desc;
             desc.eType = WHITE_SUIT;
             desc.isTop = true;
@@ -478,6 +481,9 @@ void CWhite_Suit_Slope::SetState_Fly(_float3 vLook)
     m_pBoxCollider->Set_Active(true);
 
     m_eState = STATE_FLY;
+
+    m_pGameInstance->Play(L"White_Suit_Death", false);
+    m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
 
     m_pAnimationCom->Play_Animation(L"Death_Fly", 0.1f, false);
 
