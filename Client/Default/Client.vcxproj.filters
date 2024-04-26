@@ -1014,6 +1014,7 @@
     <ClInclude Include="..\Public\TrackingLaser.h" />
     <ClInclude Include="..\Public\CUi_Dead_FadeOut.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DeadFadeOut</Filter>
+    </ClInclude>
     <ClInclude Include="..\Public\UI_Dialogue.h">
       <Filter>04. UI\Ui\CUi_Active\Dialogue</Filter>
     </ClInclude>
