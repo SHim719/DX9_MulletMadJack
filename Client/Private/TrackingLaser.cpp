@@ -49,6 +49,9 @@ void CTrackingLaser::Tick(_float fTimeDelta)
 	m_fLife -= fTimeDelta;
 	if (m_fLife < 0)
 	{
+		CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine");
+		pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vTargetPos);
+
 		m_bDestroyed = true;
 	}
 	AdjustAlpha(fTimeDelta);
@@ -117,9 +120,10 @@ void CTrackingLaser::OnTriggerEnter(CGameObject* pOther)
 
 void CTrackingLaser::Prepair_Order()
 {
-
-	m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
-	m_vTargetPos.y -= 0.5f;
+	if (m_eState == TrackingLaserState::Warning) {
+		m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
+		m_vTargetPos.y -= 0.5f;
+	}
 }
 
 void CTrackingLaser::Execute_Order()
@@ -162,7 +166,7 @@ void CTrackingLaser::PlayerTracking_Order()
 
 	_float fLength = (_float)sqrt(pow(fabs(m_vTargetPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vTargetPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vTargetPos.z - m_vMasterPos.z), 2));
 
-	m_pTransformCom->Set_Scale({ 0.1f,fLength, 0.1f });
+	m_pTransformCom->Set_Scale({ 0.1f,fLength*1.1f, 0.1f });
 }
 
 HRESULT CTrackingLaser::Add_Components()
@@ -182,7 +186,7 @@ HRESULT CTrackingLaser::Add_Components()
 
 HRESULT CTrackingLaser::Add_Texture()
 {
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Texture_GasterLaser"), TEXT("TrackingLaser"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Texture_TrackingLaser"), TEXT("TrackingLaser"))))
 		return E_FAIL;
 
 	return S_OK;
@@ -208,7 +212,8 @@ void CTrackingLaser::Initialize_Order()
 			return;
 		case CBeholder::PLAYERTRACKING:
 			m_pTarget = CPlayer_Manager::Get_Instance()->Get_Player();
-			m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
+			if(m_eState == TrackingLaserState::Warning)
+				m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
 			return;
 		default:
 			return;
@@ -239,7 +244,7 @@ void CTrackingLaser::Set_Collider()
 void CTrackingLaser::AdjustAlpha(_float fTimeDelta)
 {
 	m_fAlphaTime += fTimeDelta;
-	if (m_fLife > 0.7)
+	if (m_fLife > 0.5)
 	{
 		m_eState = TrackingLaserState::Warning;
 		if (m_fAlphaTime > 0.05)
@@ -253,12 +258,12 @@ void CTrackingLaser::AdjustAlpha(_float fTimeDelta)
 				m_iAlpha += 5;
 		}
 	}
-	else if (m_fLife > 0.4)
+	else if (m_fLife > 0.2)
 	{
 		m_eState = TrackingLaserState::Fire;
 		m_iAlpha = 255;
 	}
-	else if (m_fLife <= 0.4)
+	else if (m_fLife <= 0.1)
 	{
 		m_eState = TrackingLaserState::End;
 		if (m_fAlphaTime > 0.08)

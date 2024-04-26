@@ -52,16 +52,13 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	//if(FAILED(Ready_Layer_Beholder(L"Monster")))
-		//return E_FAIL;
-
 	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
 	//	return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
-	//::Get_Instance()->Load(L"../Bin/Resources/DataFiles/TestMh.dat", (LEVEL)m_iLevelID);
+	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/TestMh.dat", (LEVEL)m_iLevelID);
 
 	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
 		//return E_FAIL;
@@ -89,8 +86,8 @@ HRESULT CLevel_GamePlay::Initialize()
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
-	static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
-	(LEVEL_GAMEPLAY2);
+	/*static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
+	(LEVEL_GAMEPLAY2);*/
 	
 	return S_OK;
 }

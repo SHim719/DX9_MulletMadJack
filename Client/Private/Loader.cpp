@@ -62,6 +62,9 @@ unsigned int CLoader::Loading()
 	case LEVEL_SANS:
 		hr = Loading_For_Sans_Level();
 		break;
+	case LEVEL_BOSS:
+		hr = Loading_For_Boss_Level();
+		break;
 	}
 
 	LeaveCriticalSection(&m_CriticalSection);
@@ -153,6 +156,66 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	m_isFinished = true;
 
 	return S_OK;
+}
+
+HRESULT CLoader::Loading_For_Boss_Level()
+{
+	if (FAILED(Loading_For_Map_Texture()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Boss_Texture()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Monster_Prototype()))
+		return E_FAIL;
+
+	if (FAILED(Ready_MapObject_Prototype()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Ui()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Effect_Texture()))
+		return E_FAIL;
+
+	if(FAILED(Ready_Effect_Prototype()))
+		return E_FAIL;
+
+
+#pragma region Sound
+	if (FAILED(Ready_BGM()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Player_Weapon_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Player_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Monster_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Effect_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Announcer_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Streamer_Sound()))
+		return E_FAIL;
+#pragma endregion
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
+		return E_FAIL;
+
+	lstrcpy(m_szLoadingText, TEXT("End."));
+	m_fProgress = 1.f;
+
+	m_isFinished = true;
+
+	return S_OK;
+
 }
 
 HRESULT CLoader::Loading_For_Sans_Level()
@@ -385,16 +448,20 @@ HRESULT CLoader::Loading_For_Sans_Texture()
 
 HRESULT CLoader::Loading_For_Boss_Texture()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Beholder_Idle_Texture"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Beholder_Idle_Texture"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			TEXT("../Bin/Resources/Textures/Boss/Idle/BEACON%d.png"), 2))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("Beholder_Damaged_Texture"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Beholder_Damaged_Texture"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			TEXT("../Bin/Resources/Textures/Boss/Damaged/BEACON%d.png"), 2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"LandMine_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/LandMine/LandMine.png"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -461,6 +528,10 @@ HRESULT CLoader::Ready_MapObject_Prototype()
 		CStageEndTrigger::Create(m_pGraphic_Device))))
 		return E_FAIL;
 	
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_LandMine"),
+		CLandMine::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

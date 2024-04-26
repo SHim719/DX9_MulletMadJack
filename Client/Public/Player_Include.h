@@ -46,10 +46,11 @@
 #pragma region Boss
 
 #include "Beholder.h"
+#include "TrackingLaser.h"
+#include "LandMine.h"
 
 #pragma endregion
 
-#include "TrackingLaser.h"
 
 #include "CrossHair.h"
 #include "Phone.h"

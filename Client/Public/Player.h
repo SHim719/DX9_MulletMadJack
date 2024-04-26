@@ -115,6 +115,18 @@ public:
 		m_fPlayerHp += fPlayerHp;
 		if(m_fPlayerHp >= m_fPlayerMaxHp) m_fPlayerHp = m_fPlayerMaxHp;
 	}
+	void Set_PlayerHP_Damaged(_float fPlayerHp) {
+		if (m_bInvincible == false) {
+			m_fPlayerHp -= fPlayerHp;
+			m_fInvincibleTime = m_fInvincibleTimeLimit;
+			m_bInvincible = true;
+
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
+
+			m_pGameInstance->Play(L"Player_Damaged", false);
+			m_pGameInstance->SetVolume(L"Player_Damaged", 0.3f);
+		}
+	}
 
 	void Kick();
 	

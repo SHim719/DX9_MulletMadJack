@@ -222,7 +222,7 @@ void CPlayer_Manager::WeaponChange(CPlayer::WEAPON_TYPE eWeaponType)
 			Set_MaxMagazine(12);
 			break;
 		case CPlayer::WEAPON_TYPE::KATANA:
-			Set_MaxMagazine(100);
+			Set_MaxMagazine(1000);
 			break;
 		default:
 			break;

@@ -532,6 +532,15 @@
     <Filter Include="97. Manager\DialogueManager">
       <UniqueIdentifier>{6f938b0a-bb9d-4843-aebd-3b824c3b3deb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Levels\98. Boss">
+      <UniqueIdentifier>{62650118-54d7-4e14-915a-8e74af9fa81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder">
+      <UniqueIdentifier>{3082ca6d-8486-4552-9faa-da03b5542fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\LandMine">
+      <UniqueIdentifier>{18b107fa-a69a-4020-8756-b0c8af682edf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -647,9 +656,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Border.h">
       <Filter>02. GameObjects\01. MapObject\Border</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Client_Components.h">
-      <Filter>99.Defines</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Floor.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Start\CUi_Floor</Filter>
@@ -1002,7 +1008,6 @@
     <ClInclude Include="..\Public\CUi_Sans_Heart.h">
       <Filter>04. UI\Ui\Sans\CUi_Sans_Heart</Filter>
     </ClInclude>
-    <ClInclude Include="..\Public\Beholder.h" />
     <ClInclude Include="..\Public\CSansLevel.h">
       <Filter>01. Levels\SansLevel</Filter>
     </ClInclude>
@@ -1014,6 +1019,18 @@
     </ClInclude>
     <ClInclude Include="..\Public\DialogueManager.h">
       <Filter>97. Manager\DialogueManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Boss.h">
+      <Filter>01. Levels\98. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Beholder.h">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Beholder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Client_Components.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\LandMine.h">
+      <Filter>02. GameObjects\01. MapObject\LandMine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1446,18 +1463,27 @@
     <ClCompile Include="..\Private\CUi_Sans_Heart.cpp">
       <Filter>04. UI\Ui\Sans\CUi_Sans_Heart</Filter>
     </ClCompile>
-    <ClCompile Include="..\Private\Beholder.cpp" />
     <ClCompile Include="..\Private\CSansLevel.cpp">
       <Filter>01. Levels\SansLevel</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\TrackingLaser.cpp" />
     <ClCompile Include="..\Private\CUi_Dead_FadeOut.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DeadFadeOut</Filter>
+    </ClCompile>
     <ClCompile Include="..\Private\UI_Dialogue.cpp">
       <Filter>04. UI\Ui\CUi_Active\Dialogue</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\DialogueManager.cpp">
       <Filter>97. Manager\DialogueManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Level_Boss.cpp">
+      <Filter>01. Levels\98. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Beholder.cpp">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Beholder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\LandMine.cpp">
+      <Filter>02. GameObjects\01. MapObject\LandMine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
