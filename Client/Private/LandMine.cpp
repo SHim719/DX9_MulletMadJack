@@ -1,37 +1,60 @@
-#include "Soda.h"
+#include "LandMine.h"
 #include "PlayerManager.h"
 #include "GameInstance.h"
 
-CSoda::CSoda(LPDIRECT3DDEVICE9 pGraphic_Device)
+CLandMine::CLandMine(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
 {
 }
 
-CSoda::CSoda(const CSoda& rhs)
+CLandMine::CLandMine(const CLandMine& rhs)
 	: CGameObject{ rhs }
 {
 }
 
-HRESULT CSoda::Initialize_Prototype()
+HRESULT CLandMine::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CSoda::Initialize(void* pArg)
+HRESULT CLandMine::Initialize(void* pArg)
 {
 	if (E_FAIL == Add_Components())
 		return E_FAIL;
 
 	m_pBoxCollider->Set_Scale({ 0.25f, 0.25f, 0.25f });
-	
-return S_OK;
+	return S_OK;
 }
 
-void CSoda::PriorityTick(_float fTimeDelta)
+void CLandMine::PriorityTick(_float fTimeDelta)
 {
+	if (m_eCurState == LandMineState::Explode)
+	{
+		m_fExplodeTime -= fTimeDelta;
+		if (m_fExplodeTime <= 0.f)
+		{
+			m_bDestroyed = true;
+		}
+	}
+
+	if (m_eCurState == LandMineState::Explode && !m_bExplode)
+	{
+
+		m_pBoxCollider->Set_Scale({2.f, 2.f, 2.f});
+		m_pBoxCollider->Set_Offset({ 0.f, 1.f, 0.f });
+
+		CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Explosion");
+		pEffect->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos());
+		pEffect->Get_Transform()->Set_Scale({ 5.f, 5.f, 1.f });
+
+		m_pGameInstance->Play(L"Drone_Explosion", false);
+		m_pGameInstance->SetVolume(L"Drone_Explosion", 0.5f);
+
+		m_bExplode = true;
+	}
 }
 
-void CSoda::Tick(_float fTimeDelta)
+void CLandMine::Tick(_float fTimeDelta)
 {
 	m_fLifeTime -= fTimeDelta;
 	if (m_fLifeTime <= 0.f)
@@ -39,18 +62,18 @@ void CSoda::Tick(_float fTimeDelta)
 		m_bDestroyed = true;
 		return;
 	}
-		
+
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pRigidbody->Update(fTimeDelta);
 }
 
-void CSoda::LateTick(_float fTimeDelta)
+void CLandMine::LateTick(_float fTimeDelta)
 {
 	if (!m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
 		return;
 
 	_float4x4	ViewMatrix;
-		
+
 	m_pGraphic_Device->GetTransform(D3DTS_VIEW, &ViewMatrix);
 
 	D3DXMatrixInverse(&ViewMatrix, nullptr, &ViewMatrix);
@@ -68,7 +91,7 @@ void CSoda::LateTick(_float fTimeDelta)
 	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
-HRESULT CSoda::Render()
+HRESULT CLandMine::Render()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
@@ -91,7 +114,7 @@ HRESULT CSoda::Render()
 	return S_OK;
 }
 
-HRESULT CSoda::Add_Components()
+HRESULT CLandMine::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), nullptr));
 	if (nullptr == m_pTransformCom)
@@ -101,7 +124,7 @@ HRESULT CSoda::Add_Components()
 	if (nullptr == m_pVIBufferCom)
 		return E_FAIL;
 
-	m_pTextureCom = dynamic_cast<CTexture*>(Add_Component(LEVEL_STATIC, TEXT("SodaCan_Texture"), TEXT("SodaCan_Texture"), nullptr));
+	m_pTextureCom = dynamic_cast<CTexture*>(Add_Component(LEVEL_STATIC, TEXT("LandMine_Texture"), TEXT("LandMine_Texture"), nullptr));
 	if (nullptr == m_pTextureCom)
 		return E_FAIL;
 
@@ -122,50 +145,51 @@ HRESULT CSoda::Add_Components()
 	return S_OK;
 }
 
-void CSoda::OnTriggerStay(CGameObject* pOther)
+void CLandMine::OnTriggerStay(CGameObject* pOther)
 {
-	if ("Player" == pOther->Get_Tag() && CPlayer_Manager::Get_Instance()->Get_Action_Type() != CPlayer_Manager::ACTION_DRINKCAN
-		&& CPlayer_Manager::Get_Instance()->Is_ActionIdle())
+	if ("Player" == pOther->Get_Tag())
 	{
-		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_DRINKCAN);
-		m_pGameInstance->Play(L"Player_Soda_Drink", false);
-		m_pGameInstance->SetVolume(L"Player_Soda_Drink", 1.f);
+		/*m_pGameInstance->Play(L"Player_Soda_Drink", false);
+		m_pGameInstance->SetVolume(L"Player_Soda_Drink", 1.f);*/
 
-		m_pGameInstance->Play(L"Full_Life", false);
-		m_pGameInstance->SetVolume(L"Full_Life", 1.f);
-
-		m_pGameInstance->Set_Ui_ActiveState(L"CUi_GreenCrossActive", true);
-		m_bDestroyed = true;
+		m_eCurState = LandMineState::Explode;
 	}
+
+	if ("Player" == pOther->Get_Tag() && m_eCurState == LandMineState::Explode)
+	{
+		CPlayer_Manager::Get_Instance()->Set_PlayerHP_Damaged(5);
+
+	}
+
 }
 
-CSoda* CSoda::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CLandMine* CLandMine::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CSoda* pInstance = new CSoda(pGraphic_Device);
+	CLandMine* pInstance = new CLandMine(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CSoda"));
+		MSG_BOX(TEXT("Failed to Created : CLandMine"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CGameObject* CSoda::Clone(void* pArg)
+CGameObject* CLandMine::Clone(void* pArg)
 {
-	CSoda* pInstance = new CSoda(*this);
+	CLandMine* pInstance = new CLandMine(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Clone : CSoda"));
+		MSG_BOX(TEXT("Failed to Clone : CLandMine"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CSoda::Free()
+void CLandMine::Free()
 {
 	__super::Free();
 

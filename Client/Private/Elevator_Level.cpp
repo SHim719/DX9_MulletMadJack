@@ -124,5 +124,6 @@ void CElevator_Level::Free()
 {
 
 	__super::Free();
+	CElevatorLevelManager::Get_Instance()->Free();
 
 }

@@ -60,7 +60,7 @@ private:
 
 private:
 	TrackingLaserState m_eState = { TrackingLaserState::End };
-	_float m_fLife = { 5.f };
+	_float m_fLife = { 3.f };
 	_float m_fAlphaTime = { 0.f };
 	_float m_fScaleTime = { 0.f };
 	_float3 m_fScale = { 1, 1, 1 };

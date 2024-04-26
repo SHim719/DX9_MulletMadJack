@@ -65,6 +65,10 @@ public:
 	_float Get_PlayerHP() { return m_pPlayer->Get_PlayerHP(); }
 	void Set_PlayerHP(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP(_fPlayerHp); }
 	void Set_PlayerHP_Add(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP_Add(_fPlayerHp); }
+	void Set_PlayerHP_Damaged(_float _fPlayerHp) { 
+		m_pPlayer->Set_PlayerHP_Damaged(_fPlayerHp);
+
+	}
 
 	void Camera_Shake_Order(_float _fShakeTime, _float _fShakePower) { m_pPlayer->Camera_Shake_Order(_fShakePower,_fShakeTime); }
 

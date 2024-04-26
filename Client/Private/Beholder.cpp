@@ -133,10 +133,10 @@ HRESULT CBeholder::Add_Components()
 
 HRESULT CBeholder::Add_Textures()
 {
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Beholder_Idle_Texture"), TEXT("Idle"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Beholder_Idle_Texture"), TEXT("Idle"))))
         return E_FAIL;
 
-    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_GAMEPLAY, TEXT("Beholder_Damaged_Texture"), TEXT("Hit"))))
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Beholder_Damaged_Texture"), TEXT("Hit"))))
         return E_FAIL;
 
     return S_OK;
@@ -247,6 +247,7 @@ void CBeholder::Hit(void* pArg)
 
     CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
     pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
+    pHitBlood->Get_Transform()->Set_Scale({ 3.f, 3.f, 0.5f });
 
     _bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
     if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA) {

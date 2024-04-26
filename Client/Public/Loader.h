@@ -44,6 +44,7 @@ private:
 private:
 	HRESULT Loading_For_Logo_Level();
 	HRESULT Loading_For_GamePlay_Level();
+	HRESULT Loading_For_Boss_Level();
 
 	HRESULT Loading_For_Sans_Level();
 	HRESULT Loading_For_WhiteSuitMonster();

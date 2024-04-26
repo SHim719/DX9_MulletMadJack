@@ -7,6 +7,7 @@
 #include "Elevator_Level.h"
 #include "CUi_LoadingBackGround.h"
 #include "Level_Map2.h"
+#include "Level_Boss.h"
 #include "CSansLevel.h"
 
 
@@ -65,6 +66,9 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 				break;
 			case LEVEL_ELEVATOR:
 				pLevel = CElevator_Level::Create(m_pGraphic_Device);
+				break;
+			case LEVEL_BOSS:
+				pLevel = CLevel_Boss::Create(m_pGraphic_Device);
 				break;
 			case LEVEL_SANS:
 				pLevel = CSansLevel::Create(m_pGraphic_Device);
