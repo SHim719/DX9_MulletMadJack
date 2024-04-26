@@ -1,4 +1,5 @@
 #include "CSans_Bone.h"
+#include "PlayerManager.h"
 
 
 CSans_Bone::CSans_Bone(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -106,9 +107,8 @@ void CSans_Bone::OnTriggerEnter(CGameObject* pOther)
 {
     if ("Player" == pOther->Get_Tag())
     {
-        int a = 10;
+        CPlayer_Manager::Get_Instance()->Get_Player()->SansHit();
     }
-   
 }
 
 HRESULT CSans_Bone::Add_Components()

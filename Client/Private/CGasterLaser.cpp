@@ -1,4 +1,5 @@
 #include "CGasterLaser.h"
+#include "PlayerManager.h"
 
 
 CGasterLaser::CGasterLaser(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -56,6 +57,7 @@ void CGasterLaser::Tick(_float fTimeDelta)
 	}
 	AdjustAlpha(fTimeDelta);
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
+
 	if (m_eState == GasterLaserState::Fire)
 	{
 		m_pBoxCollider->Set_Active(true);
@@ -119,6 +121,10 @@ void CGasterLaser::EndRenderState()
 
 void CGasterLaser::OnTriggerEnter(CGameObject* pOther)
 {
+	if ("Player" == pOther->Get_Tag())
+	{
+		CPlayer_Manager::Get_Instance()->Get_Player()->SansHit();
+	}
 }
 
 HRESULT CGasterLaser::Add_Components()

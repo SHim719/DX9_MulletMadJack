@@ -32,6 +32,10 @@ HRESULT CPhone::Initialize(void* pArg)
     Intialize_PhoneNumber();
     Initialize_Face();
 
+    m_fFaceChnageGap = 3.f;
+    m_bFaceRoop = true;
+
+
     return S_OK;
 }
 
@@ -40,6 +44,10 @@ HRESULT CPhone::Initialize_Active()
     Set_Texture_Index(0);
     Default_Set_Size();
     Initialize_Set_Scale_Pos_Rotation(NULL);
+
+    
+    m_fFaceChnageGap = 3.f;
+    m_bFaceRoop = true;
 
     return S_OK;
 }
@@ -51,9 +59,6 @@ void CPhone::PriorityTick(_float fTimeDelta)
 
 void CPhone::Tick(_float fTimeDelta)
 {
-
-
-
     m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 
     if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
@@ -247,7 +252,13 @@ HRESULT CPhone::Add_Texture(void* pArg)
         return E_FAIL;
 
     if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Phone_Face_Textures")
-        , (CComponent**)&m_pFaceTextureCom)))
+        , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Hero)])))
+        return E_FAIL;
+
+    // 재욱 여기다 너가 넣으셈 원하는 텍스쳐들
+
+    if (FAILED(Add_Component(LEVEL_STATIC, TEXT("SansFace_Textures")
+        , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Sans)])))
         return E_FAIL;
 
     if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Phone_BackGround_Textures")
@@ -370,6 +381,9 @@ void CPhone::Initialize_Face()
     Set_FaceRotation();
     _float3 FaceScale = { m_Face.m_fSizeX, m_Face.m_fSizeY, 1 };
     m_pFaceTransformCom->Set_Scale(FaceScale);
+
+    m_eFace = FaceType::Hero;
+    m_bFaceRoop = true;
 }
 
 void CPhone::Default_Set_FaceSize()
@@ -380,12 +394,13 @@ void CPhone::Default_Set_FaceSize()
 
 void CPhone::Set_Face(_float fTimeDelta)
 {
+	Set_FacePos();
+	Set_FaceRotation();
+
+
     m_fFaceChangeTime += fTimeDelta;
-    Set_FacePos();
-    Set_FaceRotation();
-    if (m_fFaceChangeTime > 3.f)
+    if (m_fFaceChangeTime >= m_fFaceChnageGap && m_bFaceRoop)
     {
-        m_fFaceChangeTime = _float(rand() % 3 + 1);
         Set_FaceTexture();
     }
 }
@@ -412,12 +427,28 @@ void CPhone::Set_FaceRotation()
 		FaceRotation = { m_fRotation.x, m_fRotation.y, m_fRotation.z + 15 };
 	}
 
-
-
 	m_pFaceTransformCom->Rotation_XYZ(FaceRotation);
 }
 
 void CPhone::Set_FaceTexture()
+{
+    if (m_eFace == FaceType::Hero)
+    {
+        m_fFaceChangeTime = _float(rand() % 3 + 1);
+        Set_HeroFaceTexture();
+    }
+    else
+    {
+        m_fFaceChangeTime = 0;
+        ++m_iFaceTexture;
+        if (m_iFaceTexture > m_iFaceTextureMax)
+        {
+            m_iFaceTexture = m_iFaceTextureMin;
+        }
+    }
+}
+
+void CPhone::Set_HeroFaceTexture()
 {
     if (m_fLifeTime > 7)
     {
@@ -434,12 +465,30 @@ HRESULT CPhone::Render_Face()
     if (FAILED(m_pFaceTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
-    if (FAILED(m_pFaceTextureCom->Bind_Texture(m_iFaceTexture)))
+    if (FAILED(m_pFaceTextureCom[(_uint)m_eFace]->Bind_Texture(m_iFaceTexture)))
         return E_FAIL;
 
     m_pFaceVIBufferCom->Render();
 
     return S_OK;
+}
+
+void CPhone::Set_Texture(FaceType type, _uint iTextureIndex)
+{
+    m_eFace = type;
+    m_iFaceTexture = iTextureIndex;
+}
+
+void CPhone::Setting_Roop(_float RoopGap, _uint iTextureMin, _uint iTextureMax)
+{
+    m_fFaceChnageGap = RoopGap;
+    m_iFaceTextureMin = iTextureMin;
+    m_iFaceTextureMax = iTextureMax;
+}
+
+void CPhone::Set_Roop(_bool Roop)
+{
+    m_bFaceRoop = Roop;
 }
 
 void CPhone::Initialize_BackGround()
@@ -466,8 +515,6 @@ void CPhone::Set_BackGround()
 
 void CPhone::Set_BackGroundPos()
 {
-	
-
 	_float3 BackGroundpos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
 	BackGroundpos.x += 164;
 	BackGroundpos.y += 132;
@@ -534,7 +581,10 @@ void CPhone::Free()
     Safe_Release(m_pSecondNumTransformCom);
     Safe_Release(m_pSecondNumVIBufferCom);
 
-    Safe_Release(m_pFaceTextureCom);
+    for (_uint i = 0; i < (_uint)FaceType::End; ++i)
+    {
+        Safe_Release(m_pFaceTextureCom[i]);
+    }
     Safe_Release(m_pFaceTransformCom);
     Safe_Release(m_pFaceVIBufferCom);
 

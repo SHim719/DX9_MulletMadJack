@@ -96,6 +96,7 @@ void CSansLevel::Tick(_float fTimeDelta)
 		m_pPlayer->SansLevelExitInitialize();
 		// jaewook SceneChange 
 	}
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
 }
 
 HRESULT CSansLevel::Render()
@@ -124,7 +125,7 @@ HRESULT CSansLevel::Ready_Layer_Camera(const wstring& strLayerTag)
 
 HRESULT CSansLevel::Ready_Layer_Player()
 {
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, TEXT("Player"), TEXT("Prototype_Player")));
+	CPlayer* pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(LEVEL_SANS, TEXT("Player"), TEXT("Prototype_Player")));
 	CPlayer_Manager::Get_Instance()->Set_Player(pPlayer);
 	
 	if (nullptr == CPlayer_Manager::Get_Instance()->Get_Player()) {

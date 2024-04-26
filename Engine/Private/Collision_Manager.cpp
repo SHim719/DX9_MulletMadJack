@@ -43,8 +43,8 @@ void CCollision_Manager::Tick()
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Player", Trigger);
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Wall", Trigger);
 
-	Collision_Box(4, L"Layer_Bone", L"Player", Trigger);
-	Collision_Box(4, L"Layer_Gaster", L"Player", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Layer_Bone", L"Player", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Layer_Gaster", L"Player", Trigger);
 
 
 	Intersect_Ray();

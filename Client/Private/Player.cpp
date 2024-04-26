@@ -74,6 +74,7 @@ void CPlayer::Tick(_float fTimeDelta)
 		else {
 			m_fPlayerHp = 0.f;
 			//DeathAnimation Trigger
+			m_pGameInstance->Set_Ui_ActiveState(L"CUi_Dead_FadeOut");
 		}
 	}
 
@@ -691,13 +692,23 @@ void CPlayer::Hit(void* pArg)
 
 void CPlayer::SansHit()
 {
-	auto iter = m_SansHeartVec.begin();
-	if (iter != m_SansHeartVec.end())
+	if (!m_bInvincible)
 	{
-		(*iter)->Set_Dead();
-		m_SansHeartVec.erase(iter);
-	}
+		auto iter = m_SansHeartVec.begin();
+		if (iter != m_SansHeartVec.end())
+		{
+			(*iter)->Set_Dead();
+			m_SansHeartVec.erase(iter);
+			
+			Set_InvincibleTime(Get_InvincibleTimeLimit());
+			Set_Invincible(true);
+		}
 
+		if(m_SansHeartVec.size() == 0)
+		{
+			int a = 10;
+		}
+	}
 }
 
 void CPlayer::SansLevelEnterInitialize()
@@ -714,7 +725,7 @@ void CPlayer::SansLevelEnterInitialize()
 		m_SansHeartVec.emplace_back(Heart);
 	
 	}
-
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
 	Set_HpLimit(99);
 	Set_PlayerHP(99);
 }

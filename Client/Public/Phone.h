@@ -4,6 +4,13 @@
 
 BEGIN(Client)
 
+enum class FaceType
+{
+	Hero,
+	Announcer,
+	Sans,
+	End
+};
 class CPhone final : public CUi
 {
 protected:
@@ -120,14 +127,27 @@ private:
 	void Set_FacePos();
 	void Set_FaceRotation();
 	void Set_FaceTexture();
+	void Set_HeroFaceTexture();
 	HRESULT Render_Face();
+
+//for jaewook
+public:
+	void Set_Texture(FaceType Type, _uint iTextureIndex);
+	void Setting_Roop(_float RoopGap, _uint iTextureMin, _uint iTextureMax);
+	void Set_Roop(_bool Roop);
+
 
 private:
 	CVIBuffer_Rect* m_pFaceVIBufferCom = { nullptr };
 	CTransform* m_pFaceTransformCom = { nullptr };
-	CTexture* m_pFaceTextureCom = { nullptr };
+	CTexture* m_pFaceTextureCom[(_uint)FaceType::End] = {nullptr};
 	_float m_fFaceChangeTime = { 0 };
-	_uint m_iFaceTexture = { 0 };
+	_float m_fFaceChnageGap = { 0 };
+	FaceType m_eFace = { FaceType::Hero };
+	_uint m_iFaceTexture = {0};
+	_uint m_iFaceTextureMin = { 0 };
+	_uint m_iFaceTextureMax = { 0 };
+	_bool m_bFaceRoop = { true };
 	Ui_Pos_Size_Rotation m_Face = {};
 
 public:

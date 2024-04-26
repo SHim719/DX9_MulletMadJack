@@ -40,7 +40,7 @@ protected:
 public:
 	void Set_Pos(_float3 Position);
 	void Set_Focusing(bool Focused) { m_bFocused = Focused; }
-	void Set_Picked() { m_bPicked = true; }
+	void Set_Picked(); 
 	void Add_UniqueTextureIndex();
 	void Set_UniqueTextureIndex(_uint _IndexNum);
 

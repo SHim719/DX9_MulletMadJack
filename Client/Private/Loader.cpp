@@ -161,8 +161,8 @@ HRESULT CLoader::Loading_For_Sans_Level()
 	if (FAILED(Loading_For_Map_Texture()))
 		return E_FAIL;
 
-	//if (FAILED(Loading_For_Sans_Texture()))
-	//	return E_FAIL;
+	if (FAILED(Loading_For_Sans_Texture()))
+		return E_FAIL;
 
 	if (FAILED(Ready_Monster_Prototype()))
 		return E_FAIL;
@@ -354,10 +354,6 @@ HRESULT CLoader::Loading_For_Effect_Texture()
 
 HRESULT CLoader::Loading_For_Sans_Texture()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Texture_Sans_Idle"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/Idle.png")))))
-		return E_FAIL;
-	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Texture_Sans_Body"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/SansBody.png")))))
 		return E_FAIL;
@@ -833,7 +829,7 @@ HRESULT CLoader::Ready_ShopUi_Texture()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Shop_UpGrade_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Clear/Shop/UpGrade/UpGrade%d.png", 9))))
+			L"../Bin/Resources/Textures/Ui/Clear/Shop/UpGrade/UpGrade%d.png", 3))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_UpGrade_Select_Texture",
@@ -979,6 +975,11 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/OnGoing/Fade.png"))))
 		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Dead_FadeOut_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Dead_FadeOut.png"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -1039,6 +1040,11 @@ HRESULT CLoader::Ready_PlayerUi_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_Face_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/LeftArm/PhoneFace%d.png", 6))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"SansFace_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Player/LeftArm/SansFace%d.png", 5))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_BackGround_Textures",
@@ -1367,6 +1373,11 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_FadeInOut"),
 		eUiRenderType::Render_Blend,
 		CUI_FadeInOut::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Dead_FadeOut"),
+		eUiRenderType::Render_Blend,
+		CUi_Dead_FadeOut::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

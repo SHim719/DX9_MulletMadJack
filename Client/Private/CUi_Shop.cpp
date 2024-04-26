@@ -156,7 +156,7 @@ void CUi_Shop::Initialize_UpGradeVec()
 	{
 		part[i] = (CUi_Shop_UpGrade*)m_pGameInstance->
 			Add_Ui_PartClone(TEXT("CUi_Shop_UpGrade"), &Pos);
-		part[i]->Set_Texture_Index(_uint(Levelid*3 + i));
+		part[i]->Set_Texture_Index(_uint(i));
 		part[i]->Set_UniqueTextureIndex((_uint)i);
 		m_UpgradeVec.emplace_back(part[i]);
 	}

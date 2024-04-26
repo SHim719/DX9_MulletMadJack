@@ -2,7 +2,7 @@
 #include "GameInstance.h"
 #include "CUi_UpGrade_Select.h"
 #include "CUi_UpGrade_Focus.h"
-
+#include "PlayerManager.h"
 
 CUi_Shop_UpGrade::CUi_Shop_UpGrade(LPDIRECT3DDEVICE9 pGraphic_Device)
 	:CUi(pGraphic_Device)
@@ -153,6 +153,23 @@ void CUi_Shop_UpGrade::Initialize_Set_Speed()
 void CUi_Shop_UpGrade::Set_Pos(_float3 Position)
 {
 	m_pTransformCom->Set_State(CTransform::STATE::STATE_POSITION, &Position);
+}
+
+void CUi_Shop_UpGrade::Set_Picked()
+{
+	m_bPicked = true;
+	if (m_iTexture_Index == 0)
+	{
+		CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::WEAPON_TYPE::PISTOL);
+	}
+	else if (m_iTexture_Index == 1)
+	{
+		CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::WEAPON_TYPE::SHOTGUN);
+	}
+	else if (m_iTexture_Index == 2)
+	{
+		CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::WEAPON_TYPE::KATANA);
+	}
 }
 
 void CUi_Shop_UpGrade::Add_UniqueTextureIndex()
