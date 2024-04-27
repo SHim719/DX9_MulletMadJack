@@ -181,7 +181,11 @@ void CGaster_Spawner::SansState1(_uint DetailPatternCount)
 		Add_Laser(SansGasterFirePos::Left, SansGasterPos::Right, 0, 3, 0.2f);
 		break;
 	case 7:
-		Add_Bundle(SansGasterFirePos::Straight, 5);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::left, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Middle, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Right, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::left, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Right, 0, 2, 0);
 		break;
 	default:
 		break;
@@ -224,11 +228,11 @@ void CGaster_Spawner::SansState3(_uint DetailPatternCount)
 	case 1:
 		break;
 	case 2:
-		Add_Bundle(SansGasterFirePos::Straight, 6);
+		Add_Bundle(SansGasterFirePos::Straight, 3);
 		break;
 	case 3:
 		Add_Bundle(SansGasterFirePos::Left, 1);
-		Add_Bundle(SansGasterFirePos::Right, 3);
+		Add_Bundle(SansGasterFirePos::Right, 1);
 		break;
 	case 4:
 		Add_Bundle(SansGasterFirePos::Straight, 2);
@@ -249,20 +253,22 @@ void CGaster_Spawner::SansState4(_uint DetailPatternCount)
 	case 0:
 		break;
 	case 1:
-		// 네가 한 짓이지 응?
 		break;
 	case 2:
 		Add_Bundle(SansGasterFirePos::Straight, 2);
+		Add_Bundle(SansGasterFirePos::Down, 1);
 		break;
 	case 3:
-		Add_Bundle(SansGasterFirePos::Left, 5);
+		Add_Bundle(SansGasterFirePos::Left, 2);
 		Add_Bundle(SansGasterFirePos::Right, 1);
 		break;
 	case 4:
-		Add_Bundle(SansGasterFirePos::Straight, 5);
+		Add_Bundle(SansGasterFirePos::Straight, 2);
+		Add_Bundle(SansGasterFirePos::Up, 1);
 		break;
 	case 5:
-		Add_Bundle(SansGasterFirePos::BackWard, 3);
+		Add_Bundle(SansGasterFirePos::BackWard, 2);
+		Add_Bundle(SansGasterFirePos::Up, 1);
 		break;
 	default:
 		break;
@@ -277,17 +283,35 @@ void CGaster_Spawner::SansState5(_uint DetailPatternCount)
 	case 0:
 		break;
 	case 1:
-		Add_Bundle(SansGasterFirePos::Straight, 2);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::left, 0, 3, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Middle, 0, 3, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Right, 0, 3, 0);
 		break;
 	case 2:
-		Add_Bundle(SansGasterFirePos::Left, 5);
-		Add_Bundle(SansGasterFirePos::Right, 1);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Middle, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Left, SansGasterPos::left, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Left, SansGasterPos::Middle, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Left, SansGasterPos::Right, 0, 1, 0);
 		break;
 	case 3:
-		Add_Bundle(SansGasterFirePos::Straight, 5);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::left, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::Middle, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::Right, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::left, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::Middle, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::Right, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::left, 0, 3, 0);
+		Add_Laser(SansGasterFirePos::Up, SansGasterPos::Right, 0, 3, 0);
 		break;
 	case 4:
-		Add_Bundle(SansGasterFirePos::BackWard, 3);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::left, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Middle, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Right, 0, 1, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::left, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Right, 0, 2, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::left, 0, 3, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Middle, 0, 3, 0);
+		Add_Laser(SansGasterFirePos::Straight, SansGasterPos::Right, 0, 3, 0);
 		break;
 	default:
 		break;

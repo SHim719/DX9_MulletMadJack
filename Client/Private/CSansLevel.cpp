@@ -52,15 +52,9 @@ HRESULT CSansLevel::Initialize()
 
 void CSansLevel::Tick(_float fTimeDelta)
 {
-	m_itesttime += fTimeDelta;
 	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
 	if (m_pSans->GetSansTurnInfo() == SansTurnBased::SansText)
 	{
-		if (m_itesttime > 4)
-		{
-			m_itesttime = 0;
-			cout << "sansText" << endl;
-		}
 		if(m_pGameInstance->GetKeyDown(eKeyCode::RButton))
 		{
 			m_pSans->SetTurn(SansTurnBased::SansTurn);
@@ -71,32 +65,25 @@ void CSansLevel::Tick(_float fTimeDelta)
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::SansTurn)
 	{
-		if (m_itesttime > 4)
-		{
-			m_itesttime = 0;
-			cout << "sansTurn" << endl;
-		}
 		// 움직임만 가능
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::PlayerTurn)
 	{
-		if (m_itesttime > 4)
-		{
-			m_itesttime = 0;
-			cout << "PlayerTurn" << endl;
-		}
 		if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 		{
+			m_pSans->TransParent();
 			m_pSans->SetTurn(SansTurnBased::SansText);
 		}
 	}
 
-	if (m_pPlayer->Get_PlayerHP() <= 0)
+	if (m_pPlayer->Get_PlayerHP() <= 0.3f)
 	{
 		m_pPlayer->SansLevelExitInitialize();
 		// jaewook SceneChange 
 	}
 	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
+
+
 }
 
 HRESULT CSansLevel::Render()

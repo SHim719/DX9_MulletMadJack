@@ -16,6 +16,10 @@
 #include "Level_Map2.h"
 #include "Elevator_Level.h"
 
+#include "CUi_LobbyButton.h"
+#include "CUi_LobbyLogo.h"
+
+
 IMPLEMENT_SINGLETON(CGame_Manager)
 
 CGame_Manager::CGame_Manager()
@@ -37,7 +41,7 @@ void CGame_Manager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	Ready_Prototype_GameObjects();
 	Ready_Prototype_Components();
 	Ready_Loading_BackGroundTextureAndUi(); 
-
+	Ready_LobbyUi();
 	Ready_Execution_Texture();
 
 	Ready_Active_Execution();
@@ -404,9 +408,26 @@ HRESULT CGame_Manager::Ready_Prototype_Components()
 	return S_OK;
 }
 
-void CGame_Manager::Ready_LobbyUi()
+HRESULT CGame_Manager::Ready_LobbyUi()
 {
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_LobbyButton_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Lobby/Button%d.png", 2))))
+		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_LobbyLogo_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Lobby/LOGO%d.png", 12))))
+		return E_FAIL;
+
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"CUi_LobbyLogo", eUiRenderType::Render_NonBlend, CUi_LobbyLogo::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"CUi_LobbyButton", eUiRenderType::Render_NonBlend, CUi_LobbyButton::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	return S_OK;
 }
 
 HRESULT CGame_Manager::Ready_Execution_Texture()

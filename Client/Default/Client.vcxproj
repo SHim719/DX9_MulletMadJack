@@ -197,6 +197,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Client_Struct.h" />
     <ClInclude Include="..\Public\CSans.h" />
     <ClInclude Include="..\Public\CSansLevel.h" />
+    <ClInclude Include="..\Public\CSansMiss.h" />
     <ClInclude Include="..\Public\CSans_Bone.h" />
     <ClInclude Include="..\Public\CSans_Gaster.h" />
     <ClInclude Include="..\Public\CTextManager.h" />
@@ -210,6 +211,9 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\CUi_GreenCrossActive.h" />
     <ClInclude Include="..\Public\CUi_GreenCross.h" />
     <ClInclude Include="..\Public\CUi_LoadingBackGround.h" />
+    <ClInclude Include="..\Public\CUi_LobbyButton.h" />
+    <ClInclude Include="..\Public\CUi_LobbyLogo.h" />
+    <ClInclude Include="..\Public\CUi_Sans_Black.h" />
     <ClInclude Include="..\Public\CUi_Sans_Heart.h" />
     <ClInclude Include="..\Public\CUi_Sans_TextBack.h" />
     <ClInclude Include="..\Public\DialogueManager.h" />
@@ -367,7 +371,11 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Private\CSansLevel.cpp" />
+    <ClCompile Include="..\Private\CSansMiss.cpp" />
     <ClCompile Include="..\Private\CUi_Dead_FadeOut.cpp" />
+    <ClCompile Include="..\Private\CUi_LobbyButton.cpp" />
+    <ClCompile Include="..\Private\CUi_LobbyLogo.cpp" />
+    <ClCompile Include="..\Private\CUi_Sans_Black.cpp" />
     <ClCompile Include="..\Private\CUi_Sans_Heart.cpp" />
     <ClCompile Include="..\Private\CUi_Sans_TextBack.cpp" />
     <ClCompile Include="..\Private\DialogueManager.cpp" />

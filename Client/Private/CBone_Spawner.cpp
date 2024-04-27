@@ -28,7 +28,7 @@ void CBone_Spawner::Spawn(_uint PatternCount, _uint DetailPatternCount)
 		SansState4(DetailPatternCount);
 		break;
 	case 5:
-		RandomDominateState(DetailPatternCount);
+		SansState5(DetailPatternCount);
 		break;
 	case 6:
 		RandomRepeatState(DetailPatternCount);
@@ -117,39 +117,39 @@ void CBone_Spawner::SansState1(_uint DetailPatternCount)
 	case 0:
 		break;
 	case 1:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
 		break;
 	case 2:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
 		break;
 	case 3:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
 		break;
 	case 4:
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.9f);
 		break;
 	case 5:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 1);
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 1);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.7f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 1, 10.f, 0.7f);
+		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.7f);
+		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.7f);
+		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 2, 10.f, 0.7f);
 		break;
 	default:
 		break;
@@ -180,9 +180,6 @@ void CBone_Spawner::SansState3(_uint DetailPatternCount)
 	case 1:
 		break;
 	case 2:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.1f, 3, 10.f, 10);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.1f, 3, 10.f, 10);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.1f, 3, 10.f, 10);
 		break;
 	default:
 		break;
@@ -194,9 +191,6 @@ void CBone_Spawner::SansState4(_uint DetailPatternCount)
 	switch (DetailPatternCount)
 	{
 	case 1:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.5f, 1, 3.f, 5);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.5f, 3, 3.f, 5);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.5f, 3, 3.f, 5);
 		break;
 	default:
 		break;
@@ -208,14 +202,8 @@ void CBone_Spawner::SansState5(_uint DetailPatternCount)
 	switch (DetailPatternCount)
 	{
 	case 1:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.5f, 1, 3.f, 1);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.5f, 1, 3.f, 1);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.5f, 1, 3.f, 1);
 		break;
 	case 2:
-		Add_Bone(SansBonePos::Left, SansBoneDir::Straight, 0.5f, 3, 5.f, 5);
-		Add_Bone(SansBonePos::Middle, SansBoneDir::Straight, 0.5f, 1, 2.f, 5);
-		Add_Bone(SansBonePos::Right, SansBoneDir::Straight, 0.5f, 1, 2.f, 5);
 		break;
 	default:
 		break;

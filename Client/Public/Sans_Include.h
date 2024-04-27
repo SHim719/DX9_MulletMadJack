@@ -7,3 +7,5 @@
 #include "CGasterLaser.h"
 #include "CBoneRoop.h"
 #include "CGasterRoop.h"
+#include "CUi_Sans_Black.h"
+#include "CSansMiss.h"

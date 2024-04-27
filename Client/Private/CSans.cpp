@@ -52,9 +52,11 @@ HRESULT CSans::Initialize(void* pArg)
 
     m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_TextBack");
 
-
-    //m_iPatternCount = 13;
-    //m_iSansTextCount = 18;
+    if (m_pPlayerTransformCom == nullptr)
+    {
+        m_pPlayerTransformCom = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform();
+        Safe_AddRef(m_pPlayerTransformCom);
+    }
 
     return S_OK;
 }
@@ -74,6 +76,7 @@ void CSans::Tick(_float fTimeDelta)
         Set_Text();
     }
     Adjust_BodyPos(fTimeDelta);
+    m_fTransParentTime -= fTimeDelta;
 }
 
 void CSans::LateTick(_float fTimeDelta)
@@ -84,27 +87,29 @@ void CSans::LateTick(_float fTimeDelta)
 void CSans::RenderBegin()
 {
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-    m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 254);
+    m_pGraphic_Device->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 }
 
 HRESULT CSans::Render()
 {
-    RenderBegin();
+    if (m_fTransParentTime <= 0)
+    {
+        RenderBegin();
 
-    if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
-        return E_FAIL;
+        if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
+            return E_FAIL;
 
-    if (FAILED(m_pLegTextureCom->Bind_Texture(0)))
-        return E_FAIL;
+        if (FAILED(m_pLegTextureCom->Bind_Texture(0)))
+            return E_FAIL;
 
-    if (FAILED(m_pVIBufferCom->Render()))
-        return E_FAIL;
+        if (FAILED(m_pVIBufferCom->Render()))
+            return E_FAIL;
 
-    RenderBody();
+        RenderBody();
 
-    RenderEnd();
-
+        RenderEnd();
+    }
 	return S_OK;
 }
 
@@ -120,7 +125,6 @@ void CSans::RenderBody()
 void CSans::RenderEnd()
 {
     m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
-
 }
 
 void CSans::SetTurn(SansTurnBased Turn)
@@ -134,6 +138,13 @@ void CSans::SetTurn(SansTurnBased Turn)
         m_fTextLengthTime = 0;
         m_iSansTextLength = 0;
     }
+}
+
+void CSans::TransParent()
+{
+    m_fTransParentTime = 0.5f;
+	m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(),
+		L"SansMiss", L"Prototype_CSansMiss", &m_pTransformCom->Get_Pos());  
 }
 
 HRESULT CSans::Add_Components()
@@ -214,19 +225,19 @@ void CSans::Set_Pattern1Time()
     switch (m_iDetailPatternCount)
     {
     case 0:
-        m_fPatternTime = 1.1f;
+        m_fPatternTime = 1.1f; 
         break;
     case 1:
-        m_fPatternTime = 1.1f;
+        m_fPatternTime = 1.2f;
         break;
     case 2:
-        m_fPatternTime = 1.1f;
+        m_fPatternTime = 1.2f;
         break;
     case 3:
-        m_fPatternTime = 1.1f;
+        m_fPatternTime = 1.2f;
         break;
     case 4:
-        m_fPatternTime = 1.1f;
+        m_fPatternTime = 1.2f;
         break;
     case 5:
         m_fPatternTime = 2.5f;
@@ -251,22 +262,35 @@ void CSans::Set_Pattern1Time()
 
 void CSans::Set_Pattern2Time()
 {
+    _float3 Pos{};
     switch (m_iDetailPatternCount)
     {
     case 0:
         m_fPatternTime = 1.f;
         break;
     case 1:
-        m_fPatternTime = 2.f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 1.6f , 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 2:
-        m_fPatternTime = 2.f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 1.6f , 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 3:
-        m_fPatternTime = 2.f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 1.6f , 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 4:
-        m_fPatternTime = 2.f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 1.6f , 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 5:
         Add_SansPattern();
@@ -315,7 +339,7 @@ void CSans::Set_Pattern4Time()
         m_fPatternTime = 1.f;
         break;
     case 1:
-        m_fPatternTime = 1.5f;
+        m_fPatternTime = 1.5f;      
         break;
     case 2:
         m_fPatternTime = 1.5f;
@@ -336,22 +360,35 @@ void CSans::Set_Pattern4Time()
 
 void CSans::Set_Pattern5Time()
 {
+    _float3 Pos{};
     switch (m_iDetailPatternCount)
     {
     case 0:
         m_fPatternTime = 1.f;
         break;
     case 1:
-        m_fPatternTime = 1.5f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { -1.5f, 3.1f, 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 2:
-        m_fPatternTime = 1.5f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 1.6f, 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 3:
-        m_fPatternTime = 1.5f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 0.f, 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 4:
-        m_fPatternTime = 1.5f;
+        m_fPatternTime = 2.2f;
+        m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_Black");
+        Pos = { 0.f, 1.6f, 0.f };
+        m_pPlayerTransformCom->Set_Pos(Pos);
         break;
     case 5:
         Add_SansPattern();
@@ -774,6 +811,7 @@ void CSans::Free()
 {
 	__super::Free();
 
+    Safe_Release(m_pPlayerTransformCom);
     Safe_Release(m_pVIBodyBufferCom);
     Safe_Release(m_pBodyTransformCom);
     Safe_Release(m_pGasterSpawner);

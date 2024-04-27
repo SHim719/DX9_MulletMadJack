@@ -544,6 +544,21 @@
     <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser">
       <UniqueIdentifier>{28262f6b-923a-41db-8b62-da2228904c94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_Sans\CUi_Sans_Black">
+      <UniqueIdentifier>{0f362924-13ca-4281-9dc1-5d33bdfe039d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\05. Effect\SansMiss">
+      <UniqueIdentifier>{74e83295-fa8b-48de-beba-99bae1f449b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Lobby">
+      <UniqueIdentifier>{46ee47b9-4e8e-4f9b-bbd6-88b9ee311322}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Lobby\LobbyButton">
+      <UniqueIdentifier>{0d4bd1de-b2c8-4d81-8bba-dcb7e2f7326d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Lobby\LobbyLogo">
+      <UniqueIdentifier>{f1ccf4a4-e707-4607-803f-4e176a4d755b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1038,6 +1053,18 @@
     <ClInclude Include="..\Public\TrackingLaser.h">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi_Sans_Black.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Sans\CUi_Sans_Black</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CSansMiss.h">
+      <Filter>02. GameObjects\05. Effect\SansMiss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_LobbyLogo.h">
+      <Filter>04. UI\Ui\CUi_Lobby\LobbyLogo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_LobbyButton.h">
+      <Filter>04. UI\Ui\CUi_Lobby\LobbyButton</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1492,6 +1519,18 @@
     </ClCompile>
     <ClCompile Include="..\Private\TrackingLaser.cpp">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Sans_Black.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_Sans\CUi_Sans_Black</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSansMiss.cpp">
+      <Filter>02. GameObjects\05. Effect\SansMiss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_LobbyLogo.cpp">
+      <Filter>04. UI\Ui\CUi_Lobby\LobbyLogo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_LobbyButton.cpp">
+      <Filter>04. UI\Ui\CUi_Lobby\LobbyButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

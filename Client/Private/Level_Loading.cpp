@@ -9,6 +9,7 @@
 #include "Level_Map2.h"
 #include "Level_Boss.h"
 #include "CSansLevel.h"
+#include "CLevel_Lobby.h"
 
 
 CLevel_Loading::CLevel_Loading(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -51,7 +52,6 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 	m_pLoadingBackGround->Set_BarRatio(m_pLoader->Get_ProgressPercent());
 	if (true == m_pLoader->isFinished())
 	{
-		int a = 10;
 		if (GetKeyState(VK_SPACE) & 0x8000)
 		{
 			CLevel*		pLevel = { nullptr };
@@ -60,6 +60,9 @@ void CLevel_Loading::Tick(_float fTimeDelta)
 			{
 			case LEVEL_LOGO:
 				pLevel = CLevel_Logo::Create(m_pGraphic_Device);
+				break;
+			case LEVEL_LOBBY:
+				pLevel = CLevel_Lobby::Create(m_pGraphic_Device);
 				break;
 			case LEVEL_GAMEPLAY:
 				pLevel = CLevel_GamePlay::Create(m_pGraphic_Device);
