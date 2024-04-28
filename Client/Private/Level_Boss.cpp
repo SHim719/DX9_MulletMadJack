@@ -57,7 +57,11 @@ HRESULT CLevel_Boss::Initialize()
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
-	return S_OK;
+
+	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, L"SkyBox", TEXT("Prototype_SkyBox")))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 

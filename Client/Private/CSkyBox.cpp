@@ -51,7 +51,7 @@ HRESULT CSkyBox::Render()
     if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
-    if (FAILED(m_pTextureCom->Bind_Texture(9)))
+    if (FAILED(m_pTextureCom->Bind_Texture(1)))
         return E_FAIL;
 
     if (FAILED(Begin_RenderState()))

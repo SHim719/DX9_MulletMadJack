@@ -220,6 +220,9 @@ HRESULT CLoader::Loading_For_Boss_Level()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
 		return E_FAIL;
 
+	if (FAILED(Ready_SkyBox()))
+		return E_FAIL;
+
 	lstrcpy(m_szLoadingText, TEXT("End."));
 	m_fProgress = 1.f;
 
@@ -1558,8 +1561,7 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 		eUiRenderType::Render_Blend,
 		CUI_UltimatePicture::Create(m_pGraphic_Device))))
 		return E_FAIL;
-	
-		return E_FAIL; 
+
 	return S_OK;
 }
 
@@ -1910,7 +1912,7 @@ HRESULT CLoader::Ready_Streamer_Sound()
 HRESULT CLoader::Ready_SkyBox()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("SkyBox_Texture"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_CUBEMAP, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 10))))
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_CUBEMAP, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 2))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SkyBox"),
