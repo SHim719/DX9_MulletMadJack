@@ -201,6 +201,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\CSansMiss.h" />
     <ClInclude Include="..\Public\CSans_Bone.h" />
     <ClInclude Include="..\Public\CSans_Gaster.h" />
+    <ClInclude Include="..\Public\CSkyBox.h" />
     <ClInclude Include="..\Public\CTextManager.h" />
     <ClInclude Include="..\Public\CText_BackGround.h" />
     <ClInclude Include="..\Public\CUi_Combo.h" />
@@ -379,6 +380,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     </ClCompile>
     <ClCompile Include="..\Private\CSansLevel.cpp" />
     <ClCompile Include="..\Private\CSansMiss.cpp" />
+    <ClCompile Include="..\Private\CSkyBox.cpp" />
     <ClCompile Include="..\Private\CUi_Dead_FadeOut.cpp" />
     <ClCompile Include="..\Private\CUi_DrinkSoda_Word.cpp" />
     <ClCompile Include="..\Private\CUi_LobbyButton.cpp" />

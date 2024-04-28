@@ -577,6 +577,9 @@
     <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda_Word">
       <UniqueIdentifier>{cc4a35a3-fe75-430a-bc48-02c9fbace4c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\06. SkyBox">
+      <UniqueIdentifier>{165ad26a-63f6-492d-afbe-5d5ffd02ff47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1101,6 +1104,9 @@
     <ClInclude Include="..\Public\CUi_DrinkSoda_Word.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda_Word</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CSkyBox.h">
+      <Filter>02. GameObjects\06. SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1582,6 +1588,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_DrinkSoda_Word.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda_Word</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSkyBox.cpp">
+      <Filter>02. GameObjects\06. SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

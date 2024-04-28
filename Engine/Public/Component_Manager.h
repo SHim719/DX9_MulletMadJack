@@ -6,6 +6,7 @@
 #include "VIBuffer_RectXY.h"
 #include "VIBuffer_Mesh.h"
 #include "VIBuffer_Box.h"
+#include "VIBuffer_Cube.h"
 #include "Texture.h"
 #include "BoxCollider.h"
 

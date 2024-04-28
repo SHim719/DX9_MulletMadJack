@@ -57,6 +57,12 @@ namespace Engine
 		D3DCOLOR	Color;
 	}VTXCOLOR;
 
+	typedef struct
+	{
+		D3DXVECTOR3		vPosition;
+		D3DXVECTOR3		vTexcoord;
+	}VTXCUBE;
+
 	typedef struct tagRayDesc
 	{
 		//class CGameObject*	pSrcObject;

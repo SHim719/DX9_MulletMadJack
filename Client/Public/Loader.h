@@ -86,7 +86,10 @@ private:
 	HRESULT Ready_Announcer_Sound();
 	HRESULT Ready_Streamer_Sound();
 
+	HRESULT Ready_SkyBox();
+
 	void Initialize_TextManager();
+
 public:
 	static CLoader* Create(LPDIRECT3DDEVICE9 pGraphic_Device, LEVEL eNextLevelID);
 	virtual void Free() override;

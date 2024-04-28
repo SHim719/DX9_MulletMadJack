@@ -32,6 +32,7 @@ public:
 private:
 	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
 	HRESULT Ready_Layer_Player();
+	HRESULT Ready_Layer_SkyBox(const wstring& strLayerTag);
 	HRESULT Ready_Layer_Beholder(const wstring& strLayerTag);
 
 	HRESULT Ready_Layer_Sans_Boss(const wstring& strLayerTag);
