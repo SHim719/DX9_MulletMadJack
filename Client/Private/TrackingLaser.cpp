@@ -47,10 +47,29 @@ void CTrackingLaser::Tick(_float fTimeDelta)
 	Execute_Order();
 
 	m_fLife -= fTimeDelta;
-	if (m_fLife < 0)
+
+	if (m_fLife < 0 || m_pTransformCom->Get_Pos().y < 0.f)
 	{
-		CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine");
-		pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vTargetPos);
+		_bool bExplode = true;
+		CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine",&bExplode);
+
+		switch (m_eAttackOrder)
+		{
+			case CBeholder::PLAYERTRACKING:
+				pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vTargetPos);
+				break;
+			case CBeholder::FREETRACKING:
+				pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vLissajousPos);
+				break;
+			case CBeholder::LANDMINESET:
+				pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vLissajousPos);
+				break;
+			case CBeholder::AIRSTRIKE:
+				pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_pTransformCom->Get_Pos());
+				break;
+			default:
+				break;
+		}
 
 		m_bDestroyed = true;
 	}
@@ -75,8 +94,38 @@ void CTrackingLaser::BeginRenderState()
 		m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
 		m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
 		m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
-		m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR,
-			D3DCOLOR_RGBA(255, 0, 0, 255));
+
+
+		_int fAlpha = CMath_Manager::Get_Instance()->Random_Int(100, 200);
+		switch (m_eAttackOrder)
+		{
+			case CBeholder::PLAYERTRACKING:
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(255, 0, 0, fAlpha));
+				break;
+			case CBeholder::FREETRACKING: {
+				_int fRed = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				_int fGreen = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				_int fBlue = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(fRed, fGreen, fBlue, fAlpha));
+				break;
+			}
+			case CBeholder::LANDMINESET: {
+				_int fRed = CMath_Manager::Get_Instance()->Random_Int(120, 240);
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(fRed, 0, 0, fAlpha));
+				break;
+			}
+			case CBeholder::AIRSTRIKE: {
+				_int fRed = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				_int fGreen = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				_int fBlue = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(fRed, fGreen, fBlue, fAlpha));
+				break;
+			}
+			default:
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(255, 255, 255, 255));
+				break;
+
+		}
 	}
 	else
 	{
@@ -130,6 +179,12 @@ void CTrackingLaser::Prepair_Order(float _fTimeDelta)
 	case CBeholder::FREETRACKING:
 		FreeTracking_Prepair(_fTimeDelta);
 		return;
+	case CBeholder::LANDMINESET:
+		LandMineSet_Prepair(_fTimeDelta);
+		return;
+	case CBeholder::AIRSTRIKE:
+		AirStrike_Prepair(_fTimeDelta);
+		return;
 	default:
 		return;
 	}
@@ -147,6 +202,12 @@ void CTrackingLaser::Execute_Order()
 			return;
 		case CBeholder::FREETRACKING:
 			FreeTracking_Order();
+			return;
+		case CBeholder::LANDMINESET:
+			LandMineSet_Order();
+			return;
+		case CBeholder::AIRSTRIKE:
+			AirStrike_Order();
 			return;
 		default:
 			return;
@@ -227,6 +288,70 @@ void CTrackingLaser::FreeTracking_Prepair(float _fTimeDelta)
 	}
 }
 
+void CTrackingLaser::LandMineSet_Order()
+{
+	_float3 vDir = m_vLissajousPos + m_vMasterPos;
+
+	m_pTransformCom->Set_Position(vDir / 2);
+
+	//x¶û z Ãà acos
+
+	_float3 vAngleATAN = m_vMasterPos - m_vLissajousPos;
+	_float3 vAngleATANfabs = { fabs(vAngleATAN.x), fabs(vAngleATAN.y), fabs(vAngleATAN.z) };
+
+
+	_float fSide = (_float)sqrt(pow(vAngleATANfabs.x, 2) + pow(vAngleATANfabs.z, 2));
+
+	_float fAngleY = atan2(vAngleATAN.x, vAngleATAN.z);
+	_float fAngleX = atan2(fSide, vAngleATANfabs.y);
+
+	fAngleY = D3DXToDegree(fAngleY);
+	fAngleX = D3DXToDegree(fAngleX);
+
+	m_pTransformCom->Rotation_XYZ({ fAngleX, fAngleY, 0.f });
+	//m_pTransformCom->Set_Scale({ 1.f, 10.f, 1.f});
+
+	_float fLength = (_float)sqrt(pow(fabs(m_vLissajousPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vLissajousPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vLissajousPos.z - m_vMasterPos.z), 2));
+
+	m_pTransformCom->Set_Scale({ 0.1f,fLength , 0.1f });
+
+	if (m_fLandMineCoolTime <= 0.f)
+	{
+		CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine");
+		pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_vLissajousPos);
+		m_fLandMineCoolTime = m_fLandMineCoolTimeMax;
+	}
+}
+
+void CTrackingLaser::LandMineSet_Prepair(float _fTimeDelta)
+{
+	if (m_eState == TrackingLaserState::Warning) {
+		_float2 fLissajousFloat = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, 10, 10, m_fLissajousLagrangianX, m_fLissajousLagrangianY, m_fLissajousPhaseDelta, m_fLissajousSpeed);
+
+		m_vLissajousPos = { m_vTargetPos.x + fLissajousFloat.x, 0.f, m_vTargetPos.z + fLissajousFloat.y };
+	}
+
+	m_fLandMineCoolTime -= _fTimeDelta;
+}
+
+void CTrackingLaser::AirStrike_Order()
+{
+
+	_float fLength = (_float)sqrt(pow(fabs(m_vTargetPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vTargetPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vTargetPos.z - m_vMasterPos.z), 2));
+
+	m_pTransformCom->Set_Scale({ 0.3f,fLength, 0.3f });
+}
+
+void CTrackingLaser::AirStrike_Prepair(float _fTimeDelta)
+{
+	/*m_pTransformCom->Set_Speed(2.f);
+	m_pTransformCom->Go_Down(_fTimeDelta);*/
+
+	_float3 vPos = m_pTransformCom->Get_Pos();
+	m_pTransformCom->Set_PosY(vPos.y - 30.f* _fTimeDelta);
+
+}
+
 HRESULT CTrackingLaser::Add_Components()
 {
 	m_pVIBufferCom = dynamic_cast<CVIBuffer_Box*>(__super::Add_Component
@@ -256,25 +381,42 @@ void CTrackingLaser::Initialize_Arg(void* pArg)
 
 	m_eAttackOrder = pOrder->eOrder;
 
-	if(m_eAttackOrder == CBeholder::PLAYERTRACKING){
-		m_vMasterPos = pOrder->vMasterPos;
-		m_vMasterPos.y -= 0.2f;
-	}
-	else if (m_eAttackOrder == CBeholder::FREETRACKING) {
-		m_vMasterPos = pOrder->vMasterPos;
-		m_vTargetPos = pOrder->vLook;
-
-		m_fLissajousLagrangianX = CMath_Manager::Get_Instance()->Random_Int(1, 5);
-		m_fLissajousLagrangianY = CMath_Manager::Get_Instance()->Random_Int(1, 5);
-		m_fLissajousPhaseDelta = CMath_Manager::Get_Instance()->Random_Int(1, 4);
-		m_fLissajousSpeed = CMath_Manager::Get_Instance()->Random_Float(0.5, 1);
-		//m_fLissajousSpeed = CMath_Manager::Get_Instance()->Random_Int(1, 5);
-
-
-	}
-	/*TrackingLaserArg* Arg = (TrackingLaserArg*)pArg;
-	SansGasterFirePos FirePos = Arg->FirePos;*/
 	Arg_InitializeSetPosScale();
+	switch (m_eAttackOrder)
+	{
+		case CBeholder::PLAYERTRACKING:
+			m_vMasterPos = pOrder->vMasterPos;
+			m_vMasterPos.y -= 0.2f;
+			break;
+		case CBeholder::FREETRACKING:
+			m_vMasterPos = pOrder->vMasterPos;
+			m_vTargetPos = pOrder->vLook;
+
+			m_fLissajousLagrangianX = (float)CMath_Manager::Get_Instance()->Random_Int(1, 5);
+			m_fLissajousLagrangianY = (float)CMath_Manager::Get_Instance()->Random_Int(1, 5);
+			m_fLissajousPhaseDelta =  (float)CMath_Manager::Get_Instance()->Random_Int(1, 4);
+			m_fLissajousSpeed =				 CMath_Manager::Get_Instance()->Random_Float(0.5, 1);
+			break;
+		case CBeholder::LANDMINESET:
+			m_vMasterPos = pOrder->vMasterPos;
+			m_vTargetPos = pOrder->vLook;
+
+			m_fLissajousLagrangianX = (float)CMath_Manager::Get_Instance()->Random_Int(1, 5);
+			m_fLissajousLagrangianY = (float)CMath_Manager::Get_Instance()->Random_Int(1, 5);
+			m_fLissajousPhaseDelta =  (float)CMath_Manager::Get_Instance()->Random_Int(1, 4);
+			m_fLissajousSpeed =				 CMath_Manager::Get_Instance()->Random_Float(0.5, 1);
+			break;
+		case CBeholder::AIRSTRIKE: {
+			m_vMasterPos = pOrder->vMasterPos;
+			m_vTargetPos = pOrder->vLook;
+
+			_float3 vDir = m_vTargetPos + m_vMasterPos;
+			m_pTransformCom->Set_Position(vDir / 2);
+			break;
+		}
+		default:
+			break;
+	}
 }
 
 void CTrackingLaser::Initialize_Order()

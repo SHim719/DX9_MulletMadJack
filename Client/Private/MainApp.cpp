@@ -34,8 +34,8 @@ HRESULT CMainApp::Initialize()
 	ShowCursor(FALSE);
 
 
-	/*if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
-		return E_FAIL;*/
+	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	//	return E_FAIL;
 
 	if (FAILED(Open_Level(LEVEL_BOSS)))
 		return E_FAIL;

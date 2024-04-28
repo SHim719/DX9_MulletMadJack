@@ -52,6 +52,12 @@ private:
 	void FreeTracking_Order();
 	void FreeTracking_Prepair(float _fTimeDelta);
 
+	void LandMineSet_Order();
+	void LandMineSet_Prepair(float _fTimeDelta);
+
+	void AirStrike_Order();
+	void AirStrike_Prepair(float _fTimeDelta);
+
 private:
 	HRESULT Add_Components();
 	HRESULT Add_Texture();
@@ -87,6 +93,8 @@ private:
 	_float  m_fLissajousLagrangianY = { 0.f };
 	_float  m_fLissajousPhaseDelta = { 0.f };
 
+	_float  m_fLandMineCoolTime = { 0.f };
+	_float  m_fLandMineCoolTimeMax = { 0.2f };
 
 	_float3 m_vMasterPos = { 0.f, 0.f, 0.f };
 

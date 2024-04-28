@@ -544,6 +544,12 @@
     <Filter Include="97. Manager\PlayerManager">
       <UniqueIdentifier>{9ca86dde-8dff-45aa-9dc4-a42330e93e85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\Artemis">
+      <UniqueIdentifier>{07320f58-8ab3-44f4-8a09-4bb0fbbefcb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\Apolon">
+      <UniqueIdentifier>{fc16c50f-ec3c-41f4-b43e-dfd5421fdb45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1038,6 +1044,9 @@
     <ClInclude Include="..\Public\TrackingLaser.h">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Artemis.h">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\Artemis</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1492,6 +1501,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\TrackingLaser.cpp">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Artemis.cpp">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\Artemis</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
