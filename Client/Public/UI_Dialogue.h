@@ -81,7 +81,7 @@ private:
 	wstring m_strVoiceTag = L"";
 
 	_uint m_iNowDialogueIndex = 0;
-	_uint m_iTextIndex = 0;		// ±ÛÀÚ ÇÏ³ª¾¿¶ß°ÔÇÏ´Â ÀÎµ¦½º
+	_uint m_iTextIndex = 0;		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ï¿½ß°ï¿½ï¿½Ï´ï¿½ ï¿½Îµï¿½ï¿½ï¿½
 
 	_float m_fTextDelay = 0.1f;
 	_float m_fTextDelayAcc = 0.f;

@@ -25,8 +25,8 @@ HRESULT CLevel_Boss::Initialize()
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
-	m_pGameInstance->Play(L"Gameplay2", true);
-	m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
+	m_pGameInstance->Play(L"Beholder_Instrument", true);
+	m_pGameInstance->SetVolume(L"Beholder_Instrument", 0.5f);
 
 	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 		return E_FAIL;
@@ -124,6 +124,10 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 {
 	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 		TEXT("Prototype_Beholder")))
+		return E_FAIL;
+
+	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+		TEXT("Prototype_Artemis")))
 		return E_FAIL;
 
 	return S_OK;

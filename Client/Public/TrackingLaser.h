@@ -43,9 +43,20 @@ private:
 	void OnTriggerEnter(CGameObject* pOther) override;
 
 private:
-	void Prepair_Order();
+	void Prepair_Order(float _fTimeDelta);
 	void Execute_Order();
+
 	void PlayerTracking_Order();
+	void PlayerTracking_Prepair();
+
+	void FreeTracking_Order();
+	void FreeTracking_Prepair(float _fTimeDelta);
+
+	void LandMineSet_Order();
+	void LandMineSet_Prepair(float _fTimeDelta);
+
+	void AirStrike_Order();
+	void AirStrike_Prepair(float _fTimeDelta);
 
 private:
 	HRESULT Add_Components();
@@ -74,6 +85,17 @@ private:
 	CGameObject* m_pTarget = { nullptr };
 
 	_float3 m_vTargetPos = { 0.f, 0.f, 0.f };
+	_float3 m_vLissajousPos = { 0.f, 0.f, 0.f };
+
+	_float  m_fLissajousTime = { 0.f };
+	_float  m_fLissajousSpeed = { 1.f };
+	_float  m_fLissajousLagrangianX = { 0.f };
+	_float  m_fLissajousLagrangianY = { 0.f };
+	_float  m_fLissajousPhaseDelta = { 0.f };
+
+	_float  m_fLandMineCoolTime = { 0.f };
+	_float  m_fLandMineCoolTimeMax = { 0.2f };
+
 	_float3 m_vMasterPos = { 0.f, 0.f, 0.f };
 
 	CBeholder::ATTACKORDER m_eAttackOrder = { CBeholder::ATTACKORDER::ENDORDER };

@@ -19,6 +19,14 @@ HRESULT CLandMine::Initialize_Prototype()
 
 HRESULT CLandMine::Initialize(void* pArg)
 {
+
+	bool bExplode = (bool)pArg;
+
+	if(bExplode == true)
+		m_eCurState = LandMineState::Explode;
+	else
+		m_eCurState = LandMineState::Idle;
+
 	if (E_FAIL == Add_Components())
 		return E_FAIL;
 
@@ -30,6 +38,7 @@ void CLandMine::PriorityTick(_float fTimeDelta)
 {
 	if (m_eCurState == LandMineState::Explode)
 	{
+		m_pTransformCom->Set_Scale({ 0.f, 0.f, 0.f });
 		m_fExplodeTime -= fTimeDelta;
 		if (m_fExplodeTime <= 0.f)
 		{
@@ -49,18 +58,20 @@ void CLandMine::PriorityTick(_float fTimeDelta)
 
 		m_pGameInstance->Play(L"Drone_Explosion", false);
 		m_pGameInstance->SetVolume(L"Drone_Explosion", 0.5f);
-
+		if(CPlayer_Manager::Get_Instance()->Get_IsRoundPattern() == false)
+			CPlayer_Manager::Get_Instance()->Set_Pattern(false);
 		m_bExplode = true;
 	}
+
 }
 
 void CLandMine::Tick(_float fTimeDelta)
 {
 	m_fLifeTime -= fTimeDelta;
+
 	if (m_fLifeTime <= 0.f)
 	{
-		m_bDestroyed = true;
-		return;
+		m_eCurState = LandMineState::Explode;
 	}
 
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
@@ -157,7 +168,7 @@ void CLandMine::OnTriggerStay(CGameObject* pOther)
 
 	if ("Player" == pOther->Get_Tag() && m_eCurState == LandMineState::Explode)
 	{
-		CPlayer_Manager::Get_Instance()->Set_PlayerHP_Damaged(5);
+		CPlayer_Manager::Get_Instance()->Set_PlayerHP_Damaged(10);
 
 	}
 

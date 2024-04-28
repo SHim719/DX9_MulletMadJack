@@ -48,6 +48,7 @@
 #include "Beholder.h"
 #include "TrackingLaser.h"
 #include "LandMine.h"
+#include "Artemis.h"
 
 #pragma endregion
 

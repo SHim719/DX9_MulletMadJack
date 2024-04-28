@@ -5,8 +5,18 @@
 #include "CUi_SpecialHit.h"
 #include "Enemy_Corpse.h"
 #include "FPS_Camera.h"
-
-
+#include <math.h>
+#define PI 3.14159265
+double rad2deg(double radian);
+double deg2rad(double degree);
+double rad2deg(double radian)
+{
+    return radian * 180 / PI;
+}
+double deg2rad(double degree)
+{
+    return degree * PI / 180;
+}
 
 CBeholder::CBeholder(LPDIRECT3DDEVICE9 pGraphic_Device)
     : CPawn{ pGraphic_Device }
@@ -49,7 +59,7 @@ HRESULT CBeholder::Initialize(void* pArg)
     m_strTag = "Monster";
     m_substrTag = "Beholder";
 
-    m_fHp = 10000.f;
+    m_fHp = 1000.f;
 
     return S_OK;
 }
@@ -62,18 +72,31 @@ void CBeholder::PriorityTick(_float fTimeDelta)
 void CBeholder::Tick(_float fTimeDelta)
 {
     Process_State(fTimeDelta);
+    Set_PatternEndCheck();
+
     m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
     m_pRigidbody->Update(fTimeDelta);
     m_pAnimationCom->Update(fTimeDelta);
 
     if (m_pGameInstance->GetKeyDown(eKeyCode::Enter)){
+        
+        //Pattern
+        //Player_Tracking_Laser();
+    	//All_Round_Laser();
+        //All_Round_Laser_LandMine();
+        //Shoot();
+        //AirStrike();
+        
+        //m_ePattern = PATTERN_ROUND_AIRSTRIKE;
+        //Set_PatternStart();
+        //CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
 
-        BeholderAttackOrder LaserOrder;
-        LaserOrder.eOrder = PLAYERTRACKING;
-        LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
-        CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
-
+        m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM;
+        Set_PatternStart();
+        CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
     }
+    ActivePattern(fTimeDelta);
+    PatternState(fTimeDelta);
 
 
 }
@@ -98,7 +121,7 @@ HRESULT CBeholder::Render()
         return E_FAIL;
 
     m_pAnimationCom->Render();
-    Player_Tracking_Laser();
+
     if (FAILED(Begin_RenderState()))
         return E_FAIL;
 
@@ -179,24 +202,9 @@ _bool CBeholder::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDi
 
     if (CPlayer_Manager::Get_Instance()->Get_WeaponType() != CPlayer::KATANA)
     {
-        if (Check_HeadShot(vHitLocalPos))
-        {
-            pDesc->eHitType = HEAD_SHOT;
-            Hit(pDesc);
-            return true;
-        }
-        else if (Check_EggShot(vHitLocalPos))
-        {
-            pDesc->eHitType = EGG_SHOT;
-            Hit(pDesc);
-            return true;
-        }
-        else if (Check_BodyShot(vHitLocalPos))
-        {
-            pDesc->eHitType = BODY_SHOT;
-            Hit(pDesc);
-            return true;
-        }
+        pDesc->eHitType = BODY_SHOT;
+        Hit(pDesc);
+        return true;
     }
     else
     {
@@ -233,12 +241,278 @@ _bool CBeholder::Check_EggShot(_float3 vHitLocalPos)
     return  (-0.125f < vHitLocalPos.x && vHitLocalPos.x < 0.12f) && (-0.086f <= vHitLocalPos.y && vHitLocalPos.y < 0.015);
 }
 
+void CBeholder::PatternState(_float _fTimeDelta)
+{
+    switch (m_ePattern)
+    {
+    case PATTERN_IDLE:
+        break;
+    case PATTERN_WAITING:
+        break;
+    case PATTERN_PLAYERTRACKING:
+        Player_Tracking_Laser();
+        m_ePattern = PATTERN_WAITING;
+        break;
+    case PATTERN_ALLROUNDLASER:
+        All_Round_Laser();
+        m_ePattern = PATTERN_WAITING;
+        break;
+    case PATTERN_ALLROUNDLASERLANDMINE:
+        All_Round_Laser_LandMine();
+        m_ePattern = PATTERN_WAITING;
+        break;
+    case PATTERN_AIRSTRIKE:
+        AirStrike();
+        m_ePattern = PATTERN_WAITING;
+        break;
+    case PATTERN_SHOOT:
+        if (m_iShootCount < m_iShootCountMax) {
+            if (m_fShootDelay <= 0.f) {
+                m_iShootCount++;
+                m_fShootDelay = m_fShootDelayMax;
+                Shoot();
+            }
+            else
+                m_fShootDelay -= _fTimeDelta;
+        }
+        else {
+            m_iShootCount = 0;
+            Set_PatternEnd();
+        }
+        break;
+    case PATTERN_ROUND_AIRSTRIKE:
+        if (m_fRoundStrikeRadius < m_fRoundStrikeRadiusMax){
+            if (m_fRoundStrikeDelay <= 0.f) {
+                m_fRoundStrikeRadius += 1.f;
+                m_fRoundStrikeDelay = m_fRoundStrikeDelayMax;
+                RoundAirStrike();
+            }
+            else
+                m_fRoundStrikeDelay -= _fTimeDelta;
+        }
+        else{
+            m_fRoundStrikeRadius = 6.f;
+            CPlayer_Manager::Get_Instance()->Set_RoundPattern(false);
+            Set_PatternEnd();
+        }
+		break;
+    case PATTERN_ROUND_AIRSTRIKE_BOOM:
+        if (m_fRoundStrikeRadius < m_fRoundStrikeRadiusMax) {
+            if (m_fRoundStrikeBoomDelay <= 0.f) {
+                m_fRoundStrikeBoomDelay = m_fRoundStrikeBoomDelayMax;
+                RoundAirStrikeBoom(_fTimeDelta);
+            }
+            else
+                m_fRoundStrikeBoomDelay -= _fTimeDelta;
+        }
+        else {
+            m_fRoundStrikeRadius = 6.f;
+            CPlayer_Manager::Get_Instance()->Set_RoundPattern(false);
+            Set_PatternEnd();
+        }
+        break;
+    case PATTERN_ROUND_AIRSTRIKE_LANDMINE:
+        if (m_fRoundStrikeRadius < m_fRoundStrikeRadiusMax) {
+            if (m_fRoundStrikeBoomDelay <= 0.f) {
+                m_fRoundStrikeBoomDelay = m_fRoundStrikeBoomDelayMax;
+                RoundAirStrikeLandMine(_fTimeDelta);
+            }
+            else
+                m_fRoundStrikeBoomDelay -= _fTimeDelta;
+        }
+        else {
+            m_fRoundStrikeRadius = 6.f;
+            CPlayer_Manager::Get_Instance()->Set_RoundPattern(false);
+            Set_PatternEnd();
+        }
+        break;
+	default:
+		break;
+    }
+}
+
+void CBeholder::ActivePattern(_float fTimeDelta)
+{
+    if (m_ePattern == PATTERN_IDLE) {
+
+        if (m_fPatternTimeDelay <= 0.f) {
+
+            if (m_iPatternCount > m_iPatternCountMax) m_iPatternCount = 0;
+            switch (m_iPatternCount)
+            {
+            case 0:
+                m_ePattern = PATTERN_PLAYERTRACKING;
+                Set_PatternStart();
+                break;
+            case 1:
+                m_ePattern = PATTERN_ALLROUNDLASER;
+                Set_PatternStart();
+                break;
+            case 2:
+                m_ePattern = PATTERN_ALLROUNDLASERLANDMINE;
+                Set_PatternStart();
+                break;
+            case 3:
+                m_ePattern = PATTERN_AIRSTRIKE;
+                Set_PatternStart();
+                break;
+            case 4:
+                m_ePattern = PATTERN_SHOOT;
+                Set_PatternStart();
+                break;
+            case 5:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            case 6:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE_LANDMINE;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            case 7:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            default:
+                Shoot();
+                break;
+            }
+            m_iPatternCount++;
+            m_fPatternTimeDelay = m_fPatternTimeDelayMax;
+
+
+        }
+        else
+            m_fPatternTimeDelay -= fTimeDelta;
+
+    }
+
+
+}
+
 void CBeholder::Player_Tracking_Laser()
 {
 
-    m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
-    m_vTargetRecentPos = m_pTarget->Get_Transform()->Get_Pos();
+    BeholderAttackOrder LaserOrder;
+    LaserOrder.eOrder = PLAYERTRACKING;
+    LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
+    CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
  
+}
+
+void CBeholder::All_Round_Laser()
+{
+    for(int i = 0; i < 30; ++i){
+    _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-15,15);
+    _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-5,25);
+
+    BeholderAttackOrder LaserOrder;
+    LaserOrder.eOrder = FREETRACKING;
+    LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
+    LaserOrder.vLook = { fRandomX, 0.f, fRandomZ };
+
+    CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+    }
+
+}
+
+void CBeholder::All_Round_Laser_LandMine()
+{
+    for (int i = 0; i < 5; ++i) {
+		_float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-15, 15);
+		_float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-5, 25);
+
+		BeholderAttackOrder LaserOrder;
+		LaserOrder.eOrder = LANDMINESET;
+		LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
+		LaserOrder.vLook = { fRandomX, 0.f, fRandomZ };
+
+		CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+	}
+}
+
+void CBeholder::AirStrike()
+{
+        _float3 vTargetPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+        AirBoom(vTargetPos);
+}
+
+void CBeholder::RoundAirStrike()
+{
+    float f_radius = m_fRoundStrikeRadius;
+    int f_start_theta = 0;
+    int f_end_theta = 360;
+
+    for (int i = f_start_theta; i < f_end_theta; i = i+12)
+    {
+        _float2 p;
+        float f_x = (float)(cos(deg2rad(i)) * f_radius);
+        float f_y = (float)(sin(deg2rad(i)) * f_radius);
+        p.x = f_x;
+        p.y = f_y;
+        
+        _bool bExplode = true;
+        CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine", &bExplode);
+        //pObj->Get_Transform()->Set_Position(_float3(0.f, 0.f, 10.f));
+        pObj->Get_Transform()->Add_Pos(_float3(p.x, -0.3f, p.y + 10.f));
+    }
+
+
+}
+
+void CBeholder::RoundAirStrikeBoom(float _fTimeDelta)
+{
+    _float2 fLissajous = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, m_fRoundStrikeRadius, m_fRoundStrikeRadius,1,1, 1, 40);
+    m_fRoundStrikeRadius += 6 * _fTimeDelta;
+
+    AirBoom({ fLissajous.x, 0.f, fLissajous.y + 10.f });
+}
+
+void CBeholder::RoundAirStrikeLandMine(float _fTimeDelta)
+{
+    _float2 fLissajous = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, m_fRoundStrikeRadius, m_fRoundStrikeRadius, 1, 1, 1, 20);
+    m_fRoundStrikeRadius += 4 * _fTimeDelta;
+
+    CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine");
+    pObj->Get_Transform()->Add_Pos(_float3(fLissajous.x, -0.3f, fLissajous.y + 10.f));
+}
+
+void CBeholder::AirBoom(_float3 vPos)
+{
+
+    for (int i = 0; i < 15; ++i) {
+        _float3 vTargetPos = vPos;
+        _float3 vLookPos = { 0.f, 0.f, 0.f };
+        _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-1.f, 1.f);
+        _float fRandomY = CMath_Manager::Get_Instance()->Random_Float(1, 20);
+        _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-1.f, 1.f);
+
+        vTargetPos += { fRandomX, 10.f + fRandomY, fRandomZ };
+        vLookPos = { vTargetPos.x, 5.f + fRandomY, vTargetPos.z };
+
+        BeholderAttackOrder LaserOrder;
+        LaserOrder.eOrder = AIRSTRIKE;
+        LaserOrder.vMasterPos = vTargetPos;
+        LaserOrder.vLook = vLookPos;
+
+        CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+    }
+}
+
+void CBeholder::Shoot()
+{
+    _float3 vBulletPos = m_pTransformCom->Get_Pos();
+    vBulletPos.y += 0.25f;
+
+    _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+    vPlayerPos.y -= 0.4f;
+    CGameObject* pBullet = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_Bullet");
+    pBullet->Get_Transform()->Set_Position(vBulletPos);
+    pBullet->Get_Transform()->Set_Scale({ 2.f, 1.f, 2.f });
+    pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+    static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
 }
 
 void CBeholder::Hit(void* pArg)
@@ -248,6 +522,9 @@ void CBeholder::Hit(void* pArg)
     CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
     pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);
     pHitBlood->Get_Transform()->Set_Scale({ 3.f, 3.f, 0.5f });
+
+    //zzz
+    CPlayer_Manager::Get_Instance()->Set_PlayerHP(CPlayer_Manager::Get_Instance()->Get_PlayerHP() + 1);
 
     _bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
     if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA) {
@@ -707,6 +984,22 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
         m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
         break;
     }
+}
+
+void CBeholder::Set_PatternEndCheck()
+{
+    if(CPlayer_Manager::Get_Instance()->Get_IsPattern() == false)
+		m_ePattern = PATTERN_IDLE;
+}
+
+void CBeholder::Set_PatternStart()
+{
+    CPlayer_Manager::Get_Instance()->Set_Pattern(true);
+}
+
+void CBeholder::Set_PatternEnd()
+{
+    CPlayer_Manager::Get_Instance()->Set_Pattern(false);
 }
 
 CBeholder* CBeholder::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

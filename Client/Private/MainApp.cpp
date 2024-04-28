@@ -37,12 +37,14 @@ HRESULT CMainApp::Initialize()
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 	//	return E_FAIL;
 
-	if (FAILED(Open_Level(LEVEL_ELEVATOR)))
+	//if (FAILED(Open_Level(LEVEL_ELEVATOR)))
+	//	return E_FAIL;
+	if (FAILED(Open_Level(LEVEL_BOSS)))
 		return E_FAIL;
 
 	//m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM.mp3", L"TestBgm");
 	//m_pGameInstance->Play(L"TestBgm", true);
-	// ÀûÀº º¼·ýÀÛ°Ô(0.1~0.5f) ÇÃ·¹ÀÌ¾î´Â »ó´ëÀûÀ¸·Î Å©°Ô(0.6~1.0), 
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Û°ï¿½(0.1~0.5f) ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½(0.6~1.0), 
 
 	return S_OK;
 }

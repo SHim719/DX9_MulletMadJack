@@ -1,7 +1,7 @@
 #pragma once
 #include "Client_Defines.h"
 #include "Pawn.h"
-
+#include "MathManager.h"
 
 
 BEGIN(Engine)
@@ -17,7 +17,22 @@ class CBeholder final : public CPawn
 public:
 
 	enum ATTACKORDER {
-		PLAYERTRACKING, ENDORDER
+		PLAYERTRACKING, FREETRACKING, LANDMINESET, AIRSTRIKE, ENDORDER
+	};
+
+	enum BEHOLDER_PATTERN
+	{
+		PATTERN_IDLE,
+		PATTERN_WAITING,
+		PATTERN_PLAYERTRACKING,
+		PATTERN_ALLROUNDLASER,
+		PATTERN_ALLROUNDLASERLANDMINE,
+		PATTERN_SHOOT,
+		PATTERN_AIRSTRIKE,
+		PATTERN_ROUND_AIRSTRIKE,
+		PATTERN_ROUND_AIRSTRIKE_BOOM,
+		PATTERN_ROUND_AIRSTRIKE_LANDMINE,
+		PATTERN_END
 	};
 
 	struct BeholderAttackOrder
@@ -25,6 +40,8 @@ public:
 		//_float3 vLook;
 		//_float fTime = 0.f;
 		ATTACKORDER eOrder;
+		_float vSpeed = 1.f;
+		_float3 vLook = { 0.f,0.f,0.f };
 		_float3		vMasterPos;
 	};
 
@@ -73,7 +90,20 @@ private:
 	_bool Check_BodyShot(_float3 vHitLocalPos);
 	_bool Check_EggShot(_float3  vHitLocalPos);
 
+	void PatternState(_float _fTimeDelta);
+	void ActivePattern(_float fTimeDelta);
+
 	void Player_Tracking_Laser();
+	void All_Round_Laser();
+	void All_Round_Laser_LandMine();
+	void Shoot();
+	void AirStrike();
+	void RoundAirStrike();
+	void RoundAirStrikeBoom(float _fTimeDelta);
+	void RoundAirStrikeLandMine(float _fTimeDelta);
+
+	void AirBoom(_float3 vPos);
+
 	void Hit(void* pArg) override;
 private:
 	STATE			m_eState = STATE_IDLE;
@@ -106,6 +136,10 @@ public:
 	void SetState_Hit();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
 
+	void Set_PatternEndCheck();
+	void Set_PatternStart();
+	void Set_PatternEnd();
+
 public:
 	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
 
@@ -128,8 +162,30 @@ private:
 	_float3			m_vTargetRecentPos = { 0.f,0.f,0.f };
 	_float3			m_vTargetDir = { 0.f,0.f,0.f };
 
+	_int			m_iPatternCount = 0;
+	_int			m_iPatternCountMax = 7;
+	
+	_float			m_fPatternTimeDelay = 2.f;
+	_float			m_fPatternTimeDelayMax = 3.f;
 
+	_int			m_iShootCount = 0;
+	_int			m_iShootCountMax = 5;
 
+	_float			m_fShootDelay = 0.2f;
+	_float			m_fShootDelayMax = 0.2f;
+
+	_float			m_fRoundStrikeDelay = 0.4f;
+	_float			m_fRoundStrikeDelayMax = 0.4f;
+
+	_float			m_fRoundStrikeBoomDelay = 0.05f;
+	_float			m_fRoundStrikeBoomDelayMax = 0.05f;
+
+	_float		    m_fRoundStrikeRadius = 6.f;
+	_float			m_fRoundStrikeRadiusMax = 12.f;
+
+	_float          m_fLissajousTime = 0.f;
+
+	BEHOLDER_PATTERN m_ePattern = PATTERN_IDLE;
 };
 
 END

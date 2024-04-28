@@ -41,7 +41,6 @@ void CCollision_Manager::Tick()
 	
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Player", Trigger);
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Floor", Collision);
-	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"LandMine", Collision);
 
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Player", Trigger);
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Wall", Trigger);

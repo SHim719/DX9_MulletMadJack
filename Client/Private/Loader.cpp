@@ -164,6 +164,9 @@ HRESULT CLoader::Loading_For_Boss_Level()
 	if (FAILED(Loading_For_Map_Texture()))
 		return E_FAIL;
 
+	if (FAILED(Loading_For_WhiteSuitMonster()))
+		return E_FAIL;
+
 	if (FAILED(Loading_For_Boss_Texture()))
 		return E_FAIL;
 
@@ -464,6 +467,16 @@ HRESULT CLoader::Loading_For_Boss_Texture()
 			L"../Bin/Resources/Textures/LandMine/LandMine.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Artemis_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Artemis/Idle/Artemis_%d.png"),5))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Artemis_Attack_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Artemis/Attack/Artemis_%d.png"), 14))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -681,6 +694,10 @@ HRESULT CLoader::Ready_Monster_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_TrackingLaser"),
 		CTrackingLaser::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Artemis"),
+		CArtemis::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -1635,6 +1652,12 @@ HRESULT CLoader::Ready_BGM()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Elevator_FX.wav", L"Elevator_FX")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Instrumental.ogg", L"Beholder_Instrument")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Extended.ogg", L"Beholder_Extend")))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1815,7 +1838,6 @@ HRESULT CLoader::Ready_Streamer_Sound()
 {
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Streamer/Thank_You.wav", L"Streamer_Thank_You")))
 		return E_FAIL;
-
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue0.wav", L"FirstDialogue0")))
 		return E_FAIL;

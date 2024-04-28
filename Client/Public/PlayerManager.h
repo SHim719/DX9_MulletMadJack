@@ -147,6 +147,12 @@ public:
 	string Get_Execution_Target() { return m_strExecutionTarget; }
 
 	_bool Is_ActionIdle() { return m_bActionIDLE; }
+
+	void Set_Pattern(_bool _bPattern) { m_bPattern = _bPattern; }
+	_bool Get_IsPattern() { return m_bPattern; }
+
+	void Set_RoundPattern(_bool _bRoundPattern) { m_bRoundPattern = _bRoundPattern; }
+	_bool Get_IsRoundPattern() { return m_bRoundPattern; }
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -190,6 +196,8 @@ private:
 
 	string						m_strExecutionTarget = "";
 
+	_bool						m_bPattern = false;
+	_bool						m_bRoundPattern = false;
 private:
 
 	CPlayer* m_pPlayer = nullptr;
