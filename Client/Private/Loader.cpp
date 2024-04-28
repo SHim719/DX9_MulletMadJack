@@ -57,6 +57,7 @@ unsigned int CLoader::Loading()
 		hr = Loading_For_GamePlay_Level();
 		break;
 	case LEVEL_GAMEPLAY:
+	case LEVEL_ELEVATOR:
 		hr = Loading_For_GamePlay_Level();
 		break;
 	case LEVEL_SANS:
@@ -1052,6 +1053,11 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 			L"../Bin/Resources/Textures/Ui/OnGoing/Dead_FadeOut.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"UI_Ultimate_Picture_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Ultimate/Ultimate_Picture.png"))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1071,6 +1077,7 @@ HRESULT CLoader::Ready_TextUi_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Dialogue/Dialogue.png"))))
 		return E_FAIL;
+
 
 	return S_OK;
 }
@@ -1121,6 +1128,16 @@ HRESULT CLoader::Ready_PlayerUi_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"SansFace_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Player/LeftArm/SansFace%d.png", 5))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Announcer_Phone_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Phone_Announcer/Announcer%d.png", 8))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Noise_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Noise/Noise%d.png", 2))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Phone_BackGround_Textures",
@@ -1248,6 +1265,17 @@ HRESULT CLoader::Ready_Camera_Effect_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Camera_Blood_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Filter/Blood_Filter.png"))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Slash_Ultimate_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Player/Katana/Ultimate/Ultimate_Slash%d.png"
+			, 27))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Grey_Filter_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Filter/Grey_Filter.png"))))
+		return E_FAIL;
+
+	
 
 	return S_OK;
 }
@@ -1460,6 +1488,12 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 		eUiRenderType::Render_Blend,
 		CUI_Dialogue::Create(m_pGraphic_Device))))
 		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("UI_Ultimate_Picture"),
+		eUiRenderType::Render_Blend,
+		CUI_UltimatePicture::Create(m_pGraphic_Device))))
+		return E_FAIL;
+	
 	return S_OK;
 }
 
@@ -1572,6 +1606,12 @@ HRESULT CLoader::Ready_Active_Camera_Effect()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Camera_Blood", eUiRenderType::Render_Blend, CBlood_Effect::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Slash_Ultimate", eUiRenderType::Render_Blend, CSlash_Ultimate::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Grey_Filter", eUiRenderType::Render_Blend, CGrey_Filter::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1584,6 +1624,12 @@ HRESULT CLoader::Ready_BGM()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Stage2.wav", L"Gameplay2")))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Level_Elevator_Bgm.mp3", L"Elevator_BGM")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Elevator_SFX.mp3", L"Elevator_Level_SFX")))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Elevator_FX.wav", L"Elevator_FX")))
@@ -1674,6 +1720,13 @@ HRESULT CLoader::Ready_Player_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Sliding.wav", L"Player_Sliding")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Ultimate_Voice.mp3", L"Ultimate_Voice")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Haki.mp3", L"Haki")))
+		return E_FAIL;
+
+
 	return S_OK;
 }
 
@@ -1741,6 +1794,9 @@ HRESULT CLoader::Ready_Effect_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Ambiences/Blood_Splatter.wav", L"Blood_Splatter")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Danger.mp3", L"Warning")))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -1766,6 +1822,12 @@ HRESULT CLoader::Ready_Streamer_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue1.wav", L"FirstDialogue1")))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue2.wav", L"FirstDialogue2")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/Sans_Voice.mp3", L"Sans_Voice")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Noise_SFX.mp3", L"ElevatorSansDialogue2")))
 		return E_FAIL;
 
 	return S_OK;

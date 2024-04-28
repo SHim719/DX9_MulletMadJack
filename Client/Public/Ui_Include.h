@@ -45,3 +45,6 @@
 #include "CUi_Sans_Heart.h"
 #include "CUi_Dead_FadeOut.h"
 #include "UI_Dialogue.h"
+#include "Slash_Ultimate.h"
+#include "UI_UltimatePicture.h"
+#include "Grey_Filter.h"

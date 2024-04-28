@@ -64,7 +64,7 @@ public:
 	void SetState_Bound();
 	void SetState_Pushed(_float3 vLook)	override;
 	void SetState_Fly(_float3 vLook) override { SetState_Pushed(vLook); } 
-	void SetState_Death(ENEMYHIT_DESC* pDesc);
+	void SetState_Death(ENEMYHIT_DESC* pDesc)	override;
 
 private:
 	STATE			m_eState = STATE_IDLE;

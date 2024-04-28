@@ -46,7 +46,6 @@ void CKatana_Effect::PriorityTick(_float fTimeDelta)
 
 void CKatana_Effect::Tick(_float fTimeDelta)
 {
-
 	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
 		m_iTexture_Index++;
 		AnimationDelayReset();
@@ -69,7 +68,6 @@ void CKatana_Effect::Tick(_float fTimeDelta)
 	}
 
 
-
 	m_fScale = { Get_Texture_Info().x / m_fDivide , Get_Texture_Info().y / m_fDivide, 1.f };
 
 	m_pTransformCom->Set_Scale(m_fScale);
@@ -79,10 +77,7 @@ void CKatana_Effect::Tick(_float fTimeDelta)
 
 void CKatana_Effect::LateTick(_float fTimeDelta)
 {
-
-
 	m_pTransformCom->Set_State(CTransform::STATE_POSITION, &_float3(m_UiDesc.m_fX , m_UiDesc.m_fY, 0.f));
-
 }
 HRESULT CKatana_Effect::Render()
 {

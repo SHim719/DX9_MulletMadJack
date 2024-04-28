@@ -12,6 +12,16 @@ public:
 	{
 		FADEIN,
 		FADEOUT,
+		FADEOUTIN,
+		FADESTATE_END,
+	};
+
+	enum FADECOLOR
+	{
+		BLACK,
+		RED,
+		WHITE,
+		COLOR_END,
 	};
 
 
@@ -31,8 +41,9 @@ public:
 	void End_RenderState();
 
 
-	void Set_FadeIn(_float fSpeed);
-	void Set_FadeOut(_float fSpeed);
+	void Set_FadeIn(_float fSpeed, FADECOLOR eColor, _float fTargetAlpha = 0.f, _bool ManualOff = false);
+	void Set_FadeOut(_float fSpeed, FADECOLOR eColor, _float fTargetAlpha = 255.f, _bool ManualOff = false);
+	void Set_FadeState(FADESTATE eState) { m_eFadeState = eState; }
 	_bool IsFinished();
 	FADESTATE Get_State() { return m_eFadeState; }
 
@@ -48,9 +59,15 @@ protected:
 	virtual HRESULT Add_Texture(void* pArg) override;
 
 private:
-	FADESTATE m_eFadeState = FADEOUT;
+	CTexture* m_arrTextures[COLOR_END] = {};
+
+	FADESTATE m_eFadeState = FADESTATE_END;
+	FADECOLOR m_eFadeColor = BLACK;
 	_float m_fAlpha = 0.f;
+	_float m_fTargetFadeInAlpha = 0.f;
+	_float m_fTargetFadeOutAlpha = 0.f;
 	_float m_fSpeed = 100.f;
+	_bool m_bManualOff = false; // 수동으로 끌것인가 false하면 타겟 알파값이 되면 자동으로 꺼짐.
 
 public:
 	static CUI_FadeInOut* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

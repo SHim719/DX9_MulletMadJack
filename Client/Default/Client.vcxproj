@@ -230,6 +230,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Explosion.h" />
     <ClInclude Include="..\Public\CUI_FadeInOut.h" />
     <ClInclude Include="..\Public\Flying_Katana.h" />
+    <ClInclude Include="..\Public\Grey_Filter.h" />
     <ClInclude Include="..\Public\HitBlood.h" />
     <ClInclude Include="..\Public\HitBloodKatanaEffect.h" />
     <ClInclude Include="..\Public\Katana.h" />
@@ -237,6 +238,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Katana_Opening.h" />
     <ClInclude Include="..\Public\Katana_Slash.h" />
     <ClInclude Include="..\Public\LandMine.h" />
+    <ClInclude Include="..\Public\Levels_Header.h" />
     <ClInclude Include="..\Public\Level_Boss.h" />
     <ClInclude Include="..\Public\Level_Map2.h" />
     <ClInclude Include="..\public\Light_Manager.h" />
@@ -293,6 +295,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Shotgun_Shot.h" />
     <ClInclude Include="..\Public\Shotgun_SpinA.h" />
     <ClInclude Include="..\Public\Shotgun_SpinB.h" />
+    <ClInclude Include="..\Public\Slash_Ultimate.h" />
     <ClInclude Include="..\Public\Slide.h" />
     <ClInclude Include="..\Public\Slope.h" />
     <ClInclude Include="..\Public\Soda.h" />
@@ -302,6 +305,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\TrackingLaser.h" />
     <ClInclude Include="..\Public\Trigger_Headers.h" />
     <ClInclude Include="..\Public\UI_Dialogue.h" />
+    <ClInclude Include="..\Public\UI_UltimatePicture.h" />
     <ClInclude Include="..\Public\Ventilador.h" />
     <ClInclude Include="..\Public\VIBuffer_BoxObj.h" />
     <ClInclude Include="..\Public\VIBuffer_Bullet.h" />
@@ -379,6 +383,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Enemy_Corpse.cpp" />
     <ClCompile Include="..\Private\CUI_FadeInOut.cpp" />
     <ClCompile Include="..\Private\Flying_Katana.cpp" />
+    <ClCompile Include="..\Private\Grey_Filter.cpp" />
     <ClCompile Include="..\Private\HitBlood.cpp" />
     <ClCompile Include="..\Private\HitBloodKatanaEffect.cpp" />
     <ClCompile Include="..\Private\Katana.cpp" />
@@ -405,6 +410,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Shotgun_Shot.cpp" />
     <ClCompile Include="..\Private\Shotgun_SpinA.cpp" />
     <ClCompile Include="..\Private\Shotgun_SpinB.cpp" />
+    <ClCompile Include="..\Private\Slash_Ultimate.cpp" />
     <ClCompile Include="..\Private\Slide.cpp" />
     <ClCompile Include="..\Private\Slope.cpp" />
     <ClCompile Include="..\Private\CTextManager.cpp" />
@@ -469,6 +475,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Terrain_Collider.cpp" />
     <ClCompile Include="..\Private\TrackingLaser.cpp" />
     <ClCompile Include="..\Private\UI_Dialogue.cpp" />
+    <ClCompile Include="..\Private\UI_UltimatePicture.cpp" />
     <ClCompile Include="..\Private\Ventilador.cpp" />
     <ClCompile Include="..\Private\VIBuffer_BoxObj.cpp" />
     <ClCompile Include="..\Private\VIBuffer_Bullet.cpp" />

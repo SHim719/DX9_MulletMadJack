@@ -74,6 +74,10 @@ private:
 
 	_int   m_iRandomSlash = 0;
 
+	_float m_fTimeScale = 1.f;
+
+public:
+	void Set_TimeScale(_float fTimeScale) { m_fTimeScale = fTimeScale; }
 public:
 	virtual void Free() override;
 };

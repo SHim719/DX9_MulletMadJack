@@ -52,7 +52,7 @@ void CKatana_Slash::PriorityTick(_float fTimeDelta)
 
 void CKatana_Slash::Tick(_float fTimeDelta)
 {
-
+	fTimeDelta *= m_fTimeScale;
 	if (AnimationDelay(fTimeDelta) < 0.f && m_iTexture_Index <= m_pTextureCom->Get_MaxTextureNum()) {
 		m_iTexture_Index++;
 		AnimationDelayReset();
@@ -77,6 +77,7 @@ void CKatana_Slash::Tick(_float fTimeDelta)
 
 void CKatana_Slash::LateTick(_float fTimeDelta)
 {
+	fTimeDelta *= m_fTimeScale;
 	_float2 fDisablePos = CPlayer_Manager::Get_Instance()->Get_TempDisablePosition_BothHand() * -5.f;
 	_float2 fOffSet = { 0, 0 };
 

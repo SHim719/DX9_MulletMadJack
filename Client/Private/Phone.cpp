@@ -257,6 +257,14 @@ HRESULT CPhone::Add_Texture(void* pArg)
 
     // 재욱 여기다 너가 넣으셈 원하는 텍스쳐들
 
+    if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Announcer_Phone_Textures")
+        , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Announcer)])))
+        return E_FAIL;
+
+    if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Noise_Textures")
+        , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Noise)])))
+        return E_FAIL;
+
     if (FAILED(Add_Component(LEVEL_STATIC, TEXT("SansFace_Textures")
         , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Sans)])))
         return E_FAIL;
@@ -489,6 +497,13 @@ void CPhone::Setting_Roop(_float RoopGap, _uint iTextureMin, _uint iTextureMax)
 void CPhone::Set_Roop(_bool Roop)
 {
     m_bFaceRoop = Roop;
+}
+
+void CPhone::Set_Phone_Texture_To_Default()
+{
+    m_eFace = FaceType::Hero;
+    m_fFaceChnageGap = 3.f;
+    m_fFaceChangeTime = 0.f;
 }
 
 void CPhone::Initialize_BackGround()

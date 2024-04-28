@@ -84,8 +84,8 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 
 	m_pKey_Manager->Update();
 
-	m_pObject_Manager->PriorityTick(fTimeDelta);
-	m_pObject_Manager->Tick(fTimeDelta);
+	m_pObject_Manager->PriorityTick(fTimeDelta * m_fTimeScale);
+	m_pObject_Manager->Tick(fTimeDelta * m_fTimeScale);
 	
 	m_pUi_Manager->PriorityTick(fTimeDelta);
 	m_pUi_Manager->Tick(fTimeDelta);
@@ -97,7 +97,7 @@ void CGameInstance::Tick_Engine(_float fTimeDelta)
 
 	m_pFrustum->Tick();
 
-	m_pObject_Manager->LateTick(fTimeDelta);
+	m_pObject_Manager->LateTick(fTimeDelta * m_fTimeScale);
 
 	m_pRenderer->Sort_AlphaBlendObj();
 
@@ -188,6 +188,10 @@ void CGameInstance::Set_TimeDivide(_float fTimeDivide)
 		return;
 
 	m_pTimer_Manager->Set_TimeDivide(fTimeDivide);
+}
+void CGameInstance::Set_TimeScale(_float fTimeScale)
+{
+	m_fTimeScale = fTimeScale;
 }
 #pragma endregion
 
@@ -361,6 +365,11 @@ CUi* CGameInstance::Get_ActiveBlendUI(const wstring& strKey)
 	return m_pUi_Manager->Get_ActiveBlendUI(strKey);
 }
 
+CUi* CGameInstance::Get_ActiveNonBlendUI(const wstring& strKey)
+{
+	return m_pUi_Manager->Get_ActiveNonBlendUI(strKey);
+}
+
 #pragma endregion
 
 #pragma region COLLISION_MANAGER
@@ -368,7 +377,7 @@ void CGameInstance::Add_RayDesc(const RAY_DESC& RayDesc)
 {
 	m_pCollision_Manager->Add_RayDesc(RayDesc);
 }
-_bool CGameInstance::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pOutHit, OUT _float3& fHitWorldPos, OUT _float& fDist)
+_bool CGameInstance::Ray_Cast(const RAY_DESC& RayDesc, OUT CGameObject*& pOutHit, OUT _float3& fHitWorldPos, OUT _float& fDist) 
 {
 	if (nullptr == m_pCollision_Manager)
 		return false;

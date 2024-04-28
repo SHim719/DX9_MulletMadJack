@@ -86,6 +86,7 @@ public:
 
 	void Set_Texture_Index(_uint iIndex) { m_iTexture_Index = iIndex; }
 	_uint Get_Texture_Index() { return m_iTexture_Index; }
+	void Add_Texture_Index(_uint iNum) { m_iTexture_Index += iNum; }
 
 protected:
 	LPDIRECT3DDEVICE9 m_pGraphic_Device;

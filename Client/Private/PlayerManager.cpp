@@ -222,6 +222,8 @@ void CPlayer_Manager::WeaponChange(CPlayer::WEAPON_TYPE eWeaponType)
 			Set_MaxMagazine(12);
 			break;
 		case CPlayer::WEAPON_TYPE::KATANA:
+			m_pGameInstance->Play(L"Katana_Opening", false);
+			m_pGameInstance->SetVolume(L"Katana_Opening", 0.7f);
 			Set_MaxMagazine(1000);
 			break;
 		default:

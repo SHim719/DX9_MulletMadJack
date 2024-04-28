@@ -544,6 +544,15 @@
     <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser">
       <UniqueIdentifier>{28262f6b-923a-41db-8b62-da2228904c94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\Effect\Slash_Ultimate">
+      <UniqueIdentifier>{6aaee0c6-d9d3-42d1-a21a-919a61ee9b1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Ultimate">
+      <UniqueIdentifier>{069459ce-57b9-40bb-8388-afb676616297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\GreyFilter">
+      <UniqueIdentifier>{94622bbf-5cdd-400d-9d54-aebb1aadb014}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1038,6 +1047,18 @@
     <ClInclude Include="..\Public\TrackingLaser.h">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Levels_Header.h">
+      <Filter>99.Defines</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Slash_Ultimate.h">
+      <Filter>04. UI\Ui\Effect\Slash_Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\UI_UltimatePicture.h">
+      <Filter>04. UI\Ui\CUi_Active\Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Grey_Filter.h">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\GreyFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1492,6 +1513,15 @@
     </ClCompile>
     <ClCompile Include="..\Private\TrackingLaser.cpp">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Slash_Ultimate.cpp">
+      <Filter>04. UI\Ui\Effect\Slash_Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\UI_UltimatePicture.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Grey_Filter.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\GreyFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

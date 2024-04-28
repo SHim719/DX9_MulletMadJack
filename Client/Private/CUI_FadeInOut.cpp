@@ -30,15 +30,16 @@ void CUI_FadeInOut::PriorityTick(_float fTimeDelta)
 void CUI_FadeInOut::Tick(_float fTimeDelta)
 {
     if (FADEIN == m_eFadeState)
-    {
         m_fAlpha -= m_fSpeed * fTimeDelta;
-    }
+    
     else
-    {
         m_fAlpha += m_fSpeed * fTimeDelta;
-    }
+    
 
-    m_fAlpha = clamp(m_fAlpha, 0.f, 255.f);
+    m_fAlpha = clamp(m_fAlpha, m_fTargetFadeInAlpha, m_fTargetFadeOutAlpha);
+
+    if (false == m_bManualOff && (m_fAlpha == m_fTargetFadeInAlpha || m_fAlpha == m_fTargetFadeOutAlpha))
+        Set_Active(false);
 }
 
 void CUI_FadeInOut::LateTick(_float fTimeDelta)
@@ -58,7 +59,7 @@ HRESULT CUI_FadeInOut::Render()
     if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
-    m_pTextureCom->Bind_Texture(m_iTexture_Index);
+    m_arrTextures[m_eFadeColor]->Bind_Texture(0);
 
     Begin_RenderState();
 
@@ -72,25 +73,34 @@ void CUI_FadeInOut::End_RenderState()
 {
     m_pGraphic_Device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG1);
 }
-void CUI_FadeInOut::Set_FadeIn(_float fSpeed)
+void CUI_FadeInOut::Set_FadeIn(_float fSpeed, FADECOLOR eColor, _float fTargetAlpha, _bool ManualOff)
 {
     m_eFadeState = FADEIN;
+    m_eFadeColor = eColor;
     m_fSpeed = fSpeed;
     m_fAlpha = 255.f;
+    m_fTargetFadeOutAlpha = 255.f;
+    m_fTargetFadeInAlpha = fTargetAlpha;
+    m_bManualOff = ManualOff;
 }
-void CUI_FadeInOut::Set_FadeOut(_float fSpeed)
+void CUI_FadeInOut::Set_FadeOut(_float fSpeed, FADECOLOR eColor, _float fTargetAlpha, _bool ManualOff)
 {
     m_eFadeState = FADEOUT;
+    m_eFadeColor = eColor;
     m_fSpeed = fSpeed;
     m_fAlpha = 0.f;
+    m_fTargetFadeOutAlpha = fTargetAlpha;
+    m_fTargetFadeInAlpha = 0.f;
+    m_bManualOff = ManualOff;
 }
 _bool CUI_FadeInOut::IsFinished()
 {
-    if (m_eFadeState == FADEOUT && m_fAlpha == 255.f)
+    if (m_eFadeState == FADEIN && m_fAlpha == m_fTargetFadeInAlpha)
         return true;
-    
-    if (m_eFadeState == FADEIN && m_fAlpha == 0.f)
+
+    if (m_eFadeState == FADEOUT && m_fAlpha == m_fTargetFadeOutAlpha)
         return true;
+   
     return false;
 }
 HRESULT CUI_FadeInOut::Initialize_Active()
@@ -153,7 +163,12 @@ HRESULT CUI_FadeInOut::Add_Texture(void* pArg)
 {
     if (FAILED(Add_Component(LEVEL_STATIC,
         TEXT("CUi_FadeInOut_Texture"),
-        (CComponent**)&m_pTextureCom)))
+        (CComponent**)&m_arrTextures[BLACK])))
+        return E_FAIL;
+
+    if (FAILED(Add_Component(LEVEL_STATIC,
+        TEXT("CUi_Dead_FadeOut_Texture"),
+        (CComponent**)&m_arrTextures[RED])))
         return E_FAIL;
 
     return S_OK;
@@ -174,4 +189,11 @@ CUI_FadeInOut* CUI_FadeInOut::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 void CUI_FadeInOut::Free()
 {
     __super::Free();
+
+    for (auto& pTexture : m_arrTextures)
+    {
+        if (pTexture)
+         Safe_Release(pTexture);
+    }
+        
 }

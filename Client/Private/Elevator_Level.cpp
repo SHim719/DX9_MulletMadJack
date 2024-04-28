@@ -22,16 +22,17 @@ CElevator_Level::CElevator_Level(LPDIRECT3DDEVICE9 pGraphic_Device)
 HRESULT CElevator_Level::Initialize()
 {
 	m_iLevelID = LEVEL_ELEVATOR;
+	m_pGameInstance->Stop(L"Loading");
 	m_pGameInstance->Stop(L"Elevator_FX");
-	m_pGameInstance->Play(L"Gameplay2", true);
-	m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
-
-	CElevatorLevelManager::Get_Instance()->Initialize();
+	//m_pGameInstance->Play(L"Gameplay2", true);
+	//m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
 
 	//CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
-	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-	//	return E_FAIL;
+	// 이거 주석
+	// Create에서 이니셜라이즈 호출 안할거임
+	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
+		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
@@ -57,6 +58,8 @@ HRESULT CElevator_Level::Initialize()
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
+	CElevatorLevelManager::Get_Instance()->Initialize(m_pGraphic_Device);
+
 	return S_OK;
 }
 
@@ -76,11 +79,11 @@ CElevator_Level* CElevator_Level::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CElevator_Level* pInstance = new CElevator_Level(pGraphic_Device);
 
-	//if (FAILED(pInstance->Initialize()))
-	//{
-	//	MSG_BOX(TEXT("Failed to Created : CElevator_Level"));
-	//	Safe_Release(pInstance);
-	//}
+	if (FAILED(pInstance->Initialize()))
+	{
+		MSG_BOX(TEXT("Failed to Created : CElevator_Level"));
+		Safe_Release(pInstance);
+	}
 
 	return pInstance;
 }

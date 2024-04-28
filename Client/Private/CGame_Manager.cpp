@@ -74,7 +74,8 @@ void CGame_Manager::Start()
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), true);
 	ShowCursor(FALSE);
 	CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_NONE);
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor"));
+	if (m_eToChangeLevel != LEVEL_SANS)
+		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Floor"));
 
 	Set_StageProgress(StageProgress::OnGoing);
 }
@@ -127,7 +128,7 @@ void CGame_Manager::Change_Check()
 			if (!m_pFadeInOutUI)
 				m_pFadeInOutUI = static_cast<CUI_FadeInOut*>(m_pGameInstance->Get_ActiveBlendUI(L"CUi_FadeInOut"));
 			m_pFadeInOutUI->Set_Active(true);
-			m_pFadeInOutUI->Set_FadeOut(200.f);
+			m_pFadeInOutUI->Set_FadeOut(200.f, CUI_FadeInOut::FADECOLOR::BLACK);
 			break;
 		case StageProgress::Changing:
 			m_fChangeTime = 3.f;
@@ -242,7 +243,7 @@ void CGame_Manager::Level_Changing()
 		}
 		CPlayer_Manager::Get_Instance()->Get_Player()->Active_Reset();
 		m_pGameInstance->Change_Level(pLevel);
-		m_pFadeInOutUI->Set_FadeIn(350.f);
+		m_pFadeInOutUI->Set_FadeIn(350.f, CUI_FadeInOut::FADECOLOR::BLACK);
 		m_pGameInstance->Stop(L"Elevator_FX");
 		pLevel->Initialize();
 		Start();

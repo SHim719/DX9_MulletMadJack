@@ -236,50 +236,8 @@ void CChainsaw_Monster::Hit(void* pArg)
 	}
 
 	if (m_fHp <= 0.f)
-	{
-		if (!bHitByKatana)
-		{
-			SetState_Death(pDesc);
-		}
-
-		else
-		{
-			m_bDestroyed = true;
-
-			m_pGameInstance->Play(L"Chainsaw_Death", false);
-			m_pGameInstance->SetVolume(L"Chainsaw_Death", 0.3f);
-
-			CEnemy_Corpse::ENEMYCORPSE_DESC desc;
-			desc.eType = CHAINSAW;
-			desc.isTop = true;
-			CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
-			
-			_float3 vOffset = 0.25f * m_pTarget->Get_Transform()->Get_GroundRight();
-			
-			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
-				pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
-			else
-				pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
-			
-			//pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
-			static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
-			
-			
-			
-			//vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
-			desc.isTop = false;
-			CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
-			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
-				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
-			else
-				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
-			static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
-
-			CGameObject* pHitEffect
-				= m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");
-			pHitEffect->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos());
-		}
-	}
+		SetState_Death(pDesc);
+	
 		
 }
 
@@ -683,6 +641,39 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 			break;
 		case CPlayer::SHOTGUN :
 			m_pAnimationCom->Play_Animation(TEXT("Death_Shotgun"), 0.1f, false);
+			break;
+
+		case CPlayer::KATANA:
+		{
+			m_bDestroyed = true;
+			CEnemy_Corpse::ENEMYCORPSE_DESC desc;
+			desc.eType = CHAINSAW;
+			desc.isTop = true;
+			CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+
+			_float3 vOffset = 0.25f * m_pTarget->Get_Transform()->Get_GroundRight();
+
+			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+				pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+			else
+				pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+
+			//pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
+			static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+
+			//vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
+			desc.isTop = false;
+			CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+			else
+				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+			static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+
+			CGameObject* pHitEffect
+				= m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");
+			pHitEffect->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos());
+		}
 			break;
 		default:
 			m_pAnimationCom->Play_Animation(TEXT("Death_Bodyshot"), 0.1f, false);

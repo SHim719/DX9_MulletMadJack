@@ -1,6 +1,9 @@
+#pragma once
+
 #include "Client_Defines.h"
 #include "CUi.h"
 #include "CText.h"
+#include "Phone.h"
 
 
 BEGIN(Client)
@@ -12,6 +15,7 @@ public:
 	{
 		APPEAR,
 		ONGOING,
+		DELAY,
 		FINISH,
 		DS_END,
 	};
@@ -43,21 +47,36 @@ public:
 	void Set_TextDelay(_float fTextDelay) { m_fTextDelay = fTextDelay; }
 	void Set_DialogueDelay(_float fDelay) { m_fDialogueDelay = fDelay; }
 	void Set_VoiceTag(const wstring& strVoiceTag) { m_strVoiceTag = strVoiceTag; }
-	_uint Get_NowDialIdx() { return m_iNowDialogueIndex; }
+	void Set_PhoneTexDescs(vector<CPhone::Phone_Texture_Desc> vecDescs) { m_vecPhoneTexDescs = vecDescs;}
 
+	_uint Get_NowDialIdx() { return m_iNowDialogueIndex; }
+	_bool Is_DialogueEnd() { return m_eState == DS_END; }
+
+	void Set_TextEndBind(function<void()> pFunc) { m_pTextBindFunc = pFunc; }
+	void Set_DialogueEndBind(function<void()> pFunc) { m_pDialogueEndFunc = pFunc; }
+
+	void SetState_OnGoing();
+	void SetState_Delay();
+	void SetState_Finish();
 private:
 	void State_Appear(_float fTimeDelta);
 	void State_OnGoing(_float fTimeDelta);
 	void State_Finish(_float fTimeDelta);
+	void State_Delay(_float fTimeDelta);
 
+	
 private:
 	_float3 m_OriginScale = { 650.f, 137.f, 1.f };
 	_float m_fScalingSpeed = 500.f;
 	_float m_fScalingY = 0.f;
+
 private:
+	class CPhone* m_pUI_Phone = { nullptr };
 	CText::Text_Info info;
 
+	vector<CPhone::Phone_Texture_Desc>	m_vecPhoneTexDescs;
 	vector<wstring> m_vecDialogues;
+
 	wstring m_strDialogue = L"";
 	wstring m_strVoiceTag = L"";
 
@@ -71,7 +90,11 @@ private:
 	_float m_fDialogueDelayAcc = 0.f;
 	RECT   m_tTextRect;
 
-	DialogueState m_eState = APPEAR;
+	DialogueState m_eState = DS_END;
+
+private:
+	function<void()> m_pTextBindFunc = {nullptr};
+	function<void()> m_pDialogueEndFunc = {nullptr};
 public:
 	static CUI_Dialogue* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

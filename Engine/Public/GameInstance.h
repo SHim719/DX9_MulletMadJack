@@ -45,6 +45,10 @@ public:
 	HRESULT Add_Timer(const wstring& strTimerTag);
 	void Compute_TimeDelta(const wstring& strTimerTag);
 	void Set_TimeDivide(_float fTimeDivide);
+	void Set_TimeScale(_float fTimeScale);
+	_float Get_TimeScale() { return m_fTimeScale; }
+private:
+	_float m_fTimeScale = 1.f;
 #pragma endregion
 
 #pragma region OBJECT_MANAGER
@@ -95,6 +99,7 @@ public:
 	int  Get_Ui_ActiveTextureIndex(const wstring& Ui_ActiveTag);
 
 	CUi* Get_ActiveBlendUI(const wstring& strKey);
+	CUi* Get_ActiveNonBlendUI(const wstring& strKey);
 #pragma endregion
 
 

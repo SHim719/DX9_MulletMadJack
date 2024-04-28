@@ -51,6 +51,7 @@ public:
 	virtual void SetState_Fly(_float3 vLook) {}
 	virtual void SetState_Air() {}
 	virtual void SetState_Landing() {}
+	virtual void SetState_Death(ENEMYHIT_DESC* pDesc) {}
 
 	virtual _bool Is_DeathState() { return false; }
 
@@ -66,7 +67,7 @@ protected:
 
 	_float			m_fHp = 8.f;
 	_float			m_fSpeed = 1.f;
-	_float			m_fPerceptionDist = 5.f;
+	_float			m_fPerceptionDist = 7.f;
 	_float			m_fRange = 1.f;
 	_bool			m_bPushRecovery = { false };
 

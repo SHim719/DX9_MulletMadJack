@@ -9,6 +9,7 @@ enum class FaceType
 	Hero,
 	Announcer,
 	Sans,
+	Noise,
 	End
 };
 class CPhone final : public CUi
@@ -26,6 +27,7 @@ public:
 	virtual void Tick(_float fTimeDelta);
 	virtual void LateTick(_float fTimeDelta);
 	virtual HRESULT Render();
+
 
 protected:
 	virtual void Initialize_Set_Scale_Pos_Rotation(void* pArg);
@@ -135,7 +137,15 @@ public:
 	void Set_Texture(FaceType Type, _uint iTextureIndex);
 	void Setting_Roop(_float RoopGap, _uint iTextureMin, _uint iTextureMax);
 	void Set_Roop(_bool Roop);
+	void Set_Phone_Texture_To_Default();
 
+	struct Phone_Texture_Desc
+	{
+		FaceType type;
+		_float fLoopGap;
+		_uint iTextureMin;
+		_uint iTextureMax;
+	};
 
 private:
 	CVIBuffer_Rect* m_pFaceVIBufferCom = { nullptr };

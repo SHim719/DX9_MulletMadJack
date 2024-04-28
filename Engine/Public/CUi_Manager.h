@@ -51,6 +51,7 @@ public:
 	void Set_Enter(bool _Enter);
 
 	CUi* Get_ActiveBlendUI(const wstring& strKey);
+	CUi* Get_ActiveNonBlendUI(const wstring& strKey);
 private:
 	map<const wstring, class CUi*> m_Ui_LifePrototypes;
 	list<class CUi*> m_Ui_LifeClonelist;

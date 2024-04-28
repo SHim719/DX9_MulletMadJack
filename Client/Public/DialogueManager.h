@@ -2,6 +2,7 @@
 
 #include "Client_Defines.h"
 #include "Base.h"
+#include "Phone.h"
 
 BEGIN(Engine)
 class CGameInstance;
@@ -14,6 +15,7 @@ enum DialogueEvent
 	FirstDialogue,
 	ElevatorSansDialogue,
 	ElevatorReturnDialogue,
+	ElevatoInvadeDialogue,
 	BossEntryDialogue,
 	DE_END
 };
@@ -30,14 +32,19 @@ public:
 	void Initialize();
 	void Tick(_float fTimeDelta);
 
-	void Start_Dialogue(DialogueEvent eDialEvent);
+	void Start_Dialogue(DialogueEvent eDialEvent, _float fTextDelay = 0.1f, _float fDialogueDelay = 0.2f);
+	_bool Check_DialogueEnd();
 private:
 	void Init_FirstDialogue();
+	void Init_ElevatorSansDialogue();
+	void Init_ElevatorReturnDialogue();
+	void Init_ElevatoInvadeDialogue();
 
-	void Tick_FirstDialogue();
-	void Tick_ElevatorSansDialogue();
-	void Tick_ElevatorReturnDialogue();
-	void Tick_BossEntryDialogue();
+	void Tick_FirstDialogue(_float fTimeDelta);
+	void Tick_ElevatorSansDialogue(_float fTimeDelta);
+	void Tick_ElevatorReturnDialogue(_float fTimeDelta);
+	void Tick_ElevatoInvadeDialogue();
+	void Tick_BossEntryDialogue(_float fTimeDelta);
 
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
@@ -46,7 +53,10 @@ private:
 	DialogueEvent m_eDialogueEvent = No_Dial;
 
 	vector<wstring> m_vecDialogues[DE_END];
+	vector<CPhone::Phone_Texture_Desc>	m_vecPhoneTextureDescs[DE_END];
 	wstring m_vecVoiceTag[DE_END] = {};
+
+	_float m_fTimeAcc = 0.f;
 public:
 	virtual void Free() override;
 };

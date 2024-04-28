@@ -17,7 +17,8 @@ class CElevatorLevelManager : public CBase
 public:
 	enum LEVEL_STATE
 	{
-		CutScene,
+		Sans,
+		Return,
 		OnGoing,
 		EndState,
 	};
@@ -27,22 +28,30 @@ private:
 	virtual ~CElevatorLevelManager() = default;
 
 public:
-	void Initialize();
+	void Initialize(LPDIRECT3DDEVICE9 pGraphic_Device);
 	void Tick(_float fDeltaTime);
 	
 
 private:
+	LPDIRECT3DDEVICE9 m_pGraphic_Device = { nullptr };
 	CGameInstance* m_pGameInstance = { nullptr };
 
-	LEVEL_STATE m_eState =	OnGoing;
+	LEVEL_STATE m_eState = Return;
 	_float3 m_vSpawnPos[SPAWNPOS_COUNT] = {};
 	_float m_fSpawnTime = 3.f;
 	_float m_fSpawnTimeAcc = 0.f;
 
+	_float m_fEventDelayTime = 5.f;
+	_float m_fEventDelayTimeAcc = 0.f;
+	_bool m_bAnotherBranch = false;
+
+	class CUI_FadeInOut* m_pFadeInOutUI = { nullptr };
 private:
-	void Cut_Scene(_float fDeltaTime);
-	void On_Going(_float fDeltaTime);
-	void End_State(_float fDeltaTime);
+	void State_Sans(_float fDeltaTime);
+	void State_Return(_float fDeltaTime);
+	void Warning();
+	void State_On_Going(_float fDeltaTime);
+	void State_End_State(_float fDeltaTime);
 
 	void Spawn_Monsters();
 public:

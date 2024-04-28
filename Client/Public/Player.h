@@ -21,7 +21,7 @@ public:
 	enum WEAPON_TYPE { PISTOL, SHOTGUN, KATANA, WEAPON_END };
 	enum HAND_TYPE { IDLE_HAND, BOTH_HAND, HAND_END };
 	enum ANIMATION_TYPE { IDLE, SHOT, RELOAD, SPIN, OPENING, ANIMATION_END };
-	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, EXECUTION_STATE, PLAYER_STATE_END };
+	enum PLAYER_STATE { IDLE_STATE, DASH_STATE, AIRDASH_STATE, SLOPE_STATE, EXECUTION_STATE, ULTIMATE_STATE, PLAYER_STATE_END };
 	enum MOVE_STATE { STOP, MOVE, MOVE_END };
 
 public:
@@ -97,12 +97,15 @@ private:
 	void AirDash_State(_float fTimeDelta);
 	void Slope_State(_float fTimeDelta);
 	void Execution_State();
+	void Ultimate_State();
 
 	void SetState_Idle();
 	void SetState_Dash();
 	void SetState_AirDash();
 	void SetState_Slope();
 	void SetState_Execution();
+	void SetState_Ultimate();
+
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
 		m_fShakePower = fShakePower; 
@@ -150,7 +153,6 @@ public:
 	void SansHit();
 	void SansLevelEnterInitialize();
 	void SansLevelExitInitialize();
-
 
 private:
 	vector<class CUi_Sans_Heart*> m_SansHeartVec;
@@ -207,6 +209,15 @@ private:
 
 	_bool m_bJumped = false;
 	_bool m_bSliding = false;
+
+// For Ultimate
+	class CSlash_Ultimate* m_pUltimateSlash = { nullptr };
+	class CKatana_Slash* m_pKatanaSlashUI = { nullptr };
+	class CUI_UltimatePicture* m_pPicture = { nullptr };
+	class CUI_FadeInOut* m_pUiFadeInOut = { nullptr };
+	_float m_fSlashDelay = 2.f;
+	_float m_fSlashDelayAcc = 2.f;
+	_bool m_bUltimateEnd = false;
 };
 
 END

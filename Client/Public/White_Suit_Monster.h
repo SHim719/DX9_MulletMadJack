@@ -93,7 +93,7 @@ public:
 	void SetState_Fly(_float3 vLook)	override;
 	void SetState_FlyDeath();
 	void SetState_Hit();
-	void SetState_Death(ENEMYHIT_DESC* pDesc);
+	void SetState_Death(ENEMYHIT_DESC* pDesc) override;
 	void SetState_Air()					override;
 	void SetState_Landing()				override;
 

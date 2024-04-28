@@ -384,6 +384,15 @@ CUi* CUi_Manager::Get_ActiveBlendUI(const wstring& strKey)
 	return it->second;
 }
 
+CUi* CUi_Manager::Get_ActiveNonBlendUI(const wstring& strKey)
+{
+	auto it = m_Ui_Active.find(strKey);
+	if (it == m_Ui_Active.end())
+		return nullptr;
+
+	return it->second;
+}
+
 bool CUi_Manager::Get_Ui_ActiveState(const wstring& Ui_ActiveTag)
 {
 	auto iter = m_Ui_Active.find(Ui_ActiveTag);

@@ -314,7 +314,7 @@ void CWhite_Suit_Monster::Hit(void* pArg)
             m_pGameInstance->Play(L"Blood_Splatter", false);
             m_pGameInstance->SetVolume(L"Blood_Splatter", 0.5f);
 
-            m_fHp -= 8.f;
+            m_fHp -= 10.f;
         }
         else
             m_fHp -= 5.f;
@@ -759,29 +759,69 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
     CPlayer::WEAPON_TYPE eWeaponType =CPlayer_Manager::Get_Instance()->Get_WeaponType();
     CUi_SpecialHit::SpecialHit_Desc Arg;
-    switch (pDesc->eHitType)
-    {
-    case CPawn::HEAD_SHOT: {
-        m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
-        if(eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
 
-        Arg.Hit = eSpecialHit::HEADSHOT;
-        Arg.iCount = 4;
-        m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
-        break;
-    }
-    case CPawn::BODY_SHOT: {
-        m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
-        if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
- 
+    if (eWeaponType == CPlayer::KATANA)
+    {
+        m_bDestroyed = true;
+        CEnemy_Corpse::ENEMYCORPSE_DESC desc;
+        desc.eType = CHAINSAW;
+        desc.isTop = true;
+        CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+
+        _float3 vOffset = 0.25f * m_pTarget->Get_Transform()->Get_GroundRight();
+
+        if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+            pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+        else
+            pCorpseUp->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+
+        //pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
+        static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+
+        //vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
+        desc.isTop = false;
+        CGameObject* pCorpseDown = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
+        if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())
+            pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
+        else
+            pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
+        static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+
+        CGameObject* pHitEffect
+            = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");
+        pHitEffect->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos());
+
         Arg.Hit = eSpecialHit::FINISHED;
         Arg.iCount = 4;
         m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
-        break;
     }
-    case CPawn::EGG_SHOT:
-        m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
-        break;
+
+    else
+    {
+        switch (pDesc->eHitType)
+        {
+        case CPawn::HEAD_SHOT: {
+            m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
+            if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
+
+            Arg.Hit = eSpecialHit::HEADSHOT;
+            Arg.iCount = 4;
+            m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+            break;
+        }
+        case CPawn::BODY_SHOT: {
+            m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
+            if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
+
+            Arg.Hit = eSpecialHit::FINISHED;
+            Arg.iCount = 4;
+            m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+            break;
+        }
+        case CPawn::EGG_SHOT:
+            m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
+            break;
+        }
     }
 }
 
