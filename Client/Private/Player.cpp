@@ -239,6 +239,9 @@ void CPlayer::Key_Input(_float fTimeDelta)
 
 		if (eWeaponType == PISTOL)
 		{
+			m_pGameInstance->Play(L"Shotgun_Opening", false);
+			m_pGameInstance->SetVolume(L"Shotgun_Opening", 1.f);
+
 			CPlayer_Manager::Get_Instance()->WeaponChange(SHOTGUN);
 		}
 		else if (eWeaponType == SHOTGUN)
@@ -454,25 +457,22 @@ void CPlayer::Slash_Katana(){
 	Camera_Shake_Order(600000.f, 0.4f);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Katana_Effect"), true);
 
-	/*m_pGameInstance->Play(L"Katana_Slash", false);
-	m_pGameInstance->SetVolume(L"Katana_Slash", 1.f);*/
+	_int SlashCount = CPlayer_Manager::Get_Instance()->Get_SlashCount();
 
-	int Katana_TextureIndex = m_pGameInstance->Get_Ui_ActiveTextureIndex(TEXT("Ui_Katana_Slash"));
-
-	if (Katana_TextureIndex == 0)
+	if (SlashCount == 0)
 	{
 		m_pGameInstance->Play(L"Katana_Air0", false);
-		m_pGameInstance->SetVolume(L"Katana_Air0", 1.f);
+		m_pGameInstance->SetVolume(L"Katana_Air0", 0.5f);
 	}
-	else if (Katana_TextureIndex == 1)
+	else if (SlashCount == 1)
 	{
 		m_pGameInstance->Play(L"Katana_Air1", false);
-		m_pGameInstance->SetVolume(L"Katana_Air1", 1.f);
+		m_pGameInstance->SetVolume(L"Katana_Air1", 0.5f);
 	}
-	else if (Katana_TextureIndex == 2)
+	else if (SlashCount == 2)
 	{
 		m_pGameInstance->Play(L"Katana_Air2", false);
-		m_pGameInstance->SetVolume(L"Katana_Air2", 1.f);
+		m_pGameInstance->SetVolume(L"Katana_Air2", 0.5f);
 	}
 }
 

@@ -544,6 +544,9 @@
     <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser">
       <UniqueIdentifier>{28262f6b-923a-41db-8b62-da2228904c94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\06. SkyBox">
+      <UniqueIdentifier>{165ad26a-63f6-492d-afbe-5d5ffd02ff47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1038,6 +1041,9 @@
     <ClInclude Include="..\Public\TrackingLaser.h">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CSkyBox.h">
+      <Filter>02. GameObjects\06. SkyBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1492,6 +1498,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\TrackingLaser.cpp">
       <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\TrackingLaser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CSkyBox.cpp">
+      <Filter>02. GameObjects\06. SkyBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

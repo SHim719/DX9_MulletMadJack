@@ -237,6 +237,9 @@
     <ClInclude Include="..\Public\Frustum.h">
       <Filter>01.Utility\97. Frustum</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\VIBuffer_Cube.h">
+      <Filter>01.Utility\04.Components\VIBuffer\Cube</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Private\Base.cpp">
@@ -340,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\Frustum.cpp">
       <Filter>01.Utility\97. Frustum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\VIBuffer_Cube.cpp">
+      <Filter>01.Utility\04.Components\VIBuffer\Cube</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

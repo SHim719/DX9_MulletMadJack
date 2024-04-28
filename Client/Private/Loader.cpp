@@ -10,7 +10,7 @@
 #include "MapObject_Header.h"
 #include "Effect_Headers.h"
 #include "Sans_Include.h"
-
+#include "CSkyBox.h"
 
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
@@ -146,6 +146,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		return E_FAIL;
 
 	if (FAILED(Ready_Streamer_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_SkyBox()))
 		return E_FAIL;
 
 	Initialize_TextManager();
@@ -1603,6 +1606,9 @@ HRESULT CLoader::Ready_Player_Weapon_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Fire0.wav", L"Shotgun_Fire")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Load0.wav", L"Shotgun_Opening")))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Guns/shotgun/Shotgun_Reload.wav", L"Shotgun_Reload")))
 		return E_FAIL;
 
@@ -1766,6 +1772,19 @@ HRESULT CLoader::Ready_Streamer_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue1.wav", L"FirstDialogue1")))
 		return E_FAIL;
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Voice/FirstDialogue2.wav", L"FirstDialogue2")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_SkyBox()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("SkyBox_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_CUBEMAP, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 10))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SkyBox"),
+		CSkyBox::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

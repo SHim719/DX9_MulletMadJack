@@ -36,7 +36,13 @@ protected:
 protected:
 	LPDIRECT3DINDEXBUFFER9			m_pIB = nullptr;
 	_uint							m_iIndexSizeofPrimitive = 0;
-	D3DFORMAT						m_eIndexFormat;
+	D3DFORMAT						m_eIndexFormat ;
+
+	_uint							m_iIndexStride = { 0 };
+	_uint							m_iNumIndices = { 0 };
+
+protected:
+	_float3*						m_pVerticesPos = { nullptr };
 
 public:
 	const vector<_float3>& Get_Positions() const { return m_vecPositions; }

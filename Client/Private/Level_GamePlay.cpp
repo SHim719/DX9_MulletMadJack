@@ -30,6 +30,8 @@
 #include "Trigger_Headers.h"
 #include "Level_Map2.h"
 
+#include "CSkyBox.h"
+
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device }
@@ -50,6 +52,9 @@ HRESULT CLevel_GamePlay::Initialize()
 		return E_FAIL;
 	
 	if (FAILED(Ready_Layer_Player()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Layer_SkyBox(TEXT("Layer_SkyBox"))))
 		return E_FAIL;
 
 	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
@@ -166,6 +171,14 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 		MSG_BOX(TEXT("Failed to Create Player"));
 		return E_FAIL;
 	}
+
+	return S_OK;
+}
+
+HRESULT CLevel_GamePlay::Ready_Layer_SkyBox(const wstring& strLayerTag)
+{
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_SkyBox")))
+		return E_FAIL;
 
 	return S_OK;
 }
