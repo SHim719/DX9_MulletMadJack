@@ -242,26 +242,7 @@ void CLevel_GamePlay::Test_Ui()
 	{
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_GreenCrossActive"));
 	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::V))
-	{
-		//GasterArg pArg;
-		//pArg.Pos = SansGasterPos::Middle;
-		//pArg.FirePos = SansGasterFirePos::Up;
-		//pArg._floor = 0;
-		//m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Gaster", TEXT("Prototype_CSans_Gaster"), &pArg);
 
-
-		//pArg.Pos = SansGasterPos::left;
-		//pArg.FirePos = SansGasterFirePos::Up;
-		//pArg._floor = 0;
-		//m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Gaster", TEXT("Prototype_CSans_Gaster"), &pArg);
-
-
-		//pArg.Pos = SansGasterPos::Right;
-		//pArg.FirePos = SansGasterFirePos::Straight;
-		//pArg._floor = 0;
-		//m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Gaster", TEXT("Prototype_CSans_Gaster"), &pArg);
-	}
 }
 
 //else if (m_pGameInstance->GetKeyDown(eKeyCode::Y))

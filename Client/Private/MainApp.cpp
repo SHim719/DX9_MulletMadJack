@@ -35,12 +35,16 @@ HRESULT CMainApp::Initialize()
 
 
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
+	if (FAILED(Open_Level(LEVEL_LOBBY)))
+		return E_FAIL;
+
+	//if (FAILED(Open_Level(LEVEL_BOSS)))
 	//	return E_FAIL;
 
 	//if (FAILED(Open_Level(LEVEL_ELEVATOR)))
 	//	return E_FAIL;
-	if (FAILED(Open_Level(LEVEL_BOSS)))
-		return E_FAIL;
+	//if (FAILED(Open_Level(LEVEL_BOSS)))
+	//	return E_FAIL;
 
 	//m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM.mp3", L"TestBgm");
 	//m_pGameInstance->Play(L"TestBgm", true);

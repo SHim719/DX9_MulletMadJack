@@ -26,8 +26,6 @@ private:
 	class CFPS_Camera* m_pFPS_Camera = { nullptr };
 	class CSans* m_pSans = { nullptr };
 
-	// delete this !!!!!!!!!!!!!!!!!!!!!!!!!!
-	_float m_itesttime = { 0 };
 
 public:
 	static CSansLevel* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

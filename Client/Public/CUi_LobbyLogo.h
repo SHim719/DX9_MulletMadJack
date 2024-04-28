@@ -1,16 +1,16 @@
 #pragma once
 #include "Client_Defines.h"
 #include "CUi.h"
-#include "CUi_DrinkSoda_Word.h"
+
 
 BEGIN(Client)
 
-class CUi_Finish final : public CUi
+class CUi_LobbyLogo final : public CUi
 {
 protected:
-	CUi_Finish(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Finish(const CUi_Finish& rhs);
-	virtual ~CUi_Finish() = default;
+	CUi_LobbyLogo(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_LobbyLogo(const CUi_LobbyLogo& rhs);
+	virtual ~CUi_LobbyLogo() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -18,9 +18,8 @@ public:
 	virtual void PriorityTick(_float fTimeDelta) override;
 	virtual void Tick(_float fTimeDelta) override;
 	virtual void LateTick(_float fTimeDelta) override;
-	void Render_Begin();
 	virtual HRESULT Render() override;
-	void Render_End();
+
 
 protected:
 	virtual HRESULT Initialize_Active() override;
@@ -36,26 +35,16 @@ protected:
 
 
 private:
-	void Scaling(_float fTimeDelta);
-	void ChangeColor();
-
-private:
-	_float m_fScalingTime = { 0 };
-	_float3 m_OriginScale = { 720, 90, 1 };
+	void TextureSwitching(_float fTimeDelta);
 
 
 private:
-	CTexture* m_pBackGroundTextureCom = { nullptr };
-	CTransform* m_pBackGroundTransformCom = { nullptr };
-	CVIBuffer_Rect* m_pBackGroundVIBufferCom = { nullptr };
-	Ui_Pos_Size_Rotation m_BackGround = {};
-	RGBState m_eRGBstate = { RGBState::End };
-	_uint m_Red = { 0 };
-	_uint m_Green = { 0 };
-	_uint m_Blue = { 0 };
+	_float m_fSwitchingGap = { 0 };
+	_float m_fSwitchingTime = { 0 };
+
 
 public:
-	static CUi_Finish* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_LobbyLogo* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 

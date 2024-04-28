@@ -53,6 +53,9 @@ unsigned int CLoader::Loading()
 	case LEVEL_LOGO:
 		hr = Loading_For_Logo_Level();
 		break;
+	case LEVEL_LOBBY:
+		hr = Loading_For_Lobby_Level();
+		break;
 	case LEVEL_STATIC:
 		hr = Loading_For_GamePlay_Level();
 		break;
@@ -97,6 +100,7 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 
 	if (FAILED(Loading_For_Drone_Monster()))
 		return E_FAIL;
+
 	m_fProgress = 0.3f;
 
 	if (FAILED(Loading_For_Map_Texture()))
@@ -222,9 +226,18 @@ HRESULT CLoader::Loading_For_Boss_Level()
 
 }
 
+HRESULT CLoader::Loading_For_Lobby_Level()
+{
+	lstrcpy(m_szLoadingText, TEXT("End."));
+
+	m_fProgress = 1.f;
+	m_isFinished = true;
+
+	return S_OK;
+}
+
 HRESULT CLoader::Loading_For_Sans_Level()
 {
-
 	if (FAILED(Loading_For_Map_Texture()))
 		return E_FAIL;
 
@@ -232,6 +245,9 @@ HRESULT CLoader::Loading_For_Sans_Level()
 		return E_FAIL;
 
 	if (FAILED(Ready_Monster_Prototype()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Effect_Prototype()))
 		return E_FAIL;
 
 	if (FAILED(Ready_MapObject_Prototype()))
@@ -445,6 +461,16 @@ HRESULT CLoader::Loading_For_Sans_Texture()
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("CUi_Sans_Heart_Texture"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			TEXT("../Bin/Resources/Textures/Ui/Part/SansHeart.png")))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("CUi_Sans_Black_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/CUi_Sans_Black.png")))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("CSansMiss_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Pawn/Sans_Boss/CSansMiss.png")))))
 		return E_FAIL;
 
 	return S_OK;
@@ -715,6 +741,10 @@ HRESULT CLoader::Ready_Effect_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_HitBloodKatanaEffect"),
 		CHitBloodKatanaEffect::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_CSansMiss"),
+		CSansMiss::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;
@@ -1005,9 +1035,14 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 			L"../Bin/Resources/Textures/Ui/OnGoing/Dash_Finish_Stroke.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_DrinkSoda_Word_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Drink_Soda_Word.png"))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Finish_BackGround_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/OnGoing/Finish_BackGround.png"))))
+			L"../Bin/Resources/Textures/Ui/OnGoing/Finish_BackGround_Final.png"))))
 		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_DrinkSoda_Texture",
@@ -1462,8 +1497,13 @@ HRESULT CLoader::Ready_Active_UiShop()
 HRESULT CLoader::Ready_Active_UiOnGoing()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Finish"),
-		eUiRenderType::Render_NonBlend,
+		eUiRenderType::Render_Blend,
 		CUi_Finish::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_DrinkSoda_Word"),
+		eUiRenderType::Render_Blend,
+		CUi_DrinkSoda_Word::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_DrinkSoda"),
@@ -1501,6 +1541,11 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 		CUi_Dead_FadeOut::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Sans_Black"),
+		eUiRenderType::Render_NonBlend,
+		CUi_Sans_Black::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("UI_Dialogue"),
 		eUiRenderType::Render_Blend,
 		CUI_Dialogue::Create(m_pGraphic_Device))))
@@ -1511,6 +1556,7 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 		CUI_UltimatePicture::Create(m_pGraphic_Device))))
 		return E_FAIL;
 	
+		return E_FAIL; 
 	return S_OK;
 }
 

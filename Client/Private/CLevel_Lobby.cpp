@@ -10,18 +10,17 @@ CLevel_Lobby::CLevel_Lobby(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 HRESULT CLevel_Lobby::Initialize()
 {
-	//m_iLevelID = LEVEL_LOBBY;
+	m_iLevelID = LEVEL_LOBBY;
+
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_LobbyLogo");
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_LobbyButton");
 
 	return S_OK;
 }
 
 void CLevel_Lobby::Tick(_float fTimeDelta)
 {
-	if (GetKeyState(VK_RETURN) & 0x8000)
-	{
-		if (FAILED(m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pGraphic_Device, LEVEL_GAMEPLAY))))
-			return;
-	}
+
 }
 
 HRESULT CLevel_Lobby::Render()
@@ -45,5 +44,9 @@ CLevel_Lobby* CLevel_Lobby::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 
 void CLevel_Lobby::Free()
 {
+
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_LobbyLogo", false);
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_LobbyButton", false);
+
 	__super::Free();
 }

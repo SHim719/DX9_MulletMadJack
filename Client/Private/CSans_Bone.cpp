@@ -30,7 +30,11 @@ HRESULT CSans_Bone::Initialize(void* pArg)
     m_pAnimationCom->Play_Animation(TEXT("Bone"), 0.1f, true);
 
     CBoxCollider::BOXCOLLISION_DESC pDesc;
-    pDesc.vScale = m_pTransformCom->Get_Scale();
+
+    _float3 Scale = m_pTransformCom->Get_Scale();
+    Scale.z -= 0.9f;
+    Scale.x -= 0.05f;
+    pDesc.vScale = Scale;
     pDesc.vOffset = { 0.f, 0.f, 0.f };
     m_pBoxCollider = dynamic_cast<CBoxCollider*>(Add_Component
     (LEVEL_STATIC, TEXT("Box_Collider_Default"), TEXT("Collider"), &pDesc));

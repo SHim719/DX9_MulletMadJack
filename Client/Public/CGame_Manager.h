@@ -63,7 +63,7 @@ public:
 public:
 	HRESULT Ready_Prototype_GameObjects();
 	HRESULT Ready_Prototype_Components();
-	void Ready_LobbyUi();
+	HRESULT Ready_LobbyUi();
 	void Ready_Loading_BackGroundTextureAndUi(); // need Ready_Prototype_Components fuction
 	//Custom Prototype
 	HRESULT Ready_Execution_Texture();

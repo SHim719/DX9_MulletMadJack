@@ -150,6 +150,7 @@ void CUi_DrinkSoda::Adjust_Alpha(_float fTimeDelta)
 
         if (m_iAlpha <= 2)
         {
+            m_pGameInstance->Set_Ui_ActiveState(L"CUi_DrinkSoda_Word");
             m_bActive = false;
         }
         else

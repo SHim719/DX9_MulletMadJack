@@ -79,7 +79,7 @@ public:
 	void SetTurn(SansTurnBased Turn);
 	SansTurnBased GetSansTurnInfo() { return m_Turn; }
 	_uint GetPatternCount() { return m_iPatternCount; }
-
+	void TransParent();
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();
@@ -119,6 +119,7 @@ private:
 	_int m_iDetailPatternCount = { 0 };
 	_int m_iSansTextCount = { -1 };
 	_uint m_iSansTextLength = { 0 };
+	_float m_fTransParentTime = { 0 };
 	SansTurnBased m_Turn = { SansTurnBased::SansTurn };
 	
 
@@ -135,6 +136,7 @@ private:
 	CRigidbody* m_pRigidbody = { nullptr };
 	class CBone_Spawner* m_pBoneSpawner = { nullptr };
 	class CGaster_Spawner* m_pGasterSpawner = { nullptr };
+	CTransform* m_pPlayerTransformCom = { nullptr };
 
 
 public:
