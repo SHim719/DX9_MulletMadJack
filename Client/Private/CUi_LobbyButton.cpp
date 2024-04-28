@@ -40,7 +40,7 @@ void CUi_LobbyButton::Tick(_float fTimeDelta)
 	Check_Picking();
 	Texture_Switching();
 	Player_Select();
-	ShowCursor(true);
+	
 }
 
 void CUi_LobbyButton::LateTick(_float fTimeDelta)
@@ -90,6 +90,8 @@ HRESULT CUi_LobbyButton::Initialize_Active()
 
 	Initialize_PickingArea();
 	InitializeText();
+
+	ShowCursor(true);
 
 	return S_OK;
 }
@@ -351,13 +353,13 @@ void CUi_LobbyButton::Player_Select()
 	{
 		if (m_bFocusedVec[i] && m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 		{
-			ShowCursor(false);
+		
 			switch (i)	
 			{
 			case 0:
 				// game start
 				m_pGameInstance->Change_Level
-				(CLevel_Loading::Create(m_pGraphic_Device, LEVEL_GAMEPLAY));
+				(CLevel_Loading::Create(m_pGraphic_Device, LEVEL_SANS));
 				break;
 			case 1:
 				// none
@@ -368,6 +370,8 @@ void CUi_LobbyButton::Player_Select()
 			default:
 				break;
 			}
+			m_bActive = false;
+			ShowCursor(false);
 		}
 	}
 }

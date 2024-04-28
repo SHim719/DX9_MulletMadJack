@@ -559,6 +559,9 @@
     <Filter Include="04. UI\Ui\CUi_Lobby\LobbyLogo">
       <UniqueIdentifier>{f1ccf4a4-e707-4607-803f-4e176a4d755b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda_Word">
+      <UniqueIdentifier>{cc4a35a3-fe75-430a-bc48-02c9fbace4c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1065,6 +1068,9 @@
     <ClInclude Include="..\Public\CUi_LobbyButton.h">
       <Filter>04. UI\Ui\CUi_Lobby\LobbyButton</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi_DrinkSoda_Word.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda_Word</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1531,6 +1537,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_LobbyButton.cpp">
       <Filter>04. UI\Ui\CUi_Lobby\LobbyButton</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_DrinkSoda_Word.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_DrinkSoda_Word</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

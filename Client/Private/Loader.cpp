@@ -1017,9 +1017,14 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 			L"../Bin/Resources/Textures/Ui/OnGoing/Dash_Finish_Stroke.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_DrinkSoda_Word_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Drink_Soda_Word.png"))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Finish_BackGround_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/OnGoing/Finish_BackGround.png"))))
+			L"../Bin/Resources/Textures/Ui/OnGoing/Finish_BackGround_Final.png"))))
 		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_DrinkSoda_Texture",
@@ -1447,8 +1452,13 @@ HRESULT CLoader::Ready_Active_UiShop()
 HRESULT CLoader::Ready_Active_UiOnGoing()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Finish"),
-		eUiRenderType::Render_NonBlend,
+		eUiRenderType::Render_Blend,
 		CUi_Finish::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_DrinkSoda_Word"),
+		eUiRenderType::Render_Blend,
+		CUi_DrinkSoda_Word::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_DrinkSoda"),

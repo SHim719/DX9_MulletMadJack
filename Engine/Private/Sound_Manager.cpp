@@ -17,13 +17,23 @@ HRESULT CSound_Manager::Initialize()
 HRESULT CSound_Manager::Create_Sound(const string& strPath, const wstring& strSoundTag)
 {
 	CSound* pSound = CSound::Create(m_pFmodCore, strPath);
+
 	if (nullptr == pSound)
 	{
 		assert(false);
 		return E_FAIL;
 	}
 
-	m_Sounds.insert({ strSoundTag, pSound });
+	auto iter = m_Sounds.find(strSoundTag);
+
+	if (iter == m_Sounds.end())
+	{
+		m_Sounds.insert({ strSoundTag, pSound });
+	}
+	else
+	{
+		Safe_Release(pSound);
+	}
 
 	return S_OK;
 }

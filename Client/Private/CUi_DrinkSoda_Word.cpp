@@ -1,16 +1,16 @@
-#include "CUi_Finish.h"
+#include "CUi_DrinkSoda_Word.h"
 
-CUi_Finish::CUi_Finish(LPDIRECT3DDEVICE9 pGraphic_Device)
+CUi_DrinkSoda_Word::CUi_DrinkSoda_Word(LPDIRECT3DDEVICE9 pGraphic_Device)
     :CUi(pGraphic_Device)
 {
 }
 
-CUi_Finish::CUi_Finish(const CUi_Finish& rhs)
+CUi_DrinkSoda_Word::CUi_DrinkSoda_Word(const CUi_DrinkSoda_Word& rhs)
     :CUi(rhs)
 {
 }
 
-HRESULT CUi_Finish::Initialize_Prototype()
+HRESULT CUi_DrinkSoda_Word::Initialize_Prototype()
 {
     if (FAILED(Add_Components(nullptr)))
         return E_FAIL;
@@ -18,16 +18,16 @@ HRESULT CUi_Finish::Initialize_Prototype()
     return S_OK;
 }
 
-HRESULT CUi_Finish::Initialize(void* pArg)
+HRESULT CUi_DrinkSoda_Word::Initialize(void* pArg)
 {
     return S_OK;
 }
 
-void CUi_Finish::PriorityTick(_float fTimeDelta)
+void CUi_DrinkSoda_Word::PriorityTick(_float fTimeDelta)
 {
 }
 
-void CUi_Finish::Tick(_float fTimeDelta)
+void CUi_DrinkSoda_Word::Tick(_float fTimeDelta)
 {
     m_fActiveTime -= fTimeDelta;
     if (m_fActiveTime > 0)
@@ -41,11 +41,11 @@ void CUi_Finish::Tick(_float fTimeDelta)
     ChangeColor();
 }
 
-void CUi_Finish::LateTick(_float fTimeDelta)
+void CUi_DrinkSoda_Word::LateTick(_float fTimeDelta)
 {
 }
 
-void CUi_Finish::Render_Begin()
+void CUi_DrinkSoda_Word::Render_Begin()
 {
     m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
     m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
@@ -53,10 +53,9 @@ void CUi_Finish::Render_Begin()
     m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(m_Red, m_Green, m_Blue, 255));
 }
 
-HRESULT CUi_Finish::Render()
+HRESULT CUi_DrinkSoda_Word::Render()
 {
     Render_Begin();
-
     if (FAILED(m_pBackGroundTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
@@ -73,12 +72,13 @@ HRESULT CUi_Finish::Render()
 
     return S_OK;
 }
-void CUi_Finish::Render_End()
+
+void CUi_DrinkSoda_Word::Render_End()
 {
     m_pGraphic_Device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 }
 
-HRESULT CUi_Finish::Initialize_Active()
+HRESULT CUi_DrinkSoda_Word::Initialize_Active()
 {
     Initialize_Set_ActiveTime();
     Initialize_Set_Size();
@@ -93,13 +93,13 @@ HRESULT CUi_Finish::Initialize_Active()
     return S_OK;
 }
 
-void CUi_Finish::Initialize_Set_ActiveTime()
+void CUi_DrinkSoda_Word::Initialize_Set_ActiveTime()
 {
     m_fActiveTime = 3.f;
     m_fScalingTime = 0;
 }
 
-void CUi_Finish::Initialize_Set_Size()
+void CUi_DrinkSoda_Word::Initialize_Set_Size()
 {
     m_UiDesc.m_fSizeX = 5600;
     m_UiDesc.m_fSizeY = 700;
@@ -108,11 +108,11 @@ void CUi_Finish::Initialize_Set_Size()
     m_BackGround.m_fSizeY = 200;
 }
 
-void CUi_Finish::Initialize_Set_Speed()
+void CUi_DrinkSoda_Word::Initialize_Set_Speed()
 {
 }
 
-void CUi_Finish::Initialize_Set_Scale_Pos_Rotation(void* pArg)
+void CUi_DrinkSoda_Word::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 {
     _float3 Scale = { m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f };
     m_UiDesc.m_fX = 0;
@@ -120,7 +120,7 @@ void CUi_Finish::Initialize_Set_Scale_Pos_Rotation(void* pArg)
 
     m_pTransformCom->Set_Scale(Scale);
 
-    m_pTransformCom->Set_State(CTransform::STATE_POSITION, 
+    m_pTransformCom->Set_State(CTransform::STATE_POSITION,
         &_float3(m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f));
 
     _float3 BackScale = { m_BackGround.m_fSizeX, m_BackGround.m_fSizeY, 1 };
@@ -131,7 +131,71 @@ void CUi_Finish::Initialize_Set_Scale_Pos_Rotation(void* pArg)
     m_pBackGroundTransformCom->Set_State(CTransform::STATE_POSITION,
         &_float3(m_BackGround.m_fX, m_BackGround.m_fY, 0.f));
 }
-void CUi_Finish::ChangeColor()
+
+HRESULT CUi_DrinkSoda_Word::Add_Components(void* pArg)
+{
+    if (FAILED(Add_Component(
+        LEVEL_STATIC,
+        TEXT("VIBuffer_Rect_Default"),
+        (CComponent**)&m_pVIBufferCom)))
+        return E_FAIL;
+
+    if (FAILED(Add_Component(LEVEL_STATIC,
+        TEXT("Transform_Default"),
+        (CComponent**)&m_pTransformCom)))
+        return E_FAIL;
+
+    if (FAILED(Add_Component(
+        LEVEL_STATIC,
+        TEXT("VIBuffer_Rect_Default"),
+        (CComponent**)&m_pBackGroundVIBufferCom)))
+        return E_FAIL;
+
+    if (FAILED(Add_Component(LEVEL_STATIC,
+        TEXT("Transform_Default"),
+        (CComponent**)&m_pBackGroundTransformCom)))
+        return E_FAIL;
+
+    if (FAILED(Add_Texture(nullptr)))
+        return E_FAIL;
+
+
+    return S_OK;
+}
+
+HRESULT CUi_DrinkSoda_Word::Add_Texture(void* pArg)
+{
+    if (FAILED(Add_Component(LEVEL_STATIC,
+        TEXT("CUi_DrinkSoda_Word_Texture"),
+        (CComponent**)&m_pTextureCom)))
+        return E_FAIL;
+
+    if (FAILED(Add_Component(LEVEL_STATIC,
+        TEXT("CUi_Finish_BackGround_Texture"),
+        (CComponent**)&m_pBackGroundTextureCom)))
+        return E_FAIL;
+
+    return S_OK;
+}
+
+void CUi_DrinkSoda_Word::Scaling(_float fTimeDelta)
+{
+    m_fScalingTime += fTimeDelta;
+    if (m_fScalingTime < 0.25f)
+    {
+        _float3 Scale = m_pTransformCom->Get_Scale();
+        Scale.x -= fTimeDelta * 12000;
+        Scale.y -= fTimeDelta * 1500;
+        m_pTransformCom->Set_Scale(Scale);
+    }
+    else
+    {
+        _float3 TestScale = m_pTransformCom->Get_Scale();
+        m_pTransformCom->Set_Scale(m_OriginScale);
+    }
+}
+
+void CUi_DrinkSoda_Word::ChangeColor()
 {
     switch (m_eRGBstate)
     {
@@ -140,7 +204,7 @@ void CUi_Finish::ChangeColor()
         {
             m_Green = 255;
             m_Red = 255;
-            m_eRGBstate = RGBState::Yellow;
+            m_eRGBstate = RGBState::Yellow;            
         }
         else
             m_Green += 10;
@@ -198,82 +262,20 @@ void CUi_Finish::ChangeColor()
         break;
     }
 }
-HRESULT CUi_Finish::Add_Components(void* pArg)
+
+CUi_DrinkSoda_Word* CUi_DrinkSoda_Word::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-    if (FAILED(Add_Component(
-        LEVEL_STATIC,
-        TEXT("VIBuffer_Rect_Default"),
-        (CComponent**)&m_pVIBufferCom)))
-        return E_FAIL;
-
-    if (FAILED(Add_Component(LEVEL_STATIC,
-        TEXT("Transform_Default"),
-        (CComponent**)&m_pTransformCom)))
-        return E_FAIL;
-
-    if (FAILED(Add_Component(
-        LEVEL_STATIC,
-        TEXT("VIBuffer_Rect_Default"),
-        (CComponent**)&m_pBackGroundVIBufferCom)))
-        return E_FAIL;
-
-    if (FAILED(Add_Component(LEVEL_STATIC,
-        TEXT("Transform_Default"),
-        (CComponent**)&m_pBackGroundTransformCom)))
-        return E_FAIL;
-
-    if (FAILED(Add_Texture(nullptr)))
-        return E_FAIL;
-
-
-    return S_OK;
-}
-
-HRESULT CUi_Finish::Add_Texture(void* pArg)
-{
-    if (FAILED(Add_Component(LEVEL_STATIC,
-        TEXT("CUi_Finish_Texture"),
-        (CComponent**)&m_pTextureCom)))
-        return E_FAIL;
- 
-    if (FAILED(Add_Component(LEVEL_STATIC,
-        TEXT("CUi_Finish_BackGround_Texture"),
-        (CComponent**)&m_pBackGroundTextureCom)))
-        return E_FAIL;
-
-    return S_OK;
-}
-
-void CUi_Finish::Scaling(_float fTimeDelta)
-{
-    m_fScalingTime += fTimeDelta;
-    if (m_fScalingTime < 0.25f)
-    {
-        _float3 Scale = m_pTransformCom->Get_Scale();
-        Scale.x -= fTimeDelta * 12000;
-        Scale.y -= fTimeDelta * 1500;
-        m_pTransformCom->Set_Scale(Scale);
-    }
-    else
-    {
-        _float3 TestScale = m_pTransformCom->Get_Scale();
-        m_pTransformCom->Set_Scale(m_OriginScale);
-    }
-}
-
-CUi_Finish* CUi_Finish::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
-{
-    CUi_Finish* pInstance = new CUi_Finish(pGraphic_Device);
+    CUi_DrinkSoda_Word* pInstance = new CUi_DrinkSoda_Word(pGraphic_Device);
     if (FAILED(pInstance->Initialize_Prototype()))
     {
-        MSG_BOX(TEXT("CUi_Finish Create Failed"));
+        MSG_BOX(TEXT("CUi_DrinkSoda_Word Create Failed"));
         Safe_Release(pInstance);
     }
 
     return pInstance;
 }
 
-void CUi_Finish::Free()
+void CUi_DrinkSoda_Word::Free()
 {
     __super::Free();
 

@@ -1,16 +1,24 @@
 #pragma once
 #include "Client_Defines.h"
 #include "CUi.h"
-#include "CUi_DrinkSoda_Word.h"
+
 
 BEGIN(Client)
-
-class CUi_Finish final : public CUi
+enum class RGBState
+{
+	Red,
+	Yellow,
+	Green,
+	Blue,
+	Purple,
+	End
+};
+class CUi_DrinkSoda_Word final : public CUi
 {
 protected:
-	CUi_Finish(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CUi_Finish(const CUi_Finish& rhs);
-	virtual ~CUi_Finish() = default;
+	CUi_DrinkSoda_Word(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CUi_DrinkSoda_Word(const CUi_DrinkSoda_Word& rhs);
+	virtual ~CUi_DrinkSoda_Word() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype() override;
@@ -39,23 +47,24 @@ private:
 	void Scaling(_float fTimeDelta);
 	void ChangeColor();
 
+
 private:
 	_float m_fScalingTime = { 0 };
 	_float3 m_OriginScale = { 720, 90, 1 };
-
+	RGBState m_eRGBstate = { RGBState::End };
+	_uint m_Red = { 0 };
+	_uint m_Green = { 0 };
+	_uint m_Blue = { 0 };
 
 private:
 	CTexture* m_pBackGroundTextureCom = { nullptr };
 	CTransform* m_pBackGroundTransformCom = { nullptr };
 	CVIBuffer_Rect* m_pBackGroundVIBufferCom = { nullptr };
 	Ui_Pos_Size_Rotation m_BackGround = {};
-	RGBState m_eRGBstate = { RGBState::End };
-	_uint m_Red = { 0 };
-	_uint m_Green = { 0 };
-	_uint m_Blue = { 0 };
+
 
 public:
-	static CUi_Finish* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CUi_DrinkSoda_Word* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 };
 
