@@ -199,7 +199,7 @@ void CArtemis::State_Move(float _fTimeDelta)
 	_float fTargetDist = D3DXVec3Length(&(m_vTargetPosition - m_pTransformCom->Get_Pos()));
 
 	
-		if (fTargetDist < 1 v.f)
+		if (fTargetDist < 1.f)
 		{
 			m_fMoveDelay = 1.f;
 			SetState_Idle();
