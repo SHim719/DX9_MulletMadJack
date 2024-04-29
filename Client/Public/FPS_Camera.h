@@ -29,9 +29,12 @@ public:
 	virtual HRESULT Render() override;
 
 private:
-
 	_float m_fVerticalAngle = 0.f;
 	_float m_fVerticalAngleLimit = 40.f;
+	_float m_fOriginFovY = 90.f;
+	_float m_fFovY = 90.f;
+
+	_bool  m_bCutScene = false;
 
 private:
 	_float4x4			m_ViewMatrix;
@@ -44,6 +47,12 @@ public:
 
 	_float4x4		Get_Proj_Matrix() const { return m_ProjMatrix; }
 	_float4x4		Get_View_Matrix() const { return m_ViewMatrix; }
+
+	_float			Get_FovY() const		{ return m_fFovY; }
+	void			Set_FovY(_float fFovY)	{ m_fFovY = fFovY; }
+
+	void			Set_CutScene(_bool bIsCutScene) { m_bCutScene = bIsCutScene; }
+	void			Set_VerticalAngle(_float fAngle) { m_fVerticalAngle = fAngle; }
 private:
 	void Mouse_Ray();
 	

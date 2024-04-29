@@ -60,8 +60,6 @@ HRESULT CSodaMachine::Render()
 
 	m_pVIBuffer_Machine->Render();
 
-	m_pBoxCollider->Render();
-
 	return S_OK;
 }
 

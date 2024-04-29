@@ -199,10 +199,11 @@ _bool CWhite_Suit_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _
         || STATE_FLYDEATH == m_eState)
         return false;
 
-    if (m_bThisFrameHit)
+    CPlayer::WEAPON_TYPE ePlayerWeapon = CPlayer_Manager::Get_Instance()->Get_WeaponType();
+
+    if (m_bThisFrameHit && ePlayerWeapon != CPlayer::SHOTGUN)
         return true;
 
-    CPlayer::WEAPON_TYPE ePlayerWeapon = CPlayer_Manager::Get_Instance()->Get_WeaponType();
     if (ePlayerWeapon == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
         return false;
 
@@ -812,25 +813,22 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
         case CPawn::HEAD_SHOT: {
             m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
             if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
-
             Arg.Hit = eSpecialHit::HEADSHOT;
-            Arg.iCount = 4;
-            m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
             break;
         }
         case CPawn::BODY_SHOT: {
             m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
             if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
-
             Arg.Hit = eSpecialHit::FINISHED;
-            Arg.iCount = 4;
-            m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
             break;
         }
         case CPawn::EGG_SHOT:
             m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
+            Arg.Hit = eSpecialHit::FINISHED;
             break;
         }
+        Arg.iCount = 4;
+        m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
     }
 }
 

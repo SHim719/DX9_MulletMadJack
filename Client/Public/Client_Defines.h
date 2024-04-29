@@ -63,6 +63,7 @@ namespace Client
 	enum TRIGGERTYPE
 	{
 		STAGE_END,
+		BOSS_ENTRY,
 
 		TRIGGER_END
 	};

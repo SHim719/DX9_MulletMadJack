@@ -88,8 +88,6 @@ HRESULT CWhite_Suit_Slope::Render()
     if (FAILED(m_pVIBufferCom->Render()))
         return E_FAIL;
 
-    m_pBoxCollider->Render();
-
     if (FAILED(End_RenderState()))
         return E_FAIL;
 
@@ -490,6 +488,11 @@ void CWhite_Suit_Slope::SetState_Fly(_float3 vLook)
     m_pRigidbody->Set_Velocity(vLook * 10.f);
 
     m_fFlyTimeAcc = 0.f;
+
+    CUi_SpecialHit::SpecialHit_Desc Arg;
+    Arg.Hit = eSpecialHit::FINISHED;
+    Arg.iCount = 4;
+    m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
 }
 
 

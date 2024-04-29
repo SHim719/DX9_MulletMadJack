@@ -32,7 +32,8 @@ HRESULT CElevator_Level::Initialize()
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/ElevatorMap.dat", (LEVEL)m_iLevelID);
 
-	m_pGameInstance->Get_CurCamera()->Get_Transform()->LookAt(_float3(0.5f, 0.5f, 10.f));
+
+	static_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera())->Set_VerticalAngle(0.f);
 
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer_Manager::Get_Instance()->Get_NextWeapon());
@@ -108,7 +109,6 @@ HRESULT CElevator_Level::Ready_Layer_Camera(const wstring& strLayerTag)
 
 HRESULT CElevator_Level::Ready_Layer_Player()
 {
-
 	CPlayer* pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(m_iLevelID, TEXT("Player"), TEXT("Prototype_Player")));
 	CPlayer_Manager::Get_Instance()->Set_Player(pPlayer);
 
@@ -118,6 +118,8 @@ HRESULT CElevator_Level::Ready_Layer_Player()
 	}
 
 	pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+
+	pPlayer->Change_SuperInvincible();
 
 	return S_OK;
 }

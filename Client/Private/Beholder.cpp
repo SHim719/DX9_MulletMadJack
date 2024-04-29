@@ -62,7 +62,7 @@ HRESULT CBeholder::Initialize(void* pArg)
     //m_fHp = 1000.f;
     //jeongtest
     m_fHp = 100.f;
-    
+        
     return S_OK;
 }
 
@@ -73,11 +73,13 @@ void CBeholder::PriorityTick(_float fTimeDelta)
 
 void CBeholder::Tick(_float fTimeDelta)
 {
+    if (m_bCutScene)
+        return;
     Process_State(fTimeDelta);
     Set_PatternEndCheck();
 
     m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
-    m_pRigidbody->Update(fTimeDelta);
+    //m_pRigidbody->Update(fTimeDelta);
     m_pAnimationCom->Update(fTimeDelta);
 
     if (m_pGameInstance->GetKeyDown(eKeyCode::Enter)){
@@ -129,8 +131,6 @@ HRESULT CBeholder::Render()
 
     if (FAILED(m_pVIBufferCom->Render()))
         return E_FAIL;
-
-    m_pBoxCollider->Render();
 
     if (FAILED(End_RenderState()))
         return E_FAIL;
@@ -335,6 +335,9 @@ void CBeholder::PatternState(_float _fTimeDelta)
 
 void CBeholder::ActivePattern(_float fTimeDelta)
 {
+    if (m_bCutScene)
+        return;
+
     if (m_ePattern == PATTERN_IDLE) {
 
         if (m_fPatternTimeDelay <= 0.f) {

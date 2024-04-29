@@ -14,7 +14,6 @@
 #include "Artemis.h"
 #include "CUi_BossHpBar.h"
 
-
 CLevel_Boss::CLevel_Boss(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device }
 {
@@ -26,13 +25,12 @@ HRESULT CLevel_Boss::Initialize()
 
 	m_pGameInstance->Stop(L"Loading");
 
+	m_pGameInstance->Play(L"Boss_Level_Start_BGM", true);
+	m_pGameInstance->SetVolume(L"Boss_Level_Start_BGM", 0.3f);
+
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
-	m_pGameInstance->Play(L"Beholder_Instrument", true);
-	m_pGameInstance->SetVolume(L"Beholder_Instrument", 0.5f);
-
-	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-		return E_FAIL;
+	Ready_Layer_Camera(TEXT("Main_Camera"));
 	
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
@@ -43,6 +41,10 @@ HRESULT CLevel_Boss::Initialize()
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/TestMh.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer_Manager::Get_Instance()->Get_NextWeapon());
+
+	m_pFPS_Camera = static_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera());
+
+	m_pFPS_Camera->Set_VerticalAngle(0.f);
 
 	D3DLIGHT9 lightDesc{};
 	lightDesc.Type = D3DLIGHT_DIRECTIONAL;
@@ -61,12 +63,11 @@ HRESULT CLevel_Boss::Initialize()
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
-
-	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, L"SkyBox", TEXT("Prototype_SkyBox")))
+	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_STATIC, L"SkyBox", TEXT("Prototype_SkyBox")))
 		return E_FAIL;
 
-	//jeongtest
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_BossHpBar"));
+	static_cast<CBossEntryTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))
+		->Set_Level(this);
 
 	return S_OK;
 }
@@ -74,6 +75,16 @@ HRESULT CLevel_Boss::Initialize()
 void CLevel_Boss::Tick(_float fTimeDelta)
 {
 	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
+
+	switch (m_eState)
+	{
+	case NoEntry:
+
+		break;
+	case Entry:
+		Entry_State(fTimeDelta);
+		break;
+	}
 }
 
 HRESULT CLevel_Boss::Render()
@@ -116,30 +127,28 @@ HRESULT CLevel_Boss::Ready_Layer_Camera(const wstring& strLayerTag)
 
 HRESULT CLevel_Boss::Ready_Layer_Player()
 {
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(m_iLevelID, TEXT("Player"), TEXT("Prototype_Player")));
-	CPlayer_Manager::Get_Instance()->Set_Player(pPlayer);
+	m_pPlayer = dynamic_cast<CPlayer*>(m_pGameInstance->Add_Clone(m_iLevelID, TEXT("Player"), TEXT("Prototype_Player")));
+	CPlayer_Manager::Get_Instance()->Set_Player(m_pPlayer);
 
 	if (nullptr == CPlayer_Manager::Get_Instance()->Get_Player()) {
 		MSG_BOX(TEXT("Failed to Create Player"));
 		return E_FAIL;
 	}
 
-	pPlayer->Set_PlayerHP(99.f);
-	pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+	m_pPlayer->Set_PlayerHP(99.f);
+	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 51.f, -102.4f });
+	m_pPlayer->Change_SuperInvincible();
 
 	return S_OK;
 }
 
 HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 {
-	CBeholder* TempBeholder = dynamic_cast<CBeholder*>
+	m_pBeholder = dynamic_cast<CBeholder*>
 		(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag, TEXT("Prototype_Beholder")));
-	CArtemis* TempArtemis = dynamic_cast<CArtemis*>(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
-		TEXT("Prototype_Artemis")));
-	if (TempBeholder == nullptr || TempArtemis == nullptr)
-	{
-		assert(false);
-	}
+	static_cast<CBoxCollider*>(m_pBeholder->Find_Component(L"Collider"))->Update_BoxCollider(m_pBeholder->Get_Transform()->Get_WorldMatrix());
+
+	m_pBeholder->Set_Active(false);
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_BossHpBar"),
 		eUiRenderType::Render_Blend,
@@ -151,12 +160,12 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 	if (pHpBar == nullptr)
 		assert(false);
 
-	pHpBar->Set_Artemis(TempArtemis);
-	pHpBar->Set_Beholder(TempBeholder);
+	//pHpBar->Set_Artemis(TempArtemis);
+	pHpBar->Set_Beholder(m_pBeholder);
 
-	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
-		TEXT("Prototype_Apollo")))
-		return E_FAIL;
+	//if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+	//	TEXT("Prototype_Apollo")))
+	//	return E_FAIL;
 
 	///*if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 	//	TEXT("Prototype_Artemis")))
@@ -168,30 +177,88 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 
 	return S_OK;
 }
-
-void CLevel_Boss::Initialize_SodaMachine()
+void CLevel_Boss::SetState_Entry()
 {
-	CLayer* pMachineLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine");
-	CLayer* pBannerLayer = m_pGameInstance->Find_Layer(m_iLevelID, L"SodaMachine_Banner");
+	m_eState = Entry;
+	m_vEntryPos = m_pPlayer->Get_Transform()->Get_Pos();
 
-	if (!pMachineLayer || !pBannerLayer)
-		return;
-	auto MachineLayerObjects = pMachineLayer->Get_GameObjects();
-	auto BannerLayerObjects = pBannerLayer->Get_GameObjects();
+	m_pFPS_Camera->Set_CutScene(true);
+	m_pFPS_Camera->Get_Transform()->Set_State(CTransform::STATE_LOOK, &_float3(-0.2f, 0.3f, 0.95f));
+	m_pPlayer->Set_CutScene(true);
 
-	auto BannerIt = BannerLayerObjects.begin();
-	for (auto it = MachineLayerObjects.begin(); it != MachineLayerObjects.end(); ++it)
+	m_pBeholder->Set_Active(true);
+	m_pBeholder->Set_CutScene(true);
+}
+
+void CLevel_Boss::Entry_State(_float fTimeDelta)
+{
+	_float fNowFovY = m_pFPS_Camera->Get_FovY();
+	if (!m_bAnotherBranch)
 	{
-		dynamic_cast<CSodaMachine*>(*it)->Set_Banner(*BannerIt);
+		if (fNowFovY > 45.f)
+		{
+			fNowFovY -= 20.f * fTimeDelta;
+			if (fNowFovY <= 45.f)
+			{
+				fNowFovY = 45.f;
+			}
+			m_pFPS_Camera->Set_FovY(fNowFovY);
+		}
+		else
+		{
+			if (!m_bBeholderAttack)
+			{
+				m_pBeholder->All_Round_Laser();
+				m_pBeholder->All_Round_Laser_LandMine();
 
-		++BannerIt;
+				m_bBeholderAttack = true;
+			}
+			else
+			{
+				m_fTimeAcc += fTimeDelta;
+				if (m_fTimeAcc >= m_fEventDelay)
+				{
+					m_fTimeAcc = 0.f;
+					m_bAnotherBranch = true;
+
+					CPlayer_Manager::Get_Instance()->Camera_Shake_Order(0.2f, 100000.f);
+					m_pPlayer->Set_CutScene(false);
+					m_pPlayer->Change_SuperInvincible();
+
+					m_pGameInstance->Play(L"Beholder_Instrument", true);
+					m_pGameInstance->SetVolume(L"Beholder_Instrument", 1.f);
+
+					m_pGameInstance->Stop(L"Boss_Level_Start_BGM");
+
+					m_pBeholder->Set_CutScene(false);
+					m_pFPS_Camera->Set_CutScene(false);
+				}
+			}
+		}
 	}
+	else
+	{
+		if (fNowFovY < 90.f)
+		{
+			fNowFovY += 90.f * fTimeDelta;
+			if (fNowFovY >= 90.f)
+			{
+				fNowFovY = 90.f;
+				
+				// ´ëÈ­
+				m_eState = Battle;
+			}
+				
+			m_pFPS_Camera->Set_FovY(fNowFovY);
+		}
+	}
+
+	
 }
 
 
 void CLevel_Boss::Free()
 {
-
 	__super::Free();
 
 }

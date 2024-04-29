@@ -589,6 +589,9 @@
     <Filter Include="04. UI\Ui\CUi_Active\BossHpBar">
       <UniqueIdentifier>{50b84a97-7532-4e8d-bf82-d248e95b0d49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\01. MapObject\TriggerObject\1. BossEntryTrigger">
+      <UniqueIdentifier>{ad534e56-09a6-4a3b-b2ee-955ba0490212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1128,6 +1131,9 @@
     <ClInclude Include="..\Public\CUi_BossHpBar.h">
       <Filter>04. UI\Ui\CUi_Active\BossHpBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\BossEntryTrigger.h">
+      <Filter>02. GameObjects\01. MapObject\TriggerObject\1. BossEntryTrigger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1624,6 +1630,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_BossHpBar.cpp">
       <Filter>04. UI\Ui\CUi_Active\BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\BossEntryTrigger.cpp">
+      <Filter>02. GameObjects\01. MapObject\TriggerObject\1. BossEntryTrigger</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

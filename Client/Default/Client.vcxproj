@@ -183,6 +183,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Beholder.h" />
     <ClInclude Include="..\Public\Blood_Effect.h" />
     <ClInclude Include="..\Public\Border.h" />
+    <ClInclude Include="..\Public\BossEntryTrigger.h" />
     <ClInclude Include="..\Public\BoxObject.h" />
     <ClInclude Include="..\Public\CBoneRoop.h" />
     <ClInclude Include="..\Public\CBone_Spawner.h" />
@@ -372,6 +373,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Beholder.cpp" />
     <ClCompile Include="..\Private\Blood_Effect.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
+    <ClCompile Include="..\Private\BossEntryTrigger.cpp" />
     <ClCompile Include="..\Private\BoxObject.cpp" />
     <ClCompile Include="..\Private\CBoneRoop.cpp" />
     <ClCompile Include="..\Private\CBone_Spawner.cpp" />

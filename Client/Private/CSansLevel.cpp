@@ -17,8 +17,7 @@ HRESULT CSansLevel::Initialize()
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
-	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-	//	return E_FAIL;
+	Ready_Layer_Camera(TEXT("Main_Camera"));
 
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
@@ -31,7 +30,10 @@ HRESULT CSansLevel::Initialize()
 	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::PISTOL);
 	m_pPlayer->SansLevelEnterInitialize();
 
-	m_pGameInstance->Get_CurCamera()->Get_Transform()->LookAt(_float3(0.5f, 0.5f, 10.f));
+	m_pFPS_Camera = static_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera());
+	m_pFPS_Camera->Set_VerticalAngle(0.f);
+
+	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.5f, 0.f });
 
 	D3DLIGHT9 lightDesc{};
 	lightDesc.Type = D3DLIGHT_DIRECTIONAL;
@@ -69,7 +71,7 @@ void CSansLevel::Tick(_float fTimeDelta)
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::SansTurn)
 	{
-		// �����Ӹ� ����
+		
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::PlayerTurn)
 	{
@@ -171,7 +173,5 @@ CSansLevel* CSansLevel::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 void CSansLevel::Free()
 {
 	__super::Free();
-	Safe_Release(m_pPlayer);
-	Safe_Release(m_pFPS_Camera);
 	Safe_Release(m_pSans);
 }

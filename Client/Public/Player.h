@@ -63,6 +63,7 @@ public:
 	void Active_Reset();
 	void Camera_Reset();
 	void SetState_Ultimate();
+	void Set_CutScene(_bool bCutScene);
 private:
 	void Key_Input(_float fTimeDelta);
 	void HeadTilt(_float fTimeDelta, _float fDirection);
@@ -106,7 +107,6 @@ private:
 	void SetState_Slope();
 	void SetState_Execution();
 	
-
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
 		m_fShakePower = fShakePower; 

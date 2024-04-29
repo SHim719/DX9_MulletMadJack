@@ -39,7 +39,7 @@ void CElevatorLevelManager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	m_vSpawnPos[10] = { -4.f, 3.0f,  0.f };
 	m_vSpawnPos[11] = { -4.f, 3.0f, 4.f };
 
-	m_eState = EndState;
+	//m_eState = EndState;
 	m_fEventDelayTime = 2.f;
 }
 
@@ -148,8 +148,9 @@ void CElevatorLevelManager::Warning()
 			m_bAnotherBranch = false;
 			CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::KATANA);
 			m_fEventDelayTimeAcc = 0.f;
-			m_fEventDelayTime = 5.f;//30.f;//80.f;
+			m_fEventDelayTime = 80.0f;//30.f;//80.f;
 			m_eState = OnGoing;
+			CPlayer_Manager::Get_Instance()->Get_Player()->Change_SuperInvincible();
 			return;
 		}
 			
@@ -216,6 +217,7 @@ void CElevatorLevelManager::State_On_Going(_float fDeltaTime)
 				m_fEventDelayTime = 8.f;
 				m_eState = EndState;
 				m_bAnotherBranch = false;
+				CPlayer_Manager::Get_Instance()->Get_Player()->Change_SuperInvincible();
 			}
 			return;
 		}

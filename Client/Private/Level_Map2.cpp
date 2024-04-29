@@ -27,7 +27,7 @@ HRESULT CLevel_Map2::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	m_pGameInstance->Get_CurCamera()->Get_Transform()->LookAt(_float3(0.5f, 0.5f, 10.f));
+	static_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera())->Set_VerticalAngle(0.f);
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
 
@@ -35,6 +35,8 @@ HRESULT CLevel_Map2::Initialize()
 	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer_Manager::Get_Instance()->Get_NextWeapon());
 
 	Initialize_SodaMachine();
+
+
 
 	static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
 	(LEVEL_ELEVATOR);

@@ -83,6 +83,17 @@ void CLevel_GamePlay::Tick(_float fTimeDelta)
 			m_bFirstTrigger = true;
 		}
 	}
+	else
+	{
+		if (CDialogue_Manager::Get_Instance()->Check_DialogueEnd() && !m_bGo)
+		{
+			CPlayer_Manager::Get_Instance()->Get_Player()->Change_SuperInvincible();
+			m_bGo = true;
+		}
+			
+	}
+	
+	
 
 }
 
@@ -155,6 +166,8 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 
 	pPlayer->Active_Reset();
 	pPlayer->Set_Weapon_Render(false);
+
+	pPlayer->Change_SuperInvincible();
 	return S_OK;
 }
 

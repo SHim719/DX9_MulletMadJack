@@ -84,8 +84,6 @@ HRESULT CDoor::Render()
 
 	m_pVIBuffer->Render();
 
-	m_pBoxCollider->Render();
-
 	m_pGraphic_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	return S_OK;
 }

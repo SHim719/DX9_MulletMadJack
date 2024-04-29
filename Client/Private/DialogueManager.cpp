@@ -1,6 +1,8 @@
 #include "DialogueManager.h"
 #include "UI_Dialogue.h"
 #include "GameInstance.h"
+#include "FPS_Camera.h"
+
 
 IMPLEMENT_SINGLETON(CDialogue_Manager)
 
@@ -27,11 +29,14 @@ void CDialogue_Manager::Tick(_float fTimeDelta)
 	{
 	case No_Dial:
 		break;
+	case FirstDialogue:
+		Tick_FirstDialogue(fTimeDelta);
+		break;
 	case ElevatorSansDialogue:
 		Tick_ElevatorSansDialogue(fTimeDelta);
 		break;
 
-	case FirstDialogue:
+	
 	case ElevatorReturnDialogue:
 	case ElevatorEndDialogue:
 	case ElevatoManyEnemyDialogue:
@@ -93,7 +98,7 @@ void CDialogue_Manager::Init_ElevatorSansDialogue()
 		L"당신의 활약에 라이브 시청자들이 기뻐하고 있어요!",
 		L"이 다음 층이 보스방입니다! 긴장하세요!",
 		L"....뭐죠?? ..통..신이.. 방..해.....",
-		L"나랑놀자."
+		L"......"
 	};
 
 
@@ -182,7 +187,14 @@ void CDialogue_Manager::Init_BossEntryDialogue()
 void CDialogue_Manager::Tick_FirstDialogue(_float fTimeDelta)
 {
 	if (m_pUI_Dialogue->Is_DialogueEnd())
+	{
 		m_eDialogueEvent = No_Dial;
+	}
+		
+	//if (m_pUI_Dialogue->Get_NowDialIdx() == 2)
+	//{
+	//	//static_cast<CFPS_Camera*>(m_pGameInstance->Get_CurCamera())->Get_FovY())->
+	//}
 }
 
 void CDialogue_Manager::Tick_ElevatorSansDialogue(_float fTimeDelta)

@@ -23,9 +23,6 @@ void CTriggerObject::LateTick(_float fTimeDelta)
 
 HRESULT CTriggerObject::Render()
 {
-	m_pGraphic_Device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	if (m_pBoxCollider)
-		m_pBoxCollider->Render();
 	return S_OK;
 }
 

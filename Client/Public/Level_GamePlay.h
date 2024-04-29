@@ -34,9 +34,10 @@ private:
 	class CFPS_Camera* m_pFPS_Camera = { nullptr };
 	class CWhite_Suit_Monster* m_pFirstMonster = { nullptr };
 
-	_float m_fStartTriggerDelay = 1.5f;
+	_float m_fStartTriggerDelay = 1.f;
 	_float m_fTimeAcc = 0.f;
 	_bool  m_bFirstTrigger = false;
+	_bool  m_bGo = false;
 };
 
 END

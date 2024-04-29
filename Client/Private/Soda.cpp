@@ -85,7 +85,6 @@ HRESULT CSoda::Render()
 		return E_FAIL;
 
 	m_pVIBufferCom->Render();
-	m_pBoxCollider->Render();
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 	return S_OK;

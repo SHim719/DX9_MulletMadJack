@@ -125,6 +125,9 @@ HRESULT CMapLoader::Load_Trigger(HANDLE hFile, LEVEL eLevel)
 		case TRIGGERTYPE::STAGE_END:
 			pTrigger = m_pGameInstance->Add_Clone(eLevel, L"Trigger", L"Prototype_StageEndTrigger");
 			break;
+		case TRIGGERTYPE::BOSS_ENTRY:
+			pTrigger = m_pGameInstance->Add_Clone(eLevel, L"Trigger", L"Prototype_BossEntryTrigger");
+			break;
 		}
 		if (pTrigger)
 		{

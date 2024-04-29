@@ -105,6 +105,7 @@ _bool CChainsaw_Monster::On_Ray_Intersect(const _float3& fHitWorldPos, const _fl
 	if (m_bThisFrameHit)
 		return true;
 
+
 	CPlayer::WEAPON_TYPE ePlayerWeapon = CPlayer_Manager::Get_Instance()->Get_WeaponType();
 	if (ePlayerWeapon == CPlayer::KATANA && CPlayer_Manager::Get_Instance()->Get_PlayerToTarget(m_pTransformCom->Get_Pos()) > 1.5f)
 		return false;
@@ -189,6 +190,7 @@ _bool CChainsaw_Monster::Check_EggShot(_float3 vHitLocalPos)
 void CChainsaw_Monster::Hit(void* pArg)
 {
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
+
 
 	CGameObject* pHitBlood = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBlood");
 	pHitBlood->Get_Transform()->Set_Position(pDesc->fHitWorldPos);

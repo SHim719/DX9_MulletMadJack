@@ -62,13 +62,9 @@ unsigned int CLoader::Loading()
 		break;
 	case LEVEL_GAMEPLAY:
 	case LEVEL_ELEVATOR:
-		hr = Loading_For_GamePlay_Level();
-		break;
 	case LEVEL_SANS:
-		hr = Loading_For_Sans_Level();
-		break;
 	case LEVEL_BOSS:
-		hr = Loading_For_Boss_Level();
+		hr = Loading_For_GamePlay_Level();
 		break;
 	}
 
@@ -149,6 +145,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 		return E_FAIL;
 
 	if (FAILED(Ready_Streamer_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Beholder_Sound()))
 		return E_FAIL;
 
 	if (FAILED(Ready_SkyBox()))
@@ -611,6 +610,10 @@ HRESULT CLoader::Ready_MapObject_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_StageEndTrigger"),
 		CStageEndTrigger::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_BossEntryTrigger"),
+		CBossEntryTrigger::Create(m_pGraphic_Device))))
 		return E_FAIL;
 	
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_LandMine"),
@@ -1812,6 +1815,10 @@ HRESULT CLoader::Ready_BGM()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Extended.ogg", L"Beholder_Extend")))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Metamorphosis.wav", L"Boss_Level_Start_BGM")))
+		return E_FAIL;
+	
+
 	return S_OK;
 }
 
@@ -2051,7 +2058,7 @@ HRESULT CLoader::Ready_Sans_Sound()
 
 HRESULT CLoader::Ready_SkyBox()
 {
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_GAMEPLAY, TEXT("SkyBox_Texture"),
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("SkyBox_Texture"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_CUBEMAP, TEXT("../Bin/Resources/Textures/SkyBox/Sky_%d.dds"), 2))))
 		return E_FAIL;
 

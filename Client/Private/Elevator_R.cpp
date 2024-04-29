@@ -65,8 +65,6 @@ HRESULT CElevator_R::Render()
 
 	m_pVIBufferCom->Render();
 
-	m_pBoxCollider->Render();
-
 	return S_OK;
 }
 

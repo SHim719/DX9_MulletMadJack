@@ -36,9 +36,11 @@ HRESULT CFPS_Camera::Initialize(void* pArg)
 	POINT ptWindow = { g_iWinSizeX >> 1, g_iWinSizeY >> 1 };
 	ClientToScreen(g_hWnd, &ptWindow);
 	SetCursorPos(ptWindow.x, ptWindow.y);
-
+	
 	// 빌보드 행렬을 단위행렬로 초기화
 	D3DXMatrixIdentity(&m_BillboardMatrix);
+
+	m_fOriginFovY = m_CameraDesc.fFovy;
 
 	return S_OK;
 }
@@ -58,47 +60,47 @@ void CFPS_Camera::Tick(_float fTimeDelta)
 	HWND		focus_hWnd = GetFocus();
 	if (focus_hWnd != NULL && CPlayer_Manager::Get_Instance()->Get_MouseLock() == true) {
 
-		//ShowCursor(FALSE);
-		GetCursorPos(&ptMouse);
-
-		ScreenToClient(g_hWnd, &ptMouse);
-
-		_int	iMouseMove = { 0 };
-
-		if (iMouseMove = ptMouse.x - ptWindow.x)
+		if (false == m_bCutScene)
 		{
-			if (fabs(iMouseMove) > m_MoveSensitivity)
-				m_pTransformCom->Turn(_float3(0.f, 1.f, 0.f), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
-		}
+			GetCursorPos(&ptMouse);
 
-		if (iMouseMove = ptMouse.y - ptWindow.y)
-		{
-			if (fabs(iMouseMove) > m_MoveSensitivity && fabs(iMouseMove) < 400.f) {
+			ScreenToClient(g_hWnd, &ptMouse);
 
-				if (m_fVerticalAngle <= m_fVerticalAngleLimit && iMouseMove > 0.f) {
-					m_fVerticalAngle += iMouseMove * m_CameraDesc.fMouseSensor;
-					m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
-				} 
-				else if (m_fVerticalAngle >= -m_fVerticalAngleLimit && iMouseMove < 0.f) {
-					m_fVerticalAngle += iMouseMove * m_CameraDesc.fMouseSensor;
-					m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+			_int	iMouseMove = { 0 };
+
+			if (iMouseMove = ptMouse.x - ptWindow.x)
+			{
+				if (fabs(iMouseMove) > m_MoveSensitivity)
+					m_pTransformCom->Turn(_float3(0.f, 1.f, 0.f), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+			}
+
+			if (iMouseMove = ptMouse.y - ptWindow.y)
+			{
+				if (fabs(iMouseMove) > m_MoveSensitivity && fabs(iMouseMove) < 400.f) {
+
+					if (m_fVerticalAngle <= m_fVerticalAngleLimit && iMouseMove > 0.f) {
+						m_fVerticalAngle += iMouseMove * m_CameraDesc.fMouseSensor;
+						m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+					}
+					else if (m_fVerticalAngle >= -m_fVerticalAngleLimit && iMouseMove < 0.f) {
+						m_fVerticalAngle += iMouseMove * m_CameraDesc.fMouseSensor;
+						m_pTransformCom->Turn(m_pTransformCom->Get_State(CTransform::STATE_RIGHT), fTimeDelta * iMouseMove * m_CameraDesc.fMouseSensor);
+					}
 				}
 			}
+			ClientToScreen(g_hWnd, &ptWindow);
+
+			SetCursorPos(ptWindow.x, ptWindow.y);
 		}
-		ClientToScreen(g_hWnd, &ptWindow);
-
-		SetCursorPos(ptWindow.x, ptWindow.y);
-
-		_float fTempFovy = m_CameraDesc.fFovy;
+		
+		
 		if (CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::DASH_STATE
 			|| CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::AIRDASH_STATE
 			|| CPlayer_Manager::Get_Instance()->Get_Player_State() == CPlayer::PLAYER_STATE::SLOPE_STATE) {
-			fTempFovy = D3DXToRadian(80.0f);
+			m_fFovY = 80.0f;
 		}
 
-
-
-		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, fTempFovy, g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
+		D3DXMatrixPerspectiveFovLH(&m_ProjMatrix, To_Radian(m_fFovY), g_iWinSizeX / (_float)g_iWinSizeY, m_CameraDesc.fNear, m_CameraDesc.fFar);
 		m_ViewMatrix = m_pTransformCom->Get_WorldMatrix_Inverse();
 	
 		// 카메라 월드 행렬의 역행렬이 카메라의 view 행렬임

@@ -51,10 +51,7 @@ HRESULT CPlayer::Initialize(void * pArg)
 		return E_FAIL;
 
  	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), true);
-	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
-	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Phone"), true);
-	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
 
 	m_strTag = "Player";
 
@@ -77,19 +74,16 @@ void CPlayer::Tick(_float fTimeDelta)
 	if (CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_NONE) {
 		if (m_fPlayerHp > 0.f)
 		{
-			if (m_bSuperInvincible)
-			{
-
-			}
-			else
-			{
+			if (!m_bSuperInvincible)
 				m_fPlayerHp -= fTimeDelta;
-			}
 		}
-		else {
+		else 
+		{
 			m_fPlayerHp = 0.f;
 			//DeathAnimation Trigger
-			//m_pGameInstance->Set_Ui_ActiveState(L"CUi_Dead_FadeOut");
+			m_pGameInstance->Set_Ui_ActiveState(L"CUi_Dead_FadeOut");
+			//CGame_Manager::Get_Instance()->Set_Change_Level((LEVEL)m_pGameInstance->Get_CurrentLevelID());
+			//CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::Level_Change);
 		}
 	}
 
@@ -113,11 +107,6 @@ void CPlayer::Tick(_float fTimeDelta)
 	Camera_Event(fTimeDelta);
 
 	m_pRigidbody->Update(fTimeDelta);
-
-	if (m_pGameInstance->GetKeyDown(eKeyCode::F))
-	{
-		Change_SuperInvincible();
-	}
 }
 
 void CPlayer::LateTick(_float fTimeDelta)
@@ -808,7 +797,7 @@ void CPlayer::SansLevelEnterInitialize()
 	}
 	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
 	Set_HpLimit(90);
-	Set_PlayerHP(5);
+	Set_PlayerHP(90);
 }
 
 void CPlayer::SansLevelExitInitialize()
@@ -1065,7 +1054,7 @@ void CPlayer::Ultimate_State()
 		m_pKatanaSlashUI->Set_TimeScale(1.f);
 		m_pUltimateSlash->Set_Active(false);
 		m_pUiFadeInOut->Set_FadeOutIn(200.f, CUI_FadeInOut::RED, 100.f);
-		m_pGameInstance->SetVolume(L"Elevator_BGM", 0.5f);
+		m_pGameInstance->SetVolume(L"Elevator_BGM", 0.7f);
 		auto monsters = m_pGameInstance->Find_Layer(m_pGameInstance->Get_CurrentLevelID(), L"Monster")->Get_GameObjects();
 		for (CGameObject* pMonster : monsters)
 		{
@@ -1170,6 +1159,29 @@ void CPlayer::SetState_Execution()
 
 	Set_Invincible(true);
 	Set_InvincibleTime(-150.f);
+}
+
+void CPlayer::Set_CutScene(_bool bCutScene)
+{
+	if (bCutScene)
+	{
+		m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
+		ePlayerState = PLAYER_STATE_END;
+		m_pBoxCollider->Set_Active(false);
+
+		Active_Reset();
+		Set_Weapon_Render(false);
+		Set_LeftHandRender(false);
+	}
+	else
+	{
+		Active_Reset();
+		Set_Weapon_Render(true);
+		Set_LeftHandRender(true);
+		CPlayer_Manager::Get_Instance()->WeaponChange(PISTOL);
+		m_pBoxCollider->Set_Active(true);
+		ePlayerState = IDLE_STATE;
+	}
 }
 
 void CPlayer::SetState_Ultimate()

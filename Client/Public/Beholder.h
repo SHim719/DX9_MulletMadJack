@@ -97,6 +97,7 @@ private:
 	void PatternState(_float _fTimeDelta);
 	void ActivePattern(_float fTimeDelta);
 
+public:
 	void Player_Tracking_Laser();
 	void All_Round_Laser();
 	void All_Round_Laser_LandMine();
@@ -198,6 +199,11 @@ private:
 	_float          m_fLissajousTime = 0.f;
 
 	BEHOLDER_PATTERN m_ePattern = PATTERN_IDLE;
+
+	_bool			m_bCutScene = false;
+public:
+	void Set_CutScene(_bool bCutScene) { m_bCutScene = bCutScene; }
+
 };
 
 END
