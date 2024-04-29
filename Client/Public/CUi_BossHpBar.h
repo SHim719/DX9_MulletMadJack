@@ -1,7 +1,7 @@
 #pragma once
 #include "Client_Defines.h"
 #include "CUi.h"
-
+#include "Apollo.h"
 
 BEGIN(Client)
 enum class BossType
@@ -59,7 +59,7 @@ private:
 public:
 	void Set_Beholder(class CBeholder* pBeholder);
 	void Set_Artemis(class CArtemis* pArtemis);
-
+	void Set_Apollo(class CApollo* pApolon) { m_pApolon = pApolon; }
 
 private:
 	BossType m_eFocusType = { BossType::End };
@@ -82,7 +82,7 @@ private:
 private:
 	class CBeholder* m_pBeholder = { nullptr };
 	class CArtemis* m_pArtemis = { nullptr };
-
+	class CApollo* m_pApolon = { nullptr };
 
 public:
 	static CUi_BossHpBar* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

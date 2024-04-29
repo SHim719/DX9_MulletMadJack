@@ -589,6 +589,9 @@
     <Filter Include="04. UI\Ui\CUi_Active\BossHpBar">
       <UniqueIdentifier>{50b84a97-7532-4e8d-bf82-d248e95b0d49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Last_Bullet">
+      <UniqueIdentifier>{5855f61e-2412-481b-9289-05766abaf645}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1128,6 +1131,9 @@
     <ClInclude Include="..\Public\CUi_BossHpBar.h">
       <Filter>04. UI\Ui\CUi_Active\BossHpBar</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Last_Bullet.h">
+      <Filter>02. GameObjects\04. Enemy\Last_Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1174,9 +1180,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\Animation.cpp">
       <Filter>03. Client_Components\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Enemy_Bullet.cpp">
-      <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
       <Filter>04. UI\Ui\Part\Background</Filter>
@@ -1624,6 +1627,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\CUi_BossHpBar.cpp">
       <Filter>04. UI\Ui\CUi_Active\BossHpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Last_Bullet.cpp">
+      <Filter>02. GameObjects\04. Enemy\Last_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Enemy_Bullet.cpp">
+      <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -66,6 +66,8 @@ protected:
 	class CPlayer*		m_pTarget = { nullptr };
 
 	_float			m_fHp = 8.f;
+	_float			m_fMaxHp = 8.f;
+
 	_float			m_fSpeed = 1.f;
 	_float			m_fPerceptionDist = 7.f;
 	_float			m_fRange = 1.f;

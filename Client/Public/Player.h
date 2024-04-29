@@ -119,6 +119,10 @@ public:
 		m_fPlayerHp += fPlayerHp;
 		if(m_fPlayerHp >= m_fPlayerMaxHp) m_fPlayerHp = m_fPlayerMaxHp;
 	}
+
+	void Set_PlayerHPMax(_float fPlayerMaxHp) { m_fPlayerMaxHp = fPlayerMaxHp; }
+	_float Get_PlayerHPMax() { return m_fPlayerMaxHp; }
+
 	void Set_PlayerHP_Damaged(_float fPlayerHp) {
 		if (m_bInvincible == false) {
 			m_fPlayerHp -= fPlayerHp;
@@ -150,6 +154,9 @@ public:
 	void Hit(void* pArg) override;
 
 	void Set_Weapon_Render(_bool bRender) { m_bRenderWeapon = bRender; }
+	void Set_Weapon_Have(_bool bHave) { m_bHaveWeapon = bHave; }
+
+	CRigidbody* Get_Rigidbody() { return m_pRigidbody; }
 	//JeongRae Sans
 public:
 	void SansHit();

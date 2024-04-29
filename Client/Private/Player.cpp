@@ -943,6 +943,20 @@ void CPlayer::Idle_State(_float fTimeDelta)
 		m_pRigidbody->Set_Ground(false);
 	}
 	
+	if (m_pGameInstance->GetKeyDown(eKeyCode::K) && m_pRigidbody->IsGround())
+	{
+		m_pGameInstance->Play(L"Player_Jump", false);
+		m_pGameInstance->SetVolume(L"Player_Jump", 1.f);
+
+		m_bJumped = true;
+
+		m_pRigidbody->Set_VelocityY(10.f);
+		m_pRigidbody->Set_Ground(false);
+
+		//Test
+		CPlayer_Manager::Get_Instance()->Set_BossCutscene(false);
+	}
+
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift) && false == m_pRigidbody->IsGround() && m_bCanAirDash)
 	{
 		SetState_AirDash(); 

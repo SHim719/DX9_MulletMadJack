@@ -223,9 +223,9 @@ HRESULT CLoader::Loading_For_Boss_Level()
 		return E_FAIL;
 #pragma endregion
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
+	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
-		return E_FAIL;
+		return E_FAIL;*/
 
 	if (FAILED(Ready_SkyBox()))
 		return E_FAIL;
@@ -519,6 +519,21 @@ HRESULT CLoader::Loading_For_Boss_Texture()
 			TEXT("../Bin/Resources/Textures/Boss/Damaged/BEACON%d.png"), 2))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Beholder_Groggy_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Groggy/BEACON%d.png"), 1))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Beholder_Idle2_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Charge/BEACON%d.png"), 2))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Beholder_Wait_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Close/BEACON%d.png"), 2))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"LandMine_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/LandMine/LandMine.png"))))
@@ -729,6 +744,10 @@ HRESULT CLoader::Ready_Monster_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Bullet"),
 		CEnemy_Bullet::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_LastBullet"),
+		CLast_Bullet::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_SpawnTrigger"),
