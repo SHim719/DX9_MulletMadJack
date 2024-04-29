@@ -143,7 +143,7 @@ void CElevatorLevelManager::Warning()
 		{
 			bEndEvent = true;
 			m_pGameInstance->Play(L"Elevator_BGM", true);
-			m_pGameInstance->SetVolume(L"Elevator_BGM", 0.5f);
+			m_pGameInstance->SetVolume(L"Elevator_BGM", 0.7f);
 			CDialogue_Manager::Get_Instance()->Start_Dialogue(DialogueEvent::ElevatoInvadeDialogue);
 			m_bAnotherBranch = false;
 			CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::KATANA);

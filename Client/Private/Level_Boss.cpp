@@ -137,7 +137,9 @@ HRESULT CLevel_Boss::Ready_Layer_Player()
 
 	m_pPlayer->Set_PlayerHP(99.f);
 	m_pPlayer->Set_PlayerHPMax(99.f);
-	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+	//m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+
+	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 52.f, -102.4f }); 
 	m_pPlayer->Set_Weapon_Have(false);
 
 	return S_OK;
@@ -240,8 +242,7 @@ void CLevel_Boss::Entry_State(_float fTimeDelta)
 			if (fNowFovY >= 90.f)
 			{
 				fNowFovY = 90.f;
-				
-				// ��ȭ
+			
 				m_eState = Battle;
 			}
 				

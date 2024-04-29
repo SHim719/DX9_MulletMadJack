@@ -49,6 +49,7 @@ public:
 	_bool IsFinished();
 	FADESTATE Get_State() { return m_eFadeState; }
 
+	_float Get_NowAlpha() { return m_fAlpha; }
 protected:
 	virtual HRESULT Initialize_Active() override;
 	virtual void Initialize_Set_ActiveTime() override;

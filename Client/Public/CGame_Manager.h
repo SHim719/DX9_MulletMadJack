@@ -68,7 +68,6 @@ public:
 	//Custom Prototype
 	HRESULT Ready_Execution_Texture();
 	HRESULT Ready_Active_Execution();
-
 public:
 	void Print_Text(TextType type, _uint Number);
 	void Print_Text_Sans(CText::Text_Info*);

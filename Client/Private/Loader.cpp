@@ -1462,7 +1462,9 @@ HRESULT CLoader::Ready_Camera_Effect_Texture()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Filter/Grey_Filter.png"))))
 		return E_FAIL;
 
-	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"White_Fade_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, L"../Bin/Resources/Textures/Camera/Filter/White_Fade.png"))))
+		return E_FAIL;
 
 	return S_OK;
 }

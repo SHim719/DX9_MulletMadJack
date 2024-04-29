@@ -5,6 +5,7 @@
 #include "CUi_SpecialHit.h"
 #include "Enemy_Corpse.h"
 #include "FPS_Camera.h"
+#include "Ui_Include.h"
 #include <math.h>
 #define PI 3.14159265
 double rad2deg(double radian);
@@ -58,6 +59,8 @@ HRESULT CBeholder::Initialize(void* pArg)
 
     m_strTag = "Monster";
     m_substrTag = "Beholder";
+
+    m_pFadeInOut = static_cast<CUI_FadeInOut*>(m_pGameInstance->Get_ActiveBlendUI(L"CUi_FadeInOut"));
 
     //m_fHp = 1000.f;
     //jeongtest
@@ -235,9 +238,17 @@ _bool CBeholder::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDi
 
 void CBeholder::OnCollisionEnter(CGameObject* pOther)
 {
-    if (STATE_FLY == m_eState && "Wall" == pOther->Get_Tag())
+    auto tag = pOther->Get_Tag();
+    if (m_ePhase == PHASE_GROGGY && tag == "Player")
     {
-        m_bWallColl = true;
+        CPlayer::PLAYER_STATE ePlayerState = CPlayer_Manager::Get_Instance()->Get_Player()->Get_PlayerState();
+        //m_ePhase = PHASE_GROGGY
+        if (ePlayerState == CPlayer::AIRDASH_STATE || ePlayerState == CPlayer::DASH_STATE)
+        {
+            CPlayer_Manager::Get_Instance()->Get_Player()->Kick();
+            m_pFadeInOut->Set_Active(true);
+            m_pFadeInOut->Set_FadeOutIn(70.f, CUI_FadeInOut::WHITE, 255.f, 0.f);
+        }
     }
 }
 
@@ -591,11 +602,17 @@ void CBeholder::PhaseWaitPattern(_float fTimeDelta)
 void CBeholder::PhaseGroggyPattern(_float fTimeDelta)
 {
     m_pAnimationCom->Play_Animation(L"Groggy", 0.1f, true);
-
+    if (m_pFadeInOut->Get_Active() && m_pFadeInOut->Get_NowAlpha() == 255.f)
+    {
+        m_pGameInstance->Play(L"Beholder_Extend", true);
+        m_pGameInstance->SetVolume(L"Beholder_Extend", 0.7f);
+        m_pGameInstance->Find_GameObject(LEVEL_BOSS, L"SkyBox", 0)->Set_Texture_Index(0);  
+    }
+    else if (m_pFadeInOut->IsFinished())
+    {
+        CPlayer_Manager::Get_Instance()->Set_BossCutscene(false);
+    }
 }
-
-
-
 
 
 void CBeholder::Player_Tracking_Laser()

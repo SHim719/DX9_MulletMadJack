@@ -218,12 +218,15 @@ private:
 	_float          m_fLissajousTime = 0.f;
 
 	BEHOLDER_PATTERN m_ePattern = PATTERN_IDLE;
+	BEHOLDER_PHASE	 m_ePhase = PHASE_WAIT;
+
+	class CUI_FadeInOut* m_pFadeInOut = { nullptr };
 
 	_bool			m_bCutScene = false;
 public:
 	void Set_CutScene(_bool bCutScene) { m_bCutScene = bCutScene; }
 
-	BEHOLDER_PHASE	 m_ePhase	= PHASE_WAIT;
+	
 };
 
 END

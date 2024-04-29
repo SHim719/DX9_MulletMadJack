@@ -186,7 +186,7 @@ private:
 	CRigidbody* m_pRigidbody = nullptr;
 	CTransform* m_pSlopeTransform = nullptr;
 
-	_float fMaxHeadTilt = 2.0f;
+	_float fMaxHeadTilt = 5.0f;
 	_float fHeadTilt = 0.0f;
 
 	_float fDefaultLissajousTime = 0.0f;

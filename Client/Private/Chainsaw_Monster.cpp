@@ -687,6 +687,10 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 	Arg.Hit = eSpecialHit::FINISHED;
 	Arg.iCount = 4;
 	m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+
+	
+	if (CMath_Manager::Get_Instance()->Random_Int(0, 99) < 10)
+		CPlayer_Manager::Get_Instance()->Get_Player()->Set_Weapon_Have(true);
 }
 
 void CChainsaw_Monster::SetState_Air()

@@ -22,6 +22,7 @@ HRESULT CSkyBox::Initialize(void* pArg)
     if (FAILED(Add_Components()))
         return E_FAIL;
 
+    m_iTexture_Index = 1;
     return S_OK;
 }
 
@@ -51,7 +52,7 @@ HRESULT CSkyBox::Render()
     if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
         return E_FAIL;
 
-    if (FAILED(m_pTextureCom->Bind_Texture(1)))
+    if (FAILED(m_pTextureCom->Bind_Texture(m_iTexture_Index)))
         return E_FAIL;
 
     if (FAILED(Begin_RenderState()))

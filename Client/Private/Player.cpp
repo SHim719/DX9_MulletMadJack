@@ -715,8 +715,13 @@ void CPlayer::ColliderUpDown()
 
 void CPlayer::OnCollisionEnter(CGameObject* pOther)
 {
+	if (pOther->Get_SubTag() == "Beholder")
+		return;
+
+
 	if ("Monster" == pOther->Get_Tag() && (DASH_STATE == ePlayerState || AIRDASH_STATE == ePlayerState))
 	{
+
 		if (static_cast<CPawn*>(pOther)->Is_DeathState())
 			return;
 
@@ -943,7 +948,7 @@ void CPlayer::Idle_State(_float fTimeDelta)
 		m_pRigidbody->Set_Ground(false);
 
 		//Test
-		CPlayer_Manager::Get_Instance()->Set_BossCutscene(false);
+		//CPlayer_Manager::Get_Instance()->Set_BossCutscene(false);
 	}
 
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LShift) && false == m_pRigidbody->IsGround() && m_bCanAirDash)

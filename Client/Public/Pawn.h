@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "CUi_MonsterDie.h"
 #include "PlayerManager.h"
+#include "MathManager.h"
 
 BEGIN(Engine)
 class CTexture;

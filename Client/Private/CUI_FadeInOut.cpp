@@ -144,7 +144,10 @@ void CUI_FadeInOut::Set_FadeOutIn(_float fSpeed, FADECOLOR eColor, _float fTarge
 
 _bool CUI_FadeInOut::IsFinished()
 {
-    if ((m_eFadeState == FADEIN || m_eFadeState == FADEOUTIN) && m_fAlpha == m_fTargetFadeInAlpha)
+    if (m_eFadeState == FADEIN && m_fAlpha == m_fTargetFadeInAlpha)
+        return true;
+
+    if (m_eFadeState == FADEOUTIN && m_fAlpha == m_fTargetFadeInAlpha && m_bFadeOutInLoop)
         return true;
 
     if (m_eFadeState == FADEOUT && m_fAlpha == m_fTargetFadeOutAlpha)
@@ -219,6 +222,12 @@ HRESULT CUI_FadeInOut::Add_Texture(void* pArg)
         TEXT("CUi_Dead_FadeOut_Texture"),
         (CComponent**)&m_arrTextures[RED])))
         return E_FAIL;
+
+    if (FAILED(Add_Component(LEVEL_STATIC,
+        TEXT("White_Fade_Texture"),
+        (CComponent**)&m_arrTextures[WHITE])))
+        return E_FAIL;
+
 
     return S_OK;
 }

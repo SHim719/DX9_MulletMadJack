@@ -345,6 +345,9 @@ void CDrone_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 	m_pAnimationCom->Play_Animation(L"Death", 0.1f, false);
+
+	if (CMath_Manager::Get_Instance()->Random_Int(0, 99) < 10)
+		CPlayer_Manager::Get_Instance()->Get_Player()->Set_Weapon_Have(true);
 }
 
 HRESULT CDrone_Monster::Add_Components()
