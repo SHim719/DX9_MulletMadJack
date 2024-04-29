@@ -286,6 +286,7 @@ void CWhite_Suit_Slope::Hit(void* pArg)
         {
             m_bDestroyed = true;
 
+            Call_MonsterDieUi(eMonsterGrade::Middle);
             m_pGameInstance->Play(L"White_Suit_Death", false);
             m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
 

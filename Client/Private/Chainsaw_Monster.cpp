@@ -652,7 +652,7 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 			desc.eType = CHAINSAW;
 			desc.isTop = true;
 			CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
-
+			Call_MonsterDieUi(eMonsterGrade::Middle);
 			_float3 vOffset = 0.25f * m_pTarget->Get_Transform()->Get_GroundRight();
 
 			if (1 == CPlayer_Manager::Get_Instance()->Get_SlashCount())

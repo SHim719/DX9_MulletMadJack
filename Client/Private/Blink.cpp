@@ -1,23 +1,22 @@
-#include "Explosion.h"
-
+#include "Blink.h"
 #include "GameInstance.h"
 
-CExplosion::CExplosion(LPDIRECT3DDEVICE9 pGraphic_Device)
-    : CEffect { pGraphic_Device }
+CBlink::CBlink(LPDIRECT3DDEVICE9 pGraphic_Device)
+	: CEffect{ pGraphic_Device }
 {
 }
 
-CExplosion::CExplosion(const CExplosion& rhs)
-    : CEffect{ rhs }
+CBlink::CBlink(const CBlink& rhs)
+	: CEffect{ rhs }
 {
 }
 
-HRESULT CExplosion::Initialize(void* pArg)
+HRESULT CBlink::Initialize(void* pArg)
 {
 	if (FAILED(Add_Components()))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, L"Explosion_Textures", L"Explosion")))
+	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, L"Blink_Textures", L"Explosion")))
 		return E_FAIL;
 
 	m_pTransformCom->Set_Scale(_float3(2.f, 2.f, 1.f));
@@ -25,10 +24,10 @@ HRESULT CExplosion::Initialize(void* pArg)
 	// Play Sound;
 
 	m_pAnimation->Play_Animation(L"Explosion", 0.07f, false);
-    return S_OK;
+	return S_OK;
 }
 
-HRESULT CExplosion::Add_Components()
+HRESULT CBlink::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), nullptr));
 	if (nullptr == m_pTransformCom)
@@ -45,7 +44,7 @@ HRESULT CExplosion::Add_Components()
 	return S_OK;
 }
 
-HRESULT CExplosion::Begin_RenderState()
+HRESULT CBlink::Begin_RenderState()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
@@ -56,7 +55,7 @@ HRESULT CExplosion::Begin_RenderState()
 	return S_OK;
 }
 
-HRESULT CExplosion::End_RenderState()
+HRESULT CBlink::End_RenderState()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -64,33 +63,33 @@ HRESULT CExplosion::End_RenderState()
 	return S_OK;
 }
 
-CExplosion* CExplosion::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CBlink* CBlink::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CExplosion* pInstance = new CExplosion(pGraphic_Device);
+	CBlink* pInstance = new CBlink(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CExplosion"));
+		MSG_BOX(TEXT("Failed to Created : CBlink"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CExplosion* CExplosion::Clone(void* pArg)
+CBlink* CBlink::Clone(void* pArg)
 {
-	CExplosion* pInstance = new CExplosion(*this);
+	CBlink* pInstance = new CBlink(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Clone : CExplosion"));
+		MSG_BOX(TEXT("Failed to Clone : CBlink"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CExplosion::Free()
+void CBlink::Free()
 {
 	__super::Free();
 }

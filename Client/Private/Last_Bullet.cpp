@@ -42,13 +42,23 @@ void CLast_Bullet::PriorityTick(_float fTimeDelta)
 
 void CLast_Bullet::Tick(_float fTimeDelta)
 {
+	if (m_pTransformCom->Get_Pos().y < 0.f) {
+		CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Explosion");
+		pEffect->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos());
+		pEffect->Get_Transform()->Set_Scale({ 25.f, 25.f, 1.f });
+
+		m_pGameInstance->Play(L"Drone_Explosion", false);
+		m_pGameInstance->SetVolume(L"Drone_Explosion", 0.7f);
+		m_bDestroyed = true;
+	}
+
 	if (CPlayer_Manager::Get_Instance()->Get_BossCutscene() == false && m_bDeath != true) {
 		m_pTransformCom->Go_Straight(fTimeDelta);
 	}
 	else {
 		if (m_bDeath == false) {
 
-			m_fDeathDelay = CMath_Manager::Get_Instance()->Random_Float(3.f, 8.f);
+			m_fDeathDelay = CMath_Manager::Get_Instance()->Random_Float(4.f, 8.f);
 			m_fDeathDelayMax = m_fDeathDelay;
 
 			m_fDeathExplodeDelay = CMath_Manager::Get_Instance()->Random_Float(0.15f, 0.3f);
@@ -134,7 +144,7 @@ void CLast_Bullet::DeathTrigger(_float fTimeDelta)
 			m_fDeathExplodeDelay -= fTimeDelta;
 		}
 
-		m_pTransformCom->Set_Speed(5.f);
+		m_pTransformCom->Set_Speed(1.f);
 		m_pTransformCom->Go_Down(fTimeDelta);
 
 		m_fDeathDelay -= fTimeDelta;

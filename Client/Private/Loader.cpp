@@ -475,6 +475,16 @@ HRESULT CLoader::Loading_For_Effect_Texture()
 			L"../Bin/Resources/Textures/Effect/HitKatana/BloodKatana%d.png", 9))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Starlight_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Effect/Starlight/%d.png", 4))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Blink_Textures",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Effect/Blink/%d.png", 9))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -817,6 +827,14 @@ HRESULT CLoader::Ready_Effect_Prototype()
 {
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Explosion"),
 		CExplosion::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Starlight"),
+		CStarLight::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Blink"),
+		CBlink::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_HitBlood"),

@@ -64,7 +64,7 @@ HRESULT CBeholder::Initialize(void* pArg)
 
     //m_fHp = 1000.f;
     //jeongtest
-    m_fHp = 200.f;
+    m_fHp = 1000.f;
     m_fMaxHp = 1000.f;
     
     return S_OK;
@@ -467,6 +467,13 @@ void CBeholder::Phase1Pattern(_float fTimeDelta)
 
         if (m_fPatternTimeDelay <= 0.f) {
 
+            CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Blink");
+
+            _float3 vPos = m_pTransformCom->Get_Pos();
+            _float3 vTempPos = { 0.f, 0.5f, 0.f };
+            pEffect->Get_Transform()->Set_Position(vPos - m_pTransformCom->Get_Look() - vTempPos);
+            pEffect->Get_Transform()->Set_Scale({ 6.f, 6.f, 1.f });
+
             if (m_iPatternCount > m_iPatternCountPhase1Max) m_iPatternCount = 0;
             switch (m_iPatternCount)
             {
@@ -515,6 +522,13 @@ void CBeholder::Phase2Pattern(_float fTimeDelta)
     if (m_ePattern == PATTERN_IDLE) {
 
         if (m_fPatternTimeDelay <= 0.f) {
+            CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Blink");
+
+            _float3 vPos = m_pTransformCom->Get_Pos();
+            _float3 vTempPos = { 0.f, 0.5f, 0.f };
+            pEffect->Get_Transform()->Set_Position(vPos - m_pTransformCom->Get_Look() - vTempPos);
+            pEffect->Get_Transform()->Set_Scale({ 6.f, 6.f, 1.f });
+
 
             if (m_iPatternCount > m_iPatternCountPhase2Max) m_iPatternCount = 0;
             switch (m_iPatternCount)
@@ -547,6 +561,20 @@ void CBeholder::Phase2Pattern(_float fTimeDelta)
                 break;
             case 6:
                 m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM;
+
+                for (int i = 0; i < 20; i++) {
+
+                    _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-20, 20);
+                    _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-10, 30);
+
+                    CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Starlight");
+                    _float3 vTempPos = { fRandomX, 20.f,fRandomZ };
+
+                    pEffect->Get_Transform()->Set_Position(vTempPos);
+                    pEffect->Get_Transform()->Set_Scale({ 13.f, 13.f, 1.f });
+
+                }
+
                 Set_PatternStart();
                 CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
                 break;
@@ -580,13 +608,12 @@ void CBeholder::Phase3Pattern(_float fTimeDelta)
 
     if (m_fPhase3ShootDelay <= 0) {
         _float3 vBulletPos = m_pTransformCom->Get_Pos();
-        vBulletPos.y += 0.25f;
+        _float fRandomSpeed = CMath_Manager::Get_Instance()->Random_Float(10, 20);
+        vBulletPos.y -= 0.25f;
 
         for (int i = 0; i < 10; i++) {
             _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-20, 20);
             _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-10, 30);
-
-            _float fRandomSpeed = CMath_Manager::Get_Instance()->Random_Float(10, 20);
 
             _float3 vTargetPos = { fRandomX, 0.f, fRandomZ };
 
@@ -600,13 +627,13 @@ void CBeholder::Phase3Pattern(_float fTimeDelta)
             pBullet->Set_Texture_Index(1);
             static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
         }
-
         _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
         vPlayerPos.y -= 0.4f;
         CGameObject* pBullet = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_LastBullet");
         pBullet->Get_Transform()->Set_Position(vBulletPos);
-        pBullet->Get_Transform()->Set_Scale({ 10.f, 10.f, 2.f });
+        pBullet->Get_Transform()->Set_Scale({ 8.f, 8.f, 2.f });
         pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+        pBullet->Get_Transform()->Set_Speed(fRandomSpeed);
         pBullet->Set_Texture_Index(1);
         static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
         m_fPhase3ShootDelay = m_fPhase3ShootDelayMax;
@@ -642,6 +669,7 @@ void CBeholder::PhaseGroggyPattern(_float fTimeDelta)
     m_pAnimationCom->Play_Animation(L"Groggy", 0.1f, true);
     if (m_pFadeInOut->Get_Active() && m_pFadeInOut->Get_NowAlpha() == 255.f)
     {
+        m_pGameInstance->Stop(L"Beholder_Instrument");
         m_pGameInstance->Play(L"Beholder_Extend", true);
         m_pGameInstance->SetVolume(L"Beholder_Extend", 0.7f);
         m_pGameInstance->Find_GameObject(LEVEL_BOSS, L"SkyBox", 0)->Set_Texture_Index(0);  
@@ -655,8 +683,7 @@ void CBeholder::PhaseGroggyPattern(_float fTimeDelta)
 void CBeholder::PhaseDeathPattern(_float fTimeDelta)
 {
     if (m_fDeathDelay <= 0.f) {
-        if (m_pAnimationCom->IsEndAnim())
-        {
+
             CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Explosion");
             pEffect->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos());
             pEffect->Get_Transform()->Set_Scale({ 25.f, 25.f, 1.f });
@@ -665,13 +692,8 @@ void CBeholder::PhaseDeathPattern(_float fTimeDelta)
             m_pGameInstance->SetVolume(L"Drone_Explosion", 0.7f);
 
             Call_MonsterDieUi(eMonsterGrade::Middle);
-
-            CUi_SpecialHit::SpecialHit_Desc Arg;
-            Arg.Hit = eSpecialHit::FINISHED;
-            Arg.iCount = 4;
-            m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
             m_bDestroyed = true;
-        }
+       
     }
     else
     {
@@ -898,7 +920,7 @@ void CBeholder::Hit(void* pArg)
     pHitBlood->Get_Transform()->Set_Scale({ 3.f, 3.f, 0.5f });
 
     //zzz
-    CPlayer_Manager::Get_Instance()->Set_PlayerHP(CPlayer_Manager::Get_Instance()->Get_PlayerHP() + 1);
+    CPlayer_Manager::Get_Instance()->Set_PlayerHP_Add(1);
 
     _bool bHitByKatana = CPlayer_Manager::Get_Instance()->Get_Player_WeaponType() == CPlayer::KATANA;
     if (CPlayer_Manager::Get_Instance()->Get_WeaponType() == CPlayer::KATANA) {

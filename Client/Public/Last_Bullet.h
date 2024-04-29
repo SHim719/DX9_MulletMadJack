@@ -53,7 +53,7 @@ private:
 	_float			m_fDeathExplodeDelay = 0.15f;
 	_float			m_fDeathExplodeDelayMax = 0.15f;
 
-	_float			m_bDeath = false;
+	_bool			m_bDeath = false;
 
 public:
 	static CLast_Bullet* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

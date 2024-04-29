@@ -54,7 +54,8 @@
 
 #pragma endregion
 
-
+#include "Starlight.h"
+#include "Blink.h"
 #include "CrossHair.h"
 #include "Phone.h"
 #include "Drink.h"

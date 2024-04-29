@@ -1,34 +1,33 @@
-#include "Explosion.h"
-
+#include "Starlight.h"
 #include "GameInstance.h"
 
-CExplosion::CExplosion(LPDIRECT3DDEVICE9 pGraphic_Device)
-    : CEffect { pGraphic_Device }
+CStarLight::CStarLight(LPDIRECT3DDEVICE9 pGraphic_Device)
+	: CEffect{ pGraphic_Device }
 {
 }
 
-CExplosion::CExplosion(const CExplosion& rhs)
-    : CEffect{ rhs }
+CStarLight::CStarLight(const CStarLight& rhs)
+	: CEffect{ rhs }
 {
 }
 
-HRESULT CExplosion::Initialize(void* pArg)
+HRESULT CStarLight::Initialize(void* pArg)
 {
 	if (FAILED(Add_Components()))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, L"Explosion_Textures", L"Explosion")))
+	if (FAILED(m_pAnimation->Insert_Textures(LEVEL_STATIC, L"Starlight_Textures", L"Explosion")))
 		return E_FAIL;
 
 	m_pTransformCom->Set_Scale(_float3(2.f, 2.f, 1.f));
 
 	// Play Sound;
 
-	m_pAnimation->Play_Animation(L"Explosion", 0.07f, false);
-    return S_OK;
+	m_pAnimation->Play_Animation(L"Explosion", 0.1f, false);
+	return S_OK;
 }
 
-HRESULT CExplosion::Add_Components()
+HRESULT CStarLight::Add_Components()
 {
 	m_pTransformCom = dynamic_cast<CTransform*>(Add_Component(LEVEL_STATIC, TEXT("Transform_Default"), TEXT("Transform"), nullptr));
 	if (nullptr == m_pTransformCom)
@@ -45,7 +44,7 @@ HRESULT CExplosion::Add_Components()
 	return S_OK;
 }
 
-HRESULT CExplosion::Begin_RenderState()
+HRESULT CStarLight::Begin_RenderState()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
@@ -56,7 +55,7 @@ HRESULT CExplosion::Begin_RenderState()
 	return S_OK;
 }
 
-HRESULT CExplosion::End_RenderState()
+HRESULT CStarLight::End_RenderState()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -64,33 +63,33 @@ HRESULT CExplosion::End_RenderState()
 	return S_OK;
 }
 
-CExplosion* CExplosion::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CStarLight* CStarLight::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CExplosion* pInstance = new CExplosion(pGraphic_Device);
+	CStarLight* pInstance = new CStarLight(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to Created : CExplosion"));
+		MSG_BOX(TEXT("Failed to Created : CStarLight"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-CExplosion* CExplosion::Clone(void* pArg)
+CStarLight* CStarLight::Clone(void* pArg)
 {
-	CExplosion* pInstance = new CExplosion(*this);
+	CStarLight* pInstance = new CStarLight(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to Clone : CExplosion"));
+		MSG_BOX(TEXT("Failed to Clone : CStarLight"));
 		Safe_Release(pInstance);
 	}
 
 	return pInstance;
 }
 
-void CExplosion::Free()
+void CStarLight::Free()
 {
 	__super::Free();
 }

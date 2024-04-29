@@ -595,6 +595,12 @@
     <Filter Include="01. Levels\02. Map2\03. ElevatorMap">
       <UniqueIdentifier>{0d25a20f-181c-450c-946f-579789c1f403}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\05. Effect\04. Blink">
+      <UniqueIdentifier>{41a19e94-330d-4ee8-a867-bb3b2475b65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\05. Effect\05. Starlight">
+      <UniqueIdentifier>{1c94c90e-2b36-4db0-a705-b13775508026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1140,6 +1146,12 @@
     <ClInclude Include="..\Public\Last_Bullet.h">
       <Filter>02. GameObjects\04. Enemy\Last_Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Blink.h">
+      <Filter>02. GameObjects\05. Effect\04. Blink</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Starlight.h">
+      <Filter>02. GameObjects\05. Effect\05. Starlight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1642,6 +1654,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\Enemy_Bullet.cpp">
       <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Blink.cpp">
+      <Filter>02. GameObjects\05. Effect\04. Blink</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Starlight.cpp">
+      <Filter>02. GameObjects\05. Effect\05. Starlight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

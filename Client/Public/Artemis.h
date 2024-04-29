@@ -70,7 +70,7 @@ public:
 public:
 	_float Get_Hp() const { return m_fHp; }
 	//jeongtest
-	_float Get_MaxHp() const { return 100.f; }
+	_float Get_MaxHp() const { return m_fMaxHp; }
 	STATE Get_State() const { return m_eState; }
 	_float Get_RecentHitTime() const { return m_fRecentHitTime; }
 

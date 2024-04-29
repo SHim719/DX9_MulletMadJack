@@ -181,6 +181,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Artemis.h" />
     <ClInclude Include="..\Public\BackGround.h" />
     <ClInclude Include="..\Public\Beholder.h" />
+    <ClInclude Include="..\Public\Blink.h" />
     <ClInclude Include="..\Public\Blood_Effect.h" />
     <ClInclude Include="..\Public\Border.h" />
     <ClInclude Include="..\Public\BossEntryTrigger.h" />
@@ -314,6 +315,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Soda.h" />
     <ClInclude Include="..\Public\SpawnTrigger.h" />
     <ClInclude Include="..\Public\StageEndTrigger.h" />
+    <ClInclude Include="..\Public\Starlight.h" />
     <ClInclude Include="..\Public\Terrain_Collider.h" />
     <ClInclude Include="..\Public\TrackingLaser.h" />
     <ClInclude Include="..\Public\Trigger_Headers.h" />
@@ -372,6 +374,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Artemis.cpp" />
     <ClCompile Include="..\Private\BackGround.cpp" />
     <ClCompile Include="..\Private\Beholder.cpp" />
+    <ClCompile Include="..\Private\Blink.cpp" />
     <ClCompile Include="..\Private\Blood_Effect.cpp" />
     <ClCompile Include="..\Private\Border.cpp" />
     <ClCompile Include="..\Private\BossEntryTrigger.cpp" />
@@ -498,6 +501,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Soda.cpp" />
     <ClCompile Include="..\Private\SpawnTrigger.cpp" />
     <ClCompile Include="..\Private\StageEndTrigger.cpp" />
+    <ClCompile Include="..\Private\Starlight.cpp" />
     <ClCompile Include="..\Private\Terrain_Collider.cpp" />
     <ClCompile Include="..\Private\TrackingLaser.cpp" />
     <ClCompile Include="..\Private\UI_Dialogue.cpp" />

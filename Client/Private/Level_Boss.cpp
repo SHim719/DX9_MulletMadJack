@@ -162,6 +162,7 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 
 	pHpBar->Set_Beholder(m_pBeholder);
 
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_BossHpBar"), true);
 	///*if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 	//	TEXT("Prototype_Artemis")))
 	//	return E_FAIL;

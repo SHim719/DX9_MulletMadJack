@@ -227,7 +227,7 @@ private:
 	_float			m_fDeathExplodeDelayMax = 0.15f;
 
 	BEHOLDER_PATTERN m_ePattern = PATTERN_IDLE;
-	BEHOLDER_PHASE	 m_ePhase = PHASE_WAIT;
+	//BEHOLDER_PHASE	 m_ePhase = PHASE_WAIT;
 
 	class CUI_FadeInOut* m_pFadeInOut = { nullptr };
 
@@ -237,7 +237,7 @@ public:
 
 	
 	//BEHOLDER_PHASE	 m_ePhase	= PHASE_WAIT;
-	BEHOLDER_PHASE	 m_ePhase = PHASE_CHARGE;
+	BEHOLDER_PHASE	 m_ePhase = PHASE_1;
 };
 
 END
