@@ -391,6 +391,10 @@ HRESULT CLoader::Loading_For_WhiteSuitMonster()
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Bullet0.png")))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, TEXT("Enemy_Missile_Texture"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Missile0.png")))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

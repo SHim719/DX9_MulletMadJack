@@ -2,7 +2,7 @@
 #include "Client_Defines.h"
 #include "CUi.h"
 #include "CUi_DrinkSoda_Word.h"
-
+#include "PlayerManager.h"
 BEGIN(Client)
 
 class CUi_Ultimate_Finish final : public CUi

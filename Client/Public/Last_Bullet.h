@@ -4,7 +4,8 @@
 #include "Animation.h"
 #include "Pawn.h"
 #include "FPS_Camera.h"
-
+#include "PlayerManager.h"
+#include "MathManager.h"
 BEGIN(Engine)
 class CTexture;
 class CTransform;
@@ -28,6 +29,7 @@ public:
 	void LateTick(_float fTimeDelta) override;
 	HRESULT Render() override;
 
+	void DeathTrigger(_float fTimeDelta);
 private:
 	CVIBuffer_Bullet* m_pVIBufferCom = { nullptr };
 	CTexture* m_pTextureCom = { nullptr };
@@ -44,6 +46,14 @@ private:
 	HRESULT Add_Components();
 	HRESULT Begin_RenderState();
 	HRESULT End_RenderState();
+
+	_float			m_fDeathDelay = 5.f;
+	_float			m_fDeathDelayMax = 5.f;
+
+	_float			m_fDeathExplodeDelay = 0.15f;
+	_float			m_fDeathExplodeDelayMax = 0.15f;
+
+	_float			m_bDeath = false;
 
 public:
 	static CLast_Bullet* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

@@ -217,6 +217,15 @@ private:
 
 	_float          m_fLissajousTime = 0.f;
 
+	_float			m_fPhase3ShootDelay = 0.3f;
+	_float			m_fPhase3ShootDelayMax = 0.3f;
+
+	_float			m_fDeathDelay = 5.f;
+	_float			m_fDeathDelayMax = 5.f;
+
+	_float			m_fDeathExplodeDelay = 0.15f;
+	_float			m_fDeathExplodeDelayMax = 0.15f;
+
 	BEHOLDER_PATTERN m_ePattern = PATTERN_IDLE;
 	BEHOLDER_PHASE	 m_ePhase = PHASE_WAIT;
 
@@ -227,6 +236,8 @@ public:
 	void Set_CutScene(_bool bCutScene) { m_bCutScene = bCutScene; }
 
 	
+	//BEHOLDER_PHASE	 m_ePhase	= PHASE_WAIT;
+	BEHOLDER_PHASE	 m_ePhase = PHASE_CHARGE;
 };
 
 END

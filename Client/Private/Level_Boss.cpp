@@ -137,9 +137,7 @@ HRESULT CLevel_Boss::Ready_Layer_Player()
 
 	m_pPlayer->Set_PlayerHP(99.f);
 	m_pPlayer->Set_PlayerHPMax(99.f);
-	//m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
-
-	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 52.f, -102.4f }); 
+	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 51.f, -102.4f });
 	m_pPlayer->Set_Weapon_Have(false);
 
 	return S_OK;
@@ -158,8 +156,7 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 		CUi_BossHpBar::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	CUi_BossHpBar* pHpBar = dynamic_cast<CUi_BossHpBar*>
-		(m_pGameInstance->Get_ActiveBlendUI(L"CUi_BossHpBar"));
+	CUi_BossHpBar* pHpBar = dynamic_cast<CUi_BossHpBar*>(m_pGameInstance->Get_ActiveBlendUI(L"CUi_BossHpBar"));
 	if (pHpBar == nullptr)
 		assert(false);
 

@@ -271,7 +271,7 @@ void CPlayer::Key_Input(_float fTimeDelta)
 	if (m_pGameInstance->GetKeyDown(eKeyCode::G))
 	{
 		SetState_Ultimate();
-		
+		CPlayer_Manager::Get_Instance()->Set_BossCutscene(true);
 	}
 
 #pragma endregion
