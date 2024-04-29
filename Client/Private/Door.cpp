@@ -4,6 +4,8 @@
 
 #include "Player.h"
 
+#include "Monster_Headers.h"
+
 CDoor::CDoor(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
 {
@@ -115,10 +117,20 @@ HRESULT CDoor::Add_Components()
 
 void CDoor::OnCollisionStay(CGameObject* pOther)
 {
-	static_cast<CPlayer*>(pOther)->Kick();
-	m_bOpening = true;
-	m_pBoxCollider->Set_Active(false);
-	Open_Door();
+	if (pOther->Get_Tag() == "Player")
+	{
+		static_cast<CPlayer*>(pOther)->Kick();
+		m_bOpening = true;
+		m_pBoxCollider->Set_Active(false);
+		Open_Door();
+	}
+	else if (pOther->Get_Tag() == "Monster" && static_cast<CPawn*>(pOther)->Is_Flying())
+	{
+		m_bOpening = true;
+		m_pBoxCollider->Set_Active(false);
+		Open_Door();
+	}
+	
 }
 
 void CDoor::Open_Door()

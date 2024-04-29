@@ -93,6 +93,10 @@ public:
 	void SetState_Air()					override;
 	void SetState_Landing()				override;
 
+public:
+	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
+	_bool Is_Flying() override { return m_eState == STATE_FLY; }
+
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();

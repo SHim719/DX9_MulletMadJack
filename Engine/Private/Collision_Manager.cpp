@@ -31,6 +31,9 @@ void CCollision_Manager::Tick()
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Wall", Collision);
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Floor", Collision);
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Ventilador", Trigger);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"Door", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"SodaMachine", Collision);
+	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Monster", L"SpawnTrigger", Trigger);
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"SlopeMonster", L"Player", Trigger);
 
 	Collision_Box(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Floor", Collision);

@@ -38,6 +38,9 @@ HRESULT CSpawnTrigger::Add_Components()
 
 void CSpawnTrigger::OnTriggerEnter(CGameObject* pOther)
 {
+	if (pOther->Get_Tag() == "Monster" && !static_cast<CPawn*>(pOther)->Is_Flying())
+		return;
+
 	_uint iLevelID = m_pGameInstance->Get_CurrentLevelID();
 	for (_int i = m_iMinIdx; i <= m_iMaxIdx; ++i)
 	{

@@ -109,14 +109,11 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Loading_For_Effect_Texture()))
 		return E_FAIL;
 
-	//if (FAILED(Loading_For_Sans_Texture()))
-	//	return E_FAIL;
+	if (FAILED(Loading_For_Sans_Texture()))
+		return E_FAIL;
 
 	if (FAILED(Loading_For_Boss_Texture()))
 		return E_FAIL;
-
-	//if (FAILED(Loading_For_Orange_Pants_Monster()))
-	//	return E_FAIL;
 
 	m_fProgress = 0.6f;
 
@@ -1679,6 +1676,9 @@ HRESULT CLoader::Ready_Active_Camera_Effect()
 
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Grey_Filter", eUiRenderType::Render_Blend, CGrey_Filter::Create(m_pGraphic_Device))))
 		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Noise_Filter", eUiRenderType::Render_NonBlend, CNoise_Filter::Create(m_pGraphic_Device))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -1797,10 +1797,16 @@ HRESULT CLoader::Ready_Player_Sound()
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Player_SFX/Sliding.wav", L"Player_Sliding")))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Ultimate_Voice.mp3", L"Ultimate_Voice")))
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Ultimate_Start1.mp3", L"Ultimate_Voice")))
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Haki.mp3", L"Haki")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Blood.mp3", L"Slash_Blood")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Slash_Finish.mp3", L"Slash_Finish")))
 		return E_FAIL;
 
 

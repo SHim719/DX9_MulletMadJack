@@ -9,7 +9,7 @@ BEGIN(Client)
 
 class CPlayer_Manager : public CBase
 {
-DECLARE_SINGLETON(CPlayer_Manager)
+	DECLARE_SINGLETON(CPlayer_Manager)
 public:
 	enum ACTION_TYPE { ACTION_NONE, ACTION_EXECUTION, ACTION_WEAPONCHANGE, ACTION_DRINKCAN, ACTION_CUTIN_SHOP, ACTION_END };
 private:
@@ -20,7 +20,7 @@ public:
 	void Initialize(LPDIRECT3DDEVICE9 pGraphic_Device);
 
 public:
-	void Tick (_float fTimeDelta);
+	void Tick(_float fTimeDelta);
 
 	void Set_Player(CPlayer* pPlayer) { m_pPlayer = pPlayer; }
 	CPlayer* Get_Player() { return m_pPlayer; }
@@ -48,8 +48,8 @@ public:
 	_float Get_PlayerToTarget(_float3 _Target);
 
 	_float2 Lissajous_Adjust(_float& _fLissajousTime, _float _fPosX, _float _fPosY, _float _fWitth, _float _fHeight, _float _fLagrangianX, _float _fLagrangianY, _float _fPhaseDelta);
-	
-	_float2 Get_Lissajous_Run(_float _fPosX, _float _fPosY){
+
+	_float2 Get_Lissajous_Run(_float _fPosX, _float _fPosY) {
 		return Lissajous_Adjust(m_fAdjustTime, _fPosX, _fPosY, 50, 30, 1, 2, 2);
 	}
 
@@ -60,17 +60,17 @@ public:
 	void Tick_AdjustTime(_float _fTimeDelta, _float _fTimeSpeed) { m_fAdjustTime += _fTimeDelta * _fTimeSpeed; }
 	_float Get_AdjustTime() { return m_fAdjustTime; }
 
-	_float Get_LeftArmRotate() {return m_fLeftArmRotate; }
+	_float Get_LeftArmRotate() { return m_fLeftArmRotate; }
 
 	_float Get_PlayerHP() { return m_pPlayer->Get_PlayerHP(); }
 	void Set_PlayerHP(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP(_fPlayerHp); }
 	void Set_PlayerHP_Add(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP_Add(_fPlayerHp); }
-	void Set_PlayerHP_Damaged(_float _fPlayerHp) { 
+	void Set_PlayerHP_Damaged(_float _fPlayerHp) {
 		m_pPlayer->Set_PlayerHP_Damaged(_fPlayerHp);
 
 	}
 
-	void Camera_Shake_Order(_float _fShakeTime, _float _fShakePower) { m_pPlayer->Camera_Shake_Order(_fShakePower,_fShakeTime); }
+	void Camera_Shake_Order(_float _fShakeTime, _float _fShakePower) { m_pPlayer->Camera_Shake_Order(_fShakePower, _fShakeTime); }
 
 	void Execution_Ready() { Set_Action_Type(ACTION_EXECUTION); }
 	//void Set_Execution_Action(_bool _bExecution) { m_bExecution = _bExecution; }
@@ -94,9 +94,9 @@ public:
 
 	const _float Get_TempDisablePositionLimit() { return m_fTempDisablePositionLimit; }
 
-	void Set_Action_Type(ACTION_TYPE _eActionType) { 
+	void Set_Action_Type(ACTION_TYPE _eActionType) {
 		Set_DisableEnd(false);
-		m_eActionType = _eActionType; 
+		m_eActionType = _eActionType;
 	}
 	ACTION_TYPE Get_Action_Type() { return m_eActionType; }
 
@@ -109,8 +109,8 @@ public:
 	_bool Get_MouseLock() { return m_bMouseLock; }
 
 	void Set_ComboTime() { m_fComboTime = m_fComboTimeLimit; }
-	void Add_Combo() { 
-		m_iCombo++; 
+	void Add_Combo() {
+		m_iCombo++;
 		Set_ComboTime();
 	}
 	_int Get_Combo() { return m_iCombo; }
@@ -130,8 +130,6 @@ public:
 
 	_int Get_MaxMagazine() { return m_iWeaponMaxMagezine; }
 	void Set_MaxMagazine(_int _iMagazine) { m_iWeaponMaxMagezine = _iMagazine; m_iWeaponMagezine = m_iWeaponMaxMagezine; }
-
-
 
 	void Shop_System(void* Arg);
 
@@ -153,6 +151,9 @@ public:
 
 	void Set_RoundPattern(_bool _bRoundPattern) { m_bRoundPattern = _bRoundPattern; }
 	_bool Get_IsRoundPattern() { return m_bRoundPattern; }
+
+	void Set_NextWeapon(CPlayer::WEAPON_TYPE eWeaponType) { m_eNextWeapon = eWeaponType; }
+	CPlayer::WEAPON_TYPE Get_NextWeapon() { return m_eNextWeapon; }
 private:
 	CGameInstance*				m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -161,8 +162,6 @@ private:
 	_float						m_fAdjustTime = { 0 };
 
 	_float						m_fLeftArmRotate = 30.f;
-
-
 
 	ACTION_TYPE					m_eActionType = ACTION_NONE;
 
@@ -198,6 +197,8 @@ private:
 
 	_bool						m_bPattern = false;
 	_bool						m_bRoundPattern = false;
+
+	CPlayer::WEAPON_TYPE		m_eNextWeapon = CPlayer::PISTOL;
 private:
 
 	CPlayer* m_pPlayer = nullptr;

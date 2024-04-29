@@ -17,6 +17,8 @@ void CDialogue_Manager::Initialize()
 	Init_ElevatorSansDialogue();
 	Init_ElevatorReturnDialogue();
 	Init_ElevatoInvadeDialogue();
+	Init_ElevatorManyEnemyDialogue();
+	Init_ElevatorEndDialogue();
 }
 
 void CDialogue_Manager::Tick(_float fTimeDelta)
@@ -25,20 +27,17 @@ void CDialogue_Manager::Tick(_float fTimeDelta)
 	{
 	case No_Dial:
 		break;
-	case FirstDialogue:
-		Tick_FirstDialogue(fTimeDelta);
-		break;
 	case ElevatorSansDialogue:
 		Tick_ElevatorSansDialogue(fTimeDelta);
 		break;
+
+	case FirstDialogue:
 	case ElevatorReturnDialogue:
-		Tick_ElevatorReturnDialogue(fTimeDelta);
-		break;
+	case ElevatorEndDialogue:
+	case ElevatoManyEnemyDialogue:
 	case ElevatoInvadeDialogue:
-		Tick_ElevatorReturnDialogue(fTimeDelta);
-		break;
 	case BossEntryDialogue:
-		Tick_BossEntryDialogue(fTimeDelta);
+		Tick_ElevatorReturnDialogue(fTimeDelta);
 		break;
 	}
 
@@ -145,6 +144,41 @@ void CDialogue_Manager::Init_ElevatoInvadeDialogue()
 
 }
 
+void CDialogue_Manager::Init_ElevatorManyEnemyDialogue()
+{
+	m_vecDialogues[ElevatoManyEnemyDialogue] =
+	{
+		L"망할 로봇들이 너무 많습니다!!!!"
+	};
+
+	m_vecPhoneTextureDescs[ElevatoManyEnemyDialogue] =
+	{
+		{ FaceType::Announcer, 0.1f, 6, 7},
+	};
+}
+
+void CDialogue_Manager::Init_ElevatorEndDialogue()
+{
+	m_vecDialogues[ElevatorEndDialogue] =
+	{
+		L"와우! 대단해요! 시청자들의 반응도 폭발적입니다!",
+		L"조금 뒤에 보스 방에 도착합니다!",
+		L"마지막까지 분발해주세요."
+	};
+
+
+	m_vecPhoneTextureDescs[ElevatorEndDialogue] =
+	{
+		{ FaceType::Announcer, 0.1f, 0, 1},
+		{ FaceType::Announcer, 0.1f, 2, 3},
+		{ FaceType::Announcer, 0.1f, 4, 5},
+	};
+}
+
+void CDialogue_Manager::Init_BossEntryDialogue()
+{
+}
+
 void CDialogue_Manager::Tick_FirstDialogue(_float fTimeDelta)
 {
 	if (m_pUI_Dialogue->Is_DialogueEnd())
@@ -176,6 +210,18 @@ void CDialogue_Manager::Tick_ElevatorReturnDialogue(_float fTimeDelta)
 }
 
 void CDialogue_Manager::Tick_ElevatoInvadeDialogue()
+{
+	if (m_pUI_Dialogue->Is_DialogueEnd())
+		m_eDialogueEvent = No_Dial;
+}
+
+void CDialogue_Manager::Tick_ElevatorManyEnemyDialogue()
+{
+	if (m_pUI_Dialogue->Is_DialogueEnd())
+		m_eDialogueEvent = No_Dial;
+}
+
+void CDialogue_Manager::Tick_ElevatorEndDialogue()
 {
 	if (m_pUI_Dialogue->Is_DialogueEnd())
 		m_eDialogueEvent = No_Dial;

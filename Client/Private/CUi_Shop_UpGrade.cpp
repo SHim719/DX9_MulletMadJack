@@ -158,27 +158,7 @@ void CUi_Shop_UpGrade::Set_Pos(_float3 Position)
 void CUi_Shop_UpGrade::Set_Picked()
 {
 	m_bPicked = true;
-	if (m_iTexture_Index == 0)
-	{
-		m_pGameInstance->Play(L"Pistol_Reload", false);
-		m_pGameInstance->SetVolume(L"Pistol_Reload", 1.f);
-
-		CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::WEAPON_TYPE::PISTOL);
-	}
-	else if (m_iTexture_Index == 1)
-	{
-		m_pGameInstance->Play(L"Shotgun_Opening", false);
-		m_pGameInstance->SetVolume(L"Shotgun_Opening", 1.f);
-
-		CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::WEAPON_TYPE::SHOTGUN);
-	}
-	else if (m_iTexture_Index == 2)
-	{
-		m_pGameInstance->Play(L"Katana_Opening", false);
-		m_pGameInstance->SetVolume(L"Katana_Opening", 1.f);
-
-		CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::WEAPON_TYPE::KATANA);
-	}
+	CPlayer_Manager::Get_Instance()->Set_NextWeapon((CPlayer::WEAPON_TYPE)m_iTexture_Index);
 }
 
 void CUi_Shop_UpGrade::Add_UniqueTextureIndex()

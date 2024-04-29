@@ -43,6 +43,8 @@ public:
 
 	void Set_FadeIn(_float fSpeed, FADECOLOR eColor, _float fTargetAlpha = 0.f, _bool ManualOff = false);
 	void Set_FadeOut(_float fSpeed, FADECOLOR eColor, _float fTargetAlpha = 255.f, _bool ManualOff = false);
+	void Set_FadeOutIn(_float fSpeed, FADECOLOR eColor,
+		_float fTargetFadeOutAlpha = 255.f, _float fTargetFadeInAlpha = 0.f, _bool ManualOff = false);
 	void Set_FadeState(FADESTATE eState) { m_eFadeState = eState; }
 	_bool IsFinished();
 	FADESTATE Get_State() { return m_eFadeState; }
@@ -68,6 +70,7 @@ private:
 	_float m_fTargetFadeOutAlpha = 0.f;
 	_float m_fSpeed = 100.f;
 	_bool m_bManualOff = false; // 수동으로 끌것인가 false하면 타겟 알파값이 되면 자동으로 꺼짐.
+	_bool m_bFadeOutInLoop = false; // 페이드아웃인 상태일 때 왕복하면은 Loop를 True로 설정
 
 public:
 	static CUI_FadeInOut* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

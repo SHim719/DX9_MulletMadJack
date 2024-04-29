@@ -264,6 +264,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Dash_Effect.h" />
     <ClInclude Include="..\Public\Kick.h" />
     <ClInclude Include="..\Public\MoveWall.h" />
+    <ClInclude Include="..\Public\Noise_Filter.h" />
     <ClInclude Include="..\Public\Orange_Pants_Monster.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -416,6 +417,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\Level_Map2.cpp" />
     <ClCompile Include="..\Private\MoveWall.cpp" />
     <ClCompile Include="..\Private\MathManager.cpp" />
+    <ClCompile Include="..\Private\Noise_Filter.cpp" />
     <ClCompile Include="..\Private\Pistol_Opening.cpp" />
     <ClCompile Include="..\Private\Shotgun.cpp" />
     <ClCompile Include="..\Private\Shotgun_GunFire.cpp" />

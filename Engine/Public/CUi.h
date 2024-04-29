@@ -29,6 +29,7 @@ public:
 	virtual HRESULT Initialize_Prototype() PURE;
 	virtual HRESULT Initialize(void* pArg) PURE;
 	virtual HRESULT Initialize_Active() { return S_OK; };
+	virtual HRESULT Initialize_InActive() { return S_OK; }
 	virtual void PriorityTick(_float fTimeDelta) PURE;
 	virtual void Tick(_float fTimeDelta) PURE;
 	virtual void LateTick(_float fTimeDelta) PURE;
@@ -79,6 +80,10 @@ public:
 		if (_isActive == true)
 		{
 			Initialize_Active();
+		}
+		else
+		{
+			Initialize_InActive();
 		}
 
 		m_bActive = _isActive; 

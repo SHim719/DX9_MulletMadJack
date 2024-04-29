@@ -90,10 +90,11 @@ void CEnemy_Corpse::Tick(_float fTimeDelta)
 		m_bDestroyed = true;
 		return;
 	}
-	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
-
+	
 	m_pAnimation->Update(fTimeDelta);
 	m_pRigidbody->Update(fTimeDelta);
+
+	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 }
 
 void CEnemy_Corpse::LateTick(_float fTimeDelta)
@@ -117,6 +118,7 @@ HRESULT CEnemy_Corpse::Render()
 
 	m_pVIBufferCom->Render();
 
+	m_pBoxCollider->Render();
 	End_RenderState();
 
 	return S_OK;

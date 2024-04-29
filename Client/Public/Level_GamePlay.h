@@ -25,20 +25,18 @@ public:
 	static CLevel_GamePlay* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;
 
-public:
-	void Test_Ui();
-
-
 private:
 	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
 	HRESULT Ready_Layer_Player();
-	HRESULT Ready_Layer_SkyBox(const wstring& strLayerTag);
-	HRESULT Ready_Layer_Beholder(const wstring& strLayerTag);
-
-	HRESULT Ready_Layer_Sans_Boss(const wstring& strLayerTag);
+	void Ready_First_Monster();
 
 	class CPlayer* m_pPlayer = { nullptr };
 	class CFPS_Camera* m_pFPS_Camera = { nullptr };
+	class CWhite_Suit_Monster* m_pFirstMonster = { nullptr };
+
+	_float m_fStartTriggerDelay = 1.5f;
+	_float m_fTimeAcc = 0.f;
+	_bool  m_bFirstTrigger = false;
 };
 
 END

@@ -21,12 +21,6 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 {
 	m_iLevelID = LEVEL_LOADING;
 
-	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Menu.wav", L"Loading")))
-		return E_FAIL;
-
-	m_pGameInstance->Play(L"Loading", true);
-	m_pGameInstance->SetVolume(L"Loading", 0.5f);
-
 	m_eNextLevelID = eNextLevelID;
 
 	m_pLoadingBackGround = (CUi_LoadingBackGround*)m_pGameInstance->Add_Ui_PartClone

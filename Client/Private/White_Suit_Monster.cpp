@@ -458,10 +458,9 @@ void CWhite_Suit_Monster::State_Move()
 
 void CWhite_Suit_Monster::State_Alert()
 {
-    if (m_pAnimationCom->IsEndAnim())
-    {
+    if (m_pAnimationCom->IsEndAnim() && false == m_bTutorial)
         SetState_Shot();
-    }
+    
 }
 
 void CWhite_Suit_Monster::State_Pushed()
@@ -717,6 +716,13 @@ void CWhite_Suit_Monster::SetState_Fly(_float3 vLook)
     m_pRigidbody->Set_Velocity(vLook * 10.f);
 
     m_fFlyTimeAcc = 0.f;
+
+    if (m_bTutorial)
+    {
+        CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::PISTOL);
+        m_pTarget->Set_LeftHandRender(true);
+        m_pTarget->Set_Weapon_Render(true);
+    }
 }
 
 void CWhite_Suit_Monster::SetState_FlyDeath()
@@ -747,6 +753,7 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 {
     if (STATE_DEATH == m_eState)
         return;
+
     m_eState = STATE_DEATH;
     m_pGameInstance->Play(L"White_Suit_Death", false);
     m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
@@ -764,7 +771,7 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
     {
         m_bDestroyed = true;
         CEnemy_Corpse::ENEMYCORPSE_DESC desc;
-        desc.eType = CHAINSAW;
+        desc.eType = WHITE_SUIT;
         desc.isTop = true;
         CGameObject* pCorpseUp = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Corpse", L"Prototype_Corpse", &desc);
 
@@ -777,6 +784,7 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
         //pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
         static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+        static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 
         //vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
         desc.isTop = false;
@@ -786,6 +794,7 @@ void CWhite_Suit_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
         else
             pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
         static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+        static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 
         CGameObject* pHitEffect
             = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");

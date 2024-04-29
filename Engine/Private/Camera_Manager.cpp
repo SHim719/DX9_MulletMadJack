@@ -42,7 +42,8 @@ HRESULT CCamera_Manager::Create_Camera(const wstring& _wstrCameraKey, CCoreCamer
 
 	if (iter != m_mapCamera.end())
 	{
-		MSG_BOX(TEXT("Already Exist Camera"));
+		Safe_Release(pCamera);
+		//MSG_BOX(TEXT("Already Exist Camera"));
 		return S_OK;
 	}
 

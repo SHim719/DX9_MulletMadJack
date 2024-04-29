@@ -67,7 +67,7 @@ private:
 	
 private:
 	_float3 m_OriginScale = { 650.f, 137.f, 1.f };
-	_float m_fScalingSpeed = 500.f;
+	_float m_fScalingSpeed = 800.f;
 	_float m_fScalingY = 0.f;
 
 private:
@@ -81,7 +81,7 @@ private:
 	wstring m_strVoiceTag = L"";
 
 	_uint m_iNowDialogueIndex = 0;
-	_uint m_iTextIndex = 0;		// ���� �ϳ����߰��ϴ� �ε���
+	_uint m_iTextIndex = 0;		
 
 	_float m_fTextDelay = 0.1f;
 	_float m_fTextDelayAcc = 0.f;
