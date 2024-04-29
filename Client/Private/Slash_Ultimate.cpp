@@ -22,7 +22,7 @@ HRESULT CSlash_Ultimate::Initialize(void* pArg)
 	if (E_FAIL == Add_Components(NULL))
 		return E_FAIL;
 
-	m_fScale = { 1280.f, 720.f, 0.5f };
+	m_fScale = { 1280.f, 720.f, 1.f };
 	Initialize_Set_Scale_Pos_Rotation(NULL);
 	Set_Texture_Index(0);
 

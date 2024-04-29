@@ -228,11 +228,6 @@ void CUI_Dialogue::State_Delay(_float fTimeDelta)
 
 void CUI_Dialogue::State_Finish(_float fTimeDelta)
 {
-	m_fDialogueDelayAcc += fTimeDelta;
-	if (m_fDialogueDelayAcc < m_fDialogueDelay)
-		return;
-
-
 	m_fScalingY -= m_fScalingSpeed * fTimeDelta;
 	if (m_fScalingY <= 0.f)
 	{

@@ -25,7 +25,6 @@ private:
 
 private:
 	void OnTriggerEnter(CGameObject* pOther) override;
-
 public:
 	void Set_NextLevel(LEVEL eNextLevel) { m_eNextLevel = eNextLevel; }
 

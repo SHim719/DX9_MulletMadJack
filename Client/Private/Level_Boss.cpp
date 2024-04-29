@@ -39,6 +39,7 @@ HRESULT CLevel_Boss::Initialize()
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/TestMh.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
+	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer_Manager::Get_Instance()->Get_NextWeapon());
 
 	D3DLIGHT9 lightDesc{};
 	lightDesc.Type = D3DLIGHT_DIRECTIONAL;

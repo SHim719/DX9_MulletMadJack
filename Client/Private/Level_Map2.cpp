@@ -24,17 +24,15 @@ HRESULT CLevel_Map2::Initialize()
 	m_pGameInstance->Play(L"Gameplay2", true);
 	m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
 
-	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-	//	return E_FAIL;
-	//
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	//CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+	m_pGameInstance->Get_CurCamera()->Get_Transform()->LookAt(_float3(0.5f, 0.5f, 10.f));
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
 
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
+	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer_Manager::Get_Instance()->Get_NextWeapon());
 
 	Initialize_SodaMachine();
 
@@ -59,11 +57,11 @@ CLevel_Map2* CLevel_Map2::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CLevel_Map2* pInstance = new CLevel_Map2(pGraphic_Device);
 
-	//if (FAILED(pInstance->Initialize()))
-	//{
-	//	MSG_BOX(TEXT("Failed to Created : CLevel_Map2"));
-	//	Safe_Release(pInstance);
-	//}
+	if (FAILED(pInstance->Initialize()))
+	{
+		MSG_BOX(TEXT("Failed to Created : CLevel_Map2"));
+		Safe_Release(pInstance);
+	}
 
 	return pInstance;
 }

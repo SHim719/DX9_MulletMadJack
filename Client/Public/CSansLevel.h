@@ -29,6 +29,8 @@ private:
 private:
 	_bool m_bBGMPlaying = { false };
 
+	_float m_fEventDelayTimeAcc = 0.f;
+	_float m_fEventDelayTime = 2.f;
 public:
 	static CSansLevel* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual void Free() override;

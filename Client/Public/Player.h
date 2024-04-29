@@ -59,9 +59,10 @@ public:
 	PLAYER_STATE	Get_PlayerState() { return ePlayerState; }
 	MOVE_STATE		Get_MoveState() { return eMoveState; }
 
-
+	void Set_LeftHandRender(_bool bActive);
 	void Active_Reset();
 	void Camera_Reset();
+	void SetState_Ultimate();
 private:
 	void Key_Input(_float fTimeDelta);
 	void HeadTilt(_float fTimeDelta, _float fDirection);
@@ -104,7 +105,7 @@ private:
 	void SetState_AirDash();
 	void SetState_Slope();
 	void SetState_Execution();
-	void SetState_Ultimate();
+	
 
 public:
 	void Camera_Shake_Order(_float fShakePower, _float fShakeTime) { 
@@ -148,6 +149,7 @@ public:
 	void OnCollisionEnter(CGameObject* pOther) override;
 	void Hit(void* pArg) override;
 
+	void Set_Weapon_Render(_bool bRender) { m_bRenderWeapon = bRender; }
 	//JeongRae Sans
 public:
 	void SansHit();
@@ -210,6 +212,7 @@ private:
 	_bool m_bJumped = false;
 	_bool m_bSliding = false;
 
+	_bool m_bRenderWeapon = true;
 // For Ultimate
 	class CSlash_Ultimate* m_pUltimateSlash = { nullptr };
 	class CKatana_Slash* m_pKatanaSlashUI = { nullptr };

@@ -12,9 +12,7 @@
 
 #include "Ui_Include.h"
 
-#include "Level_GamePlay.h"
-#include "Level_Map2.h"
-#include "Elevator_Level.h"
+#include "Levels_Header.h"
 
 #include "CUi_LobbyButton.h"
 #include "CUi_LobbyLogo.h"
@@ -232,24 +230,22 @@ void CGame_Manager::Level_Changing()
 	if (m_pFadeInOutUI->Get_State() == CUI_FadeInOut::FADEOUT && m_pFadeInOutUI->IsFinished())
 	{
 		CLevel* pLevel = nullptr;
+		CPlayer_Manager::Get_Instance()->Get_Player()->Active_Reset();
 		switch (m_eToChangeLevel)
 		{
 		case LEVEL_GAMEPLAY2:
 			pLevel = CLevel_Map2::Create(m_pGraphic_Device);
 			break;
-		case LEVEL_SANS:
-			break;
 		case LEVEL_ELEVATOR:
 			pLevel = CElevator_Level::Create(m_pGraphic_Device);
 			break;
 		case LEVEL_BOSS:
+			pLevel = CLevel_Boss::Create(m_pGraphic_Device);
 			break;
 		}
-		CPlayer_Manager::Get_Instance()->Get_Player()->Active_Reset();
 		m_pGameInstance->Change_Level(pLevel);
-		m_pFadeInOutUI->Set_FadeIn(350.f, CUI_FadeInOut::FADECOLOR::BLACK);
+		m_pFadeInOutUI->Set_FadeIn(450.f, CUI_FadeInOut::FADECOLOR::BLACK);
 		m_pGameInstance->Stop(L"Elevator_FX");
-		pLevel->Initialize();
 		Start();
 		m_fStageClearTime = 0.f;
 	}

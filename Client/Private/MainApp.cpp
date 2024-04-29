@@ -7,6 +7,7 @@
 #include "Light_Manager.h"
 #include "MathManager.h"
 #include "DialogueManager.h"
+#include "ElevatorLevelManager.h"
 #include "MapLoader.h"
 
 CMainApp::CMainApp()
@@ -35,25 +36,23 @@ HRESULT CMainApp::Initialize()
 
 
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
-	//if (FAILED(Open_Level(LEVEL_LOBBY)))
-	//	return E_FAIL;
+	if (FAILED(Open_Level(LEVEL_LOBBY)))
+		return E_FAIL;
 
 	/*if (FAILED(Open_Level(LEVEL_BOSS)))
 		return E_FAIL;*/
 
-	if (FAILED(Open_Level(LEVEL_SANS)))
+	//if (FAILED(Open_Level(LEVEL_SANS)))
+	//	return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM/Menu.wav", L"Loading")))
 		return E_FAIL;
 
-	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
-	//	return E_FAIL;
+	m_pGameInstance->Play(L"Loading", true);
+	m_pGameInstance->SetVolume(L"Loading", 0.5f);
 
-
-	//if (FAILED(Open_Level(LEVEL_BOSS)))
-	//	return E_FAIL;
-
-	//m_pGameInstance->Create_Sound("../Bin/Resources/Sound/BGM.mp3", L"TestBgm");
-	//m_pGameInstance->Play(L"TestBgm", true);
-	// ���� �����۰�(0.1~0.5f) �÷��̾�� ��������� ũ��(0.6~1.0), 
+	if (FAILED(Open_Level(LEVEL_LOBBY)))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -105,6 +104,7 @@ void CMainApp::Free()
 	CLight_Manager::Get_Instance()->Free();
 	CMath_Manager::Get_Instance()->Free();
 	CDialogue_Manager::Get_Instance()->Free();
+	CElevatorLevelManager::Get_Instance()->Free();
 	Safe_Release(m_pGraphic_Device);
 	Safe_Release(m_pGameInstance);	
 

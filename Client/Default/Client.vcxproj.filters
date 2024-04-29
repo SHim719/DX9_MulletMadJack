@@ -529,9 +529,6 @@
     <Filter Include="97. Manager\DialogueManager">
       <UniqueIdentifier>{6f938b0a-bb9d-4843-aebd-3b824c3b3deb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Levels\98. Boss">
-      <UniqueIdentifier>{62650118-54d7-4e14-915a-8e74af9fa81b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder">
       <UniqueIdentifier>{3082ca6d-8486-4552-9faa-da03b5542fa8}</UniqueIdentifier>
     </Filter>
@@ -579,6 +576,12 @@
     </Filter>
     <Filter Include="02. GameObjects\06. SkyBox">
       <UniqueIdentifier>{165ad26a-63f6-492d-afbe-5d5ffd02ff47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\Noise">
+      <UniqueIdentifier>{e2feecff-0aa8-43dd-909d-09e159b9bab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\98. Boss">
+      <UniqueIdentifier>{62650118-54d7-4e14-915a-8e74af9fa81b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1107,6 +1110,9 @@
     <ClInclude Include="..\Public\CSkyBox.h">
       <Filter>02. GameObjects\06. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Noise_Filter.h">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Noise</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1591,6 +1597,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CSkyBox.cpp">
       <Filter>02. GameObjects\06. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Noise_Filter.cpp">
+      <Filter>04. UI\Ui\CUi_Active\Camera_Filter\Noise</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

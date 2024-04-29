@@ -24,26 +24,22 @@ HRESULT CElevator_Level::Initialize()
 	m_iLevelID = LEVEL_ELEVATOR;
 	m_pGameInstance->Stop(L"Loading");
 	m_pGameInstance->Stop(L"Elevator_FX");
-	//m_pGameInstance->Play(L"Gameplay2", true);
-	//m_pGameInstance->SetVolume(L"Gameplay2", 0.5f);
 
-	//CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
-
-	// 이거 주석
-	// Create에서 이니셜라이즈 호출 안할거임
-	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-		return E_FAIL;
+	Ready_Layer_Camera(TEXT("Main_Camera"));
 
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/ElevatorMap.dat", (LEVEL)m_iLevelID);
 
+	m_pGameInstance->Get_CurCamera()->Get_Transform()->LookAt(_float3(0.5f, 0.5f, 10.f));
+
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
+	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer_Manager::Get_Instance()->Get_NextWeapon());
 
 	D3DLIGHT9 lightDesc{};
 	lightDesc.Type = D3DLIGHT_DIRECTIONAL;
-	lightDesc.Diffuse = D3DXCOLOR(1.f, 0.8f, 0.9f, 1.f);
+	lightDesc.Diffuse = D3DXCOLOR(1.f, 0.6f, 0.8f, 1.f);
 	lightDesc.Ambient = D3DXCOLOR(1.0f, 1.f, 1.f, 1.f);
 	lightDesc.Direction = _float3(0.f, -1.f, 0.f);
 	
@@ -59,6 +55,9 @@ HRESULT CElevator_Level::Initialize()
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
 	CElevatorLevelManager::Get_Instance()->Initialize(m_pGraphic_Device);
+
+	m_pGameInstance->Play(L"Elevator_Level_SFX", true);
+	m_pGameInstance->SetVolume(L"Elevator_Level_SFX", 0.3f);
 
 	return S_OK;
 }
@@ -85,7 +84,7 @@ CElevator_Level* CElevator_Level::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 		Safe_Release(pInstance);
 	}
 
-	return pInstance;
+	return pInstance;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 }
 
 HRESULT CElevator_Level::Ready_Layer_Camera(const wstring& strLayerTag)
@@ -128,6 +127,6 @@ void CElevator_Level::Free()
 {
 
 	__super::Free();
-	CElevatorLevelManager::Get_Instance()->Free();
+
 
 }

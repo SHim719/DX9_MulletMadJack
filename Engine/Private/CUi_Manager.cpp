@@ -247,7 +247,6 @@ void CUi_Manager::LateTick(_float fTimeDelta)
 			++Blenditer;
 		}
 	}
-
 	for (auto& iter : m_Ui_Active) {
 		if (iter.second->Get_Active())
 			iter.second->LateTick(fTimeDelta);

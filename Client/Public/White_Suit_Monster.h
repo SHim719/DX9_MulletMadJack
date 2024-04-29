@@ -65,6 +65,7 @@ private:
 private:
 	STATE			m_eState = STATE_IDLE;
 
+	_bool			m_bTutorial = false;
 private:
 	void Process_State(_float fTimeDelta);
 
@@ -99,13 +100,14 @@ public:
 
 public:
 	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
+	_bool Is_Flying() override { return m_eState == STATE_FLY; }
 
+	void Set_TutorialMob(_bool b) { m_bTutorial = b; m_fPerceptionDist = 1.f; }
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();
 	HRESULT			Begin_RenderState()		override;
 	HRESULT			End_RenderState()		override;
-
 
 public:
 	static CWhite_Suit_Monster* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

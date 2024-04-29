@@ -2,6 +2,7 @@
 #include "MapLoader.h"
 #include "PlayerManager.h"
 #include "CSans.h"
+#include "Levels_Header.h"
 
 
 CSansLevel::CSansLevel(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -16,8 +17,8 @@ HRESULT CSansLevel::Initialize()
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
-	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-		return E_FAIL;
+	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
+	//	return E_FAIL;
 
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
@@ -27,7 +28,10 @@ HRESULT CSansLevel::Initialize()
 
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
+	CPlayer_Manager::Get_Instance()->WeaponChange(CPlayer::PISTOL);
 	m_pPlayer->SansLevelEnterInitialize();
+
+	m_pGameInstance->Get_CurCamera()->Get_Transform()->LookAt(_float3(0.5f, 0.5f, 10.f));
 
 	D3DLIGHT9 lightDesc{};
 	lightDesc.Type = D3DLIGHT_DIRECTIONAL;
@@ -76,14 +80,27 @@ void CSansLevel::Tick(_float fTimeDelta)
 		}
 	}
 
+	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
 	if (m_pPlayer->Get_PlayerHP() <= 0.3f)
 	{
 		m_pPlayer->SansLevelExitInitialize();
-		// jaewook SceneChange 
+		
+		// jaewook SceneChange
+		CPlayer_Manager::Get_Instance()->Get_Player()->Set_Active(false);
+		CPlayer_Manager::Get_Instance()->Get_Player()->Active_Reset();
+		CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Ui_Phone"), false);
+		m_pGameInstance->Set_Ui_ActiveState(L"Noise_Filter");
+		m_fEventDelayTimeAcc += fTimeDelta;
+		if (m_fEventDelayTimeAcc >= m_fEventDelayTime)
+		{
+			m_pGameInstance->Stop(L"Gameplay");
+			m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_TextBack", false);
+			m_pGameInstance->Set_Ui_ActiveState(L"Noise_Filter", false);
+			CGame_Manager::Get_Instance()->Clear_Sans_Text();
+			CLevel* pElevatorLevel = CElevator_Level::Create(m_pGraphic_Device);
+			m_pGameInstance->Change_Level(pElevatorLevel);
+		}
 	}
-	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
-
-
 }
 
 HRESULT CSansLevel::Render()
@@ -147,14 +164,14 @@ CSansLevel* CSansLevel::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 		MSG_BOX(TEXT("Failed to Created : CSansLevel"));
 		Safe_Release(pInstance);
 	}
-
+	
 	return pInstance;
 }
 
 void CSansLevel::Free()
 {
+	__super::Free();
 	Safe_Release(m_pPlayer);
 	Safe_Release(m_pFPS_Camera);
 	Safe_Release(m_pSans);
-	__super::Free();
 }

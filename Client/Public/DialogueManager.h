@@ -16,6 +16,8 @@ enum DialogueEvent
 	ElevatorSansDialogue,
 	ElevatorReturnDialogue,
 	ElevatoInvadeDialogue,
+	ElevatoManyEnemyDialogue,
+	ElevatorEndDialogue,
 	BossEntryDialogue,
 	DE_END
 };
@@ -39,11 +41,16 @@ private:
 	void Init_ElevatorSansDialogue();
 	void Init_ElevatorReturnDialogue();
 	void Init_ElevatoInvadeDialogue();
+	void Init_ElevatorManyEnemyDialogue();
+	void Init_ElevatorEndDialogue();
+	void Init_BossEntryDialogue();
 
 	void Tick_FirstDialogue(_float fTimeDelta);
 	void Tick_ElevatorSansDialogue(_float fTimeDelta);
 	void Tick_ElevatorReturnDialogue(_float fTimeDelta);
 	void Tick_ElevatoInvadeDialogue();
+	void Tick_ElevatorManyEnemyDialogue();
+	void Tick_ElevatorEndDialogue();
 	void Tick_BossEntryDialogue(_float fTimeDelta);
 
 private:

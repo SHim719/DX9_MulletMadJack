@@ -40,6 +40,7 @@ void CStageEndTrigger::OnTriggerEnter(CGameObject* pOther)
 	CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_CUTIN_SHOP);
 	m_pGameInstance->Stop(L"Gameplay");
 	m_pGameInstance->Stop(L"Gameplay2");
+	m_pGameInstance->Stop(L"Elevator_BGM");
 
 	m_pGameInstance->Play(L"Stage_End", false);
 	m_pGameInstance->SetVolume(L"Stage_End", 0.5f);

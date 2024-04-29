@@ -1,36 +1,18 @@
 #include "..\Public\Level_GamePlay.h"
 #include "GameInstance.h"
-#include "Core_Camera.h"
-#include "CUi_SpecialHit.h"
-#include "CUi_MonsterDie.h"
-#include "CUi_PEACE.h"
-#include "Level_Loading.h"
 #include "CGame_Manager.h"
-#include "White_Suit_Monster.h"
-#include "Drone_Monster.h"
-#include "Chainsaw_Monster.h"
-#include "Orange_Pants_Monster.h"
-#include "Enemy_Bullet.h"
 
-#include "Wall.h"
-#include "CrossHair.h"
 #include "Core_Camera.h"
-#include "CUi_SpecialHit.h"
-#include "CUi_MonsterDie.h"
 #include "PlayerManager.h"
 #include "Player.h"
 
 #include "SodaMachine.h"
 #include "MapLoader.h"
 
-#include "CUi_Combo.h"
-#include "CSans.h"
-#include "CSans_Gaster.h"
-
 #include "Trigger_Headers.h"
+#include "Monster_Headers.h"
 #include "Level_Map2.h"
-
-#include "CSkyBox.h"
+#include "DialogueManager.h"
 
 
 CLevel_GamePlay::CLevel_GamePlay(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -54,22 +36,11 @@ HRESULT CLevel_GamePlay::Initialize()
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
-	if (FAILED(Ready_Layer_SkyBox(TEXT("Layer_SkyBox"))))
-		return E_FAIL;
-
-	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
-	//	return E_FAIL;
-
 	CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test3.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
 	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/TestMh.dat", (LEVEL)m_iLevelID);
 
-	//if (FAILED(Ready_Layer_Sans_Boss(L"Layer_Sans")))
-		//return E_FAIL;
-
-	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Test2.dat", (LEVEL)m_iLevelID);
-	//CMapLoader::Get_Instance()->Load(L"../Bin/Resources/DataFiles/Sans.dat", (LEVEL)m_iLevelID);
 	CPlayer_Manager::Get_Instance()->Set_MouseLock(true);
 
 	Initialize_SodaMachine();
@@ -94,13 +65,24 @@ HRESULT CLevel_GamePlay::Initialize()
 	static_cast<CStageEndTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))->Set_NextLevel
 	(LEVEL_GAMEPLAY2);
 	
+	Ready_First_Monster();
 	return S_OK;
 }
 
 void CLevel_GamePlay::Tick(_float fTimeDelta)
 {
-	Test_Ui();
 	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
+
+	if (!m_bFirstTrigger)
+	{
+		m_fTimeAcc += fTimeDelta;
+		if (m_fTimeAcc >= m_fStartTriggerDelay)
+		{
+			m_fTimeAcc = 0.f;
+			CDialogue_Manager::Get_Instance()->Start_Dialogue(FirstDialogue, 0.07f, 1.f);
+			m_bFirstTrigger = true;
+		}
+	}
 
 }
 
@@ -172,96 +154,21 @@ HRESULT CLevel_GamePlay::Ready_Layer_Player()
 		return E_FAIL;
 	}
 
+	pPlayer->Active_Reset();
+	pPlayer->Set_Weapon_Render(false);
 	return S_OK;
 }
 
-HRESULT CLevel_GamePlay::Ready_Layer_SkyBox(const wstring& strLayerTag)
+void CLevel_GamePlay::Ready_First_Monster()
 {
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, TEXT("Prototype_SkyBox")))
-		return E_FAIL;
-
-	return S_OK;
+	m_pFirstMonster = dynamic_cast<CWhite_Suit_Monster*>(m_pGameInstance->Add_Clone
+	(m_iLevelID, TEXT("Monster"), TEXT("Prototype_White_Suit")));
+	m_pFirstMonster->Get_Transform()->Set_Pos({ 0.f, 0.5f, 8.f });
+	static_cast<CBoxCollider*>(m_pFirstMonster->Find_Component(L"Collider"))->Update_BoxCollider(m_pFirstMonster->Get_Transform()->Get_WorldMatrix());
+	m_pFirstMonster->Set_TutorialMob(true);
 }
-
-HRESULT CLevel_GamePlay::Ready_Layer_Beholder(const wstring& strLayerTag)
-{
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag,
-		TEXT("Prototype_Beholder")))
-		return E_FAIL;
-
-	return S_OK;
-}
-
-HRESULT CLevel_GamePlay::Ready_Layer_Sans_Boss(const wstring& strLayerTag)
-{
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, strLayerTag, 
-		TEXT("Prototype_Sans")))
-		return E_FAIL;
-
-	return S_OK;
-}
-
 
 void CLevel_GamePlay::Free()
 {
 	__super::Free();
 }
-
-
-void CLevel_GamePlay::Test_Ui()
-{
-	if (m_pGameInstance->GetKeyDown(eKeyCode::H))
-	{
-		CUi_Combo::ComboDesc test;
-		test.bFirstCall = true;
-		test.iKillCount = CPlayer_Manager::Get_Instance()->Get_Combo();
-		m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &test);
-		//CUi_Combo::ComboDesc test;
-		//test.bFirstCall = false;
-		//test.iKillCount = 3;
-		//m_pGameInstance->Add_Ui_LifeClone(L"CUi_Combo", eUiRenderType::Render_NonBlend, &test);
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::U))
-	{
-	/*	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::StageClear);
-		CPlayer_Manager::Get_Instance()->Set_MouseLock(false);
-		ShowCursor(TRUE);
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), false);*/
-		CPlayer_Manager::Get_Instance()->Set_Action_Type(CPlayer_Manager::ACTION_CUTIN_SHOP);
-	}
-
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::I))
-	{
-		CUi_SpecialHit::SpecialHit_Desc Arg;
-		Arg.Hit = eSpecialHit::HEADSHOT;
-		Arg.iCount = 4;
-		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"),
-			eUiRenderType::Render_NonBlend, &Arg);
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::K))
-	{
-		m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_Special3Sec"),
-			eUiRenderType::Render_Blend, nullptr);
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::L))
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Finish"));
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::G))
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"));
-	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::Z))
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_GreenCrossActive"));
-	}
-
-}
-
-//else if (m_pGameInstance->GetKeyDown(eKeyCode::Y))
-//{
-//	_uint qewr = CGame_Manager::Get_Instance()->Get_TextNumber(TextType::TutorialClear);
-//	CGame_Manager::Get_Instance()->Print_Text(TextType::TutorialClear,
-//		qewr);
-//	CGame_Manager::Get_Instance()->Add_TextNumber(TextType::TutorialClear);
-//}

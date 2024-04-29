@@ -93,7 +93,11 @@ void CTexture::Free()
     __super::Free();
 
     for (auto& pTexture : m_Textures)
-        Safe_Release(pTexture);
+    {
+        if (pTexture)
+            Safe_Release(pTexture);
+    }
+        //Safe_Release(pTexture);
 
     m_Textures.clear();
 }

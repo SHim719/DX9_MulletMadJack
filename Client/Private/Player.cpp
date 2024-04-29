@@ -10,8 +10,6 @@
 #include "Player_Include.h"
 
 
-
-
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CGameObject{ pGraphic_Device }
 {
@@ -53,16 +51,14 @@ HRESULT CPlayer::Initialize(void * pArg)
 		return E_FAIL;
 
  	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_CrossHair"), true);
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
-	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
+	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Right_Hand"), true);
+	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol"), true);
 	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Phone"), true);
 	//m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Pistol_Shot"), true);
 
 	m_strTag = "Player";
 
-	
 	return S_OK;
-
 }
 
 void CPlayer::PriorityTick(_float fTimeDelta)
@@ -95,7 +91,6 @@ void CPlayer::Tick(_float fTimeDelta)
 		Set_InvincibleTime(0.f);
 		Set_Invincible(false);
 	}
-
 
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pTransformCom->Head_Roll(fTimeDelta, fHeadTilt);
@@ -296,6 +291,9 @@ void CPlayer::HeadTiltReset(_float fTimeDelta)
 
 void CPlayer::Render_Weapon()
 {
+	if (false == m_bRenderWeapon)
+		return;
+
 	switch (eWeaponType)
 	{
 		case PISTOL:
@@ -469,18 +467,23 @@ void CPlayer::Slash_Katana(){
 	if (SlashCount == 0)
 	{
 		m_pGameInstance->Play(L"Katana_Air0", false);
-		m_pGameInstance->SetVolume(L"Katana_Air0", 0.5f);
+		m_pGameInstance->SetVolume(L"Katana_Air0", 0.8f);
 	}
 	else if (SlashCount == 1)
 	{
 		m_pGameInstance->Play(L"Katana_Air1", false);
-		m_pGameInstance->SetVolume(L"Katana_Air1", 0.5f);
+		m_pGameInstance->SetVolume(L"Katana_Air1", 0.8f);
 	}
 	else if (SlashCount == 2)
 	{
 		m_pGameInstance->Play(L"Katana_Air2", false);
-		m_pGameInstance->SetVolume(L"Katana_Air2", 0.5f);
+		m_pGameInstance->SetVolume(L"Katana_Air2", 0.8f);
 	}
+}
+
+void CPlayer::Set_LeftHandRender(_bool bActive)
+{
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("Ui_Phone"), bActive);
 }
 
 void CPlayer::Active_Reset()
@@ -553,6 +556,9 @@ void CPlayer::Camera_Event(_float fTimeDelta)
 
 void CPlayer::Shot()
 {
+	if (!m_bRenderWeapon)
+		return;
+
 	if (m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 	{
 		if (OPENING == eAnimationType || RELOAD == eAnimationType)
@@ -777,19 +783,19 @@ void CPlayer::SansLevelEnterInitialize()
 	
 	}
 	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
-	Set_HpLimit(99);
-	Set_PlayerHP(99);
+	Set_HpLimit(90);
+	Set_PlayerHP(5);
 }
 
 void CPlayer::SansLevelExitInitialize()
 {
 	for (size_t i = 0; i < m_SansHeartVec.size(); ++i)
 	{
-		Safe_Release(m_SansHeartVec[i]);
+		m_SansHeartVec[i]->Set_Dead();
 	}
 	m_SansHeartVec.clear();
 	Set_HpLimit(15);
-	Set_PlayerHP(15);
+	//Set_PlayerHP(15);
 }
 
 
@@ -1012,10 +1018,10 @@ void CPlayer::Ultimate_State()
 	m_fSlashDelayAcc += fTimeDelta;
 	if (m_fSlashDelayAcc >= m_fSlashDelay && IDLE == eAnimationType)
 	{
-		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SHOT);
 		Attack();
+		CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(SHOT);
 		m_fSlashDelayAcc = 0.f;
-		m_fSlashDelay *= 0.8f;
+		m_fSlashDelay *= 0.7f;
 		if (m_fSlashDelay < 0.05f)
 			m_fSlashDelay = 0.05f;
 		if (m_pUltimateSlash->Get_Texture_Index() < 26)
@@ -1026,7 +1032,6 @@ void CPlayer::Ultimate_State()
 		{
 			m_bUltimateEnd = true;
 		}
-			
 	}
 
 	if (m_bUltimateEnd)
@@ -1034,14 +1039,20 @@ void CPlayer::Ultimate_State()
 		m_pGameInstance->Set_TimeScale(1.f);
 		m_pKatanaSlashUI->Set_TimeScale(1.f);
 		m_pUltimateSlash->Set_Active(false);
-		m_pUiFadeInOut->Set_Active(false);
+		m_pUiFadeInOut->Set_FadeOutIn(200.f, CUI_FadeInOut::RED, 100.f);
+		m_pGameInstance->SetVolume(L"Elevator_BGM", 0.5f);
 		auto monsters = m_pGameInstance->Find_Layer(m_pGameInstance->Get_CurrentLevelID(), L"Monster")->Get_GameObjects();
 		for (CGameObject* pMonster : monsters)
 		{
 			CPawn::ENEMYHIT_DESC pDesc{};
 			static_cast<CPawn*>(pMonster)->SetState_Death(&pDesc);
 		}
+		Set_Invincible(false);
+		Set_InvincibleTime(1.f);
 		SetState_Idle();
+
+		m_pGameInstance->Play(L"Slash_Finish", false);
+		m_pGameInstance->Play(L"Slash_Blood", false);
 	}
 }
 
@@ -1140,6 +1151,7 @@ void CPlayer::SetState_Ultimate()
 {
 	ePlayerState = ULTIMATE_STATE;
 	CPlayer_Manager::Get_Instance()->Set_Player_AnimationType(IDLE);
+	CPlayer_Manager::Get_Instance()->Set_Player_MoveState(STOP);
 	m_pRigidbody->Set_Velocity({ 0.f, 0.f, 0.f });
 
 	m_pUltimateSlash = static_cast<CSlash_Ultimate*>(m_pGameInstance->Get_ActiveBlendUI(L"Slash_Ultimate"));
@@ -1151,13 +1163,18 @@ void CPlayer::SetState_Ultimate()
 
 	m_pGameInstance->SetVolume(L"Elevator_BGM", 0.3f);
 	m_pGameInstance->Play(L"Ultimate_Voice", false);
+	m_pGameInstance->SetVolume(L"Ultimate_Voice", 1.0f);
 	m_pGameInstance->Play(L"Haki", false);
+	m_pGameInstance->SetVolume(L"Haki", 0.5f);
 
 	m_pUiFadeInOut->Set_Active(true);
 	m_pUiFadeInOut->Set_FadeOut(40.f, CUI_FadeInOut::BLACK, 50.f, true);
 	m_pUltimateSlash->Set_Active(true);
-	m_pGameInstance->Set_TimeScale(0.01f);
-	m_pKatanaSlashUI->Set_TimeScale(3.5f);
+	m_pGameInstance->Set_TimeScale(0.005f);
+	m_pKatanaSlashUI->Set_TimeScale(3.f);
+
+	Set_Invincible(true);
+	Set_InvincibleTime(-150.f);
 }
 
 void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShakeTime)
@@ -1179,13 +1196,9 @@ void CPlayer::Camera_Shake(_float fTimeDelta, _float fShakePower, _float& fShake
 
 void CPlayer::Free()
 {
+	Active_Reset();
 	__super::Free();
 
-	for (size_t i = 0; i < m_SansHeartVec.size(); ++i)
-	{
-		m_SansHeartVec[i]->Set_Dead();
-	}
-	m_SansHeartVec.clear();
 	Safe_Release(m_pBoxCollider);
 	Safe_Release(m_pRigidbody);
 	Safe_Release(m_pTransformCom);

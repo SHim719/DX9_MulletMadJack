@@ -660,6 +660,7 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 
 			//pCorpseUp->Get_Transform()->Add_Pos({ 0.f, 0.3f, 0.f });
 			static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Set_Scale({ 0.5f, 0.5f, 0.5f });
+			static_cast<CBoxCollider*>(pCorpseUp->Find_Component(L"Collider"))->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 
 			//vOffset = 0.12f * m_pTarget->Get_Transform()->Get_GroundRight();
 			desc.isTop = false;
@@ -668,7 +669,8 @@ void CChainsaw_Monster::SetState_Death(ENEMYHIT_DESC* pDesc)
 				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() - vOffset);
 			else
 				pCorpseDown->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos() + vOffset);
-			static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.f });
+			static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Set_Scale({ 1.3f, 1.3f, 1.3f });
+			static_cast<CBoxCollider*>(pCorpseDown->Find_Component(L"Collider"))->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 
 			CGameObject* pHitEffect
 				= m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_HitBloodKatanaEffect");

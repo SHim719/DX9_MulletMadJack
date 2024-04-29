@@ -29,17 +29,52 @@ void CUI_FadeInOut::PriorityTick(_float fTimeDelta)
 
 void CUI_FadeInOut::Tick(_float fTimeDelta)
 {
-    if (FADEIN == m_eFadeState)
+    switch (m_eFadeState)
+    {
+    case FADEIN:
         m_fAlpha -= m_fSpeed * fTimeDelta;
-    
-    else
+        break;
+    case FADEOUT:
         m_fAlpha += m_fSpeed * fTimeDelta;
-    
-
+        break;
+    case FADEOUTIN:
+    {
+        if (!m_bFadeOutInLoop)
+        {
+            m_fAlpha += m_fSpeed * fTimeDelta;
+            if (m_fAlpha >= m_fTargetFadeOutAlpha)
+                m_bFadeOutInLoop = true;
+        }
+        else
+            m_fAlpha -= m_fSpeed * fTimeDelta;
+    }
+        break;
+    case FADESTATE_END:
+        break;
+    }
+        
     m_fAlpha = clamp(m_fAlpha, m_fTargetFadeInAlpha, m_fTargetFadeOutAlpha);
 
-    if (false == m_bManualOff && (m_fAlpha == m_fTargetFadeInAlpha || m_fAlpha == m_fTargetFadeOutAlpha))
-        Set_Active(false);
+    if (false == m_bManualOff)
+    {
+        switch (m_eFadeState)
+        {
+        case CUI_FadeInOut::FADEIN:
+        case CUI_FadeInOut::FADEOUT:
+            if (m_fAlpha == m_fTargetFadeInAlpha || m_fAlpha == m_fTargetFadeOutAlpha)
+                Set_Active(false);
+            break;
+        case CUI_FadeInOut::FADEOUTIN:
+            if (m_bFadeOutInLoop && (m_fAlpha == m_fTargetFadeInAlpha))
+                Set_Active(false);
+            break;
+        case CUI_FadeInOut::FADESTATE_END:
+            break;
+        default:
+            break;
+        }
+    }
+        
 }
 
 void CUI_FadeInOut::LateTick(_float fTimeDelta)
@@ -93,9 +128,23 @@ void CUI_FadeInOut::Set_FadeOut(_float fSpeed, FADECOLOR eColor, _float fTargetA
     m_fTargetFadeInAlpha = 0.f;
     m_bManualOff = ManualOff;
 }
+
+void CUI_FadeInOut::Set_FadeOutIn(_float fSpeed, FADECOLOR eColor, _float fTargetFadeOutAlpha, _float fTargetFadeInAlpha, _bool ManualOff)
+{
+    m_eFadeState = FADEOUTIN;
+    m_eFadeColor = eColor;
+    m_fSpeed = fSpeed;
+    m_fAlpha = 0.f;
+    m_fTargetFadeOutAlpha = fTargetFadeOutAlpha;
+    m_fTargetFadeInAlpha = fTargetFadeInAlpha;
+    m_bManualOff = ManualOff;
+    m_bFadeOutInLoop = false;
+}
+
+
 _bool CUI_FadeInOut::IsFinished()
 {
-    if (m_eFadeState == FADEIN && m_fAlpha == m_fTargetFadeInAlpha)
+    if ((m_eFadeState == FADEIN || m_eFadeState == FADEOUTIN) && m_fAlpha == m_fTargetFadeInAlpha)
         return true;
 
     if (m_eFadeState == FADEOUT && m_fAlpha == m_fTargetFadeOutAlpha)
