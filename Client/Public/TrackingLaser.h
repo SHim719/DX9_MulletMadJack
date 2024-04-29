@@ -58,6 +58,16 @@ private:
 	void AirStrike_Order();
 	void AirStrike_Prepair(float _fTimeDelta);
 
+	void TrackingAirStrike_Order();
+	void TrackingAirStrike_Prepair(float _fTimeDelta);
+
+	void MonsterSpawn_Order();
+	void MonsterSpawn_Prepair(float _fTimeDelta);
+
+	void AirStrike();
+	void AirStrikeBoom(_float3 vPos);
+
+	void MonsterSpawn();
 private:
 	HRESULT Add_Components();
 	HRESULT Add_Texture();
@@ -97,6 +107,7 @@ private:
 	_float  m_fLandMineCoolTimeMax = { 0.2f };
 
 	_float3 m_vMasterPos = { 0.f, 0.f, 0.f };
+	_float  m_fRotate = { 0.f };
 
 	CBeholder::ATTACKORDER m_eAttackOrder = { CBeholder::ATTACKORDER::ENDORDER };
 

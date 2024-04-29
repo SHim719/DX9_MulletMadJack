@@ -27,7 +27,6 @@ void CPlayer_Manager::Tick(_float fTimeDelta)
 		m_pPlayer->Set_AnimationType(CPlayer::OPENING);
 	}
 
-
 	switch (m_eActionType)
 	{
 		case ACTION_TYPE::ACTION_NONE: {

@@ -10,7 +10,7 @@ END
 
 BEGIN(Client)
 
-class CArtemis final : public CPawn
+class CApollo final : public CPawn
 {
 	enum STATE
 	{
@@ -24,9 +24,9 @@ class CArtemis final : public CPawn
 	};
 
 private:
-	CArtemis(LPDIRECT3DDEVICE9 pGraphic_Device);
-	CArtemis(const CArtemis& rhs);
-	virtual ~CArtemis() = default;
+	CApollo(LPDIRECT3DDEVICE9 pGraphic_Device);
+	CApollo(const CApollo& rhs);
+	virtual ~CApollo() = default;
 
 public:
 	virtual HRESULT Initialize_Prototype();
@@ -105,7 +105,7 @@ private:
 	HRESULT			End_RenderState();
 
 public:
-	static CArtemis* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
+	static CApollo* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;
 };

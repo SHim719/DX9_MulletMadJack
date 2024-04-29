@@ -49,6 +49,7 @@
 #include "TrackingLaser.h"
 #include "LandMine.h"
 #include "Artemis.h"
+#include "Apollo.h"
 
 #pragma endregion
 
