@@ -8,7 +8,7 @@ enum class BossType
 {
 	Beholder,
 	Artemis,
-	Apolon,
+	Apollon,
 	End
 };
 class CUi_BossHpBar final : public CUi
@@ -27,11 +27,11 @@ public:
 	void Render_Begin();
 	void Render_BeginBeholder();
 	void Render_BeginArtemis();
-	void Render_BeginApolon();
+	void Render_BeginApollon();
 	virtual HRESULT Render() override;
 	void Render_Beholder();
 	void Render_Artemis();
-	void Render_Apolon();
+	void Render_Apollon();
 	void Render_End();
 
 
@@ -59,6 +59,7 @@ private:
 public:
 	void Set_Beholder(class CBeholder* pBeholder);
 	void Set_Artemis(class CArtemis* pArtemis);
+	void Set_Apollon(class CApollo* pApollon);
 
 
 private:
@@ -82,6 +83,7 @@ private:
 private:
 	class CBeholder* m_pBeholder = { nullptr };
 	class CArtemis* m_pArtemis = { nullptr };
+	class CApollo* m_pApollon = { nullptr };
 
 
 public:

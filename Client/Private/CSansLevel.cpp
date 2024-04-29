@@ -17,8 +17,8 @@ HRESULT CSansLevel::Initialize()
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
-	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
-	//	return E_FAIL;
+	if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
+		return E_FAIL;
 
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;

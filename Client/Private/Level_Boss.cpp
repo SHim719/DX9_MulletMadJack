@@ -13,6 +13,7 @@
 #include "Beholder.h"
 #include "Artemis.h"
 #include "CUi_BossHpBar.h"
+#include "Apollo.h"
 
 
 CLevel_Boss::CLevel_Boss(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -136,7 +137,9 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 		(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag, TEXT("Prototype_Beholder")));
 	CArtemis* TempArtemis = dynamic_cast<CArtemis*>(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 		TEXT("Prototype_Artemis")));
-	if (TempBeholder == nullptr || TempArtemis == nullptr)
+	CApollo* TempCApollo = dynamic_cast<CApollo*>(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+		TEXT("Prototype_Apollo")));
+	if (TempBeholder == nullptr || TempArtemis == nullptr || TempCApollo == nullptr)
 	{
 		assert(false);
 	}
@@ -153,10 +156,7 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 
 	pHpBar->Set_Artemis(TempArtemis);
 	pHpBar->Set_Beholder(TempBeholder);
-
-	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
-		TEXT("Prototype_Apollo")))
-		return E_FAIL;
+	pHpBar->Set_Apollon(TempCApollo);
 
 	///*if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 	//	TEXT("Prototype_Artemis")))

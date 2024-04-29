@@ -60,6 +60,7 @@ void CApollo::Tick(_float fTimeDelta)
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pRigidbody->Update(fTimeDelta);
 	m_pAnimationCom->Update(fTimeDelta);
+	m_fRecentHitTime += fTimeDelta;
 }
 
 void CApollo::LateTick(_float fTimeDelta)
@@ -155,6 +156,8 @@ void CApollo::Hit(void* pArg)
 
 	if (m_fHp <= 0.f)
 		SetState_Death(pDesc);
+
+	m_fRecentHitTime = 0;
 }
 
 void CApollo::Shoot()

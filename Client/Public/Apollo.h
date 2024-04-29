@@ -104,6 +104,17 @@ private:
 	HRESULT			Begin_RenderState();
 	HRESULT			End_RenderState();
 
+
+public:
+	_float Get_Hp() const { return m_fHp; }
+	//jeongtest
+	_float Get_MaxHp() const { return 100.f; }
+	STATE Get_State() const { return m_eState; }
+	_float Get_RecentHitTime() const { return m_fRecentHitTime; }
+
+private:
+	_float m_fRecentHitTime = { 0 };
+
 public:
 	static CApollo* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;

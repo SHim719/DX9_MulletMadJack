@@ -783,6 +783,7 @@ void CPlayer::SansHit()
 			
 			Set_InvincibleTime(Get_InvincibleTimeLimit());
 			Set_Invincible(true);
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
 		}
 
 		if(m_SansHeartVec.size() == 0)
@@ -808,7 +809,7 @@ void CPlayer::SansLevelEnterInitialize()
 	}
 	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
 	Set_HpLimit(90);
-	Set_PlayerHP(5);
+	Set_PlayerHP(90);
 }
 
 void CPlayer::SansLevelExitInitialize()

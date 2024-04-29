@@ -33,7 +33,7 @@ unsigned int APIENTRY Loading_Main(void* pArg)
 HRESULT CLoader::Initialize(LEVEL eNextLevelID)
 {
 	m_eNextLevelID = eNextLevelID;
-
+	m_fProgress = 0.1f;
 	InitializeCriticalSection(&m_CriticalSection);
 
 	m_hThread = (HANDLE)_beginthreadex(nullptr, 0, Loading_Main, this, 0, nullptr);
@@ -187,10 +187,10 @@ HRESULT CLoader::Loading_For_Boss_Level()
 	if (FAILED(Ready_MapObject_Prototype()))
 		return E_FAIL;
 
-	if (FAILED(Loading_For_Ui()))
+	if (FAILED(Loading_For_Effect_Texture()))
 		return E_FAIL;
 
-	if (FAILED(Loading_For_Effect_Texture()))
+	if (FAILED(Loading_For_Ui()))
 		return E_FAIL;
 
 	if(FAILED(Ready_Effect_Prototype()))
@@ -222,10 +222,6 @@ HRESULT CLoader::Loading_For_Boss_Level()
 	if (FAILED(Ready_Beholder_Sound()))
 		return E_FAIL;
 #pragma endregion
-
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
-		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
-		return E_FAIL;
 
 	if (FAILED(Ready_SkyBox()))
 		return E_FAIL;
@@ -1208,7 +1204,7 @@ HRESULT CLoader::Ready_BossUi_Texture()
 			L"../Bin/Resources/Textures/Ui/Beholder/BossBack.png"))))
 		return E_FAIL;
 
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Apolon_BackGround_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Apollon_BackGround_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/Beholder/BossBack.png"))))
 		return E_FAIL;
@@ -1228,9 +1224,9 @@ HRESULT CLoader::Ready_BossUi_Texture()
 			L"../Bin/Resources/Textures/Ui/Beholder/Name_Artemis.png"))))
 		return E_FAIL;
 	
-	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Name_Apolon_Texture",
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Name_Apollon_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Beholder/Name_Apolon.png"))))
+			L"../Bin/Resources/Textures/Ui/Beholder/Name_Apollon.png"))))
 		return E_FAIL;
 
 	return S_OK;
