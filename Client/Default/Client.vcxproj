@@ -205,6 +205,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\CSkyBox.h" />
     <ClInclude Include="..\Public\CTextManager.h" />
     <ClInclude Include="..\Public\CText_BackGround.h" />
+    <ClInclude Include="..\Public\CUi_BossHpBar.h" />
     <ClInclude Include="..\Public\CUi_Combo.h" />
     <ClInclude Include="..\Public\CUi_Damaged.h" />
     <ClInclude Include="..\Public\CUi_Dead_FadeOut.h" />
@@ -220,6 +221,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\CUi_Sans_Black.h" />
     <ClInclude Include="..\Public\CUi_Sans_Heart.h" />
     <ClInclude Include="..\Public\CUi_Sans_TextBack.h" />
+    <ClInclude Include="..\Public\CUi_Ultimate_Finish.h" />
     <ClInclude Include="..\Public\DialogueManager.h" />
     <ClInclude Include="..\Public\Drink.h" />
     <ClInclude Include="..\Public\CUi_Reload.h" />
@@ -384,6 +386,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\CSansLevel.cpp" />
     <ClCompile Include="..\Private\CSansMiss.cpp" />
     <ClCompile Include="..\Private\CSkyBox.cpp" />
+    <ClCompile Include="..\Private\CUi_BossHpBar.cpp" />
     <ClCompile Include="..\Private\CUi_Dead_FadeOut.cpp" />
     <ClCompile Include="..\Private\CUi_DrinkSoda_Word.cpp" />
     <ClCompile Include="..\Private\CUi_LobbyButton.cpp" />
@@ -391,6 +394,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\CUi_Sans_Black.cpp" />
     <ClCompile Include="..\Private\CUi_Sans_Heart.cpp" />
     <ClCompile Include="..\Private\CUi_Sans_TextBack.cpp" />
+    <ClCompile Include="..\Private\CUi_Ultimate_Finish.cpp" />
     <ClCompile Include="..\Private\DialogueManager.cpp" />
     <ClCompile Include="..\Private\Effect.cpp" />
     <ClCompile Include="..\Private\ElevatorLevelManager.cpp" />

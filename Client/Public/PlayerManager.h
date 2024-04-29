@@ -5,6 +5,7 @@
 #include "Base.h"
 #include "Player.h"
 
+
 BEGIN(Client)
 
 class CPlayer_Manager : public CBase
@@ -67,7 +68,14 @@ public:
 	void Set_PlayerHP_Add(_float _fPlayerHp) { m_pPlayer->Set_PlayerHP_Add(_fPlayerHp); }
 	void Set_PlayerHP_Damaged(_float _fPlayerHp) {
 		m_pPlayer->Set_PlayerHP_Damaged(_fPlayerHp);
+		if (m_pPlayer->Get_SuperInvincible())
+		{
 
+		}
+		else
+		{
+			m_pPlayer->Set_PlayerHP_Damaged(_fPlayerHp);
+		}
 	}
 
 	void Camera_Shake_Order(_float _fShakeTime, _float _fShakePower) { m_pPlayer->Camera_Shake_Order(_fShakePower, _fShakeTime); }
@@ -155,7 +163,7 @@ public:
 	void Set_NextWeapon(CPlayer::WEAPON_TYPE eWeaponType) { m_eNextWeapon = eWeaponType; }
 	CPlayer::WEAPON_TYPE Get_NextWeapon() { return m_eNextWeapon; }
 private:
-	CGameInstance*				m_pGameInstance = { nullptr };
+	CGameInstance* m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
 	_float						m_fStageClearTime = { 0.f };
 	_int						m_iTextureindex = { 0 };
@@ -199,8 +207,8 @@ private:
 	_bool						m_bRoundPattern = false;
 
 	CPlayer::WEAPON_TYPE		m_eNextWeapon = CPlayer::PISTOL;
-private:
 
+private:
 	CPlayer* m_pPlayer = nullptr;
 
 public:

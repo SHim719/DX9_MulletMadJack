@@ -170,21 +170,21 @@ void CUi_LobbyButton::InitializeText()
 
 	m_pTextVec.reserve(3);
 	CText::Text_Info Text;
-	Text.Text = L"°ÔÀÓ ½ÃÀÛ";
+	Text.Text = L"ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
 	Text.Length = (_uint)wcslen(Text.Text);
 	Text.Rect = m_ButtonPickingVec[0];
 	Text.Rect.left += 70;
 	Text.Rect.top += 10;
 	m_pTextVec.emplace_back(Text);
 
-	Text.Text = L"¿É¼Ç";
+	Text.Text = L"ï¿½É¼ï¿½";
 	Text.Length = (_uint)wcslen(Text.Text);
 	Text.Rect = m_ButtonPickingVec[1];
 	Text.Rect.left += 120;
 	Text.Rect.top += 10;
 	m_pTextVec.emplace_back(Text);
 
-	Text.Text = L"Á¾·á";
+	Text.Text = L"ï¿½ï¿½ï¿½ï¿½";
 	Text.Length = (_uint)wcslen(Text.Text);
 	Text.Rect = m_ButtonPickingVec[2];
 	Text.Rect.left += 120;

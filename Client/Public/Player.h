@@ -161,6 +161,15 @@ private:
 
 
 public:
+	void Change_SuperInvincible() { m_bSuperInvincible = !m_bSuperInvincible; }
+	bool Get_SuperInvincible() const { return m_bSuperInvincible; }
+
+
+private:
+	bool m_bSuperInvincible = false;
+
+
+public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphic_Device);
 	virtual CGameObject* Clone(void* pArg) override;
 	virtual void Free() override;

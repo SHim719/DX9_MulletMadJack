@@ -59,8 +59,10 @@ HRESULT CBeholder::Initialize(void* pArg)
     m_strTag = "Monster";
     m_substrTag = "Beholder";
 
-    m_fHp = 1000.f;
-
+    //m_fHp = 1000.f;
+    //jeongtest
+    m_fHp = 100.f;
+    
     return S_OK;
 }
 
@@ -98,7 +100,7 @@ void CBeholder::Tick(_float fTimeDelta)
     ActivePattern(fTimeDelta);
     PatternState(fTimeDelta);
 
-
+    m_fRecentHitTime += fTimeDelta;
 }
 
 void CBeholder::LateTick(_float fTimeDelta)
@@ -611,6 +613,7 @@ void CBeholder::Hit(void* pArg)
         SetState_Hit();
     }
 
+    m_fRecentHitTime = 0;
     m_bThisFrameHit = true;
 }
 

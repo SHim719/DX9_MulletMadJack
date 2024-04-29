@@ -69,7 +69,7 @@ void CSansLevel::Tick(_float fTimeDelta)
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::SansTurn)
 	{
-		// ¿òÁ÷ÀÓ¸¸ °¡´É
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::PlayerTurn)
 	{

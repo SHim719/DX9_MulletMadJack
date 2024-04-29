@@ -51,7 +51,6 @@ public:
 	};
 
 private:
-
 	enum STATE
 	{
 		STATE_IDLE,
@@ -147,6 +146,14 @@ public:
 
 public:
 	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
+	_float Get_Hp() const { return m_fHp; }
+	//jeongtest
+	_float Get_MaxHp() const { return 100.f; }
+	_float Get_RecentHitTime() const { return m_fRecentHitTime; }
+	STATE Get_State() const { return m_eState; }
+private:
+	_float m_fRecentHitTime = { 0 };
+
 
 private:
 	HRESULT			Add_Components();

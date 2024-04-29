@@ -58,6 +58,8 @@ HRESULT CPlayer::Initialize(void * pArg)
 
 	m_strTag = "Player";
 
+	m_bSuperInvincible = false;
+	
 	return S_OK;
 }
 
@@ -73,7 +75,17 @@ void CPlayer::Tick(_float fTimeDelta)
 	Reload_Warning();
 	//LifeCut
 	if (CPlayer_Manager::Get_Instance()->Get_Action_Type() == CPlayer_Manager::ACTION_NONE) {
-		if (m_fPlayerHp > 0.f) m_fPlayerHp -= fTimeDelta;
+		if (m_fPlayerHp > 0.f)
+		{
+			if (m_bSuperInvincible)
+			{
+
+			}
+			else
+			{
+				m_fPlayerHp -= fTimeDelta;
+			}
+		}
 		else {
 			m_fPlayerHp = 0.f;
 			//DeathAnimation Trigger
@@ -101,6 +113,11 @@ void CPlayer::Tick(_float fTimeDelta)
 	Camera_Event(fTimeDelta);
 
 	m_pRigidbody->Update(fTimeDelta);
+
+	if (m_pGameInstance->GetKeyDown(eKeyCode::F))
+	{
+		Change_SuperInvincible();
+	}
 }
 
 void CPlayer::LateTick(_float fTimeDelta)
@@ -737,13 +754,20 @@ void CPlayer::OnCollisionEnter(CGameObject* pOther)
 void CPlayer::Hit(void* pArg)
 {
 	_float* pDamage = (_float*)pArg;
-	if (false == m_bInvincible && m_fPlayerHp > 0.f) {
-		Set_PlayerHP_Add(-*pDamage);
-		Set_InvincibleTime(Get_InvincibleTimeLimit());
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
+	if (m_bSuperInvincible)
+	{
 
-		m_pGameInstance->Play(L"Player_Damaged", false);
-		m_pGameInstance->SetVolume(L"Player_Damaged", 0.3f);
+	}
+	else
+	{
+		if (false == m_bInvincible && m_fPlayerHp > 0.f) {
+			Set_PlayerHP_Add(-*pDamage);
+			Set_InvincibleTime(Get_InvincibleTimeLimit());
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
+
+			m_pGameInstance->Play(L"Player_Damaged", false);
+			m_pGameInstance->SetVolume(L"Player_Damaged", 0.3f);
+		}
 	}
 }
 
@@ -1030,6 +1054,7 @@ void CPlayer::Ultimate_State()
 		}	
 		else
 		{
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Ultimate_Finish"));
 			m_bUltimateEnd = true;
 		}
 	}

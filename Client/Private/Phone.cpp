@@ -45,7 +45,7 @@ HRESULT CPhone::Initialize_Active()
     Default_Set_Size();
     Initialize_Set_Scale_Pos_Rotation(NULL);
 
-    
+    m_eFace = FaceType::Noise;
     m_fFaceChnageGap = 3.f;
     m_bFaceRoop = true;
 
@@ -255,8 +255,6 @@ HRESULT CPhone::Add_Texture(void* pArg)
         , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Hero)])))
         return E_FAIL;
 
-    // 재욱 여기다 너가 넣으셈 원하는 텍스쳐들
-
     if (FAILED(Add_Component(LEVEL_STATIC, TEXT("Announcer_Phone_Textures")
         , (CComponent**)&m_pFaceTextureCom[_uint(FaceType::Announcer)])))
         return E_FAIL;
@@ -396,6 +394,7 @@ void CPhone::Initialize_Face()
 
 void CPhone::Default_Set_FaceSize()
 {
+    m_FaceOriginScale = { 105, 105, 0 };
     m_Face.m_fSizeX = 105;
     m_Face.m_fSizeY = 105;
 }
@@ -416,14 +415,24 @@ void CPhone::Set_Face(_float fTimeDelta)
 void CPhone::Set_FacePos()
 {
 	_float3 Facepos = m_pTransformCom->Get_State(CTransform::STATE_POSITION);
-	Facepos.x += 130;
+    _float3 FaceScale = m_FaceOriginScale;
+    //origin 130, 235
+	Facepos.x += 133;
 	Facepos.y += 235;
 	if (CGameInstance::Get_Instance()->GetKey(eKeyCode::LShift)) {
 		//Temp Rotate
 		Facepos.x += 80;
 		Facepos.y += -60;
 	}
-
+    if (m_eFace != FaceType::Hero)
+    {
+        FaceScale.x += 24;
+        m_pFaceTransformCom->Set_Scale(FaceScale);
+    }
+    else
+    {
+        m_pFaceTransformCom->Set_Scale(m_FaceOriginScale);
+    }
 	m_pFaceTransformCom->Set_Position(Facepos);
 }
 

@@ -10,6 +10,9 @@
 #include "MapObject_Header.h"
 #include "Trigger_Headers.h"
 
+#include "Beholder.h"
+#include "Artemis.h"
+#include "CUi_BossHpBar.h"
 
 
 CLevel_Boss::CLevel_Boss(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -62,6 +65,8 @@ HRESULT CLevel_Boss::Initialize()
 	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, L"SkyBox", TEXT("Prototype_SkyBox")))
 		return E_FAIL;
 
+	//jeongtest
+	m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_BossHpBar"));
 
 	return S_OK;
 }
@@ -127,13 +132,27 @@ HRESULT CLevel_Boss::Ready_Layer_Player()
 
 HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 {
-	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
-		TEXT("Prototype_Beholder")))
+	CBeholder* TempBeholder = dynamic_cast<CBeholder*>
+		(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag, TEXT("Prototype_Beholder")));
+	CArtemis* TempArtemis = dynamic_cast<CArtemis*>(m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+		TEXT("Prototype_Artemis")));
+	if (TempBeholder == nullptr || TempArtemis == nullptr)
+	{
+		assert(false);
+	}
+
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_BossHpBar"),
+		eUiRenderType::Render_Blend,
+		CUi_BossHpBar::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
-		TEXT("Prototype_Artemis")))
-		return E_FAIL;
+	CUi_BossHpBar* pHpBar = dynamic_cast<CUi_BossHpBar*>
+		(m_pGameInstance->Get_ActiveBlendUI(L"CUi_BossHpBar"));
+	if (pHpBar == nullptr)
+		assert(false);
+
+	pHpBar->Set_Artemis(TempArtemis);
+	pHpBar->Set_Beholder(TempBeholder);
 
 	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 		TEXT("Prototype_Apollo")))

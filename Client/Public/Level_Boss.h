@@ -24,12 +24,14 @@ private:
 	HRESULT Ready_Layer_Camera(const wstring& strLayerTag);
 	HRESULT Ready_Layer_Player();
 	HRESULT Ready_Layer_Beholder(const wstring& strLayerTag);
-
+	HRESULT Ready_BossUi();
 	void Initialize_SodaMachine();
 
 
+private:
 	class CPlayer* m_pPlayer = { nullptr };
 	class CFPS_Camera* m_pFPS_Camera = { nullptr };
+
 };
 
 END
