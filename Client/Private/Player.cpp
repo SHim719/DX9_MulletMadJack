@@ -808,7 +808,7 @@ void CPlayer::SansLevelEnterInitialize()
 	}
 	m_pGameInstance->Set_Ui_ActiveState(L"CUi_Execution_Show", false);
 	Set_HpLimit(90);
-	Set_PlayerHP(5);
+	Set_PlayerHP(90);
 }
 
 void CPlayer::SansLevelExitInitialize()

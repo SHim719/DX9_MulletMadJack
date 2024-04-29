@@ -492,7 +492,6 @@ void CBeholder::RoundAirStrikeLandMine(float _fTimeDelta)
 
 void CBeholder::AirBoom(_float3 vPos)
 {
-
     for (int i = 0; i < 15; ++i) {
         _float3 vTargetPos = vPos;
         _float3 vLookPos = { 0.f, 0.f, 0.f };
@@ -509,6 +508,8 @@ void CBeholder::AirBoom(_float3 vPos)
         LaserOrder.vLook = vLookPos;
 
         CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+        m_pGameInstance->Play(L"Beholder_AirBoom", false);
+        m_pGameInstance->SetVolume(L"Beholder_AirBoom", 0.3f);
     }
 }
 

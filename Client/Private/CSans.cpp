@@ -77,16 +77,22 @@ void CSans::Tick(_float fTimeDelta)
 
         if (!m_bSansSpeaking && m_fSans_Words_Timelength > 0)
         {
-            m_pGameInstance->Play(L"Sans_Words", true);
-            m_pGameInstance->SetVolume(L"Sans_Words", 0.5f);
+            m_fLineStartTime += fTimeDelta;
 
-            m_bSansSpeaking = true;
+            if (m_fLineStartTime >= 0.35f)
+            {
+                m_pGameInstance->Play(L"Sans_Words", true);
+                m_pGameInstance->SetVolume(L"Sans_Words", 0.5f);
+
+                m_bSansSpeaking = true;
+                m_fLineStartTime = 0.f;
+            }
         }
     }
 
     m_fSans_Words_Timelength -= fTimeDelta;
     
-    if (m_fSans_Words_Timelength <= 0)
+    if (m_fSans_Words_Timelength <= -0.35f)
     {
         m_pGameInstance->Stop(L"Sans_Words");
 
@@ -287,14 +293,6 @@ void CSans::Set_Pattern1Time()
 
 void CSans::Set_Pattern2Time()
 {
-    /*if (!m_bBGMPlaying)
-    {
-        m_pGameInstance->Play(L"MEGALOVANIA", true);
-        m_pGameInstance->SetVolume(L"MEGALOVANIA", 0.5f);
-
-        m_bBGMPlaying = true;
-    }*/
-
     _float3 Pos{};
     switch (m_iDetailPatternCount)
     {
@@ -732,7 +730,16 @@ void CSans::Set_Text()
     CText::Text_Info* Info = CGame_Manager::Get_Instance()->Get_Text(TextType::Sans, m_iSansTextCount);
     Info->Rect = { 300, 20, 800, 120 };
     Info->RGBA = D3DCOLOR_RGBA(0, 0, 0, 255);
+
+    if (!m_bMeasured_Sans_Lines)
+    {
+        m_fSans_Words_Timelength = (_float)Info->Length * 0.02f;
+
+        m_bMeasured_Sans_Lines = true;
+    }
+
     Info->Length = m_iSansTextLength;
+
     CGame_Manager::Get_Instance()->Print_Text_Sans(Info);
 }
 
@@ -743,8 +750,6 @@ void CSans::Set_TextLength(_float fTimeDelta)
     {
         ++m_iSansTextLength;
     }
-
-    m_fSans_Words_Timelength = (_float)m_iSansTextLength;
 }
 
 void CSans::Adjust_BodyPos(_float fTimeDelta)

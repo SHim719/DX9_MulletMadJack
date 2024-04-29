@@ -20,6 +20,8 @@ HRESULT CSansLevel::Initialize()
 	//if (FAILED(Ready_Layer_Camera(TEXT("Main_Camera"))))
 	//	return E_FAIL;
 
+	Ready_Layer_Camera(TEXT("Main_Camera"));
+
 	if (FAILED(Ready_Layer_Player()))
 		return E_FAIL;
 
@@ -65,6 +67,9 @@ void CSansLevel::Tick(_float fTimeDelta)
 			CGame_Manager::Get_Instance()->Clear_Sans_Text();
 			m_pGameInstance->Set_Ui_ActiveState
 			(L"CUi_Sans_TextBack", false);	
+
+			if (m_pSans->Get_Measured_Sans_Lines())
+				m_pSans->Set_Measured_Sans_Lines(false);
 		}
 	}
 	else if (m_pSans->GetSansTurnInfo() == SansTurnBased::SansTurn)
@@ -94,6 +99,9 @@ void CSansLevel::Tick(_float fTimeDelta)
 		if (m_fEventDelayTimeAcc >= m_fEventDelayTime)
 		{
 			m_pGameInstance->Stop(L"Gameplay");
+			m_pGameInstance->Stop(L"MEGALOVANIA");
+			m_pGameInstance->Stop(L"Sans_Words");
+
 			m_pGameInstance->Set_Ui_ActiveState(L"CUi_Sans_TextBack", false);
 			m_pGameInstance->Set_Ui_ActiveState(L"Noise_Filter", false);
 			CGame_Manager::Get_Instance()->Clear_Sans_Text();
