@@ -23,8 +23,7 @@ HRESULT CLevel_Loading::Initialize(LEVEL eNextLevelID)
 
 	m_eNextLevelID = eNextLevelID;
 
-	m_pLoadingBackGround = (CUi_LoadingBackGround*)m_pGameInstance->Add_Ui_PartClone
-	(L"CUi_LoadingBackGround", nullptr);
+	m_pLoadingBackGround = (CUi_LoadingBackGround*)m_pGameInstance->Add_Ui_PartClone(L"CUi_LoadingBackGround", nullptr);
 	if (FAILED(Ready_Layer_BackGround(TEXT("Layer_BackGround"))))
 		return E_FAIL;
 	m_pLoader = CLoader::Create(m_pGraphic_Device, eNextLevelID);

@@ -41,8 +41,8 @@ HRESULT CMainApp::Initialize()
 	if (FAILED(Open_Level(LEVEL_LOBBY)))
 		return E_FAIL;
 
-	//if (FAILED(Open_Level(LEVEL_BOSS)))
-	//	return E_FAIL;
+	/*if (FAILED(Open_Level(LEVEL_SANS)))
+		return E_FAIL;*/
 
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 	//	return E_FAIL;
@@ -53,8 +53,8 @@ HRESULT CMainApp::Initialize()
 	m_pGameInstance->Play(L"Loading", true);
 	m_pGameInstance->SetVolume(L"Loading", 0.5f);
 
-	if (FAILED(Open_Level(LEVEL_LOBBY)))
-		return E_FAIL;
+	/*if (FAILED(Open_Level(LEVEL_LOBBY)))
+		return E_FAIL;*/
 
 	return S_OK;
 }

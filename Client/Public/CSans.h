@@ -80,6 +80,10 @@ public:
 	SansTurnBased GetSansTurnInfo() { return m_Turn; }
 	_uint GetPatternCount() { return m_iPatternCount; }
 	void TransParent();
+
+	void Set_Measured_Sans_Lines(_bool bMeasured) { m_bMeasured_Sans_Lines = bMeasured; }
+	_bool Get_Measured_Sans_Lines() { return m_bMeasured_Sans_Lines; }
+
 private:
 	HRESULT			Add_Components();
 	HRESULT			Add_Textures();
@@ -115,7 +119,8 @@ private:
 	_uint m_iSansIndex = { 0 };
 	_uint m_iPatternCount = { 0 };
 	_float m_fPatternTime = { 0 };
-	_float m_fTextLengthTime = { 0 };
+	_float m_fTextLengthTime = { 0.f };
+	_float m_fLineStartTime = { 0.f };
 	_int m_iDetailPatternCount = { 0 };
 	_int m_iSansTextCount = { -1 };
 	_uint m_iSansTextLength = { 0 };
@@ -127,6 +132,7 @@ private:
 	_uint m_itestCount = { 0 };
 	_bool m_bBGMPlaying = { false };
 	_bool m_bSansSpeaking = { false };
+	_bool m_bMeasured_Sans_Lines = { false };
 	_float m_fSans_Words_Timelength = { 0 };
 
 private:

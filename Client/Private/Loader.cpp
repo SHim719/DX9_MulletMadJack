@@ -150,6 +150,9 @@ HRESULT CLoader::Loading_For_GamePlay_Level()
 	if (FAILED(Ready_Beholder_Sound()))
 		return E_FAIL;
 
+	if (FAILED(Ready_Sans_Sound()))
+		return E_FAIL;
+
 	if (FAILED(Ready_SkyBox()))
 		return E_FAIL;
 
@@ -220,6 +223,9 @@ HRESULT CLoader::Loading_For_Boss_Level()
 
 	if (FAILED(Ready_Beholder_Sound()))
 		return E_FAIL;
+
+	if (FAILED(Ready_Sans_Sound()))
+		return E_FAIL;
 #pragma endregion
 
 	/*if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
@@ -281,6 +287,9 @@ HRESULT CLoader::Loading_For_Sans_Level()
 		return E_FAIL;
 
 	if (FAILED(Ready_Effect_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Beholder_Sound()))
 		return E_FAIL;
 
 	if (FAILED(Ready_Sans_Sound()))
@@ -2056,6 +2065,9 @@ HRESULT CLoader::Ready_Beholder_Sound()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Beholder_Sound/Beholder_Bullet.wav", L"Beholder_Bullet")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Beholder_Sound/Beholder_AirBoom.wav", L"Beholder_AirBoom")))
 		return E_FAIL;
 
 	return S_OK;

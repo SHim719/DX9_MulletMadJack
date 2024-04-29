@@ -172,6 +172,9 @@ void CArtemis::Shoot()
 	pBullet->Get_Transform()->Set_Position(vBulletPos);
 	pBullet->Get_Transform()->Set_Scale({ 2.f, 1.f, 2.f });
 	pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+
+	m_pGameInstance->Play(L"Beholder_Bullet", false);
+	m_pGameInstance->SetVolume(L"Beholder_Bullet", 0.5f);
 	static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
 }
 
