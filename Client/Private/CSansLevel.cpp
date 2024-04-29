@@ -12,8 +12,7 @@ CSansLevel::CSansLevel(LPDIRECT3DDEVICE9 pGraphic_Device)
 HRESULT CSansLevel::Initialize()
 {
 	m_iLevelID = LEVEL_SANS;
-	m_pGameInstance->Play(L"Gameplay", true);
-	m_pGameInstance->SetVolume(L"Gameplay", 0.5f);
+	m_pGameInstance->Stop(L"Loading");
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 
@@ -53,6 +52,7 @@ HRESULT CSansLevel::Initialize()
 void CSansLevel::Tick(_float fTimeDelta)
 {
 	CPlayer_Manager::Get_Instance()->Tick_AdjustTime(fTimeDelta, 8.f);
+
 	if (m_pSans->GetSansTurnInfo() == SansTurnBased::SansText)
 	{
 		if(m_pGameInstance->GetKeyDown(eKeyCode::RButton))

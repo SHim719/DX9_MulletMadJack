@@ -214,6 +214,9 @@ HRESULT CLoader::Loading_For_Boss_Level()
 
 	if (FAILED(Ready_Streamer_Sound()))
 		return E_FAIL;
+
+	if (FAILED(Ready_Beholder_Sound()))
+		return E_FAIL;
 #pragma endregion
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
@@ -260,6 +263,24 @@ HRESULT CLoader::Loading_For_Sans_Level()
 		return E_FAIL;
 
 	if (FAILED(Loading_For_Ui()))
+		return E_FAIL;
+
+	if (FAILED(Ready_BGM()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Player_Weapon_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Player_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Monster_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Effect_Sound()))
+		return E_FAIL;
+
+	if (FAILED(Ready_Sans_Sound()))
 		return E_FAIL;
 
 	Initialize_TextManager();
@@ -1904,6 +1925,37 @@ HRESULT CLoader::Ready_Streamer_Sound()
 		return E_FAIL;
 
 	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Etc/Noise_SFX.mp3", L"ElevatorSansDialogue2")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Beholder_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Beholder_Sound/Beholder_Laser0.wav", L"Beholder_Laser0")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Beholder_Sound/Beholder_Laser1.wav", L"Beholder_Laser1")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Beholder_Sound/Beholder_Laser2.wav", L"Beholder_Laser2")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Beholder_Sound/Beholder_Bullet.wav", L"Beholder_Bullet")))
+		return E_FAIL;
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_Sans_Sound()
+{
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Sans_Sound/Gaster.wav", L"Gaster")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Sans_Sound/MEGALOVANIA.wav", L"MEGALOVANIA")))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Create_Sound("../Bin/Resources/Sound/Sans_Sound/Sans_Words.wav", L"Sans_Words")))
 		return E_FAIL;
 
 	return S_OK;

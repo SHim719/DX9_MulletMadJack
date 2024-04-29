@@ -74,7 +74,25 @@ void CSans::Tick(_float fTimeDelta)
     {
         Set_TextLength(fTimeDelta);
         Set_Text();
+
+        if (!m_bSansSpeaking && m_fSans_Words_Timelength > 0)
+        {
+            m_pGameInstance->Play(L"Sans_Words", true);
+            m_pGameInstance->SetVolume(L"Sans_Words", 0.5f);
+
+            m_bSansSpeaking = true;
+        }
     }
+
+    m_fSans_Words_Timelength -= fTimeDelta;
+    
+    if (m_fSans_Words_Timelength <= 0)
+    {
+        m_pGameInstance->Stop(L"Sans_Words");
+
+        m_bSansSpeaking = false;
+    }
+
     Adjust_BodyPos(fTimeDelta);
     m_fTransParentTime -= fTimeDelta;
 }
@@ -253,6 +271,13 @@ void CSans::Set_Pattern1Time()
         SetTurn(SansTurnBased::SansText);
         break;
     case 9:
+        if (!m_bBGMPlaying)
+        {
+            m_pGameInstance->Play(L"MEGALOVANIA", true);
+            m_pGameInstance->SetVolume(L"MEGALOVANIA", 0.5f);
+
+            m_bBGMPlaying = true;
+        }
         Add_SansPattern();
         break;
     default:
@@ -262,6 +287,14 @@ void CSans::Set_Pattern1Time()
 
 void CSans::Set_Pattern2Time()
 {
+    /*if (!m_bBGMPlaying)
+    {
+        m_pGameInstance->Play(L"MEGALOVANIA", true);
+        m_pGameInstance->SetVolume(L"MEGALOVANIA", 0.5f);
+
+        m_bBGMPlaying = true;
+    }*/
+
     _float3 Pos{};
     switch (m_iDetailPatternCount)
     {
@@ -689,6 +722,7 @@ void CSans::State_Pattern()
         cout << m_iPatternCount << endl;
         m_pBoneSpawner->Spawn(m_iPatternCount, m_iDetailPatternCount);
         m_pGasterSpawner->Spawn(m_iPatternCount, m_iDetailPatternCount);
+
         ++m_iDetailPatternCount;
     }
 }
@@ -709,6 +743,8 @@ void CSans::Set_TextLength(_float fTimeDelta)
     {
         ++m_iSansTextLength;
     }
+
+    m_fSans_Words_Timelength = m_iSansTextLength;
 }
 
 void CSans::Adjust_BodyPos(_float fTimeDelta)

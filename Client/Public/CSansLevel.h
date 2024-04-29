@@ -26,6 +26,8 @@ private:
 	class CFPS_Camera* m_pFPS_Camera = { nullptr };
 	class CSans* m_pSans = { nullptr };
 
+private:
+	_bool m_bBGMPlaying = { false };
 
 public:
 	static CSansLevel* Create(LPDIRECT3DDEVICE9 pGraphic_Device);

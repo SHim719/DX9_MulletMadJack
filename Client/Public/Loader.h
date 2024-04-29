@@ -85,6 +85,8 @@ private:
 	HRESULT Ready_Effect_Sound();
 	HRESULT Ready_Announcer_Sound();
 	HRESULT Ready_Streamer_Sound();
+	HRESULT Ready_Beholder_Sound();
+	HRESULT Ready_Sans_Sound();
 
 	HRESULT Ready_SkyBox();
 

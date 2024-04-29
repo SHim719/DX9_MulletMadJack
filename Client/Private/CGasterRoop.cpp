@@ -12,6 +12,9 @@ CGasterRoop::CGasterRoop(const CGameObject& rhs)
 
 HRESULT CGasterRoop::Initialize(void* pArg)
 {
+	m_pGameInstance->Play(L"Gaster", false);
+	m_pGameInstance->SetVolume(L"Gaster", 0.3f);
+
 	GasterRoopArg* Arg = (GasterRoopArg*)pArg;
 	m_ePos = Arg->Pos;
 	m_eFirePos = Arg->FirePos;

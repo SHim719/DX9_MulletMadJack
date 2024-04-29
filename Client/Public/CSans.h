@@ -125,6 +125,9 @@ private:
 
 	// delete this !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	_uint m_itestCount = { 0 };
+	_bool m_bBGMPlaying = { false };
+	_bool m_bSansSpeaking = { false };
+	_float m_fSans_Words_Timelength = { 0 };
 
 private:
 	CVIBuffer* m_pVIBufferCom = { nullptr };

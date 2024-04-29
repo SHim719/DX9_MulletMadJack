@@ -394,6 +394,8 @@ void CBeholder::ActivePattern(_float fTimeDelta)
 
 void CBeholder::Player_Tracking_Laser()
 {
+    m_pGameInstance->Play(L"Beholder_Laser0", false);
+    m_pGameInstance->SetVolume(L"Beholder_Laser0", 1.f);
 
     BeholderAttackOrder LaserOrder;
     LaserOrder.eOrder = PLAYERTRACKING;
@@ -404,6 +406,9 @@ void CBeholder::Player_Tracking_Laser()
 
 void CBeholder::All_Round_Laser()
 {
+    m_pGameInstance->Play(L"Beholder_Laser1", false);
+    m_pGameInstance->SetVolume(L"Beholder_Laser1", 1.f);
+
     for(int i = 0; i < 30; ++i){
     _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-15,15);
     _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-5,25);
@@ -420,6 +425,9 @@ void CBeholder::All_Round_Laser()
 
 void CBeholder::All_Round_Laser_LandMine()
 {
+    m_pGameInstance->Play(L"Beholder_Laser2", false);
+    m_pGameInstance->SetVolume(L"Beholder_Laser2", 1.f);
+
     for (int i = 0; i < 5; ++i) {
 		_float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-15, 15);
 		_float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-5, 25);
@@ -503,6 +511,9 @@ void CBeholder::AirBoom(_float3 vPos)
 
 void CBeholder::Shoot()
 {
+    m_pGameInstance->Play(L"Beholder_Bullet", false);
+    m_pGameInstance->SetVolume(L"Beholder_Bullet", 0.5f);
+
     _float3 vBulletPos = m_pTransformCom->Get_Pos();
     vBulletPos.y += 0.25f;
 

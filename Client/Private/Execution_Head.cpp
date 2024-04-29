@@ -60,7 +60,7 @@ void CExecution_Head::Tick(_float fTimeDelta)
 				CGameInstance::Get_Instance()->Set_Ui_ActiveState(TEXT("Execution_Knife"), true);
 
 				m_pGameInstance->Play(L"Player_Execution_Weapon", false);
-				m_pGameInstance->SetVolume(L"Player_Execution_Weapon", 0.3f);
+				m_pGameInstance->SetVolume(L"Player_Execution_Weapon", 1.f);
 
 				m_iTexture_Index++;
 			}
