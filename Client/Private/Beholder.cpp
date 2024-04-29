@@ -61,7 +61,7 @@ HRESULT CBeholder::Initialize(void* pArg)
 
     //m_fHp = 1000.f;
     //jeongtest
-    m_fHp = 1000.f;
+    m_fHp = 200.f;
     m_fMaxHp = 1000.f;
     
     return S_OK;
@@ -405,6 +405,7 @@ void CBeholder::ActivePattern(_float fTimeDelta)
 			PhaseChargePattern(fTimeDelta);
 			break;
         case PHASE_DEATH:
+            PhaseDeathPattern(fTimeDelta);
             break;
         case PHASE_END:
             break;
@@ -565,6 +566,43 @@ void CBeholder::Phase2Pattern(_float fTimeDelta)
 
 void CBeholder::Phase3Pattern(_float fTimeDelta)
 {
+
+    if (m_fPhase3ShootDelay <= 0) {
+        _float3 vBulletPos = m_pTransformCom->Get_Pos();
+        vBulletPos.y += 0.25f;
+
+        for (int i = 0; i < 10; i++) {
+            _float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-20, 20);
+            _float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-10, 30);
+
+            _float fRandomSpeed = CMath_Manager::Get_Instance()->Random_Float(10, 20);
+
+            _float3 vTargetPos = { fRandomX, 0.f, fRandomZ };
+
+            _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+            vPlayerPos.y -= 0.4f;
+            CGameObject* pBullet = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_LastBullet");
+            pBullet->Get_Transform()->Set_Position(vBulletPos);
+            pBullet->Get_Transform()->Set_Scale({ 8.f, 8.f, 2.f });
+            pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vTargetPos);
+            pBullet->Get_Transform()->Set_Speed(fRandomSpeed);
+            pBullet->Set_Texture_Index(1);
+            static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
+        }
+
+        _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+        vPlayerPos.y -= 0.4f;
+        CGameObject* pBullet = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_LastBullet");
+        pBullet->Get_Transform()->Set_Position(vBulletPos);
+        pBullet->Get_Transform()->Set_Scale({ 10.f, 10.f, 2.f });
+        pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+        pBullet->Set_Texture_Index(1);
+        static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
+        m_fPhase3ShootDelay = m_fPhase3ShootDelayMax;
+    }
+    else {
+        		m_fPhase3ShootDelay -= fTimeDelta;
+    }
 }
 
 void CBeholder::PhaseChargePattern(_float fTimeDelta)
@@ -592,6 +630,58 @@ void CBeholder::PhaseGroggyPattern(_float fTimeDelta)
 {
     m_pAnimationCom->Play_Animation(L"Groggy", 0.1f, true);
 
+}
+
+void CBeholder::PhaseDeathPattern(_float fTimeDelta)
+{
+    if (m_fDeathDelay <= 0.f) {
+        if (m_pAnimationCom->IsEndAnim())
+        {
+            CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Explosion");
+            pEffect->Get_Transform()->Set_Position(m_pTransformCom->Get_Pos());
+            pEffect->Get_Transform()->Set_Scale({ 25.f, 25.f, 1.f });
+
+            m_pGameInstance->Play(L"Drone_Explosion", false);
+            m_pGameInstance->SetVolume(L"Drone_Explosion", 0.7f);
+
+            Call_MonsterDieUi(eMonsterGrade::Middle);
+
+            CUi_SpecialHit::SpecialHit_Desc Arg;
+            Arg.Hit = eSpecialHit::FINISHED;
+            Arg.iCount = 4;
+            m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
+            m_bDestroyed = true;
+        }
+    }
+    else
+    {
+        if (m_fDeathExplodeDelay <= 0.f)
+        {
+            CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Explosion");
+
+            _float3 vPos = m_pTransformCom->Get_Pos();
+
+            vPos.x += CMath_Manager::Get_Instance()->Random_Float(-2.f, 2.f);
+            vPos.y += CMath_Manager::Get_Instance()->Random_Float(-2.f, 2.f);
+            vPos.z += CMath_Manager::Get_Instance()->Random_Float(-2.f, 2.f);
+
+            pEffect->Get_Transform()->Set_Position(vPos);
+            pEffect->Get_Transform()->Set_Scale({ 6.f, 6.f, 1.f });
+
+            m_pGameInstance->Play(L"Drone_Explosion", false);
+            m_pGameInstance->SetVolume(L"Drone_Explosion", 0.2f);
+            m_fDeathExplodeDelay = m_fDeathExplodeDelayMax;
+        }
+        else
+        {
+            m_fDeathExplodeDelay -= fTimeDelta;
+        }
+
+        m_pTransformCom->Set_Speed(5.f);
+        m_pTransformCom->Go_Down(fTimeDelta);
+
+        m_fDeathDelay -= fTimeDelta;
+    }
 }
 
 
@@ -741,8 +831,9 @@ void CBeholder::AirBoom(_float3 vPos)
         LaserOrder.vLook = vLookPos;
 
         CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+
         m_pGameInstance->Play(L"Beholder_AirBoom", false);
-        m_pGameInstance->SetVolume(L"Beholder_AirBoom", 0.3f);
+        m_pGameInstance->SetVolume(L"Beholder_AirBoom", 0.15f);
     }
 }
 
@@ -1191,42 +1282,8 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
 {
     if (STATE_DEATH == m_eState)
         return;
-    m_eState = STATE_DEATH;
-    m_pGameInstance->Play(L"White_Suit_Death", false);
-    m_pGameInstance->SetVolume(L"White_Suit_Death", 0.3f);
-
-    m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
-    m_bCanIntersect = false;
-    m_pBoxCollider->Set_Active(false);
-
-    Call_MonsterDieUi(eMonsterGrade::Middle);
-
-    CPlayer::WEAPON_TYPE eWeaponType = CPlayer_Manager::Get_Instance()->Get_WeaponType();
-    CUi_SpecialHit::SpecialHit_Desc Arg;
-    switch (pDesc->eHitType)
-    {
-    case CPawn::HEAD_SHOT: {
-        //m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
-        //if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
-
-        Arg.Hit = eSpecialHit::HEADSHOT;
-        Arg.iCount = 4;
-        m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
-        break;
-    }
-    case CPawn::BODY_SHOT: {
-        //m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
-        //if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
-
-        Arg.Hit = eSpecialHit::FINISHED;
-        Arg.iCount = 4;
-        m_pGameInstance->Add_Ui_LifeClone(TEXT("CUi_SpecialHit"), eUiRenderType::Render_NonBlend, &Arg);
-        break;
-    }
-    case CPawn::EGG_SHOT:
-        //m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
-        break;
-    }
+    
+    m_ePhase = PHASE_DEATH;
 }
 
 void CBeholder::Set_PatternEndCheck()

@@ -36,6 +36,7 @@ void CUi_Ultimate_Finish::Tick(_float fTimeDelta)
     }
     else
     {
+        CPlayer_Manager::Get_Instance()->Set_BossCutscene(false);
         m_bActive = false;
     }
     ChangeColor();

@@ -502,9 +502,6 @@
     <Filter Include="01. Levels\02. Map2">
       <UniqueIdentifier>{4667eaaa-08dc-437c-922c-f5236b073904}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Levels\03. ElevatorMap">
-      <UniqueIdentifier>{0d25a20f-181c-450c-946f-579789c1f403}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00. MainApp">
       <UniqueIdentifier>{edc3c5d1-ea6b-4e29-b34d-540396673e0f}</UniqueIdentifier>
     </Filter>
@@ -594,6 +591,9 @@
     </Filter>
     <Filter Include="02. GameObjects\04. Enemy\Last_Bullet">
       <UniqueIdentifier>{5855f61e-2412-481b-9289-05766abaf645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\02. Map2\03. ElevatorMap">
+      <UniqueIdentifier>{0d25a20f-181c-450c-946f-579789c1f403}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1036,7 +1036,7 @@
       <Filter>02. GameObjects\01. MapObject\MoveWall</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Elevator_Level.h">
-      <Filter>01. Levels\03. ElevatorMap</Filter>
+      <Filter>01. Levels\02. Map2\03. ElevatorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\ElevatorLevelManager.h">
       <Filter>97. Manager\ElevatorLevelManager</Filter>
@@ -1542,7 +1542,7 @@
       <Filter>02. GameObjects\01. MapObject\MoveWall</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Elevator_Level.cpp">
-      <Filter>01. Levels\03. ElevatorMap</Filter>
+      <Filter>01. Levels\02. Map2\03. ElevatorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\ElevatorLevelManager.cpp">
       <Filter>97. Manager\ElevatorLevelManager</Filter>
