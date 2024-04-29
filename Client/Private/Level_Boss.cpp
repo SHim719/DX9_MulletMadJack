@@ -134,6 +134,18 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 		TEXT("Prototype_Artemis")))
 		return E_FAIL;
 
+	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+		TEXT("Prototype_Apollo")))
+		return E_FAIL;
+
+	///*if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+	//	TEXT("Prototype_Artemis")))
+	//	return E_FAIL;
+
+	//if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
+	//	TEXT("Prototype_Apollo")))
+	//	return E_FAIL;
+
 	return S_OK;
 }
 

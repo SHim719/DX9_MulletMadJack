@@ -1,4 +1,4 @@
-#include "Artemis.h"
+#include "Apollo.h"
 #include "GameInstance.h"
 #include "PlayerManager.h"
 #include "CUi_SpecialHit.h"
@@ -6,22 +6,22 @@
 #include "Beholder.h"
 #include "FPS_Camera.h"
 
-CArtemis::CArtemis(LPDIRECT3DDEVICE9 pGraphic_Device)
+CApollo::CApollo(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CPawn{ pGraphic_Device }
 {
 }
 
-CArtemis::CArtemis(const CArtemis& rhs)
+CApollo::CApollo(const CApollo& rhs)
 	: CPawn{ rhs }
 {
 }
 
-HRESULT CArtemis::Initialize_Prototype()
+HRESULT CApollo::Initialize_Prototype()
 {
 	return S_OK;
 }
 
-HRESULT CArtemis::Initialize(void* pArg)
+HRESULT CApollo::Initialize(void* pArg)
 {
 	if (FAILED(Add_Components()))
 		return E_FAIL;
@@ -48,12 +48,12 @@ HRESULT CArtemis::Initialize(void* pArg)
 	return S_OK;
 }
 
-void CArtemis::PriorityTick(_float fTimeDelta)
+void CApollo::PriorityTick(_float fTimeDelta)
 {
 	m_bThisFrameHit = false;
 }
 
-void CArtemis::Tick(_float fTimeDelta)
+void CApollo::Tick(_float fTimeDelta)
 {
 	Process_State(fTimeDelta);
 
@@ -62,7 +62,7 @@ void CArtemis::Tick(_float fTimeDelta)
 	m_pAnimationCom->Update(fTimeDelta);
 }
 
-void CArtemis::LateTick(_float fTimeDelta)
+void CApollo::LateTick(_float fTimeDelta)
 {
 	if (!m_pGameInstance->In_WorldFrustum(m_pTransformCom->Get_Pos(), 2.f))
 		return;
@@ -72,7 +72,7 @@ void CArtemis::LateTick(_float fTimeDelta)
 	m_pGameInstance->Add_RenderObjects(CRenderer::RENDER_NONBLEND, this);
 }
 
-HRESULT CArtemis::Render()
+HRESULT CApollo::Render()
 {
 	if (FAILED(m_pTransformCom->Bind_WorldMatrix()))
 		return E_FAIL;
@@ -93,7 +93,7 @@ HRESULT CArtemis::Render()
 	return S_OK;
 }
 
-_bool CArtemis::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
+_bool CApollo::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDist, void* pArg)
 {
 	if (STATE_DEATH == m_eState)
 		return false;
@@ -125,7 +125,7 @@ _bool CArtemis::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDis
 	return false;
 }
 
-void CArtemis::OnCollisionEnter(CGameObject* pOther)
+void CApollo::OnCollisionEnter(CGameObject* pOther)
 {
 	if ("Player" == pOther->Get_Tag())
 	{
@@ -134,7 +134,7 @@ void CArtemis::OnCollisionEnter(CGameObject* pOther)
 	}
 }
 
-void CArtemis::Hit(void* pArg)
+void CApollo::Hit(void* pArg)
 {
 	ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
@@ -157,7 +157,7 @@ void CArtemis::Hit(void* pArg)
 		SetState_Death(pDesc);
 }
 
-void CArtemis::Shoot()
+void CApollo::Shoot()
 {
 	_float3 vBulletPos = m_pTransformCom->Get_Pos();
 	vBulletPos.y += 0.25f;
@@ -171,58 +171,58 @@ void CArtemis::Shoot()
 	static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
 }
 
-void CArtemis::Process_State(_float fTimeDelta)
+void CApollo::Process_State(_float fTimeDelta)
 {
 	switch (m_eState)
 	{
-	case CArtemis::STATE_IDLE:
+	case CApollo::STATE_IDLE:
 		State_Idle(fTimeDelta);
 		break;
-	case CArtemis::STATE_MOVE:
+	case CApollo::STATE_MOVE:
 		State_Move(fTimeDelta);
 		break;
-	case CArtemis::STATE_SHOT:
+	case CApollo::STATE_SHOT:
 		State_Shot(fTimeDelta);
 		break;
-	case CArtemis::STATE_AIRSTRIKE:
+	case CApollo::STATE_AIRSTRIKE:
 		State_AirStrike(fTimeDelta);
 		break;
-	case CArtemis::STATE_MONSTERSPAWN:
+	case CApollo::STATE_MONSTERSPAWN:
 		State_MonsterSpawn(fTimeDelta);
 		break;
-	case CArtemis::STATE_DEATH:
+	case CApollo::STATE_DEATH:
 		State_Death(fTimeDelta);
 		break;
 	}
 }
 
-void CArtemis::State_Idle(float _fTimeDelta)
+void CApollo::State_Idle(float _fTimeDelta)
 {
 	_int iRand = CMath_Manager::Get_Instance()->Random_Int(0, 10);
 
 	switch (iRand)
 	{
-		case 0 :
-		case 1 :
-		case 2 :
-		case 3 :
-		case 4 :
-		case 5 :
-			SetState_Move();
-			break;
-		case 6 :
-		case 7 :
-		case 8 :
-			SetState_Shot();
-			break;
-		case 9 : 
-			SetState_MonsterSpawn();
-			break;
-		case 10 :
-			SetState_AirStrike();
-			break;
-		default:
-			break;
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+		SetState_Move();
+		break;
+	case 6:
+	case 7:
+	case 8:
+		SetState_Shot();
+		break;
+	case 9:
+		SetState_MonsterSpawn();
+		break;
+	case 10:
+		SetState_AirStrike();
+		break;
+	default:
+		break;
 
 
 
@@ -246,26 +246,26 @@ void CArtemis::State_Idle(float _fTimeDelta)
 	//}
 }
 
-void CArtemis::State_Move(float _fTimeDelta)
+void CApollo::State_Move(float _fTimeDelta)
 {
 	_float fTargetDist = D3DXVec3Length(&(m_vTargetPosition - m_pTransformCom->Get_Pos()));
-	
-		if (fTargetDist < 1.f)
-		{
-			m_fMoveDelay = 1.f;
-			SetState_Idle();
-			return;
-		}
-		else {
-			D3DXVec3Normalize(&m_vTargetDirection, &(m_vTargetPosition - m_pTransformCom->Get_Pos()));
-			m_pTransformCom->Set_Pos(m_pTransformCom->Get_Pos() + m_vTargetDirection * m_pTransformCom->Get_Speed() * _fTimeDelta);
-			m_pTransformCom->Set_Speed(m_pTransformCom->Get_Speed() + 70.f * _fTimeDelta);
-			if (m_pTransformCom->Get_Speed() >= m_fMaxSpeed) m_pTransformCom->Set_Speed(m_fMaxSpeed);
-		}
+
+	if (fTargetDist < 1.f)
+	{
+		m_fMoveDelay = 1.f;
+		SetState_Idle();
+		return;
+	}
+	else {
+		D3DXVec3Normalize(&m_vTargetDirection, &(m_vTargetPosition - m_pTransformCom->Get_Pos()));
+		m_pTransformCom->Set_Pos(m_pTransformCom->Get_Pos() + m_vTargetDirection * m_pTransformCom->Get_Speed() * _fTimeDelta);
+		m_pTransformCom->Set_Speed(m_pTransformCom->Get_Speed() + 70.f * _fTimeDelta);
+		if (m_pTransformCom->Get_Speed() >= m_fMaxSpeed) m_pTransformCom->Set_Speed(m_fMaxSpeed);
+	}
 
 }
 
-void CArtemis::State_Shot(float _fTimeDelta)
+void CApollo::State_Shot(float _fTimeDelta)
 {
 
 	if (m_fShotCount < m_fShotCountMax)
@@ -289,7 +289,7 @@ void CArtemis::State_Shot(float _fTimeDelta)
 
 }
 
-void CArtemis::State_AirStrike(float _fTimeDelta)
+void CApollo::State_AirStrike(float _fTimeDelta)
 {
 	//if()
 	if (m_bIsAirStrikeShoot == true) {
@@ -322,7 +322,7 @@ void CArtemis::State_AirStrike(float _fTimeDelta)
 
 }
 
-void CArtemis::State_MonsterSpawn(float _fTimeDelta)
+void CApollo::State_MonsterSpawn(float _fTimeDelta)
 {
 	//if()
 	if (m_bIsAirStrikeShoot == true) {
@@ -349,7 +349,7 @@ void CArtemis::State_MonsterSpawn(float _fTimeDelta)
 }
 
 
-void CArtemis::State_Death(float _fTimeDelta)
+void CApollo::State_Death(float _fTimeDelta)
 {
 	if (m_fDeathDelay <= 0.f) {
 		if (m_pAnimationCom->IsEndAnim())
@@ -375,7 +375,7 @@ void CArtemis::State_Death(float _fTimeDelta)
 		if (m_fDeathExplodeDelay <= 0.f)
 		{
 			CGameObject* pEffect = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Effect", L"Prototype_Explosion");
-			
+
 			_float3 vPos = m_pTransformCom->Get_Pos();
 
 			vPos.x += CMath_Manager::Get_Instance()->Random_Float(-2.f, 2.f);
@@ -404,7 +404,7 @@ void CArtemis::State_Death(float _fTimeDelta)
 
 }
 
-void CArtemis::SetState_Idle()
+void CApollo::SetState_Idle()
 {
 	if (STATE_DEATH == m_eState)
 		return;
@@ -416,7 +416,7 @@ void CArtemis::SetState_Idle()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
-void CArtemis::SetState_Move()
+void CApollo::SetState_Move()
 {
 	if (STATE_DEATH == m_eState)
 		return;
@@ -437,7 +437,7 @@ void CArtemis::SetState_Move()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
-void CArtemis::SetState_Shot()
+void CApollo::SetState_Shot()
 {
 	if (STATE_DEATH == m_eState)
 		return;
@@ -449,7 +449,7 @@ void CArtemis::SetState_Shot()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
-void CArtemis::SetState_AirStrike()
+void CApollo::SetState_AirStrike()
 {
 	if (STATE_DEATH == m_eState)
 		return;
@@ -461,7 +461,7 @@ void CArtemis::SetState_AirStrike()
 	m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
 
-void CArtemis::SetState_MonsterSpawn()
+void CApollo::SetState_MonsterSpawn()
 {
 	if (STATE_DEATH == m_eState)
 		return;
@@ -482,7 +482,7 @@ void CArtemis::SetState_MonsterSpawn()
 
 }
 
-void CArtemis::SetState_Death(ENEMYHIT_DESC* pDesc)
+void CApollo::SetState_Death(ENEMYHIT_DESC* pDesc)
 {
 	if (STATE_DEATH == m_eState)
 		return;
@@ -495,7 +495,7 @@ void CArtemis::SetState_Death(ENEMYHIT_DESC* pDesc)
 	m_pAnimationCom->Play_Animation(L"IDLE", 0.1f, false);
 }
 
-HRESULT CArtemis::Add_Components()
+HRESULT CApollo::Add_Components()
 {
 	m_pVIBufferCom = dynamic_cast<CVIBuffer_Rect*>(__super::Add_Component(LEVEL_STATIC, TEXT("VIBuffer_Rect_Default"), TEXT("VIBuffer")));
 
@@ -513,18 +513,18 @@ HRESULT CArtemis::Add_Components()
 	return S_OK;
 }
 
-HRESULT CArtemis::Add_Textures()
+HRESULT CApollo::Add_Textures()
 {
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Artemis_Texture"), TEXT("IDLE"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Apollo_Texture"), TEXT("IDLE"))))
 		return E_FAIL;
 
-	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Artemis_Attack_Texture"), TEXT("Attack"))))
+	if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_STATIC, TEXT("Apollo_Attack_Texture"), TEXT("Attack"))))
 		return E_FAIL;
 
 	return S_OK;
 }
 
-HRESULT CArtemis::Begin_RenderState()
+HRESULT CApollo::Begin_RenderState()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHAREF, 0);
@@ -533,20 +533,20 @@ HRESULT CArtemis::Begin_RenderState()
 	return S_OK;
 }
 
-HRESULT CArtemis::End_RenderState()
+HRESULT CApollo::End_RenderState()
 {
 	m_pGraphic_Device->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 	return S_OK;
 }
 
-CArtemis* CArtemis::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
+CApollo* CApollo::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
-	CArtemis* pInstance = new CArtemis(pGraphic_Device);
+	CApollo* pInstance = new CApollo(pGraphic_Device);
 
 	if (FAILED(pInstance->Initialize_Prototype()))
 	{
-		MSG_BOX(TEXT("Failed to create: CArtemis"));
+		MSG_BOX(TEXT("Failed to create: CApollo"));
 
 		Safe_Release(pInstance);
 	}
@@ -554,13 +554,13 @@ CArtemis* CArtemis::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 	return pInstance;
 }
 
-CGameObject* CArtemis::Clone(void* pArg)
+CGameObject* CApollo::Clone(void* pArg)
 {
-	CArtemis* pInstance = new CArtemis(*this);
+	CApollo* pInstance = new CApollo(*this);
 
 	if (FAILED(pInstance->Initialize(pArg)))
 	{
-		MSG_BOX(TEXT("Failed to create: CArtemis"));
+		MSG_BOX(TEXT("Failed to create: CApollo"));
 
 		Safe_Release(pInstance);
 	}
@@ -568,7 +568,7 @@ CGameObject* CArtemis::Clone(void* pArg)
 	return pInstance;
 }
 
-void CArtemis::Free()
+void CApollo::Free()
 {
 	__super::Free();
 

@@ -91,9 +91,9 @@ void CBeholder::Tick(_float fTimeDelta)
         //Set_PatternStart();
         //CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
 
-        m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM;
+        /*m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM;
         Set_PatternStart();
-        CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+        CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);*/
     }
     ActivePattern(fTimeDelta);
     PatternState(fTimeDelta);
@@ -475,7 +475,8 @@ void CBeholder::RoundAirStrikeLandMine(float _fTimeDelta)
     _float2 fLissajous = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, m_fRoundStrikeRadius, m_fRoundStrikeRadius, 1, 1, 1, 20);
     m_fRoundStrikeRadius += 4 * _fTimeDelta;
 
-    CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine");
+    _bool bExplode = true;
+    CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine", &bExplode);
     pObj->Get_Transform()->Add_Pos(_float3(fLissajous.x, -0.3f, fLissajous.y + 10.f));
 }
 
@@ -831,7 +832,7 @@ void CBeholder::SetState_Alert()
     if (STATE_DEATH == m_eState)
         return;
     m_eState = STATE_ALERT;
-    m_pAnimationCom->Play_Animation(L"Alert", 0.15f, false);
+    m_pAnimationCom->Play_Animation(L"Idle", 0.15f, false);
 
     m_pRigidbody->Set_Velocity(_float3(0.f, 0.f, 0.f));
 }
@@ -851,7 +852,7 @@ void CBeholder::SetState_Pushed(_float3 vLook)
     m_pRigidbody->Set_Velocity(vLook * 15.f);
     m_pRigidbody->Set_Friction(5.f);
 
-    m_pAnimationCom->Play_Animation(L"Pushed", 150200.f, false);
+    //m_pAnimationCom->Play_Animation(L"Pushed", 150200.f, false);
 }
 
 void CBeholder::SetState_Shot()
@@ -862,7 +863,7 @@ void CBeholder::SetState_Shot()
     m_pGameInstance->Play(L"White_Suit_Shoot", false);
     m_pGameInstance->SetVolume(L"White_Suit_Shoot", 0.3f);
 
-    m_pAnimationCom->Play_Animation(L"Shot", 0.15f, false);
+    //m_pAnimationCom->Play_Animation(L"Shot", 0.15f, false);
 
     _float3 vBulletPos = m_pTransformCom->Get_Pos();
     vBulletPos.y += 0.25f;
@@ -882,7 +883,7 @@ void CBeholder::SetState_Jump()
     if (STATE_DEATH == m_eState)
         return;
     m_eState = STATE_JUMP;
-    m_pAnimationCom->Play_Animation(L"Jump", 0.1f, false);
+   // m_pAnimationCom->Play_Animation(L"Jump", 0.1f, false);
 
     _float fRand = _float(rand() % 2);
     if (0.f == fRand)
@@ -912,7 +913,7 @@ void CBeholder::SetState_Fly(_float3 vLook)
 
     m_eState = STATE_FLY;
 
-    m_pAnimationCom->Play_Animation(L"Death_Fly", 0.1f, false);
+    //m_pAnimationCom->Play_Animation(L"Death_Fly", 0.1f, false);
 
     vLook.y = 0.f;
     m_pRigidbody->Set_Velocity(vLook * 10.f);
@@ -923,11 +924,6 @@ void CBeholder::SetState_Fly(_float3 vLook)
 void CBeholder::SetState_FlyDeath()
 {
     m_eState = STATE_FLYDEATH;
-
-    if (m_bWallColl)
-        m_pAnimationCom->Play_Animation(L"Death_Fly_Wall", 0.1f, false);
-    else
-        m_pAnimationCom->Play_Animation(L"Death_Fly_Floor", 0.1f, false);
 
     m_pBoxCollider->Set_Active(false);
 
@@ -963,7 +959,7 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
     switch (pDesc->eHitType)
     {
     case CPawn::HEAD_SHOT: {
-        m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
+        //m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
         if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
 
         Arg.Hit = eSpecialHit::HEADSHOT;
@@ -972,7 +968,7 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
         break;
     }
     case CPawn::BODY_SHOT: {
-        m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
+        //m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
         if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
 
         Arg.Hit = eSpecialHit::FINISHED;
@@ -981,7 +977,7 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
         break;
     }
     case CPawn::EGG_SHOT:
-        m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
+        //m_pAnimationCom->Play_Animation(L"Death_Eggshot", 0.1f, false);
         break;
     }
 }

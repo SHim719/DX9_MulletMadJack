@@ -174,6 +174,12 @@ HRESULT CLoader::Loading_For_Boss_Level()
 	if (FAILED(Loading_For_WhiteSuitMonster()))
 		return E_FAIL;
 
+	if (FAILED(Loading_For_Chainsaw_Monster()))
+		return E_FAIL;
+
+	if (FAILED(Loading_For_Drone_Monster()))
+		return E_FAIL;
+
 	if (FAILED(Loading_For_Boss_Texture()))
 		return E_FAIL;
 
@@ -509,6 +515,16 @@ HRESULT CLoader::Loading_For_Boss_Texture()
 			TEXT("../Bin/Resources/Textures/Boss/Artemis/Attack/Artemis_%d.png"), 14))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Apollo_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Apollo/Idle/Apollo_%d.png"), 5))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Apollo_Attack_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			TEXT("../Bin/Resources/Textures/Boss/Apollo/Attack/Apollo_%d.png"), 14))))
+		return E_FAIL;
+
 	return S_OK;
 }
 
@@ -730,6 +746,10 @@ HRESULT CLoader::Ready_Monster_Prototype()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Artemis"),
 		CArtemis::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(TEXT("Prototype_Apollo"),
+		CApollo::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
 	return S_OK;

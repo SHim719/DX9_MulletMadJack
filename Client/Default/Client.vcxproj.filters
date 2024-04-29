@@ -556,9 +556,6 @@
     <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\Artemis">
       <UniqueIdentifier>{07320f58-8ab3-44f4-8a09-4bb0fbbefcb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\Apolon">
-      <UniqueIdentifier>{fc16c50f-ec3c-41f4-b43e-dfd5421fdb45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\CUi_Sans\CUi_Sans_Black">
       <UniqueIdentifier>{0f362924-13ca-4281-9dc1-5d33bdfe039d}</UniqueIdentifier>
     </Filter>
@@ -579,6 +576,9 @@
     </Filter>
     <Filter Include="02. GameObjects\06. SkyBox">
       <UniqueIdentifier>{165ad26a-63f6-492d-afbe-5d5ffd02ff47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Pawns\Beholder\Apollon">
+      <UniqueIdentifier>{fc16c50f-ec3c-41f4-b43e-dfd5421fdb45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1107,6 +1107,9 @@
     <ClInclude Include="..\Public\CSkyBox.h">
       <Filter>02. GameObjects\06. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Apollo.h">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\Apollon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1591,6 +1594,9 @@
     </ClCompile>
     <ClCompile Include="..\Private\CSkyBox.cpp">
       <Filter>02. GameObjects\06. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Apollo.cpp">
+      <Filter>02. GameObjects\04. Enemy\Pawns\Beholder\Apollon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

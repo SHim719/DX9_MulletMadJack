@@ -127,7 +127,6 @@ void CLevel_GamePlay::Initialize_SodaMachine()
 		++BannerIt;
 	}
 
-
 }
 
 CLevel_GamePlay* CLevel_GamePlay::Create(LPDIRECT3DDEVICE9 pGraphic_Device)

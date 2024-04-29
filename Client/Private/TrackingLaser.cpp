@@ -67,6 +67,12 @@ void CTrackingLaser::Tick(_float fTimeDelta)
 			case CBeholder::AIRSTRIKE:
 				pObj->Get_Transform()->Set_State(CTransform::STATE_POSITION, &m_pTransformCom->Get_Pos());
 				break;
+			case CBeholder::AIRSTRIKETRACKING:
+				AirStrike();
+				break;
+			case CBeholder::MONSTERSPAWN:
+				MonsterSpawn();
+				break;
 			default:
 				break;
 		}
@@ -115,6 +121,18 @@ void CTrackingLaser::BeginRenderState()
 				break;
 			}
 			case CBeholder::AIRSTRIKE: {
+				_int fRed = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				_int fGreen = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				_int fBlue = CMath_Manager::Get_Instance()->Random_Int(0, 255);
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(fRed, fGreen, fBlue, fAlpha));
+				break;
+			}
+			case CBeholder::AIRSTRIKETRACKING: {
+				_int fRed = CMath_Manager::Get_Instance()->Random_Int(100, 255);\
+				m_pGraphic_Device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(fRed, 0, 0, fAlpha));
+				break;
+			}
+			case CBeholder::MONSTERSPAWN: {
 				_int fRed = CMath_Manager::Get_Instance()->Random_Int(0, 255);
 				_int fGreen = CMath_Manager::Get_Instance()->Random_Int(0, 255);
 				_int fBlue = CMath_Manager::Get_Instance()->Random_Int(0, 255);
@@ -185,6 +203,12 @@ void CTrackingLaser::Prepair_Order(float _fTimeDelta)
 	case CBeholder::AIRSTRIKE:
 		AirStrike_Prepair(_fTimeDelta);
 		return;
+	case CBeholder::AIRSTRIKETRACKING:
+		TrackingAirStrike_Prepair(_fTimeDelta);
+		return;
+	case CBeholder::MONSTERSPAWN:
+		MonsterSpawn_Prepair(_fTimeDelta);
+		return;
 	default:
 		return;
 	}
@@ -208,6 +232,12 @@ void CTrackingLaser::Execute_Order()
 			return;
 		case CBeholder::AIRSTRIKE:
 			AirStrike_Order();
+			return;
+		case CBeholder::AIRSTRIKETRACKING:
+			TrackingAirStrike_Order();
+			return;
+		case CBeholder::MONSTERSPAWN:
+			MonsterSpawn_Order();
 			return;
 		default:
 			return;
@@ -352,6 +382,127 @@ void CTrackingLaser::AirStrike_Prepair(float _fTimeDelta)
 
 }
 
+void CTrackingLaser::TrackingAirStrike_Order()
+{
+	_float3 vDir = m_vTargetPos + m_vMasterPos;
+
+	m_pTransformCom->Set_Position(vDir / 2);
+
+
+	//x¶û z Ãà acos
+
+	//_float3 vAngleATAN = m_vMasterPos - m_vTargetPos;
+	//_float3 vAngleATANfabs = { fabs(vAngleATAN.x), fabs(vAngleATAN.y), fabs(vAngleATAN.z) };
+
+
+	//_float fSide = (_float)sqrt(pow(vAngleATANfabs.x, 2) + pow(vAngleATANfabs.z, 2));
+
+	//_float fAngleY = atan2(vAngleATAN.x, vAngleATAN.z);
+	//_float fAngleX = atan2(fSide, vAngleATANfabs.y);
+
+	//fAngleY = D3DXToDegree(fAngleY);
+	//fAngleX = D3DXToDegree(fAngleX);
+
+	//m_pTransformCom->Rotation_XYZ({ fAngleX, fAngleY, 0.f });
+	//m_pTransformCom->Set_Scale({ 1.f, 10.f, 1.f});
+
+	_float fLength = (_float)sqrt(pow(fabs(m_vTargetPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vTargetPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vTargetPos.z - m_vMasterPos.z), 2));
+	m_pTransformCom->Set_Scale({ 1.5f,fLength, 1.5f });
+}
+
+void CTrackingLaser::TrackingAirStrike_Prepair(float _fTimeDelta)
+{
+	_float3 vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
+	vTargetPos.y = 15.f;
+	
+	if (m_eState == TrackingLaserState::Warning) 
+		m_vMasterPos = vTargetPos;
+
+	vTargetPos.y = -5.f;
+	if (m_eState == TrackingLaserState::Warning)
+		m_vTargetPos = vTargetPos;
+	
+	m_pTransformCom->Rotation_XYZ({ 0.f, m_fRotate, 0.f });
+	m_fRotate += _fTimeDelta * 100.f;
+}
+
+void CTrackingLaser::MonsterSpawn_Order()
+{
+	_float3 vDir = m_vTargetPos + m_vMasterPos;
+
+	m_pTransformCom->Set_Position(vDir / 2);
+
+	_float fLength = (_float)sqrt(pow(fabs(m_vTargetPos.x - m_vMasterPos.x), 2) + pow(fabs(m_vTargetPos.y - m_vMasterPos.y), 2) + pow(fabs(m_vTargetPos.z - m_vMasterPos.z), 2));
+	m_pTransformCom->Set_Scale({ 1.5f,fLength, 1.5f });
+}
+
+void CTrackingLaser::MonsterSpawn_Prepair(float _fTimeDelta)
+{
+
+	m_pTransformCom->Rotation_XYZ({ 0.f, m_fRotate, 0.f });
+	m_fRotate += _fTimeDelta * 100.f;
+}
+
+void CTrackingLaser::AirStrike()
+{
+	_float3 vTargetPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+	AirStrikeBoom(vTargetPos);
+}
+
+void CTrackingLaser::AirStrikeBoom(_float3 vPos)
+{
+
+	for (int i = 0; i < 15; ++i) {
+		_float3 vTargetPos = vPos;
+		_float3 vLookPos = { 0.f, 0.f, 0.f };
+		_float fRandomX = CMath_Manager::Get_Instance()->Random_Float(-1.f, 1.f);
+		_float fRandomY = CMath_Manager::Get_Instance()->Random_Float(1, 20);
+		_float fRandomZ = CMath_Manager::Get_Instance()->Random_Float(-1.f, 1.f);
+
+		vTargetPos += { fRandomX, 10.f + fRandomY, fRandomZ };
+		vLookPos = { vTargetPos.x, 5.f + fRandomY, vTargetPos.z };
+
+		CBeholder::BeholderAttackOrder LaserOrder;
+		LaserOrder.eOrder = CBeholder::AIRSTRIKE;
+		LaserOrder.vMasterPos = vTargetPos;
+		LaserOrder.vLook = vLookPos;
+
+		CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+	}
+}
+
+void CTrackingLaser::MonsterSpawn()
+{
+	for (int i = 0; i < 5; ++i)
+	{
+		int iRandMonster = CMath_Manager::Get_Instance()->Random_Int(0,2);
+		wstring wstrMonsterName = L"";
+		switch (iRandMonster) {
+			case 0:
+				wstrMonsterName = L"Prototype_White_Suit";
+				break;
+			case 1:
+				wstrMonsterName = L"Prototype_Chainsaw";
+				break;
+			case 2:
+				wstrMonsterName = L"Prototype_Drone";
+				break;
+		}
+
+
+		CPawn* pPawn = static_cast<CPawn*>(m_pGameInstance->Add_Clone(LEVEL_BOSS, L"Monster", wstrMonsterName));
+		pPawn->SetState_Air();
+
+		_float3 vPos = m_vTargetPos;
+		vPos.y += 5.f;
+		vPos.x += CMath_Manager::Get_Instance()->Random_Float(-2.f, 2.f);
+		vPos.z += CMath_Manager::Get_Instance()->Random_Float(-2.f, 2.f);
+
+		pPawn->Get_Transform()->Set_Pos(vPos);
+		static_cast<CBoxCollider*>(pPawn->Find_Component(L"Collider"))->Update_BoxCollider(pPawn->Get_Transform()->Get_WorldMatrix());
+	}
+}
+
 HRESULT CTrackingLaser::Add_Components()
 {
 	m_pVIBufferCom = dynamic_cast<CVIBuffer_Box*>(__super::Add_Component
@@ -414,6 +565,16 @@ void CTrackingLaser::Initialize_Arg(void* pArg)
 			m_pTransformCom->Set_Position(vDir / 2);
 			break;
 		}
+		case CBeholder::AIRSTRIKETRACKING:
+			break;
+		case CBeholder::MONSTERSPAWN: {
+			m_vMasterPos = pOrder->vMasterPos;
+			m_vTargetPos = pOrder->vLook;
+
+			_float3 vDir = m_vTargetPos + m_vMasterPos;
+			m_pTransformCom->Set_Position(vDir / 2);
+			break;
+		}
 		default:
 			break;
 	}
@@ -431,6 +592,9 @@ void CTrackingLaser::Initialize_Order()
 				m_vTargetPos = m_pTarget->Get_Transform()->Get_Pos();
 			return;
 		case CBeholder::FREETRACKING:
+			return;
+		case CBeholder::AIRSTRIKETRACKING:
+			m_pTarget = CPlayer_Manager::Get_Instance()->Get_Player();
 			return;
 		default:
 			return;
