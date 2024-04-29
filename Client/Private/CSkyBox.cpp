@@ -76,7 +76,7 @@ HRESULT CSkyBox::Add_Components()
     if (nullptr == m_pVIBufferCom)
         return E_FAIL;
 
-    m_pTextureCom = dynamic_cast<CTexture*>(Add_Component(LEVEL_GAMEPLAY, TEXT("SkyBox_Texture"), TEXT("SkyBox_Texture"), nullptr));
+    m_pTextureCom = dynamic_cast<CTexture*>(Add_Component(LEVEL_STATIC, TEXT("SkyBox_Texture"), TEXT("SkyBox_Texture"), nullptr));
     if (nullptr == m_pTextureCom)
         return E_FAIL;
 

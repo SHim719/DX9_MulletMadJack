@@ -63,7 +63,7 @@ HRESULT CLevel_Boss::Initialize()
 
 	m_pGraphic_Device->LightEnable(9, TRUE);
 
-	if (nullptr == m_pGameInstance->Add_Clone(LEVEL_STATIC, L"SkyBox", TEXT("Prototype_SkyBox")))
+	if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, L"SkyBox", TEXT("Prototype_SkyBox")))
 		return E_FAIL;
 
 	static_cast<CBossEntryTrigger*>(m_pGameInstance->Find_GameObject(m_iLevelID, L"Trigger", 0))
@@ -135,10 +135,10 @@ HRESULT CLevel_Boss::Ready_Layer_Player()
 		return E_FAIL;
 	}
 
-	pPlayer->Set_PlayerHP(99.f);
-	pPlayer->Set_PlayerHPMax(99.f);
-	pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
-	pPlayer->Set_Weapon_Have(false);
+	m_pPlayer->Set_PlayerHP(99.f);
+	m_pPlayer->Set_PlayerHPMax(99.f);
+	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+	m_pPlayer->Set_Weapon_Have(false);
 
 	return S_OK;
 }
