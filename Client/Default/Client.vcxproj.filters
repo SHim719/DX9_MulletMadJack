@@ -592,6 +592,9 @@
     <Filter Include="02. GameObjects\01. MapObject\TriggerObject\1. BossEntryTrigger">
       <UniqueIdentifier>{ad534e56-09a6-4a3b-b2ee-955ba0490212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObjects\04. Enemy\Last_Bullet">
+      <UniqueIdentifier>{5855f61e-2412-481b-9289-05766abaf645}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1134,6 +1137,9 @@
     <ClInclude Include="..\Public\BossEntryTrigger.h">
       <Filter>02. GameObjects\01. MapObject\TriggerObject\1. BossEntryTrigger</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\Last_Bullet.h">
+      <Filter>02. GameObjects\04. Enemy\Last_Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1180,9 +1186,6 @@
     </ClCompile>
     <ClCompile Include="..\Private\Animation.cpp">
       <Filter>03. Client_Components\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Private\Enemy_Bullet.cpp">
-      <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Background.cpp">
       <Filter>04. UI\Ui\Part\Background</Filter>
@@ -1633,6 +1636,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\BossEntryTrigger.cpp">
       <Filter>02. GameObjects\01. MapObject\TriggerObject\1. BossEntryTrigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Last_Bullet.cpp">
+      <Filter>02. GameObjects\04. Enemy\Last_Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\Enemy_Bullet.cpp">
+      <Filter>02. GameObjects\04. Enemy\Enemy_Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -135,9 +135,10 @@ HRESULT CLevel_Boss::Ready_Layer_Player()
 		return E_FAIL;
 	}
 
-	m_pPlayer->Set_PlayerHP(99.f);
-	m_pPlayer->Get_Transform()->Set_Pos({ 0.f, 51.f, -102.4f });
-	m_pPlayer->Change_SuperInvincible();
+	pPlayer->Set_PlayerHP(99.f);
+	pPlayer->Set_PlayerHPMax(99.f);
+	pPlayer->Get_Transform()->Set_Pos({ 0.f, 1.1f, 0.f });
+	pPlayer->Set_Weapon_Have(false);
 
 	return S_OK;
 }
@@ -160,12 +161,7 @@ HRESULT CLevel_Boss::Ready_Layer_Beholder(const wstring& strLayerTag)
 	if (pHpBar == nullptr)
 		assert(false);
 
-	//pHpBar->Set_Artemis(TempArtemis);
 	pHpBar->Set_Beholder(m_pBeholder);
-
-	//if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
-	//	TEXT("Prototype_Apollo")))
-	//	return E_FAIL;
 
 	///*if (nullptr == m_pGameInstance->Add_Clone(m_iLevelID, strLayerTag,
 	//	TEXT("Prototype_Artemis")))
@@ -245,7 +241,7 @@ void CLevel_Boss::Entry_State(_float fTimeDelta)
 			{
 				fNowFovY = 90.f;
 				
-				// ´ëÈ­
+				// ï¿½ï¿½È­
 				m_eState = Battle;
 			}
 				

@@ -21,7 +21,7 @@ public:
 	};
 	
 	enum BEHOLDER_PHASE {
-		PHASE_GROGGY, PHASE_1, PHASE_2, PHASE_DEATH, PHASE_END
+		PHASE_WAIT, PHASE_CHARGE, PHASE_GROGGY, PHASE_1, PHASE_2, PHASE_3, PHASE_DEATH, PHASE_END
 
 	};
 
@@ -37,6 +37,8 @@ public:
 		PATTERN_ROUND_AIRSTRIKE,
 		PATTERN_ROUND_AIRSTRIKE_BOOM,
 		PATTERN_ROUND_AIRSTRIKE_LANDMINE,
+		PATTERN_ROUND_AIRSTRIKE_REVERSE,
+		PATTERN_ROUND_AIRSTRIKE_BOOM_REVERSE,
 		PATTERN_END
 	};
 
@@ -98,6 +100,16 @@ private:
 	void ActivePattern(_float fTimeDelta);
 
 public:
+	void PhaseControl(_float fTimeDelta);
+	void Phase1Pattern(_float fTimeDelta);
+	void Phase2Pattern(_float fTimeDelta);
+	void Phase3Pattern(_float fTimeDelta);
+	void PhaseChargePattern(_float fTimeDelta);
+	void PhaseWaitPattern(_float fTimeDelta);
+	void PhaseGroggyPattern(_float fTimeDelta);
+	void PhaseDeathPattern(_float fTimeDelta);
+
+
 	void Player_Tracking_Laser();
 	void All_Round_Laser();
 	void All_Round_Laser_LandMine();
@@ -106,6 +118,11 @@ public:
 	void RoundAirStrike();
 	void RoundAirStrikeBoom(float _fTimeDelta);
 	void RoundAirStrikeLandMine(float _fTimeDelta);
+
+	void RoundAirStrikeReverse();
+	void RoundAirStrikeBoomReverse(float _fTimeDelta);
+
+
 
 	void AirBoom(_float3 vPos);
 
@@ -149,7 +166,7 @@ public:
 	_bool Is_DeathState() override { return m_eState == STATE_FLYDEATH || m_eState == STATE_DEATH || m_eState == STATE_FLY; }
 	_float Get_Hp() const { return m_fHp; }
 	//jeongtest
-	_float Get_MaxHp() const { return 100.f; }
+	_float Get_MaxHp() const { return m_fMaxHp; }
 	_float Get_RecentHitTime() const { return m_fRecentHitTime; }
 	STATE Get_State() const { return m_eState; }
 private:
@@ -176,10 +193,11 @@ private:
 	_float3			m_vTargetDir = { 0.f,0.f,0.f };
 
 	_int			m_iPatternCount = 0;
-	_int			m_iPatternCountMax = 7;
+	_int			m_iPatternCountPhase1Max = 6;
+	_int			m_iPatternCountPhase2Max = 9;
 	
-	_float			m_fPatternTimeDelay = 2.f;
-	_float			m_fPatternTimeDelayMax = 3.f;
+	_float			m_fPatternTimeDelay = 3.f;
+	_float			m_fPatternTimeDelayMax = 4.f;
 
 	_int			m_iShootCount = 0;
 	_int			m_iShootCountMax = 5;
@@ -194,7 +212,8 @@ private:
 	_float			m_fRoundStrikeBoomDelayMax = 0.05f;
 
 	_float		    m_fRoundStrikeRadius = 6.f;
-	_float			m_fRoundStrikeRadiusMax = 12.f;
+	_float			m_fRoundStrikeRadiusMin = 6.f;
+	_float			m_fRoundStrikeRadiusMax = 18.f;
 
 	_float          m_fLissajousTime = 0.f;
 
@@ -204,6 +223,7 @@ private:
 public:
 	void Set_CutScene(_bool bCutScene) { m_bCutScene = bCutScene; }
 
+	BEHOLDER_PHASE	 m_ePhase	= PHASE_WAIT;
 };
 
 END

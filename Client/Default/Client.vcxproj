@@ -249,6 +249,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClInclude Include="..\Public\Katana_Opening.h" />
     <ClInclude Include="..\Public\Katana_Slash.h" />
     <ClInclude Include="..\Public\LandMine.h" />
+    <ClInclude Include="..\Public\Last_Bullet.h" />
     <ClInclude Include="..\Public\Levels_Header.h" />
     <ClInclude Include="..\Public\Level_Boss.h" />
     <ClInclude Include="..\Public\Level_Map2.h" />
@@ -421,6 +422,7 @@ copy "$(SolutionDir)\External\lib\FMOD\Release\fmodstudio.dll" "$(SolutionDir)\C
     <ClCompile Include="..\Private\CUi_GreenCrossActive.cpp" />
     <ClCompile Include="..\Private\CUi_GreenCross.cpp" />
     <ClCompile Include="..\Private\LandMine.cpp" />
+    <ClCompile Include="..\Private\Last_Bullet.cpp" />
     <ClCompile Include="..\Private\Level_Boss.cpp" />
     <ClCompile Include="..\Private\Level_Map2.cpp" />
     <ClCompile Include="..\Private\MoveWall.cpp" />

@@ -61,14 +61,16 @@ HRESULT CBeholder::Initialize(void* pArg)
 
     //m_fHp = 1000.f;
     //jeongtest
-    m_fHp = 100.f;
-        
+    m_fHp = 1000.f;
+    m_fMaxHp = 1000.f;
+    
     return S_OK;
 }
 
 void CBeholder::PriorityTick(_float fTimeDelta)
 {
     m_bThisFrameHit = false;
+    PhaseControl(fTimeDelta);
 }
 
 void CBeholder::Tick(_float fTimeDelta)
@@ -88,7 +90,7 @@ void CBeholder::Tick(_float fTimeDelta)
         //Player_Tracking_Laser();
     	//All_Round_Laser();
         //All_Round_Laser_LandMine();
-        //Shoot();
+        Shoot();
         //AirStrike();
         
         //m_ePattern = PATTERN_ROUND_AIRSTRIKE;
@@ -164,6 +166,15 @@ HRESULT CBeholder::Add_Textures()
     if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Beholder_Damaged_Texture"), TEXT("Hit"))))
         return E_FAIL;
 
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Beholder_Groggy_Texture"), TEXT("Groggy"))))
+        return E_FAIL;
+
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Beholder_Idle2_Texture"), TEXT("Phase2"))))
+        return E_FAIL;
+
+    if (FAILED(m_pAnimationCom->Insert_Textures(LEVEL_BOSS, TEXT("Beholder_Wait_Texture"), TEXT("Wait"))))
+        return E_FAIL;
+
     return S_OK;
 }
 
@@ -187,6 +198,9 @@ _bool CBeholder::On_Ray_Intersect(const _float3& fHitWorldPos, const _float& fDi
 {
     if (STATE_DEATH == m_eState || STATE_FLY == m_eState || STATE_EXECUTION == m_eState
         || STATE_FLYDEATH == m_eState)
+        return false;
+
+    if (m_ePhase == PHASE_GROGGY || m_ePhase == PHASE_DEATH)
         return false;
 
     if (m_bThisFrameHit)
@@ -328,6 +342,37 @@ void CBeholder::PatternState(_float _fTimeDelta)
             Set_PatternEnd();
         }
         break;
+    case PATTERN_ROUND_AIRSTRIKE_BOOM_REVERSE:
+        if (m_fRoundStrikeRadius > m_fRoundStrikeRadiusMin) {
+            if (m_fRoundStrikeBoomDelay <= 0.f) {
+                m_fRoundStrikeBoomDelay = m_fRoundStrikeBoomDelayMax;
+                RoundAirStrikeBoomReverse(_fTimeDelta);
+            }
+            else
+                m_fRoundStrikeBoomDelay -= _fTimeDelta;
+        }
+        else {
+            m_fRoundStrikeRadius = 6.f;
+            CPlayer_Manager::Get_Instance()->Set_RoundPattern(false);
+            Set_PatternEnd();
+        }
+        break;
+    case PATTERN_ROUND_AIRSTRIKE_REVERSE:
+        if (m_fRoundStrikeRadius > m_fRoundStrikeRadiusMin) {
+            if (m_fRoundStrikeDelay <= 0.f) {
+                m_fRoundStrikeRadius -= 1.f;
+                m_fRoundStrikeDelay = m_fRoundStrikeDelayMax;
+                RoundAirStrikeReverse();
+            }
+            else
+                m_fRoundStrikeDelay -= _fTimeDelta;
+        }
+        else {
+            m_fRoundStrikeRadius = 6.f;
+            CPlayer_Manager::Get_Instance()->Set_RoundPattern(false);
+            Set_PatternEnd();
+        }
+        break;
 	default:
 		break;
     }
@@ -338,11 +383,128 @@ void CBeholder::ActivePattern(_float fTimeDelta)
     if (m_bCutScene)
         return;
 
+
+    switch (m_ePhase)
+    {
+        case PHASE_WAIT:
+            PhaseWaitPattern(fTimeDelta);
+            break;
+        case PHASE_GROGGY:
+            PhaseGroggyPattern(fTimeDelta);
+            break;
+        case PHASE_1:
+            Phase1Pattern(fTimeDelta);
+            break;
+        case PHASE_2:
+            Phase2Pattern(fTimeDelta);
+            break;
+        case PHASE_3:
+            Phase3Pattern(fTimeDelta);
+            break;
+        case PHASE_CHARGE:
+			PhaseChargePattern(fTimeDelta);
+			break;
+        case PHASE_DEATH:
+            break;
+        case PHASE_END:
+            break;
+        default:
+            break;
+    }
+
+}
+
+void CBeholder::PhaseControl(_float fTimeDelta)
+{
+    if (m_fHp < 1000.f && m_fHp > 950.f && m_ePhase == PHASE_WAIT) {
+	    m_ePhase = PHASE_1;
+		m_iPatternCount = 0;
+		m_fPatternTimeDelay = 0.f;
+    }
+
+    if(m_fHp <= 700.f && m_ePhase == PHASE_1){
+		m_ePhase = PHASE_GROGGY;
+		m_iPatternCount = 0;
+		m_fPatternTimeDelay = 0.f;
+        CPlayer_Manager::Get_Instance()->Set_BossCutscene(true);
+	}
+
+    if (m_ePhase == PHASE_GROGGY && (CPlayer_Manager::Get_Instance()->Get_BossCutscene() == false)) {
+        m_ePhase = PHASE_2;
+        m_iPatternCount = 0;
+        m_fPatternTimeDelay = 0.f;
+
+        auto Apollo = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), TEXT("Monster"), TEXT("Prototype_Apollo"));
+        Apollo->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos() + m_pTransformCom->Get_Right() * 1.5f );
+
+        auto Artemis = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), TEXT("Monster"), TEXT("Prototype_Artemis"));
+        Artemis->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos() - m_pTransformCom->Get_Right() * 1.5f);
+    }
+
+    if (m_fHp <= 200.f && m_ePhase == PHASE_2) {
+        m_ePhase = PHASE_CHARGE;
+    }
+
+
+
+}
+
+void CBeholder::Phase1Pattern(_float fTimeDelta)
+{
     if (m_ePattern == PATTERN_IDLE) {
 
         if (m_fPatternTimeDelay <= 0.f) {
 
-            if (m_iPatternCount > m_iPatternCountMax) m_iPatternCount = 0;
+            if (m_iPatternCount > m_iPatternCountPhase1Max) m_iPatternCount = 0;
+            switch (m_iPatternCount)
+            {
+            case 0:
+                m_ePattern = PATTERN_PLAYERTRACKING;
+                Set_PatternStart();
+                break;
+            case 1:
+                m_ePattern = PATTERN_ALLROUNDLASER;
+                Set_PatternStart();
+                break;
+            case 2:
+                m_ePattern = PATTERN_ALLROUNDLASERLANDMINE;
+                Set_PatternStart();
+                break;
+            case 3:
+                m_ePattern = PATTERN_SHOOT;
+                Set_PatternStart();
+                break;
+            case 4:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            case 5:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE_LANDMINE;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            default:
+                Shoot();
+                break;
+            }
+            m_iPatternCount++;
+            m_fPatternTimeDelay = m_fPatternTimeDelayMax;
+        }
+        else
+            m_fPatternTimeDelay -= fTimeDelta;
+    }
+}
+
+void CBeholder::Phase2Pattern(_float fTimeDelta)
+{
+    m_pAnimationCom->Play_Animation(L"Phase2", 0.1f, true);
+
+    if (m_ePattern == PATTERN_IDLE) {
+
+        if (m_fPatternTimeDelay <= 0.f) {
+
+            if (m_iPatternCount > m_iPatternCountPhase2Max) m_iPatternCount = 0;
             switch (m_iPatternCount)
             {
             case 0:
@@ -362,21 +524,29 @@ void CBeholder::ActivePattern(_float fTimeDelta)
                 Set_PatternStart();
                 break;
             case 4:
-                m_ePattern = PATTERN_SHOOT;
-                Set_PatternStart();
-                break;
-            case 5:
                 m_ePattern = PATTERN_ROUND_AIRSTRIKE;
                 Set_PatternStart();
                 CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
                 break;
-            case 6:
+            case 5:
                 m_ePattern = PATTERN_ROUND_AIRSTRIKE_LANDMINE;
                 Set_PatternStart();
                 CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
                 break;
-            case 7:
+            case 6:
                 m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            case 7:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE_BOOM_REVERSE;
+                m_fRoundStrikeRadius = m_fRoundStrikeRadiusMax;
+                Set_PatternStart();
+                CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
+                break;
+            case 8:
+                m_ePattern = PATTERN_ROUND_AIRSTRIKE_REVERSE;
+                m_fRoundStrikeRadius = m_fRoundStrikeRadiusMax;
                 Set_PatternStart();
                 CPlayer_Manager::Get_Instance()->Set_RoundPattern(true);
                 break;
@@ -386,16 +556,47 @@ void CBeholder::ActivePattern(_float fTimeDelta)
             }
             m_iPatternCount++;
             m_fPatternTimeDelay = m_fPatternTimeDelayMax;
-
-
         }
-        else
+        else {
             m_fPatternTimeDelay -= fTimeDelta;
-
+        }
     }
+}
+
+void CBeholder::Phase3Pattern(_float fTimeDelta)
+{
+}
+
+void CBeholder::PhaseChargePattern(_float fTimeDelta)
+{
+    m_pAnimationCom->Play_Animation(L"Wait", 0.1f, true);
+
+    if (m_fHp <= 1000.f) {
+        m_fHp += 300 * fTimeDelta;
+        m_pTransformCom->Add_Pos({ 0.f, 10.f * fTimeDelta, 0.f });
+    }
+
+    if (m_fHp >= 1000.f) {
+        m_fHp = 1000.f;
+		m_ePhase = PHASE_3;
+	}
 
 
 }
+
+void CBeholder::PhaseWaitPattern(_float fTimeDelta)
+{
+}
+
+void CBeholder::PhaseGroggyPattern(_float fTimeDelta)
+{
+    m_pAnimationCom->Play_Animation(L"Groggy", 0.1f, true);
+
+}
+
+
+
+
 
 void CBeholder::Player_Tracking_Laser()
 {
@@ -478,7 +679,7 @@ void CBeholder::RoundAirStrike()
 void CBeholder::RoundAirStrikeBoom(float _fTimeDelta)
 {
     _float2 fLissajous = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, m_fRoundStrikeRadius, m_fRoundStrikeRadius,1,1, 1, 40);
-    m_fRoundStrikeRadius += 6 * _fTimeDelta;
+    m_fRoundStrikeRadius += 8 * _fTimeDelta;
 
     AirBoom({ fLissajous.x, 0.f, fLissajous.y + 10.f });
 }
@@ -486,11 +687,40 @@ void CBeholder::RoundAirStrikeBoom(float _fTimeDelta)
 void CBeholder::RoundAirStrikeLandMine(float _fTimeDelta)
 {
     _float2 fLissajous = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, m_fRoundStrikeRadius, m_fRoundStrikeRadius, 1, 1, 1, 20);
-    m_fRoundStrikeRadius += 4 * _fTimeDelta;
+    m_fRoundStrikeRadius += 8 * _fTimeDelta;
 
     _bool bExplode = true;
     CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine", &bExplode);
     pObj->Get_Transform()->Add_Pos(_float3(fLissajous.x, -0.3f, fLissajous.y + 10.f));
+}
+
+void CBeholder::RoundAirStrikeReverse()
+{
+    float f_radius = m_fRoundStrikeRadius;
+    int f_start_theta = 0;
+    int f_end_theta = 360;
+
+    for (int i = f_start_theta; i < f_end_theta; i = i + 12)
+    {
+        _float2 p;
+        float f_x = (float)(cos(deg2rad(i)) * f_radius);
+        float f_y = (float)(sin(deg2rad(i)) * f_radius);
+        p.x = f_x;
+        p.y = f_y;
+
+        _bool bExplode = true;
+        CGameObject* pObj = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"LandMine", L"Prototype_LandMine", &bExplode);
+        //pObj->Get_Transform()->Set_Position(_float3(0.f, 0.f, 10.f));
+        pObj->Get_Transform()->Add_Pos(_float3(p.x, -0.3f, p.y + 10.f));
+    }
+}
+
+void CBeholder::RoundAirStrikeBoomReverse(float _fTimeDelta)
+{
+    _float2 fLissajous = CMath_Manager::Get_Instance()->Lissajous_Curve(_fTimeDelta, m_fLissajousTime, m_fRoundStrikeRadius, m_fRoundStrikeRadius, 1, 1, 1, 40);
+    m_fRoundStrikeRadius -= 8 * _fTimeDelta;
+
+    AirBoom({ fLissajous.x, 0.f, fLissajous.y + 10.f });
 }
 
 void CBeholder::AirBoom(_float3 vPos)
@@ -523,17 +753,35 @@ void CBeholder::Shoot()
     _float3 vBulletPos = m_pTransformCom->Get_Pos();
     vBulletPos.y += 0.25f;
 
-    _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+    /*_float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
     vPlayerPos.y -= 0.4f;
     CGameObject* pBullet = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_Bullet");
     pBullet->Get_Transform()->Set_Position(vBulletPos);
     pBullet->Get_Transform()->Set_Scale({ 2.f, 1.f, 2.f });
     pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+    static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());*/
+
+    //pBullet->Get_Transform()->Set_Scale({ 10.f, 10.f, 1.f });
+
+    _float3 vPlayerPos = CPlayer_Manager::Get_Instance()->Get_Player()->Get_Transform()->Get_Pos();
+    vPlayerPos.y -= 0.4f;
+    CGameObject* pBullet = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), L"Bullet", L"Prototype_LastBullet");
+    pBullet->Get_Transform()->Set_Position(vBulletPos);
+    pBullet->Get_Transform()->Set_Scale({ 10.f, 10.f, 2.f });
+    pBullet->Get_Transform()->Set_Target(m_pTransformCom->Get_Pos(), vPlayerPos);
+    pBullet->Set_Texture_Index(1);
     static_cast<CBoxCollider*>(pBullet->Find_Component(L"Collider"))->Update_BoxCollider(pBullet->Get_Transform()->Get_WorldMatrix());
+
+
+
+
+
+
 }
 
 void CBeholder::Hit(void* pArg)
 {
+    
     ENEMYHIT_DESC* pDesc = (ENEMYHIT_DESC*)pArg;
 
     CGameObject* pHitBlood = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Effect", L"Prototype_HitBlood");
@@ -627,37 +875,18 @@ void CBeholder::Process_State(_float fTimeDelta)
     case CBeholder::STATE_IDLE:
         State_Idle();
         break;
-    case CBeholder::STATE_MOVE:
-        State_Move();
-        break;
-    case CBeholder::STATE_ALERT:
-        State_Alert();
-        break;
-    case CBeholder::STATE_PUSHED:
-        State_Pushed();
-        break;
-    case CBeholder::STATE_SHOT:
-        State_Shot();
-        break;
-    case CBeholder::STATE_JUMP:
-        State_Jump();
-        break;
     case CBeholder::STATE_HIT:
         State_Hit();
         break;
     case CBeholder::STATE_EXECUTION:
         State_Execution();
         break;
-    case CBeholder::STATE_FLY:
-        State_Fly(fTimeDelta);
-        break;
-    case CBeholder::STATE_FLYDEATH:
-        State_FlyDeath(fTimeDelta);
-        break;
     case CBeholder::STATE_DEATH:
         State_Death(fTimeDelta);
         break;
-
+    default:
+        State_Idle();
+        break;
     }
 }
 
@@ -977,7 +1206,7 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
     {
     case CPawn::HEAD_SHOT: {
         //m_pAnimationCom->Play_Animation(L"Death_Headshot", 0.1f, false);
-        if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
+        //if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Head_Explode", 0.1f, false);
 
         Arg.Hit = eSpecialHit::HEADSHOT;
         Arg.iCount = 4;
@@ -986,7 +1215,7 @@ void CBeholder::SetState_Death(ENEMYHIT_DESC* pDesc)
     }
     case CPawn::BODY_SHOT: {
         //m_pAnimationCom->Play_Animation(L"Death_Bodyshot", 0.1f, false);
-        if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
+        //if (eWeaponType == CPlayer::SHOTGUN) m_pAnimationCom->Play_Animation(L"Death_Shotgun", 0.1f, false);
 
         Arg.Hit = eSpecialHit::FINISHED;
         Arg.iCount = 4;

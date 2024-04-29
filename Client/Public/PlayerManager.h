@@ -162,6 +162,9 @@ public:
 
 	void Set_NextWeapon(CPlayer::WEAPON_TYPE eWeaponType) { m_eNextWeapon = eWeaponType; }
 	CPlayer::WEAPON_TYPE Get_NextWeapon() { return m_eNextWeapon; }
+
+	void Set_BossCutscene(_bool _bBossCutscene) { m_bBossCutscene = _bBossCutscene; }
+	_bool Get_BossCutscene() { return m_bBossCutscene; }
 private:
 	CGameInstance* m_pGameInstance = { nullptr };
 	LPDIRECT3DDEVICE9			m_pGraphic_Device = { nullptr };
@@ -208,6 +211,7 @@ private:
 
 	CPlayer::WEAPON_TYPE		m_eNextWeapon = CPlayer::PISTOL;
 
+	_bool						m_bBossCutscene = false;
 private:
 	CPlayer* m_pPlayer = nullptr;
 
