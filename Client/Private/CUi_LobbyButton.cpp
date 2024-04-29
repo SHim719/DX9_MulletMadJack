@@ -170,21 +170,21 @@ void CUi_LobbyButton::InitializeText()
 
 	m_pTextVec.reserve(3);
 	CText::Text_Info Text;
-	Text.Text = L"���� ����";
+	Text.Text = L"GameStart";//L"게임 시작";
 	Text.Length = (_uint)wcslen(Text.Text);
 	Text.Rect = m_ButtonPickingVec[0];
 	Text.Rect.left += 70;
 	Text.Rect.top += 10;
 	m_pTextVec.emplace_back(Text);
 
-	Text.Text = L"�ɼ�";
+	Text.Text = L"Option";
 	Text.Length = (_uint)wcslen(Text.Text);
 	Text.Rect = m_ButtonPickingVec[1];
 	Text.Rect.left += 120;
 	Text.Rect.top += 10;
 	m_pTextVec.emplace_back(Text);
 
-	Text.Text = L"����";
+	Text.Text = L"Quit";
 	Text.Length = (_uint)wcslen(Text.Text);
 	Text.Rect = m_ButtonPickingVec[2];
 	Text.Rect.left += 120;
@@ -353,7 +353,7 @@ void CUi_LobbyButton::Player_Select()
 	{
 		if (m_bFocusedVec[i] && m_pGameInstance->GetKeyDown(eKeyCode::LButton))
 		{
-		
+			//LEVEL_GAMEPLAY
 			switch (i)	
 			{
 			case 0:

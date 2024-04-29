@@ -339,7 +339,7 @@ void CArtemis::State_MonsterSpawn(float _fTimeDelta)
 		LaserOrder.vLook = vPos;
 		LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
 
-		CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
+		CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_STATIC, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
 		m_bIsAirStrikeShoot = false;
 	}
 

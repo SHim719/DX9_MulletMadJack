@@ -45,7 +45,7 @@ HRESULT CPhone::Initialize_Active()
     Default_Set_Size();
     Initialize_Set_Scale_Pos_Rotation(NULL);
 
-    m_eFace = FaceType::Noise;
+    m_eFace = FaceType::Hero;
     m_fFaceChnageGap = 3.f;
     m_bFaceRoop = true;
 

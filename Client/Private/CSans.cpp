@@ -744,7 +744,7 @@ void CSans::Set_TextLength(_float fTimeDelta)
         ++m_iSansTextLength;
     }
 
-    m_fSans_Words_Timelength = m_iSansTextLength;
+    m_fSans_Words_Timelength = (_float)m_iSansTextLength;
 }
 
 void CSans::Adjust_BodyPos(_float fTimeDelta)

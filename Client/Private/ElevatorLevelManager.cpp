@@ -39,7 +39,7 @@ void CElevatorLevelManager::Initialize(LPDIRECT3DDEVICE9 pGraphic_Device)
 	m_vSpawnPos[10] = { -4.f, 3.0f,  0.f };
 	m_vSpawnPos[11] = { -4.f, 3.0f, 4.f };
 
-	m_eState = Return;
+	m_eState = EndState;
 	m_fEventDelayTime = 2.f;
 }
 

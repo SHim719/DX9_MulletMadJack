@@ -544,6 +544,10 @@ HRESULT CLoader::Loading_For_Boss_Texture()
 			TEXT("../Bin/Resources/Textures/Boss/Apollo/Attack/Apollo_%d.png"), 14))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_BOSS, TEXT("Texture_TrackingLaser"),
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D, TEXT("../Bin/Resources/Textures/Bullet/Sans/GasterLaser.png")))))
+		return E_FAIL;
+
 	return S_OK;
 }
 

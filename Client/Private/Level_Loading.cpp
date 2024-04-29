@@ -5,7 +5,7 @@
 #include "Level_Logo.h"
 #include "Level_GamePlay.h"
 #include "Elevator_Level.h"
-#include "CUi_LoadingBackGround.h"xz
+#include "CUi_LoadingBackGround.h"
 #include "Level_Map2.h"
 #include "Level_Boss.h"
 #include "CSansLevel.h"
