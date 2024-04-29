@@ -247,13 +247,9 @@ void CLevel_GamePlay::Test_Ui()
 	{
 		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Finish"));
 	}
-	else if (m_pGameInstance->GetKeyDown(eKeyCode::G))
-	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Execution_Show"));
-	}
 	else if (m_pGameInstance->GetKeyDown(eKeyCode::Z))
 	{
-		m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_GreenCrossActive"));
+	
 	}
 
 }

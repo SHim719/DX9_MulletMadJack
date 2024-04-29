@@ -25,8 +25,10 @@ HRESULT CUI_Dialogue::Initialize_Prototype()
 	m_pTransformCom->Set_Pos({ m_UiDesc.m_fX, m_UiDesc.m_fY, 0.f });
 	m_pTransformCom->Set_Scale({ m_UiDesc.m_fSizeX, m_UiDesc.m_fSizeY, 1.f });
 
-	m_tTextRect.left = long(m_UiDesc.m_fX + (_float)g_iWinSizeX * 0.5f - m_UiDesc.m_fSizeX * 0.5f ) + 15;
-	m_tTextRect.top = long((_float)g_iWinSizeY * 0.5f - m_UiDesc.m_fY - m_UiDesc.m_fSizeY * 0.5f) + 15;
+	//m_tTextRect.left = long(m_UiDesc.m_fX + (_float)g_iWinSizeX * 0.5f - m_UiDesc.m_fSizeX * 0.5f ) + 15;
+	//m_tTextRect.top = long((_float)g_iWinSizeY * 0.5f - m_UiDesc.m_fY - m_UiDesc.m_fSizeY * 0.5f) + 15;
+	m_tTextRect.left = long(m_UiDesc.m_fX + (_float)g_iWinSizeX * 0.5f - m_UiDesc.m_fSizeX * 0.5f) + 55;
+	m_tTextRect.top = long((_float)g_iWinSizeY * 0.5f - m_UiDesc.m_fY - m_UiDesc.m_fSizeY * 0.5f) + 25;
 	m_tTextRect.right = m_tTextRect.left + (long)m_UiDesc.m_fSizeX - 10;
 	m_tTextRect.bottom = m_tTextRect.top + (long)m_UiDesc.m_fSizeY - 10;
 

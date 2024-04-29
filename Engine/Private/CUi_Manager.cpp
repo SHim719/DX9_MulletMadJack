@@ -27,7 +27,8 @@ HRESULT CUi_Manager::Add_Ui_Active(const wstring& Ui_ActiveTag, eUiRenderType Ui
 
 		m_Ui_Active.emplace(Ui_ActiveTag, Ui_Active);
 	}
-	else {
+	else 
+	{
 		if (m_Ui_ActiveBlend.end() != m_Ui_ActiveBlend.find(Ui_ActiveTag))
 			return E_FAIL;
 

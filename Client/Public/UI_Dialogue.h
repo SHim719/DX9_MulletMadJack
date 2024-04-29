@@ -66,7 +66,8 @@ private:
 
 	
 private:
-	_float3 m_OriginScale = { 650.f, 137.f, 1.f };
+	//_float3 m_OriginScale = { 650.f, 137.f, 1.f };
+	_float3 m_OriginScale = { 730.f, 100.f, 1.f };
 	_float m_fScalingSpeed = 500.f;
 	_float m_fScalingY = 0.f;
 

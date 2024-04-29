@@ -66,6 +66,7 @@ private:
 	HRESULT Ready_StartUi_Texture();
 	HRESULT Ready_OnGoingUi_Texture();
 	HRESULT Ready_TextUi_Texture();
+	HRESULT Ready_BossUi_Texture();
 	HRESULT Ready_PlayerUi_Texture();
 	HRESULT Ready_PlayerGunUi_Texture();
 	HRESULT Ready_Camera_Effect_Texture();

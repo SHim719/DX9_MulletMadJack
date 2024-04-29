@@ -49,3 +49,4 @@
 #include "UI_UltimatePicture.h"
 #include "Grey_Filter.h"
 #include "CUi_DrinkSoda_Word.h"
+#include "CUi_Ultimate_Finish.h"

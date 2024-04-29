@@ -41,7 +41,7 @@ HRESULT CArtemis::Initialize(void* pArg)
 
 	m_strTag = "Monster";
 
-	m_fHp = 200.f;
+	m_fHp = 100.f;
 	m_fFlyTime = 1.5f;
 	m_fSpeed = 2.f;
 	return S_OK;
@@ -59,6 +59,8 @@ void CArtemis::Tick(_float fTimeDelta)
 	m_pBoxCollider->Update_BoxCollider(m_pTransformCom->Get_WorldMatrix());
 	m_pRigidbody->Update(fTimeDelta);
 	m_pAnimationCom->Update(fTimeDelta);
+
+	m_fRecentHitTime += fTimeDelta;
 }
 
 void CArtemis::LateTick(_float fTimeDelta)
@@ -154,6 +156,8 @@ void CArtemis::Hit(void* pArg)
 
 	if (m_fHp <= 0.f)
 		SetState_Death(pDesc);
+
+	m_fRecentHitTime = 0;
 }
 
 void CArtemis::Process_State(_float fTimeDelta)

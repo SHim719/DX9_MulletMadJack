@@ -56,6 +56,19 @@ public:
 	void SetState_Move();
 	void SetState_Death(ENEMYHIT_DESC* pDesc);
 
+
+public:
+	_float Get_Hp() const { return m_fHp; }
+	//jeongtest
+	_float Get_MaxHp() const { return 100.f; }
+	STATE Get_State() const { return m_eState; }
+	_float Get_RecentHitTime() const { return m_fRecentHitTime; }
+
+
+private:
+	_float m_fRecentHitTime = { 0 };
+
+
 private:
 	STATE			m_eState = STATE_IDLE;
 

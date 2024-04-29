@@ -12,8 +12,6 @@ CSansLevel::CSansLevel(LPDIRECT3DDEVICE9 pGraphic_Device)
 HRESULT CSansLevel::Initialize()
 {
 	m_iLevelID = LEVEL_SANS;
-	m_pGameInstance->Play(L"Gameplay", true);
-	m_pGameInstance->SetVolume(L"Gameplay", 0.5f);
 
 	CGame_Manager::Get_Instance()->Set_StageProgress(StageProgress::OnGoing);
 

@@ -159,6 +159,8 @@ private:
 	_uint m_iFaceTextureMax = { 0 };
 	_bool m_bFaceRoop = { true };
 	Ui_Pos_Size_Rotation m_Face = {};
+	_float3 m_FaceOriginScale = {};
+
 
 public:
 	virtual void Free() override;

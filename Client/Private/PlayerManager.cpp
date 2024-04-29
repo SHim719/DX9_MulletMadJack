@@ -1,6 +1,7 @@
 #include "PlayerManager.h"
 #include "GameInstance.h"
 
+
 IMPLEMENT_SINGLETON(CPlayer_Manager)
 
 CPlayer_Manager::CPlayer_Manager()
@@ -232,10 +233,12 @@ void CPlayer_Manager::WeaponChange(CPlayer::WEAPON_TYPE eWeaponType)
 
 	//Set_Action_Type(ACTION_NONE);
 }
+
 void CPlayer_Manager::Free()
 {
 	Safe_Release(m_pGameInstance);
 	Safe_Release(m_pGraphic_Device);
+
 	Destroy_Instance();
 }
 

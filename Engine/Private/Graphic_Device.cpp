@@ -64,10 +64,8 @@ HRESULT CGraphic_Device::Initialize(const GRAPHIC_DESC& GraphicDesc, _Out_ LPDIR
 	// 폰트 객체 생성
 	D3DXFONT_DESCW		tFontInfo;
 	ZeroMemory(&tFontInfo, sizeof(D3DXFONT_DESCW));
-	//tFontInfo.Height = 20;
-	//tFontInfo.Width = 10;
-	tFontInfo.Height = 30;
-	tFontInfo.Width = 15;
+	tFontInfo.Height = 20;
+	tFontInfo.Width = 10;
 	//tFontInfo.Weight = FW_HEAVY;
 	tFontInfo.Weight = FW_MEDIUM;
 	tFontInfo.CharSet = HANGEUL_CHARSET;

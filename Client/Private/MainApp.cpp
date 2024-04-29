@@ -35,11 +35,13 @@ HRESULT CMainApp::Initialize()
 
 
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
-	//if (FAILED(Open_Level(LEVEL_LOBBY)))
-	//	return E_FAIL;
+	// 
 
-	if (FAILED(Open_Level(LEVEL_BOSS)))
+	if (FAILED(Open_Level(LEVEL_LOBBY)))
 		return E_FAIL;
+
+	//if (FAILED(Open_Level(LEVEL_BOSS)))
+	//	return E_FAIL;
 
 	//if (FAILED(Open_Level(LEVEL_GAMEPLAY)))
 	//	return E_FAIL;

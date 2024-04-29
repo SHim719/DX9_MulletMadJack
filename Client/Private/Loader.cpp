@@ -12,6 +12,7 @@
 #include "Sans_Include.h"
 #include "CSkyBox.h"
 
+
 CLoader::CLoader(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: m_pGraphic_Device{ pGraphic_Device }
 	, m_pGameInstance{ CGameInstance::Get_Instance() }
@@ -784,6 +785,9 @@ HRESULT CLoader::Loading_For_Drone_Monster()
 
 HRESULT CLoader::Loading_For_Ui()
 {
+	if (FAILED(Ready_BossUi_Texture()))
+		return E_FAIL;
+
 	if (FAILED(Ready_ClearUi_Texture()))
 		return E_FAIL;
 
@@ -1041,6 +1045,11 @@ HRESULT CLoader::Ready_OnGoingUi_Texture()
 			L"../Bin/Resources/Textures/Ui/OnGoing/Dash_Finish_Stroke.png"))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Ultimate_Finish_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/OnGoing/Ultimate_Finish.png"))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_DrinkSoda_Word_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Ui/OnGoing/Drink_Soda_Word.png"))))
@@ -1133,9 +1142,54 @@ HRESULT CLoader::Ready_TextUi_Texture()
 
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Dialogue_Texture",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
-			L"../Bin/Resources/Textures/Ui/Dialogue/Dialogue.png"))))
+			L"../Bin/Resources/Textures/Ui/Dialogue/TextBackGround_Real.png"))))
 		return E_FAIL;
 
+	//if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Dialogue_Texture",
+	//	CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+	//		L"../Bin/Resources/Textures/Ui/Dialogue/Dialogue.png"))))
+	//	return E_FAIL;
+
+
+	return S_OK;
+}
+
+HRESULT CLoader::Ready_BossUi_Texture()
+{
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Beholder_BackGround_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/BossBack_Beholder.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Artemis_BackGround_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/BossBack.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Apolon_BackGround_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/BossBack.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_BossHpBar_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/BossHpBar%d.png", 11))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Name_Beholder_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/Name_Beholder.png"))))
+		return E_FAIL;
+
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Name_Artemis_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/Name_Artemis.png"))))
+		return E_FAIL;
+	
+	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"CUi_Name_Apolon_Texture",
+		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
+			L"../Bin/Resources/Textures/Ui/Beholder/Name_Apolon.png"))))
+		return E_FAIL;
 
 	return S_OK;
 }
@@ -1193,6 +1247,8 @@ HRESULT CLoader::Ready_PlayerUi_Texture()
 			L"../Bin/Resources/Textures/Ui/Phone_Announcer/Announcer%d.png", 8))))
 		return E_FAIL;
 
+
+	// jeongtest
 	if (FAILED(m_pGameInstance->Add_Prototype(LEVEL_STATIC, L"Noise_Textures",
 		CTexture::Create(m_pGraphic_Device, CTexture::TYPE_TEXTURE2D,
 			L"../Bin/Resources/Textures/Noise/Noise%d.png", 2))))
@@ -1507,6 +1563,11 @@ HRESULT CLoader::Ready_Active_UiOnGoing()
 		CUi_Finish::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
+	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_Ultimate_Finish"),
+		eUiRenderType::Render_Blend,
+		CUi_Ultimate_Finish::Create(m_pGraphic_Device))))
+		return E_FAIL;
+
 	if (FAILED(m_pGameInstance->Add_Ui_Active(TEXT("CUi_DrinkSoda_Word"),
 		eUiRenderType::Render_Blend,
 		CUi_DrinkSoda_Word::Create(m_pGraphic_Device))))
@@ -1648,11 +1709,8 @@ HRESULT CLoader::Ready_Active_Gun()
 	if (FAILED(m_pGameInstance->Add_Ui_Active(L"Ui_Drink", eUiRenderType::Render_NonBlend, CDrink::Create(m_pGraphic_Device))))
 		return E_FAIL;
 
-
-
 	return S_OK;
 }
-
 HRESULT CLoader::Ready_Prototype_Effect()
 {
 	if (FAILED(m_pGameInstance->Add_Ui_LifePrototype(TEXT("CPistol_Gunfire"),

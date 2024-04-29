@@ -580,6 +580,12 @@
     <Filter Include="02. GameObjects\06. SkyBox">
       <UniqueIdentifier>{165ad26a-63f6-492d-afbe-5d5ffd02ff47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Ultimate_Finish">
+      <UniqueIdentifier>{70b191e4-4945-4da4-833f-f1831774c089}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\Ui\CUi_Active\BossHpBar">
+      <UniqueIdentifier>{50b84a97-7532-4e8d-bf82-d248e95b0d49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -1107,6 +1113,12 @@
     <ClInclude Include="..\Public\CSkyBox.h">
       <Filter>02. GameObjects\06. SkyBox</Filter>
     </ClInclude>
+    <ClInclude Include="..\Public\CUi_Ultimate_Finish.h">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Ultimate_Finish</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\CUi_BossHpBar.h">
+      <Filter>04. UI\Ui\CUi_Active\BossHpBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1591,6 +1603,12 @@
     </ClCompile>
     <ClCompile Include="..\Private\CSkyBox.cpp">
       <Filter>02. GameObjects\06. SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_Ultimate_Finish.cpp">
+      <Filter>04. UI\Ui\CUi_Active\CUi_OnGoing\CUi_Ultimate_Finish</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Private\CUi_BossHpBar.cpp">
+      <Filter>04. UI\Ui\CUi_Active\BossHpBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
