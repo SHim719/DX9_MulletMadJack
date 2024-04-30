@@ -2,6 +2,7 @@
 #include "Beholder.h"
 #include "Artemis.h"
 #include "CGame_Manager.h"
+#include "Apollo.h"
 
 
 CUi_BossHpBar::CUi_BossHpBar(LPDIRECT3DDEVICE9 pGraphic_Device)
@@ -58,8 +59,8 @@ void CUi_BossHpBar::Render_Begin()
 	case Client::BossType::Artemis:
 		Render_BeginArtemis();
 		break;
-	case Client::BossType::Apolon:
-		Render_BeginApolon();
+	case Client::BossType::Apollon:
+		Render_BeginApollon();
 		break;
 	default:
 		assert(false);
@@ -104,7 +105,7 @@ void CUi_BossHpBar::Render_BeginArtemis()
 	}
 }
 
-void CUi_BossHpBar::Render_BeginApolon()
+void CUi_BossHpBar::Render_BeginApollon()
 {
 	if (!m_bBigShaked)
 	{
@@ -133,8 +134,8 @@ HRESULT CUi_BossHpBar::Render()
 	case Client::BossType::Artemis:
 		Render_Artemis();
 		break;
-	case Client::BossType::Apolon:
-		Render_Apolon();
+	case Client::BossType::Apollon:
+		Render_Apollon();
 		break;
 	default:
 		assert(false);
@@ -176,15 +177,15 @@ void CUi_BossHpBar::Render_Artemis()
 	m_pNameVIBufferCom->Render();
 }
 
-void CUi_BossHpBar::Render_Apolon()
+void CUi_BossHpBar::Render_Apollon()
 {
 	m_pBackGroundTransformCom->Bind_WorldMatrix();
-	m_pBackGroundTextureCom[(_uint)BossType::Apolon]->Bind_Texture(0);
+	m_pBackGroundTextureCom[(_uint)BossType::Apollon]->Bind_Texture(0);
 	m_pBackGroundVIBufferCom->Render();
 
 
 	m_pNameTransformCom->Bind_WorldMatrix();
-	m_pNameTextureCom[(_uint)BossType::Apolon]->Bind_Texture(0);
+	m_pNameTextureCom[(_uint)BossType::Apollon]->Bind_Texture(0);
 	m_pNameVIBufferCom->Render();
 }
 
@@ -331,17 +332,17 @@ HRESULT CUi_BossHpBar::Add_Texture(void* pArg)
 		(CComponent**)&m_pNameTextureCom[(_uint)BossType::Artemis])))
 		return E_FAIL;
 
-	//apolon
+	//Apollon
 
 	
 	if (FAILED(Add_Component(LEVEL_STATIC,
-		TEXT("CUi_Apolon_BackGround_Texture"),
-		(CComponent**)&m_pBackGroundTextureCom[(_uint)BossType::Apolon])))
+		TEXT("CUi_Apollon_BackGround_Texture"),
+		(CComponent**)&m_pBackGroundTextureCom[(_uint)BossType::Apollon])))
 		return E_FAIL;
 
 	if (FAILED(Add_Component(LEVEL_STATIC,
-		TEXT("CUi_Name_Apolon_Texture"),
-		(CComponent**)&m_pNameTextureCom[(_uint)BossType::Apolon])))
+		TEXT("CUi_Name_Apollon_Texture"),
+		(CComponent**)&m_pNameTextureCom[(_uint)BossType::Apollon])))
 		return E_FAIL;
 
 	//hpbar(mutual)
@@ -368,7 +369,7 @@ void CUi_BossHpBar::Shaking(_float fTimeDelta)
 			if (m_pArtemis == nullptr || m_pArtemis->Get_RecentHitTime() > 0.4)
 				return;
 			break;
-		case Client::BossType::Apolon:
+		case Client::BossType::Apollon:
 			break;
 		default:
 			assert(false);
@@ -424,7 +425,14 @@ void CUi_BossHpBar::Set_HpTextureIndex()
 			Hp = m_pArtemis->Get_Hp();
 		}
 		break;
-	case Client::BossType::Apolon:
+	case Client::BossType::Apollon:
+		if (m_pApollon == nullptr)
+			return;
+		else
+		{
+			HpMax = m_pApollon->Get_MaxHp();
+			Hp = m_pApollon->Get_Hp();
+		}
 		break;
 	default:
 		assert(false);
@@ -461,6 +469,7 @@ void CUi_BossHpBar::Decision_Type()
 {
 	_float BeholderHitTime = { 9999 };
 	_float ArtemisHitTime = { 9999 };
+	_float ApollonHitTime = { 9999 };
 	if (m_pBeholder)
 	{
 		BeholderHitTime = m_pBeholder->Get_RecentHitTime();
@@ -469,16 +478,23 @@ void CUi_BossHpBar::Decision_Type()
 	{
 		ArtemisHitTime = m_pArtemis->Get_RecentHitTime();
 	}
+	if (m_pApollon)
+	{
+		ApollonHitTime = m_pApollon->Get_RecentHitTime();
+	}
 
 
-
-	if (BeholderHitTime <= ArtemisHitTime)
+	if (BeholderHitTime <= ArtemisHitTime && BeholderHitTime <= ApollonHitTime)
 	{
 		m_eFocusType = BossType::Beholder;
 	}
-	else
+	else if(ArtemisHitTime <= ApollonHitTime)
 	{
 		m_eFocusType = BossType::Artemis;
+	}
+	else
+	{
+		m_eFocusType = BossType::Apollon;
 	}
 }
 
@@ -492,6 +508,11 @@ void CUi_BossHpBar::Check_BossDead()
 	if (m_pArtemis && m_pArtemis->Get_Hp() <= 0)
 	{
 		Safe_Release(m_pArtemis);
+	}
+
+	if (m_pApollon && m_pApollon->Get_Hp() <= 0)
+	{
+		Safe_Release(m_pApollon);
 	}
 
 }
@@ -528,6 +549,22 @@ void CUi_BossHpBar::Set_Artemis(CArtemis* pArtemis)
 	}
 }
 
+void CUi_BossHpBar::Set_Apollon(CApollo* pApollon)
+{
+	if (pApollon == nullptr)
+		assert(false);
+
+	if (m_pApollon)
+	{
+		assert(false);
+	}
+	else
+	{
+		m_pApollon = pApollon;
+		Safe_AddRef(m_pApollon);
+	}
+}
+
 CUi_BossHpBar* CUi_BossHpBar::Create(LPDIRECT3DDEVICE9 pGraphic_Device)
 {
 	CUi_BossHpBar* pInstance = new CUi_BossHpBar(pGraphic_Device);
@@ -546,6 +583,7 @@ void CUi_BossHpBar::Free()
 
 	Safe_Release(m_pBeholder);
 	Safe_Release(m_pArtemis);
+	Safe_Release(m_pApollon);
 	Safe_Release(m_pBackGroundVIBufferCom);
 	Safe_Release(m_pBackGroundTransformCom);
 	Safe_Release(m_pNameTransformCom);

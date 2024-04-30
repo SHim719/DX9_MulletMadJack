@@ -777,6 +777,7 @@ void CPlayer::SansHit()
 			
 			Set_InvincibleTime(Get_InvincibleTimeLimit());
 			Set_Invincible(true);
+			m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_Damaged"));
 		}
 
 		if(m_SansHeartVec.size() == 0)

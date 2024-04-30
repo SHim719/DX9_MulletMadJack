@@ -13,6 +13,7 @@
 #include "Beholder.h"
 #include "Artemis.h"
 #include "CUi_BossHpBar.h"
+#include "Apollo.h"
 
 CLevel_Boss::CLevel_Boss(LPDIRECT3DDEVICE9 pGraphic_Device)
 	: CLevel{ pGraphic_Device }
