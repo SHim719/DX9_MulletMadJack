@@ -15,7 +15,7 @@ public:
     _bool Is_Playing();
     void SetVolume(const float& _fVolume);
     void SetLoop(const bool& _bLoop) { m_bLoop = _bLoop; }
-
+    void SetPosition(_float _vPosition);
 private:
     HRESULT Initialize(CFMOD_Core* pFMOD_Core, const string& strPath);
 

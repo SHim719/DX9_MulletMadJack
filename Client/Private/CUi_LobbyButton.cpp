@@ -358,7 +358,7 @@ void CUi_LobbyButton::Player_Select()
 			{
 			case 0:
 				// game start
-				m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pGraphic_Device, LEVEL_GAMEPLAY));
+				m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pGraphic_Device, LEVEL_BOSS));
 				//m_pGameInstance->Change_Level(CLevel_Loading::Create(m_pGraphic_Device, LEVEL_BOSS));
 				break;
 			case 1:

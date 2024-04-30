@@ -31,6 +31,19 @@ void CSound::SetVolume(const float& _fVolume)
 	m_pChannel->setVolume(_fVolume);
 }
 
+void CSound::SetPosition(_float _vPosition)
+{
+	if (nullptr == m_pSound) return;
+	if (nullptr != m_pChannel)
+	{
+		UINT iLen;
+		m_pSound->getLength(&iLen, FMOD_TIMEUNIT_MS);
+		_vPosition = (float)iLen * _vPosition / 100.f;
+
+		m_pChannel->setPosition((int)_vPosition, FMOD_TIMEUNIT_MS);
+	}
+}
+
 HRESULT CSound::Initialize(CFMOD_Core* pFMOD_Core, const string& strPath)
 {
 	m_pFMOD_Core = pFMOD_Core;

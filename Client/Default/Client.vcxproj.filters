@@ -322,9 +322,6 @@
     <Filter Include="04. UI\Ui\CUi_Active\Camera_Filter\Blood">
       <UniqueIdentifier>{04c8cd6f-f390-40a7-8b5e-8cb5ea2febd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="97. Manager\MathManager">
-      <UniqueIdentifier>{a697414d-99e9-4ab7-96fc-dd07cea47909}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening">
       <UniqueIdentifier>{61060200-e759-44eb-adac-e08463fb5df4}</UniqueIdentifier>
     </Filter>
@@ -592,14 +589,17 @@
     <Filter Include="02. GameObjects\04. Enemy\Last_Bullet">
       <UniqueIdentifier>{5855f61e-2412-481b-9289-05766abaf645}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. Levels\02. Map2\03. ElevatorMap">
-      <UniqueIdentifier>{0d25a20f-181c-450c-946f-579789c1f403}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObjects\05. Effect\04. Blink">
       <UniqueIdentifier>{41a19e94-330d-4ee8-a867-bb3b2475b65d}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObjects\05. Effect\05. Starlight">
       <UniqueIdentifier>{1c94c90e-2b36-4db0-a705-b13775508026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Levels\03. ElevatorMap">
+      <UniqueIdentifier>{0d25a20f-181c-450c-946f-579789c1f403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97. Manager\PlayerManager\MathManager">
+      <UniqueIdentifier>{a697414d-99e9-4ab7-96fc-dd07cea47909}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -626,9 +626,6 @@
     </ClInclude>
     <ClInclude Include="..\Public\Level_GamePlay.h">
       <Filter>01. Levels\01.GamePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Public\Level_Loading.h">
-      <Filter>01. Levels\99.Loading</Filter>
     </ClInclude>
     <ClInclude Include="..\public\Player.h">
       <Filter>02. GameObjects\02. Player</Filter>
@@ -1042,7 +1039,7 @@
       <Filter>02. GameObjects\01. MapObject\MoveWall</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\Elevator_Level.h">
-      <Filter>01. Levels\02. Map2\03. ElevatorMap</Filter>
+      <Filter>01. Levels\03. ElevatorMap</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\ElevatorLevelManager.h">
       <Filter>97. Manager\ElevatorLevelManager</Filter>
@@ -1060,7 +1057,7 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\MathManager.h">
-      <Filter>97. Manager\MathManager</Filter>
+      <Filter>97. Manager\PlayerManager\MathManager</Filter>
     </ClInclude>
     <ClInclude Include="..\Public\CUi_Sans_TextBack.h">
       <Filter>04. UI\Ui\CUi_Active\CUi_Sans</Filter>
@@ -1151,6 +1148,9 @@
     </ClInclude>
     <ClInclude Include="..\Public\Starlight.h">
       <Filter>02. GameObjects\05. Effect\05. Starlight</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Public\Level_Loading.h">
+      <Filter>01. Levels\99.Loading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1554,7 +1554,7 @@
       <Filter>02. GameObjects\01. MapObject\MoveWall</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\Elevator_Level.cpp">
-      <Filter>01. Levels\02. Map2\03. ElevatorMap</Filter>
+      <Filter>01. Levels\03. ElevatorMap</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\ElevatorLevelManager.cpp">
       <Filter>97. Manager\ElevatorLevelManager</Filter>
@@ -1572,7 +1572,7 @@
       <Filter>04. UI\Ui\CUi_Active\Hand\RIght_Hand\Katana\Katana_Opening</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\MathManager.cpp">
-      <Filter>97. Manager\MathManager</Filter>
+      <Filter>97. Manager\PlayerManager\MathManager</Filter>
     </ClCompile>
     <ClCompile Include="..\Private\CUi_Sans_TextBack.cpp">
       <Filter>04. UI\Ui\CUi_Active\CUi_Sans</Filter>

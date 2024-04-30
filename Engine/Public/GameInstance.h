@@ -125,6 +125,7 @@ public:
 	HRESULT Play(const wstring& strSoundTag, _bool bLoop);
 	HRESULT Stop(const wstring& strSoundTag);
 	HRESULT SetVolume(const wstring& strSoundTag, const _float& fVolume);
+	HRESULT SetPosition(const wstring& strSoundTag, _float fPosition);
 	_bool Is_Playing(const wstring& strSoundTag);
 #pragma endregion
 

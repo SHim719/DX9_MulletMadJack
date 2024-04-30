@@ -460,6 +460,18 @@ HRESULT CGameInstance::SetVolume(const wstring& strSoundTag, const _float& fVolu
 
 	return m_pSound_Manager->SetVolume(strSoundTag, fVolume);
 }
+
+HRESULT CGameInstance::SetPosition(const wstring& strSoundTag, _float fPosition)
+{
+	if (nullptr == m_pSound_Manager)
+		return E_FAIL;
+	
+	return m_pSound_Manager->SetPosition(strSoundTag, fPosition);
+}
+
+
+
+
 _bool CGameInstance::Is_Playing(const wstring& strSoundTag)
 {
 	if (nullptr == m_pSound_Manager)

@@ -42,8 +42,8 @@ HRESULT CArtemis::Initialize(void* pArg)
 
 	m_strTag = "Monster";
 
-	m_fHp = 400.f;
-	m_fMaxHp = 400.f;
+	m_fHp = 300.f;
+	m_fMaxHp = 300.f;
 	m_fFlyTime = 1.5f;
 	m_fSpeed = 2.f;
 	return S_OK;

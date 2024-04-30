@@ -435,8 +435,10 @@ void CBeholder::PhaseControl(_float fTimeDelta)
     }
 
     if(m_fHp <= 700.f && m_ePhase == PHASE_1){
+
 		m_ePhase = PHASE_GROGGY;
-		m_iPatternCount = 0;
+        m_pAnimationCom->Play_Animation(L"Groggy", 0.1f, true);
+        m_iPatternCount = 0;
 		m_fPatternTimeDelay = 0.f;
         CPlayer_Manager::Get_Instance()->Set_BossCutscene(true);
 	}
@@ -451,6 +453,10 @@ void CBeholder::PhaseControl(_float fTimeDelta)
 
         auto Artemis = m_pGameInstance->Add_Clone(m_pGameInstance->Get_CurrentLevelID(), TEXT("Monster"), TEXT("Prototype_Artemis"));
         Artemis->Get_Transform()->Set_Pos(m_pTransformCom->Get_Pos() - m_pTransformCom->Get_Right() * 1.5f);
+
+        CUi_BossHpBar* pHpBar = dynamic_cast<CUi_BossHpBar*>(m_pGameInstance->Get_ActiveBlendUI(L"CUi_BossHpBar"));
+        pHpBar->Set_Artemis(dynamic_cast<CArtemis*>(Artemis));
+        pHpBar->Set_Apollo(dynamic_cast<CApollo*>(Apollo));
     }
 
     if (m_fHp <= 200.f && m_ePhase == PHASE_2) {
@@ -666,13 +672,14 @@ void CBeholder::PhaseWaitPattern(_float fTimeDelta)
 
 void CBeholder::PhaseGroggyPattern(_float fTimeDelta)
 {
-    m_pAnimationCom->Play_Animation(L"Groggy", 0.1f, true);
     if (m_pFadeInOut->Get_Active() && m_pFadeInOut->Get_NowAlpha() == 255.f)
     {
         m_pGameInstance->Stop(L"Beholder_Instrument");
         m_pGameInstance->Play(L"Beholder_Extend", true);
         m_pGameInstance->SetVolume(L"Beholder_Extend", 0.7f);
-        m_pGameInstance->Find_GameObject(LEVEL_BOSS, L"SkyBox", 0)->Set_Texture_Index(0);  
+        m_pGameInstance->SetPosition(L"Beholder_Extend", 19.f);
+        m_pGameInstance->Find_GameObject(LEVEL_BOSS, L"SkyBox", 0)->Set_Texture_Index(0);
+        m_pAnimationCom->Play_Animation(L"Phase2", 0.1f, true);
     }
     else if (m_pFadeInOut->IsFinished())
     {
@@ -692,6 +699,7 @@ void CBeholder::PhaseDeathPattern(_float fTimeDelta)
             m_pGameInstance->SetVolume(L"Drone_Explosion", 0.7f);
 
             Call_MonsterDieUi(eMonsterGrade::Middle);
+            m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_BossHpBar"), false);
             m_bDestroyed = true;
        
     }
@@ -753,6 +761,7 @@ void CBeholder::All_Round_Laser()
     LaserOrder.vMasterPos = m_pTransformCom->Get_Pos();
     LaserOrder.vLook = { fRandomX, 0.f, fRandomZ };
 
+    m_pGameInstance->Set_Ui_ActiveState(TEXT("CUi_BossHpBar"), true);
     CGameObject* pLaser = m_pGameInstance->Add_Clone(LEVEL_GAMEPLAY, L"Laser", L"Prototype_TrackingLaser", &LaserOrder);
     }
 

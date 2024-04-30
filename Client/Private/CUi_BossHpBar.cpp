@@ -446,7 +446,7 @@ void CUi_BossHpBar::LockHpBar()
 {
 	if (m_eFocusType == BossType::Beholder)
 	{
-		if (m_iTexture_Index == 5)
+		if (m_iTexture_Index == 7)
 		{
 			m_bLockHpBar = true;
 		}

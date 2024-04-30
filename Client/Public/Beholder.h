@@ -2,7 +2,8 @@
 #include "Client_Defines.h"
 #include "Pawn.h"
 #include "MathManager.h"
-
+#include "CUi_BossHpBar.h"
+#include "Artemis.h"
 
 BEGIN(Engine)
 class CTexture;

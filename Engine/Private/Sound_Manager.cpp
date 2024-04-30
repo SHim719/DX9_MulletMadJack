@@ -74,6 +74,18 @@ HRESULT CSound_Manager::SetVolume(const wstring& strSoundTag, const _float& fVol
 	return S_OK;
 }
 
+HRESULT CSound_Manager::SetPosition(const wstring& strSoundTag, _float fPosition)
+{
+	auto it = m_Sounds.find(strSoundTag);
+	
+	if (m_Sounds.end() == it)
+		return E_FAIL;
+
+	it->second->SetPosition(fPosition);
+	
+	return S_OK;
+}
+
 _bool CSound_Manager::Is_Playing(const wstring& strSoundTag)
 {
 	auto it = m_Sounds.find(strSoundTag);
